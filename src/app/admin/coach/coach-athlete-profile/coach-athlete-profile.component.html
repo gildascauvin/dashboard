@@ -1,0 +1,50 @@
+<div class="row container-profile">
+	<div class="col-md-7 container-profile-left">
+		<h3 class="mt-4">{{ '#Profil physique' | dgTranslate }}</h3>
+		<p class="container-profile-left-info">
+			{{ '#Choisissez tous les exercices qui sont prévus dans votre programme et noter chaque exercice : 0 si c’est une faiblesse, 10 si l’exercice est un point fort' | dgTranslate }}
+		</p>
+		<div class="row mt-4">
+			<div class="col-md-5">
+				<h4>{{ '#Ajouter un nouvel exercice' | dgTranslate }}</h4>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>{{ '#Exercice' | dgTranslate }}</label>
+							<input type="text" placeholder="Snatch pull" class="form-control">
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>{{ '#Record personnel' | dgTranslate }} / 1 RM</label>
+							<input type="text" placeholder="ex. 150kg" class="form-control">
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>{{ '#Note (sur 10)' | dgTranslate }}</label>
+							<input type="text" placeholder="10/10" class="form-control">
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>{{ '#Commentaire' | dgTranslate }}</label>
+							<textarea class="form-control" placeholder="{{ '#Travailler avec les straps pour monter la force sans être limité par le grip.' | dgTranslate }}"></textarea>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<button class="btn btn-primary btn-add-profile">{{ '#Ajouter' | dgTranslate }}</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-7">
+				<h4>{{ '#Points forts' | dgTranslate }}</h4>
+
+				<h4>{{ '#Points faibles' | dgTranslate }}</h4>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-5 program-compare">
+		<h4 class="text-center mt-4 pt-4">{{ '#Comparaison avec votre programme' | dgTranslate }}</h4>
+	</div>
+</div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DoorgetsTranslateService } from 'doorgets-ng-translate';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'dashboard-app';
+  constructor(
+    private doorgetsTranslateService: DoorgetsTranslateService) {}
+
+  ngOnInit() {
+    this.doorgetsTranslateService.init({
+      languages: ['en', 'fr'],
+      current: 'fr',
+      default: 'fr'
+    });
+  }
 }
+

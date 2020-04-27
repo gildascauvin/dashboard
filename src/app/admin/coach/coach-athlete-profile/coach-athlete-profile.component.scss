@@ -1,0 +1,40 @@
+.container-profile {
+    margin-top: -29px;
+	height: 100%;
+
+	.container-profile-left {
+		h3 {
+			font-size: 23.97px;
+			font-weight: 600;
+			letter-spacing: .15px;
+    		line-height: 23.97px;
+		}
+		h4 {
+			font-size: 18.44px;
+			font-weight: 600;
+			color: #42444a;
+			letter-spacing: .15px;
+    		line-height: 23.97px;
+		}
+		.container-profile-left-info {
+			color: #888;
+			font-size: 18.44px;
+			letter-spacing: .13px;
+    		line-height: 20.28px;
+    		margin-top: 30px;
+    		margin-bottom: 50px;
+		}
+		.btn-add-profile {
+			margin-top: 50px;
+			margin-bottom: 50px;
+			padding: 8px 60px;
+			font-size: 13px;
+		}
+
+	}
+
+	.program-compare {
+		background-color: #F9F9F9;
+	}
+}
+

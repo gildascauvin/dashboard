@@ -1,0 +1,59 @@
+<div class="container-auth">
+	<div class="my-login-page">
+		<section class="h-100">
+			<div class="container h-100">
+				<div class="row justify-content-md-center h-100">
+					<div class="card-wrapper">
+						<div class="brand">
+							<img class="logo-img-brand" src="/assets/img/logo.png">
+						</div>
+						<div class="card fat">
+							<div class="card-body">
+								<h4 class="card-title pb-4">{{ '#Connexion' | dgTranslate }}</h4>
+								<form [formGroup]="loginForm" (submit)="submitLogin()">
+
+									<div class="form-group">
+										<label for="email">{{ '#Email' | dgTranslate }}</label>
+
+										<input id="email" type="input" formControlName="email"  class="form-control" name="email" value="" placeholder="example@gmail.com" required autofocus>
+									</div>
+
+									<div class="form-group">
+										<label for="password">
+											{{ '#Password' | dgTranslate }}
+										</label>
+										<input id="password" formControlName="password" placeholder="Your password" type="password" class="form-control" name="password" required data-eye>
+									</div>
+
+									<div class="form-group no-margin">
+										<button type="submit" [disabled]="isLoading" class="btn btn-primary btn-block">
+											{{ '#Connexion' | dgTranslate }}
+										</button>
+									</div>
+
+									<div class="form-group text-center mt-3">
+										<a href="#" [routerLink]="['forgot-password']">{{ '#Forgot password?' | dgTranslate }}</a>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="footer">
+							<div class="row">
+								<div class="col-md-12 mb-4 text-bottom-link">
+									{{ '#You do not have an account?' | dgTranslate }} <a href="#" [routerLink]="['signup']">{{ '#Signup' | dgTranslate }}</a>
+								</div>
+								<div class="col-md-12 mt-4">
+									{{ '#Copyright' | dgTranslate }} &copy; ThePerfClub
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+
+
+

@@ -1,0 +1,20 @@
+<div class="ng-autocomplete">
+	<ng-autocomplete
+		#auto
+	  [data]="data"
+	  [placeHolder]="label"
+	  [searchKeyword]="keyword"
+	  (selected)='selectEvent($event)'
+	  (inputChanged)='onChangeSearch($event)'
+	  (inputFocused)='onFocused($event)'
+	  [itemTemplate]="itemTemplate">
+	</ng-autocomplete>
+	<ng-template #itemTemplate let-item>
+		<div *ngIf="type==='normal'">
+			<a [innerHTML]="item.category_root_name + ' - ' + item.category_parent_name + ' - ' + item.name"></a>
+		</div>
+		<div *ngIf="type==='workout'">
+			<a [innerHTML]="item.name"></a>
+		</div>
+	</ng-template>
+</div>

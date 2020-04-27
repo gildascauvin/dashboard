@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+        <h1 class="pb-2 ml-md-0 ml-sm-3 ml-0 mr-3 pt-2">
+        	<a href="#" class="img-logo-brand"><img src="/assets/img/logo.png" width="82" height="82" alt=""></a>
+        </h1>
+        <button class="navbar-toggler my-2" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse ml-lg-2 ml-0" id="navbarCollapse">
+        	<div class="nav-top-header">
+            	<div class="content-header">
+		            <span class="selection-program">
+		            	Programme de <br />
+		            	<span class="selection-program-name">Mounir R'Quiba <i class="fa fa-chevron-down"></i></span>
+		            </span>
+		          </div>
+		        </div>
+            <div class="nav-bottom-header">
+            	<div class="content-header">
+	            	<button class="btn btn-primary float-right mr-4">+ Créer une séance</button>
+	            	<ul class="navbar-nav flex-row mb-md-1 mt-md-0 mb-3 mt-2">
+	                <li class="nav-item">
+	                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/coach', 'dashboard']">Dashboard</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/coach', 'profile']">Profile</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/coach', 'calendar']">Planning</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/coach', 'stats']">Statistiques</a>
+	                </li>
+		            </ul>
+	            </div>
+	          </div>
+
+        </div>
+    </div>
+</nav>
+<div class="container-fluid body-content-sections">
+    <router-outlet></router-outlet>
+</div>

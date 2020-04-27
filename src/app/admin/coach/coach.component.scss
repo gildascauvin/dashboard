@@ -1,0 +1,58 @@
+.img-logo-brand {
+	z-index: 100000;
+  position: absolute;
+  left: 36px;
+  top: 25px;
+}
+.nav-top-header {
+	color: #FFFFFF;
+	position: absolute;
+  left: 0;
+  top: 0;
+  height: 65px;
+  padding: 8px 0 10px 174px;
+  width: 100%;
+  background-color: #000000;
+}
+.nav-bottom-header {
+	color: #FFFFFF;
+	position: absolute;
+  left: 0;
+  top: 65px;
+  height: 65px;
+  padding: 8px 0 10px 164px;
+  width: 100%;
+  background-color: #111111;
+
+	.content-header {
+	  margin-top: 10px;
+
+		.nav-link {
+			padding-bottom: 10px !important;
+			font-size: 14px;
+			margin-right: 50px;
+			text-decoration: none !important;
+			color: #E1E1E1;
+
+			&.active {
+	  		border-bottom: solid 3px #d44000;
+			}
+		}
+  }
+}
+
+.body-content-sections {
+	padding-top: 120px;
+	padding: 120px 40px 0;
+	height: 100%;
+}
+
+.selection-program {
+	font-size: 13px;
+	color: #CCCCCC;
+	.selection-program-name {
+		font-size: 18px;
+		color: #FFFFFF;
+		margin-top: 0;
+	}
+}
