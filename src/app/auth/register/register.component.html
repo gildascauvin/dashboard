@@ -10,62 +10,193 @@
 						<div class="card fat">
 							<div class="card-body">
 								<h4 class="card-title pb-4">{{ '#Signup' | dgTranslate }}</h4>
-								<form [formGroup]="signupForm" (submit)="submitSignup()">
-									<div class="row">
-										<div class="col-md-12">
-											<div class="form-group">
-												<label>{{ '#Account type' | dgTranslate }}</label>
-												<select class="form-control">
-													<option value="1">{{ '#Athlete' | dgTranslate }}</option>
-													<option value="2">{{ '#Coach' | dgTranslate }}</option>
-												</select>
-											</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label>{{ '#Role' | dgTranslate }}</label>
+											<select  [class.is-invalid]="errors.role_id" (input)="errors.role_id=false" [(ngModel)]="model.role_id" class="form-control">
+									      <option [value]="0">{{ 'Choose...' | dgTranslate }}</option>
+									      <option [value]="3">{{ 'Coach' | dgTranslate }}</option>
+									      <option [value]="1">{{ 'Athlet' | dgTranslate }}</option>
+									    </select>
 										</div>
+									</div>
 
-										<div class="col-md-6">
-											<div class="form-group">
-												<label >{{ '#Lastname' | dgTranslate }}</label>
-												<input type="text" placeholder="ex: Jean" autocomplete="new-password"  class="form-control" >
-											</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>{{ '#Lastname' | dgTranslate }}</label>
+											<input placeholder="Smith" [class.is-invalid]="errors.lastname" (input)="errors.lastname=false" [(ngModel)]="model.lastname" type="text" autocomplete="new-password" class="form-control">
 										</div>
+									</div>
 
-										<div class="col-md-6">
-											<div class="form-group">
-												<label for="password">
-													{{ '#Fisrtname' | dgTranslate }}
-												</label>
-												<input type="text" placeholder="ex: Dupont" autocomplete="new-password" class="form-control" name="password">
-											</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>{{ '#Firstname' | dgTranslate }}</label>
+											<input placeholder="John" [class.is-invalid]="errors.firstname" (input)="errors.firstname=false" [(ngModel)]="model.firstname" type="text" autocomplete="new-password" class="form-control">
 										</div>
+									</div>
 
-										<div class="col-md-6">
-											<div class="form-group">
-												<label for="email">{{ '#Email' | dgTranslate }}</label>
-
-												<input type="email" placeholder="example@gmail.com"  autocomplete="new-password" formControlName="email"  class="form-control">
-											</div>
-
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>{{ '#Email' | dgTranslate }}</label>
+											<input placeholder="example@gmail.com" [class.is-invalid]="errors.email" (input)="errors.email=false" [(ngModel)]="model.email" type="email" autocomplete="new-password" class="form-control">
 										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label for="password">
-													{{ '#Password' | dgTranslate }}
-												</label>
-												<input id="password" placeholder="{{ '#Your password' | dgTranslate }}" autocomplete="new-password" formControlName="password" type="password" class="form-control" name="password" data-eye>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>{{ '#Password' | dgTranslate }}</label>
+											<input minlength="8" maxlength="50" placeholder="Your password" [class.is-invalid]="errors.password" (input)="errors.password=false" [(ngModel)]="model.password" type="password" autocomplete="new-password" class="form-control">
+											<div class="password-strength-meter"><password-strength-meter [password]="model.password"></password-strength-meter></div>
+										</div>
+									</div>
+								</div>
+								<div class="row" *ngIf="model.role_id == 1">
+									<div class="col-md-12">
+										<hr />
+									</div>
+									<div class="col-md-6">
+										<label>{{ '#Birthday' | dgTranslate }}</label>
+										<div class="input-group">
+								      <input class="form-control" [class.is-invalid]="errors.birthday_at" (input)="errors.birthday_at=false" placeholder="yyyy-mm-dd"
+								             name="dp" [(ngModel)]="birthdayModel" ngbDatepicker #d="ngbDatepicker">
+								      <div class="input-group-append">
+								        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="fa fa-calendar"></i></button>
+								      </div>
+								    </div>
+									</div>
+
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>{{ '#Gender' | dgTranslate }}</label><br />
+											<div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]="model.gender">
+											  <label ngbButtonLabel class="btn-light">
+											    <input ngbButton type="radio" [value]="1"> {{ '#Male' | dgTranslate }}
+											  </label>
+											  <label ngbButtonLabel class="btn-light">
+											    <input ngbButton type="radio" [value]="2"> {{ '#Female' | dgTranslate }}
+											  </label>
+											  <label ngbButtonLabel class="btn-light">
+											    <input ngbButton type="radio" [value]="3"> {{ '#No' | dgTranslate }}
+											  </label>
 											</div>
 										</div>
 									</div>
 
-									<div class="form-group no-margin">
-										<button type="submit" [disabled]="isLoading" class="btn btn-primary btn-block">
-											{{ '#Signup' | dgTranslate }}
-										</button>
+									<div class="col-md-12">
+										<hr />
+										<div class="form-group">
+											<label>{{ '#Timezone' | dgTranslate }}</label>
+											<select class="form-control" [class.is-invalid]="errors.timezone" (input)="errors.timezone=false" [(ngModel)]="model.timezone">
+												<option *ngFor="let zone of timezone" [value]="zone.value">{{zone.name}}</option>
+											</select>
+										</div>
 									</div>
 
-									<div class="form-group text-center mt-3">
-										{{ '#By clicking on "Registration", you accept the terms of use' | dgTranslate }}
+									<div class="col-md-12">
+										<div class="form-group">
+											<label>{{ '#Location' | dgTranslate }}</label>
+											<input placeholder="Paris, France" [class.is-invalid]="errors.location" (input)="errors.location=false" [(ngModel)]="model.location" type="text" autocomplete="new-password" class="form-control">
+										</div>
+										<hr />
 									</div>
-								</form>
+
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>{{ 'Skype' | dgTranslate }}</label>
+											<input placeholder="{{ '#Your Skype' | dgTranslate }}" [class.is-invalid]="errors.skype" (input)="errors.skype=false" [(ngModel)]="model.skype" type="text" autocomplete="new-password" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>{{ '#Phone' | dgTranslate }}</label>
+											<input placeholder="012345679" [class.is-invalid]="errors.phone" (input)="errors.phone=false" [(ngModel)]="model.phone" type="text" autocomplete="new-password" class="form-control">
+										</div>
+									</div>
+
+									<div class="col-md-12">
+										<hr />
+										<div class="form-group">
+											<label>{{ '#Sport' | dgTranslate }}</label>
+											<input placeholder="Musculation" [class.is-invalid]="errors.sport" (input)="errors.sport=false" [(ngModel)]="model.sport" type="text" autocomplete="new-password" class="form-control">
+										</div>
+										<hr />
+									</div>
+
+									<div class="col-md-12">
+										<div class="form-group">
+											<label>{{ '#Units' | dgTranslate }}</label><br />
+											<div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]="model.body_units">
+											  <label ngbButtonLabel class="btn-light">
+											    <input ngbButton type="radio" [value]="1"> Imperial / US
+											  </label>
+											  <label ngbButtonLabel class="btn-light">
+											    <input ngbButton type="radio" [value]="2"> Metric system
+											  </label>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6" *ngIf="model.body_units==2">
+										<label>{{ '#Height' | dgTranslate }}</label>
+										<div class="input-group">
+											<input placeholder="170" [class.is-invalid]="errors.body_height_cm" (input)="errors.body_height_cm=false" [(ngModel)]="model.body_height_cm" type="text" autocomplete="new-password" class="form-control">
+											<div class="input-group-append">
+										    <span class="input-group-text">cm</span>
+										  </div>
+										</div>
+									</div>
+									<div class="col-md-6" *ngIf="model.body_units==2">
+										<label>{{ '#Weight' | dgTranslate }}</label>
+										<div class="input-group">
+											<input placeholder="70" [class.is-invalid]="errors.body_weight_kg" (input)="errors.body_weight_kg=false" [(ngModel)]="model.body_weight_kg" type="text" autocomplete="new-password" class="form-control">
+											<div class="input-group-append">
+										    <span class="input-group-text">kg</span>
+										  </div>
+										</div>
+									</div>
+									<div class="col-md-6" *ngIf="model.body_units==1">
+										<label>{{ '#Height' | dgTranslate }}</label>
+										<div class="input-group">
+											<input placeholder="5" [class.is-invalid]="errors.body_height_ft" (input)="errors.body_height_ft=false" [(ngModel)]="model.body_height_ft" type="text" autocomplete="new-password" class="form-control">
+											<div class="input-group-append">
+										    <span class="input-group-text">ft</span>
+										  </div>
+										</div>
+									</div>
+									<div class="col-md-6" *ngIf="model.body_units==1">
+										<label>{{ '#Height' | dgTranslate }} </label>
+										<div class="input-group">
+											<input placeholder="5" [class.is-invalid]="errors.body_height_in" (input)="errors.body_height_in=false" [(ngModel)]="model.body_height_in" type="text" autocomplete="new-password" class="form-control">
+											<div class="input-group-append">
+										    <span class="input-group-text">in</span>
+										  </div>
+										</div>
+									</div>
+
+									<div class="col-md-6" *ngIf="model.body_units==1">
+										<label>{{ '#Weight' | dgTranslate }}</label>
+										<div class="input-group">
+											<input placeholder="165" [class.is-invalid]="errors.body_weight_lbs" (input)="errors.body_weight_lbs=false" [(ngModel)]="model.body_weight_lbs" type="text" autocomplete="new-password" class="form-control">
+											<div class="input-group-append">
+										    <span class="input-group-text">lbs</span>
+										  </div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group no-margin">
+											<button type="submit" (click)="save()" [disabled]="isLoading" class="btn btn-primary btn-block">
+												{{ '#Signup' | dgTranslate }}
+											</button>
+										</div>
+									</div>
+
+									<div class="col-md-12">
+										<div class="form-group text-center mt-3">
+											{{ "#By clicking on 'Signup', you accept the terms of use" | dgTranslate }}
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="footer">

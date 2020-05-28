@@ -34,21 +34,21 @@ export class LoginComponent extends FormCore implements OnInit {
     this.currentLanguage = this.doorgetsTranslateService.getConfig().current
 
     if (this.loginService.isLogged()) {
-      this.router.navigateByUrl('/admin');
+      this.router.navigateByUrl(this.loginService.getUserPath());
     }
 
     this._initForm();
   }
 
   submitLogin() {
-    this.isLoading = true;
+    this.startLoading();
 
     this.loginForm.controls.email.markAsTouched();
     this.loginForm.controls.password.markAsTouched();
 
     if (this.loginForm.invalid) {
       console.log('Invalid form')
-      return this.isLoading = false;
+      return;
     }
 
     this.loginService
@@ -56,13 +56,12 @@ export class LoginComponent extends FormCore implements OnInit {
       .subscribe((response: any)=> {
           this.loginService.setUserToken(response.token);
           this.loginService.setUserRefreshToken(response.refresh_token);
-          this.router.navigateByUrl('/admin');
-          this.isLoading = false;
+          this.loginService.setUserType(response.role_id);
+
+          this.router.navigateByUrl(this.loginService.getUserPath());
         }, (error) => {
           this.setErrors(error);
-          this.isLoading = false;
-
-          localStorage.removeItem('dg_refresh_token');
+          this.loginService.clear();
         });
 
       return false;

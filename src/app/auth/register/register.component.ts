@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
-import { RegisterService } from './register.service';
-import { FormCore } from '../../_/core/form.core';
-
+import { ToastrService } from 'ngx-toastr';
+import { ReCaptchaV3Service } from 'ngx-captcha';
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { DoorgetsTranslateService } from 'doorgets-ng-translate';
 import { Observable } from 'rxjs/Observable';
+
+import { webConfig } from '../../web-config';
+import { FormCore } from '../../_/core/form.core';
+
+import { RegisterService } from './register.service';
 
 @Component({
   selector: 'app-register',
@@ -14,15 +18,49 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent extends FormCore implements OnInit {
+  siteKey: string = '6LfTXvwUAAAAAE-jlWk3OAvIkAxucJ-neT4bCdYM';
+  recaptcha: any;
+  token: any;
+
+  baseColor = '#FFF';
+  strength: number = 0;
+
+  barLabel: string = "Password strength:";
+  myColors = ['#DD2C00', '#FF6D00', '#FFD600', '#AEEA00', '#00C853'];
 
   currentLanguage: string;
   regexp = new RegExp(/([A-Z0-9._%+-]+@([A-Z0-9.-]+\.[A-Z]{2,4}))/i);
 
   signupForm: FormGroup;
 
+  birthdayModel: NgbDateStruct = {
+    day: 1,
+    month: 1,
+    year: 2002
+  };
+
+  model: any = {
+    data: {},
+    role_id: 0,
+    timezone: '+00:00',
+    gender: 1,
+    body_units: 1,
+  };
+
+  subjectRoles;
+  roles: any[] = [];
+
+  errors: any = {}
+  errorsMessage: string = '';
+
+  timezone: any[] = webConfig.timezone;
+
   constructor(
     private router: Router,
+    private calendar: NgbCalendar,
+    private toastrService: ToastrService,
     private signupService: RegisterService,
+    private reCaptchaV3Service: ReCaptchaV3Service,
     private doorgetsTranslateService: DoorgetsTranslateService) {
     super();
   }
@@ -31,35 +69,38 @@ export class RegisterComponent extends FormCore implements OnInit {
     this.currentLanguage = this.doorgetsTranslateService.getConfig().current
 
     if (this.signupService.isLogged()) {
-      this.router.navigateByUrl('/account');
+      this.router.navigateByUrl(this.signupService.getUserPath());
     }
 
-    this._initForm();
+    // this.reCaptchaV3Service.execute(this.siteKey, 'homepage', (token) => {
+    //   console.log('This is your token: ', token);
+    //   this.token = token;
+    // }, {
+    //   useGlobalDomain: false
+    // });
   }
 
-  submitSignup() {
-    this.isLoading = true;
+  save() {
+    this.startLoading();
 
-    this.signupForm.controls.email.markAsTouched();
-    this.signupForm.controls.password.markAsTouched();
+    this.model.birthday = `${this.birthdayModel.year}-${this.birthdayModel.month}-${this.birthdayModel.day}`;
 
-    if (this.signupForm.invalid) {
-      return this.isLoading = false;
-    }
+    this.signupService.signup(this.model).subscribe((data: any) => {
+      if (data.errors) {
+        this.errors = data.errors;
+        this.toastrService.error(data.message || 'An error has occurred');
+      } else {
+        this.signupService.setUserToken(data.token);
+        this.signupService.setUserRefreshToken(data.refresh_token);
+        this.signupService.setUserType(this.model.role_id);
 
-    this.signupService
-      .signup(this.signupForm.controls.email.value, this.signupForm.controls.password.value)
-      .subscribe((response: any)=> {
-          this.signupService.setUserToken(response.token);
-          this.signupService.setUserRefreshToken(response.refresh_token);
-          this.router.navigateByUrl('/account');
-          this.isLoading = false;
-        }, (error) => {
-          this._setErrors(error);
-          this.isLoading = false;
-        });
+        this.router.navigateByUrl(this.signupService.getUserPath());
+      }
+    });
+  }
 
-      return false;
+  handleSuccessCaptcha(e) {
+    console.log('handleSuccessCaptcha', e);
   }
 
   changeLanguage(lang) {
@@ -68,22 +109,8 @@ export class RegisterComponent extends FormCore implements OnInit {
     }
   }
 
-  private _setErrors(error) {
-    console.log('error', error);
-    if (error && error.code === 401) {
-      this._initForm();
-
-      this.signupService.clear();
-
-      this.errorMessage = 'Invalid credential, please try again.';
-      this.showErrorMessage();
-    }
-  }
-
-  private _initForm() {
-    this.signupForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required])
-    });
+  strengthChanged(strength: number) {
+    console.log('strength', strength);
+    this.strength = strength;
   }
 }

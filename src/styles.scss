@@ -5,11 +5,11 @@ body {
 }
 
 .form-control {
-	border: 0;
-	background-color: #FFFFFF;
-	margin-left: 10px;
-	width: 94%;
-	color: #adb5bd !important;
+  border-radius: 5px;
+  border: solid 1px #E1E1E1;
+  background-color: #FFFFFF;
+  margin-left: 10px;
+  color: #999 !important;
 }
 
 .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -170,19 +170,23 @@ h4 {
 }
 
 select {
-    width: 268px;
-    padding: 5px;
-    font-size: 16px;
-    line-height: 1;
-    border: 0;
-    border-radius: 5px;
-    height: 34px;
-    background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat right #F1F1F1;
-    -webkit-appearance: none;
+  width: 100%;
+  padding: 5px 10px 5px 5px;
+  font-size: 16px;
+  line-height: 1;
+  border: 0;
+  border-radius: 5px;
+  height: 34px;
+  color: #999 !important;
+  // background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat right #FFFFFF;
+  // background-position: 92% 51%;
+  -webkit-appearance: none;
+  outline: none;
 }
 
 
-
+select:focus,
+select.form-control:focus,
 textarea:focus,
 textarea.form-control:focus,
 input.form-control:focus,
@@ -191,9 +195,117 @@ input[type=password]:focus,
 input[type=email]:focus,
 input[type=number]:focus,
 [type=text].form-control:focus,
+[type=text].box-body-workout-inputs:focus,
+[type=text].box-body-exercice-inputs:focus,
 [type=password].form-control:focus,
 [type=email].form-control:focus,
 [type=tel].form-control:focus,
 [contenteditable].form-control:focus {
+  outline: none;
   box-shadow: inset 0 -1px 0 #ddd;
 }
+
+
+/* Spinner */
+
+.spinner-ctnr {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  .spinner.colorwheel {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 100%;
+    z-index: 0;
+    // margin-top: 15%;
+    // margin-left: 45%;
+  }
+  .spinner.colorwheel::before,
+  .spinner.colorwheel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+
+  .spinner.colorwheel::after {
+    background: #F1F1F1;
+    -webkit-animation: rotate 1.5s linear reverse infinite;
+    animation: rotate 1.5s linear reverse infinite;
+    // -webkit-animation: fade 1s infinite alternate, rotate 2.5s linear reverse infinite;
+    // animation: fade 1s infinite alternate, rotate 2.5s linear reverse infinite;
+  }
+
+  .spinner .centerpiece {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    border-radius: 100%;
+    border-color: #000;
+    box-sizing: border-box;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #e2622a;
+    border-top: 12px solid #e2622a;
+    -webkit-animation: rotate 0.8s linear infinite;
+    animation: rotate 0.8s linear infinite;
+  }
+  .logo-fixed {
+    background-image: url('/assets/img/logo.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+	width: 94px;
+    height: 109px;
+    display: inline-block;
+    z-index: 100;
+    left: 0;
+    right: 0;
+    top: 15px;
+    bottom: 0;
+    margin: auto;
+    position: absolute;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .spinner-ctnr {
+    .spinner.colorwheel {
+      // margin-top: 15%;
+      // margin-left: 35%;
+    }
+  }
+}
+
+// @-webkit-keyframes fade {
+//   from { opacity: 1; }
+//   to { opacity: 0.2; }
+// }
+// @keyframes fade {
+//   from { opacity: 1; }
+//   to { opacity: 0.2; }
+// }
+
+@-webkit-keyframes rotate {
+  from { -webkit-transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); }
+}
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Spinner end */
+

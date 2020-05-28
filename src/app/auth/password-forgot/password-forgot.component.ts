@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PasswordForgotComponent implements OnInit {
 
+	isSent: boolean = true;
+
   constructor() { }
 
   ngOnInit(): void {

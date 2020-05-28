@@ -14,12 +14,25 @@ export class RegisterService {
     return this.loginService.isLoggedIn();
   }
 
-  signup(email, password) {
+  signup(model) {
     return this.loginService
-      .signup({
-        username: email,
-        password: password
-      });
+      .signup(model);
+  }
+
+  isAthlet() {
+    return this.loginService.isAthlet();
+  }
+
+  isCoach() {
+    return this.loginService.isCoach();
+  }
+
+  setUserType(typeId) {
+    this.loginService.setUserType(typeId);
+  }
+
+  getUserPath() {
+    return this.loginService.getUserPath();
   }
 
   logout() {

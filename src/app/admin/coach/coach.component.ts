@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+
+import { DOCUMENT } from '@angular/common';
+import { AuthService } from '../../_/services/http/auth.service';
 
 @Component({
   selector: 'app-coach',
@@ -7,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CoachComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+  	private authService: AuthService,
+  	@Inject(DOCUMENT) private _document) { }
 
   ngOnInit(): void {
+    this._document.body.style.background = '#FFF';
   }
 
+  logout() {
+  	this.authService.logout();
+  }
 }

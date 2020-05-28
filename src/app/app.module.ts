@@ -1,14 +1,32 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { ToastrModule } from 'ngx-toastr';
 import { NgModule } from '@angular/core';
-
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgxDnDModule } from '@swimlane/ngx-dnd';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { ChartsModule } from 'ng2-charts';
+import { DndModule } from 'ng2-dnd';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
+import { NgxCaptchaModule } from 'ngx-captcha';
+
+// import 'hammerjs';
+
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+
+import { JwtInterceptor } from './_/services/http/jwt.interceptor';
 
 import { DoorgetsTranslateModule , NgTranslate, NgTranslateAbstract } from 'doorgets-ng-translate';
 
 export function newNgTranslate(http: HttpClient) {
   return new NgTranslate(http, '../../assets/locale');
 }
+
+import { AuthGuard } from './auth.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -61,17 +79,35 @@ import { CoachAthleteCalendarComponent } from './admin/coach/coach-athlete-calen
     CoachAthleteCalendarComponent,
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
     FormsModule,
+    NgxDatatableModule,
     ReactiveFormsModule,
+    AppRoutingModule,
+    NgbModule,
+    NgxDnDModule,
+    ModalModule.forRoot(),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    AutocompleteLibModule,
+    ChartsModule,
+    CommonModule,
+    DndModule.forRoot(),
     DoorgetsTranslateModule.forRoot({
       provide: NgTranslateAbstract,
       useFactory: (newNgTranslate),
       deps: [HttpClient]
     }),
+    PasswordStrengthMeterModule,
+    NgxCaptchaModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

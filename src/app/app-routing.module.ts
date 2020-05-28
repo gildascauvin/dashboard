@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { AuthGuard } from './auth.service';
+
 import { AuthComponent } from './auth/auth.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
@@ -25,7 +27,6 @@ import { CoachAthleteProfileComponent } from './admin/coach/coach-athlete-profil
 import { CoachAthleteStatsComponent } from './admin/coach/coach-athlete-stats/coach-athlete-stats.component';
 import { CoachAthleteCalendarComponent } from './admin/coach/coach-athlete-calendar/coach-athlete-calendar.component';
 
-
 const routes: Routes = [{
     path: '',
     component: AuthComponent,
@@ -45,24 +46,26 @@ const routes: Routes = [{
 }, {
     path: 'coach',
     component: CoachComponent,
+    canActivate: [AuthGuard],
     children: [{
-      path: 'dashboard',
-      component: CoachDashboardComponent
-    },{
-      path: 'profile',
-      component: CoachAthleteProfileComponent
-    },{
-      path: 'calendar',
-      component: CoachAthleteCalendarComponent
-    },{
-      path: 'stats',
-      component: CoachAthleteStatsComponent
-    }]
+        path: 'dashboard',
+        component: CoachDashboardComponent
+      },{
+        path: 'profile',
+        component: CoachAthleteProfileComponent
+      },{
+        path: 'calendar',
+        component: CoachAthleteCalendarComponent
+      },{
+        path: 'stats',
+        component: CoachAthleteStatsComponent
+      }]
 }, {
     path: 'athlete',
     component: AthleteComponent,
+    canActivate: [AuthGuard],
     children: [{
-        path: '',
+        path: 'dashboard',
         component: AthleteDashboardComponent
     }]
 }];

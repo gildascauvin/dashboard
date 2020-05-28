@@ -23,6 +23,22 @@ export class LoginService {
     this.loginService.logout();
   }
 
+  isAthlet() {
+    return this.loginService.isAthlet();
+  }
+
+  isCoach() {
+    return this.loginService.isCoach();
+  }
+
+  setUserType(typeId) {
+    this.loginService.setUserType(typeId);
+  }
+
+  getUserPath() {
+    return this.loginService.getUserPath();
+  }
+
   setUserToken(token) {
     this.loginService.setUserToken(token)
   }

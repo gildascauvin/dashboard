@@ -55,8 +55,23 @@ export class AuthService {
 
   isLoggedIn() {
     let token: string = localStorage.getItem(config.prefixApp + 'token');
-    console.log('AuthService.isLoggedIn', token);
     return !!token;
+  }
+
+  isAthlet() {
+    return localStorage.getItem(config.prefixApp + 'user_type') == '1';
+  }
+
+  isCoach() {
+    return localStorage.getItem(config.prefixApp + 'user_type') == '3';
+  }
+
+  setUserType(typeId) {
+    localStorage.setItem(config.prefixApp + 'user_type', typeId);
+  }
+
+  getUserPath() {
+    return this.isAthlet() ? '/athlete/dashboard' : this.isCoach() ? '/coach/dashboard' : '';
   }
 
   checkForgotPassword(email) {
@@ -77,19 +92,17 @@ export class AuthService {
   }
 
   setUserToken(token) {
-    localStorage.setItem(config.prefixApp + 'token', token);
-
-    this._initUserFromToken(token);
+    token && localStorage.setItem(config.prefixApp + 'token', token);
   }
 
   setUserRefreshToken(refreshToken) {
-    localStorage.setItem(config.prefixApp + 'refresh_token', refreshToken);
+    refreshToken && localStorage.setItem(config.prefixApp + 'refresh_token', refreshToken);
   }
 
   resetUserProfile() {
     let token = localStorage.getItem(config.prefixApp + 'token');
 
-    this._initUserFromToken(token)
+    // this._initUserFromToken(token)
   }
 
   private _initUserFromToken(token) {

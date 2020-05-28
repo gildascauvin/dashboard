@@ -11,4 +11,14 @@ export class FormCore {
   hideErrorMessage() {
     this.isErrorMessage = false;
   }
+
+  startLoading() {
+  	if (!this.isLoading) {
+  		this.isLoading = true;
+	  	let timer = setTimeout(() => {
+	  		this.isLoading = false;
+	  		clearTimeout(timer);
+	  	}, 2000);
+  	}
+  }
 }
