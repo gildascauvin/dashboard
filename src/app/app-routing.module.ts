@@ -26,6 +26,8 @@ import { CoachNotificationsComponent } from './admin/coach/coach-notifications/c
 import { CoachAthleteProfileComponent } from './admin/coach/coach-athlete-profile/coach-athlete-profile.component';
 import { CoachAthleteStatsComponent } from './admin/coach/coach-athlete-stats/coach-athlete-stats.component';
 import { CoachAthleteCalendarComponent } from './admin/coach/coach-athlete-calendar/coach-athlete-calendar.component';
+import { ConfirmAccountComponent } from './auth/confirm-account/confirm-account.component';
+import { AccountNotConfirmedComponent } from './auth/account-not-confirmed/account-not-confirmed.component';
 
 const routes: Routes = [{
     path: '',
@@ -40,8 +42,14 @@ const routes: Routes = [{
         path: 'forgot-password',
         component: PasswordForgotComponent
     },{
-        path: 'reset-password',
+        path: 'account-not-confirmed/:email',
+        component: AccountNotConfirmedComponent
+    },{
+        path: 'reset-password/:token/:email',
         component: PasswordResetComponent
+    },{
+        path: 'confirm-account/:token/:email',
+        component: ConfirmAccountComponent
     }]
 }, {
     path: 'coach',

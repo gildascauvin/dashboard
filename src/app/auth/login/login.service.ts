@@ -6,7 +6,6 @@ import { AuthService } from '../../_/services/http/auth.service';
   providedIn: 'root'
 })
 export class LoginService {
-
   constructor(
     private loginService: AuthService) {}
 

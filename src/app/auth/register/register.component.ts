@@ -40,6 +40,10 @@ export class RegisterComponent extends FormCore implements OnInit {
   };
 
   model: any = {
+    // lastname: 'Rquiba',
+    // firstname: 'Mounir',
+    // email: 'mounir.rquiba@gmail.com',
+    // password: 'Mounir!123',
     data: {},
     role_id: 0,
     timezone: '+00:00',
@@ -94,7 +98,7 @@ export class RegisterComponent extends FormCore implements OnInit {
         this.signupService.setUserRefreshToken(data.refresh_token);
         this.signupService.setUserType(this.model.role_id);
 
-        this.router.navigateByUrl(this.signupService.getUserPath());
+        this.router.navigateByUrl('account-not-confirmed/' + this.model.email);
       }
     });
   }

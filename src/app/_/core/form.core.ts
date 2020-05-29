@@ -18,7 +18,7 @@ export class FormCore {
 	  	let timer = setTimeout(() => {
 	  		this.isLoading = false;
 	  		clearTimeout(timer);
-	  	}, 2000);
+	  	}, 3000);
   	}
   }
 }

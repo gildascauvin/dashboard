@@ -1,0 +1,38 @@
+<div class="container-auth">
+	<div class="my-login-page">
+		<section class="h-100">
+			<div class="container h-100">
+				<div class="row justify-content-md-center h-100">
+					<div class="card-wrapper">
+						<div class="brand">
+							<img class="logo-img-brand" src="/assets/img/logo.png">
+						</div>
+						<div class="card fat">
+							<div class="card-body">
+								<h4 class="card-title">
+									{{ '#Account confirmation' | dgTranslate }}
+								</h4>
+								<div class="row">
+									<div *ngIf="isLoading && !isValid" class="col-md-12 alert alert-light mt-4 text-center">{{ '#Confirmation in progress...' | dgTranslate }}</div>
+									<div *ngIf="!isLoading && isValid" class="col-md-12 alert alert-success mt-4 text-center">{{ '#Thank You, your account is now confirmed.' | dgTranslate }}</div>
+									<div *ngIf="!isLoading && !isValid" class=" col-md-12 alert alert-danger mt-4 text-center">{{ '#Token expired.' | dgTranslate }}</div>
+								</div>
+
+							</div>
+						</div>
+						<div class="footer">
+							<div class="row">
+								<div class="col-md-12 mb-4 text-bottom-link">
+									<a [routerLink]="['/']">{{ '#Signin' | dgTranslate }}</a>
+								</div>
+								<div class="col-md-12 mt-4">
+									{{ '#Copyright' | dgTranslate }} &copy; ThePerfClub
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>

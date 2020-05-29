@@ -7,10 +7,7 @@ import { UserService } from '../model/user.service'
 
 import { webConfig } from '../../../web-config';
 
-let config = {
-  baseApi: webConfig.baseApi + 'api/',
-  prefixApp: 'dg_'
-};
+let config = webConfig;
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +32,24 @@ export class AuthService {
   auth(data) {
     return this.httpService.auth(data);
   }
+
+  confirmAccount(token, email) {
+    return this.httpService.confirmAccount(token, email);
+  }
+
+  forgotPassword(email) {
+    return this.httpService.forgotPassword(email);
+  }
+
+  resetPassword(token, email, password) {
+    return this.httpService.resetPassword(token, email, password);
+  }
+
+  accountNotConfirmed(email) {
+    return this.httpService.accountNotConfirmed(email);
+  }
+
+
 
   login(email, password) {
     return this.auth({

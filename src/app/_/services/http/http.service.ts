@@ -20,11 +20,13 @@ export class HttpService {
   baseApi: string = config.baseApi + '';
 
   baseAuth: string = config.base + 'login_check';
+  baseConfirmAccount: string = config.base + 'confirm-account';
+  baseNotConfirmAccount: string = config.base + 'resend-confirm-account';
   baseSingup: string = config.base + 'register';
   baseRefreshToken: string = config.base + 'token-refresh';
 
-  baseForgotPassword: string = config.baseApi;
-  baseResetPassword: string = config.baseApi;
+  baseForgotPassword: string = config.base + 'forgot-password';
+  baseResetPassword: string = config.base + 'reset-password';
 
   private _hasHeaders: boolean = false;
 
@@ -64,6 +66,26 @@ export class HttpService {
   auth(data) {
     console.log('data', data);
     return this.http.post(this.baseAuth, data);
+  }
+
+  confirmAccount(token, email) {
+    return this.http.get(this.baseConfirmAccount + '/' + token + '/'+ email);
+  }
+
+  accountNotConfirmed(email) {
+    return this.http.get(this.baseNotConfirmAccount + '/'+ email);
+  }
+
+  forgotPassword(email) {
+    return this.http.post(this.baseForgotPassword, {
+      email: email,
+    });
+  }
+
+  resetPassword(token, email, password) {
+    return this.http.post(this.baseResetPassword + '/' + token + '/'+ email, {
+      password: password,
+    });
   }
 
   signup(data) {

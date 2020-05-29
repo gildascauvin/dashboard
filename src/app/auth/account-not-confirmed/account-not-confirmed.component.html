@@ -10,22 +10,17 @@
 						<div class="card fat">
 							<div class="card-body">
 								<h4 class="card-title">
-									{{ '#Forgot Password' | dgTranslate }}
-									<p>{{ '#Enter your email and we will send you a link to reset your password' | dgTranslate }}</p>
+									{{ '#Final step!' | dgTranslate }}
+									<p class="text-center">{{ '#Activate your account by clicking on the link in the email you should have received.' | dgTranslate }}</p>
 								</h4>
 								<div class="row">
-									<div class="form-group col-md-12" *ngIf="!isSent">
-										<label for="email">{{ '#Email' | dgTranslate }}</label>
-										<input id="email" [class.is-invalid]="errors.email" (input)="errors.email=false" type="email" [(ngModel)]="email" placeholder="example@gmail.com" class="form-control" autofocus>
-
-									</div>
-
-									<div class="form-group  col-md-12" >
+									<div class="form-group  col-md-12 text-center" >
+										<p>{{ '#If you didn’t received it, please click on the button below.' | dgTranslate }}</p>
 										<button (click)="check()" [disabled]="isLoading" type="submit" class="btn btn-primary btn-block" *ngIf="!isSent">
-											{{ '#Reset Password' | dgTranslate }}
+											{{ '#Send the mail again' | dgTranslate }}
 										</button>
 
-										<div *ngIf="isSent" class="alert alert-success mt-4 text-center">{{ '#An email with a password reset link has just been sent to you.' | dgTranslate }}</div>
+										<div *ngIf="isSent" class="alert alert-success mt-4 text-center">{{ '#An email with a confirmation link has just been sent to you.' | dgTranslate }}</div>
 									</div>
 								</div>
 
@@ -33,9 +28,6 @@
 						</div>
 						<div class="footer">
 							<div class="row">
-								<div class="col-md-12 mb-4 text-bottom-link">
-									<a [routerLink]="['/']">{{ '#Signin' | dgTranslate }}</a>
-								</div>
 								<div class="col-md-12 mt-4">
 									{{ '#Copyright' | dgTranslate }} &copy; ThePerfClub
 								</div>

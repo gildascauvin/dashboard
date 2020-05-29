@@ -273,5 +273,14 @@
   "#Create a workout": "Create a workout",
   "#Planning": "Planning",
   "#Statistics": "Statistics",
-  "#Logout": "Logout"
+  "#Logout": "Logout",
+  "#Final step!": "Final step!",
+  "#Activate your account by clicking on the link in the email you should have received.": "Activate your account by clicking on the link in the email you should have received.",
+  "#If you didn’t received it, please click on the button below.": "If you didn’t received it, please click on the button below.",
+  "#An email with a confirmation link has just been sent to you.": "An email with a confirmation link has just been sent to you.",
+  "#Send the mail again": "Send the mail again",
+  "#Account confirmation": "Account confirmation",
+  "#Confirmation in progress...": "Confirmation in progress...",
+  "#Thank You, your account is now confirmed.": "Thank You, your account is now confirmed.",
+  "#Token expired.": "Token expired."
 }

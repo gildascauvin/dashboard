@@ -54,11 +54,18 @@ export class LoginComponent extends FormCore implements OnInit {
     this.loginService
       .login(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
       .subscribe((response: any)=> {
-          this.loginService.setUserToken(response.token);
-          this.loginService.setUserRefreshToken(response.refresh_token);
-          this.loginService.setUserType(response.role_id);
+          if (response.status == 2) {
+            this.loginService.setUserToken(response.token);
+            this.loginService.setUserRefreshToken(response.refresh_token);
+            this.loginService.setUserType(response.role_id);
 
-          this.router.navigateByUrl(this.loginService.getUserPath());
+            this.router.navigateByUrl(this.loginService.getUserPath());
+          }
+
+          if (response.status == 1) {
+            this.router.navigateByUrl('/account-not-confirmed/' + response.email)
+          }
+
         }, (error) => {
           this.setErrors(error);
           this.loginService.clear();

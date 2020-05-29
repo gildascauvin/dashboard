@@ -53,6 +53,8 @@ import { CoachNotificationsComponent } from './admin/coach/coach-notifications/c
 import { CoachAthleteProfileComponent } from './admin/coach/coach-athlete-profile/coach-athlete-profile.component';
 import { CoachAthleteStatsComponent } from './admin/coach/coach-athlete-stats/coach-athlete-stats.component';
 import { CoachAthleteCalendarComponent } from './admin/coach/coach-athlete-calendar/coach-athlete-calendar.component';
+import { ConfirmAccountComponent } from './auth/confirm-account/confirm-account.component';
+import { AccountNotConfirmedComponent } from './auth/account-not-confirmed/account-not-confirmed.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +79,8 @@ import { CoachAthleteCalendarComponent } from './admin/coach/coach-athlete-calen
     CoachAthleteProfileComponent,
     CoachAthleteStatsComponent,
     CoachAthleteCalendarComponent,
+    ConfirmAccountComponent,
+    AccountNotConfirmedComponent,
   ],
   imports: [
     FormsModule,
