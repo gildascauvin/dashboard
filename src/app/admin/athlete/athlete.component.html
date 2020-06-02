@@ -11,12 +11,11 @@
             	<div class="content-header">
 		            <div class="dropdown profile-menu">
 					        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					          Mounir R'Quiba
+					          {{ user.data.firstname }} {{ user.data.lastname }}
 					        </a>
 					        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 					          <a class="dropdown-item" href="#">{{ '#Dashboard' | dgTranslate }}</a>
 					          <a class="dropdown-item" href="#">{{ '#Programs' | dgTranslate }}</a>
-					          <a class="dropdown-item" href="#">{{ '#Athlets' | dgTranslate }}</a>
 					          <div class="dropdown-divider"></div>
 					          <a class="dropdown-item" href="#">{{ '#Settings' | dgTranslate }}</a>
 					          <a class="dropdown-item" href="#">{{ '#Documentation' | dgTranslate }}</a>
@@ -31,16 +30,28 @@
 	            	<button class="btn btn-primary float-right mr-4"><i class="fa fa-plus"></i> {{ '#Create a workout' | dgTranslate }}</button>
 	            	<ul class="navbar-nav flex-row mb-md-1 mt-md-0 mb-3 mt-2">
 	                <li class="nav-item">
-	                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/athlete', 'dashboard']">{{ '#Dashboard' | dgTranslate }}</a>
+	                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/athlete', 'dashboard']">
+	                    	<i class="fa fa-user-circle-o mr-2"></i>
+	                    	{{ '#Overview' | dgTranslate }}
+	                    </a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/athlete', 'profile']">{{ '#Profile' | dgTranslate }}</a>
+	                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/athlete', 'profile']">
+	                    	<i class="fa fa-heartbeat mr-1"></i>
+	                    	{{ '#Profile' | dgTranslate }}
+	                    </a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/athlete', 'calendar']">{{ '#Planning' | dgTranslate }}</a>
+	                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/athlete', 'calendar']">
+	                    	<i class="fa fa-calendar-o mr-1"></i>
+	                    	{{ '#Planning' | dgTranslate }}
+	                    </a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/athlete', 'stats']">{{ '#Statistics' | dgTranslate }}</a>
+	                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/athlete', 'stats']">
+	                    	<i class="fa fa-bar-chart mr-1"></i>
+	                    	{{ '#Statistics' | dgTranslate }}
+	                    </a>
 	                </li>
 		            </ul>
 	            </div>
@@ -49,5 +60,6 @@
     </div>
 </nav>
 <div class="container-fluid body-content-sections">
+	<pre>{{user|json}}</pre>
     <router-outlet></router-outlet>
 </div>

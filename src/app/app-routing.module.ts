@@ -75,6 +75,15 @@ const routes: Routes = [{
     children: [{
         path: 'dashboard',
         component: AthleteDashboardComponent
+      },{
+        path: 'profile',
+        component: AthleteProfileComponent
+      },{
+        path: 'calendar',
+        component: AthleteCalendarComponent
+      },{
+        path: 'stats',
+        component: AthleteStatsComponent
     }]
 }];
 

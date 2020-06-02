@@ -1,0 +1,67 @@
+<div class="modal-header">
+  <h4 *ngIf="model.step===1" class="modal-title pull-left">{{ '#Select type' | dgTranslate }}</h4>
+  <h4 *ngIf="model.step===2" class="modal-title pull-left">{{ '#Exercice' | dgTranslate }}: {{ model.type.name }}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" [disabled]="isLoading" (click)="cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<div class="row" *ngIf="model.step===1">
+		<div class="col-md-12 text-center">
+			<button
+				*ngFor="let exerciceType of configExercices.types"
+				(click)="selectType(exerciceType)"
+				class="btn ml-4 mr-4 exercice-type-select">{{ exerciceType.name }}</button>
+		</div>
+	</div>
+	<div class="row" *ngIf="model.step===2">
+		<div class="col-md-12 text-center">
+		</div>
+		<div class="inputs-exercice-type" [ngSwitch]="model.type.id">
+		   <tpc-inputs-exercice-type-simple [model]="model" *ngSwitchCase="1"></tpc-inputs-exercice-type-simple>
+		   <tpc-inputs-exercice-type-complex [model]="model" *ngSwitchCase="2"></tpc-inputs-exercice-type-complex>
+		   <tpc-inputs-exercice-type-amrap [model]="model" *ngSwitchCase="3"></tpc-inputs-exercice-type-amrap>
+		   <tpc-inputs-exercice-type-time [model]="model" *ngSwitchCase="4"></tpc-inputs-exercice-type-time>
+		   <tpc-inputs-exercice-type-emom [model]="model" *ngSwitchCase="5"></tpc-inputs-exercice-type-emom>
+		   <tpc-inputs-exercice-type-open [model]="model" *ngSwitchCase="6"></tpc-inputs-exercice-type-open>
+		   <tpc-inputs-exercice-type-cardio [model]="model" *ngSwitchCase="7"></tpc-inputs-exercice-type-cardio>
+		   <tpc-inputs-exercice-type-custom [model]="model" *ngSwitchCase="8"></tpc-inputs-exercice-type-custom>
+		</div>
+
+		<div class="col-md-6" *ngIf="isPlanning">
+			<label>{{ '#Date' | dgTranslate }}</label>
+			<div class="input-group">
+	      <input class="form-control" [class.is-invalid]="errors.started_at" (input)="errors.started_at=false" placeholder="yyyy-mm-dd"
+	             name="dp" [(ngModel)]="startedAtModel" ngbDatepicker #d="ngbDatepicker">
+	      <div class="input-group-append">
+	        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="fa fa-calendar"></i></button>
+	      </div>
+	    </div>
+		</div>
+
+		<div class="col-md-12 mt-2">
+			<div class="form-group">
+				<label>{{ '#Notes' | dgTranslate }}</label>
+				<textarea  placeholder="My comments" [(ngModel)]="model.description" class="form-control"></textarea>
+			</div>
+		</div>
+
+		<div class="col-md-12">
+			<div class="form-group">
+				<label>{{ '#Video link' | dgTranslate }}</label>
+				<input  placeholder="https://youtube.com/" type="text" [(ngModel)]="model.video_link" class="form-control">
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer" *ngIf="model.step===2">
+	<button class="btn btn-dark btn-back-type" (click)="model.step=1"><i class="fa fa-arrow-left"></i> {{ '#Change type' | dgTranslate }}</button>
+
+  <button class="btn btn-light mr-4" [disabled]="isLoading" (click)="cancel()">
+		<i class="fa fa-close"></i> {{ '#Cancel' | dgTranslate }}
+	</button>
+	<button class="btn btn-primary" [disabled]="isLoading" (click)="save()">
+		<i class="fa fa-trash"></i>
+		{{ '#Save' | dgTranslate }}
+	</button>
+</div>

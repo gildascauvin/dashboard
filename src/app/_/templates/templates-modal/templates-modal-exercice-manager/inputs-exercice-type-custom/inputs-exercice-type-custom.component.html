@@ -1,0 +1,26 @@
+<div class="col-md-12">
+	<div class="form-group">
+		<label>{{ '#Name' | dgTranslate }}</label>
+		<input placeholder="Workout name + Date" [(ngModel)]="model.name" type="text" autocomplete="off" class="form-control">
+	</div>
+</div>
+
+<div class="col-md-12">
+	<div class="form-group">
+		<label>{{ '#Scoring' | dgTranslate }}</label>
+		<div class="form-inline">
+			<div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]="model.custom_scoring">
+			  <label ngbButtonLabel class="btn-light" *ngFor="let exerciceScoring of configExercices.custom" >
+			    <input ngbButton type="radio" [value]="exerciceScoring.id"> {{ exerciceScoring.name }}
+			  </label>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-12">
+	<div class="form-group">
+		<label>{{ '#Workout Plan' | dgTranslate }}</label>
+		<textarea [(ngModel)]="model.custom" class="form-control workout-custom"></textarea>
+	</div>
+</div>

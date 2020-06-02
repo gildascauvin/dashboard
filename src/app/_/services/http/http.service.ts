@@ -10,23 +10,21 @@ import 'rxjs/add/operator/toPromise';
 
 import { webConfig } from '../../../web-config';
 
-let config = webConfig;
-
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  baseApi: string = config.baseApi + '';
+  baseApi: string = webConfig.baseApi + '';
 
-  baseAuth: string = config.base + 'login_check';
-  baseConfirmAccount: string = config.base + 'confirm-account';
-  baseNotConfirmAccount: string = config.base + 'resend-confirm-account';
-  baseSingup: string = config.base + 'register';
-  baseRefreshToken: string = config.base + 'token-refresh';
+  baseAuth: string = webConfig.base + 'login_check';
+  baseConfirmAccount: string = webConfig.base + 'confirm-account';
+  baseNotConfirmAccount: string = webConfig.base + 'resend-confirm-account';
+  baseSingup: string = webConfig.base + 'register';
+  baseRefreshToken: string = webConfig.base + 'token-refresh';
 
-  baseForgotPassword: string = config.base + 'forgot-password';
-  baseResetPassword: string = config.base + 'reset-password';
+  baseForgotPassword: string = webConfig.base + 'forgot-password';
+  baseResetPassword: string = webConfig.base + 'reset-password';
 
   private _hasHeaders: boolean = false;
 
@@ -93,8 +91,7 @@ export class HttpService {
   }
 
   refreshToken() {
-    let refreshToken = localStorage.getItem('dg_refresh_token');
-    console.log('refreshToken', refreshToken);
+    let refreshToken = localStorage.getItem(webConfig.prefixApp + 'refresh_token');
     if (!refreshToken) {
       return Observable.of([]);
     }

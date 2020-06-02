@@ -49,8 +49,6 @@ export class AuthService {
     return this.httpService.accountNotConfirmed(email);
   }
 
-
-
   login(email, password) {
     return this.auth({
       // "grant_type": "password",
@@ -81,8 +79,24 @@ export class AuthService {
     return localStorage.getItem(config.prefixApp + 'user_type') == '3';
   }
 
+  getUserData() {
+    let user: string = localStorage.getItem(webConfig.prefixApp + 'user');
+    return  !!user ? JSON.parse(user) : {
+      data: {},
+      role: {}
+    };
+  }
+
+  getUserInfos(relaod?) {
+    return this.userService.getUserInfos(relaod);
+  }
+
   setUserType(typeId) {
     localStorage.setItem(config.prefixApp + 'user_type', typeId);
+  }
+
+  setUserId(userId) {
+    localStorage.setItem(config.prefixApp + 'user_id', userId);
   }
 
   getUserPath() {
@@ -102,12 +116,18 @@ export class AuthService {
 
     localStorage.removeItem(config.prefixApp + 'token');
     localStorage.removeItem(config.prefixApp + 'user');
+    localStorage.removeItem(config.prefixApp + 'user_id');
+    localStorage.removeItem(config.prefixApp + 'type_id');
+    localStorage.removeItem(config.prefixApp + 'refresh_token');
 
     this.router.navigateByUrl(redirectTo);
   }
 
   setUserToken(token) {
-    token && localStorage.setItem(config.prefixApp + 'token', token);
+    if (token) {
+      localStorage.setItem(config.prefixApp + 'token', token);
+      this._initUserFromToken();
+    }
   }
 
   setUserRefreshToken(refreshToken) {
@@ -120,7 +140,7 @@ export class AuthService {
     // this._initUserFromToken(token)
   }
 
-  private _initUserFromToken(token) {
+  private _initUserFromToken() {
     this.httpService
       .get('user').subscribe((userInfos) => {
         this.userService.initUserInfos(userInfos);

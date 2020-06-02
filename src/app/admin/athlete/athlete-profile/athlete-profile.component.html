@@ -1,1 +1,21 @@
-<p>athlete-profile works!</p>
+<div class="row profile-container">
+	<div class="col-md-6 profile-left-bar">
+		<div class="profile-form">
+			<div class="profile-form-title">Your information</div>
+			<div class="profile-form-content"></div>
+		</div>
+	</div>
+	<div class="col-md-6 profile-right-bar">
+		<div class="profile-mrv">
+			<div class="profile-mrv-title">Your readiness level</div>
+			<div class="profile-mrv-content">
+				<div class="mrv-score">
+					<div class="mrv-score-icon"><i class="fa fa-heartbeat"></i></div>
+					<div class="mrv-score-number">8/10</div>
+					<div class="mrv-score-label">{{ '#Score MRV' | dgTranslate }}</div>
+				</div>
+				<p>{{ '#Hint to guide the volume level. A strong note indicates that you can have a high volume level. This index is also useful for comparing multiple athletes, and scheduling them accordingly.' | dgTranslate}}
+			</div>
+		</div>
+	</div>
+</div>

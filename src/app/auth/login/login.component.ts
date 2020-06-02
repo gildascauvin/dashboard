@@ -58,6 +58,7 @@ export class LoginComponent extends FormCore implements OnInit {
             this.loginService.setUserToken(response.token);
             this.loginService.setUserRefreshToken(response.refresh_token);
             this.loginService.setUserType(response.role_id);
+            this.loginService.setUserId(response.user_id);
 
             this.router.navigateByUrl(this.loginService.getUserPath());
           }

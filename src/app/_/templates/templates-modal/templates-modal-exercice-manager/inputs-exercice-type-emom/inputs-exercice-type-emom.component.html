@@ -1,0 +1,71 @@
+<div class="col-md-12">
+	<div class="form-group">
+		<label>{{ '#Search movement' | dgTranslate }}</label>
+		<tpc-input-autocomplete
+			[data]="movements"
+			type="workout"
+			(handleOnChangeSearch)="onChangeSearch($event)"
+			(onSelectedItem)="onSelectedItem($event)"></tpc-input-autocomplete>
+	</div>
+</div>
+
+<div class="col-md-12 mb-2" *ngIf="model.movements.length">
+	<label>{{ '#Movements' | dgTranslate }}</label>
+	<ul class="list-group">
+		<li *ngFor="let movement of model.movements; let movementIndex=index;" class="list-group-item">
+			<div class="row">
+				<div class="col">
+					<input placeholder="1" type="number" [(ngModel)]="movement.quantity" class="form-control">
+				</div>
+				<div class="col">{{ movement.name }}</div>
+				<div class="col">
+					<input placeholder="130" type="number" [(ngModel)]="movement.value" class="form-control">
+				</div>
+				<div class="col">
+					<select [(ngModel)]="movement.unit" class="form-control">
+						<option [value]="1">lbs</option>
+						<option [value]="2">kg</option>
+						<option [value]="3">%</option>
+					</select>
+				</div>
+				<div class="col text-right">
+					<button class="btn" (click)="removeMovement(movementIndex)"><i class="fa fa-close"></i></button>
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
+
+<div class="col-md-12">
+	<div class="form-group">
+		<label>{{ '#Scoring' | dgTranslate }}</label>
+		<div class="form-inline">
+			<div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]="model.emom_scoring">
+			  <label ngbButtonLabel class="btn-light" *ngFor="let exerciceScoring of configExercices.emom" >
+			    <input ngbButton type="radio" [value]="exerciceScoring.id"> {{ exerciceScoring.name }}
+			  </label>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-12">
+	<label>{{ '#Duration/Interval' | dgTranslate }}</label>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-inline">
+				<input type="text" [(ngModel)]="model.emom_duration" class="form-control emom-interval-inputs">
+		    	{{ '#Duration/Every' | dgTranslate }}
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-inline">
+				<input type="text" [(ngModel)]="model.emom_seconds" class="form-control emom-interval-inputs">
+		    	{{ '#Seconds' | dgTranslate }}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+

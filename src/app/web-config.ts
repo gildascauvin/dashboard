@@ -3,7 +3,7 @@ import { environment } from '../environments/environment';
 export const webConfig = {
  	base: environment.base,
  	baseApi: environment.baseApi,
- 	prefixApp: 'tpc_',
+ 	prefixApp: 'tpc_customer_',
  	timezone: [
         { name: "(GMT -12:00) Eniwetok, Kwajalein", value: "-12:00"},
         { name: "(GMT -11:00) Midway Island, Samoa", value: "-11:00"},

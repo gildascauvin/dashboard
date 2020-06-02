@@ -34,6 +34,10 @@ export class LoginService {
     this.loginService.setUserType(typeId);
   }
 
+  setUserId(userId) {
+    this.loginService.setUserId(userId);
+  }
+
   getUserPath() {
     return this.loginService.getUserPath();
   }

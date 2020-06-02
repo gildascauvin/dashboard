@@ -1,0 +1,71 @@
+<div class="col-md-12">
+	<div class="form-group">
+		<label>{{ '#Search movement' | dgTranslate }}</label>
+		<tpc-input-autocomplete
+			[data]="movements"
+			type="workout"
+			(handleOnChangeSearch)="onChangeSearch($event)"
+			(onSelectedItem)="onSelectedItem($event)"></tpc-input-autocomplete>
+	</div>
+</div>
+
+<div class="col-md-12">
+	<div class="form-group">
+		<label>{{ '#Style' | dgTranslate }}</label>
+		<div class="form-inline">
+			<div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]="model.time_style">
+			  <label ngbButtonLabel class="btn-light" *ngFor="let exerciceTime of configExercices.time" >
+			    <input ngbButton type="radio" [value]="exerciceTime.id"> {{ exerciceTime.name }}
+			  </label>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-12" *ngIf="model.time_style == 1">
+	<div class="form-inline mb-3">
+		<div class="form-group">
+	    <input class="form-control mr-3 style-time-rounds" type="number" [(ngModel)]="model.time_style_fixed">
+	    <label class="form-check-label">
+	      {{ '#Rounds' | dgTranslate }}
+	    </label>
+	  </div>
+	</div>
+
+</div>
+
+<div class="col-md-12" *ngIf="model.time_style == 2">
+	<div class="mb-2">
+		<span class="badge badge-pill badge-dark mr-1" *ngFor="let time of varyingStyle">{{ time }}</span>
+	</div>
+	<div class="form-group">
+		<input type="text" [(ngModel)]="model.time_style_varying" (ngModelChange)="updateVaryingStyle($event)" class="form-control">
+	</div>
+</div>
+
+<div class="col-md-12 mb-2" *ngIf="model.movements.length">
+	<label>{{ '#Movements' | dgTranslate }}</label>
+	<ul class="list-group">
+		<li *ngFor="let movement of model.movements; let movementIndex=index;" class="list-group-item">
+			<div class="row">
+				<div class="col">
+					<input placeholder="1" type="number" [(ngModel)]="movement.quantity" class="form-control">
+				</div>
+				<div class="col">{{ movement.name }}</div>
+				<div class="col">
+					<input placeholder="130" type="number" [(ngModel)]="movement.value" class="form-control">
+				</div>
+				<div class="col">
+					<select [(ngModel)]="movement.unit" class="form-control">
+						<option [value]="1">lbs</option>
+						<option [value]="2">kg</option>
+						<option [value]="3">%</option>
+					</select>
+				</div>
+				<div class="col text-right">
+					<button class="btn" (click)="removeMovement(movementIndex)"><i class="fa fa-close"></i></button>
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>

@@ -1,0 +1,44 @@
+.number-movement-list {
+	text-align: center;
+	display: inline-block;
+	width: 100px;
+}
+
+.number-movement-list-label {
+	display: inline-block;
+}
+
+.exercice-type-select {
+	border: solid 1px #F1F1F1;
+    border-radius: 0;
+    padding: 23px 14px;
+    min-width: 110px;
+    margin: 21px;
+    font-weight: 600;
+    color: #666;
+    background: #F1F1F1;
+	-webkit-box-shadow: 0 8px 6px -6px black;
+    -moz-box-shadow: 0 8px 6px -6px black;
+    box-shadow: 0 8px 6px -6px black;
+}
+
+.exercice-type-select:hover {
+    background: #111;
+    color: #F1F1F1;
+}
+
+.inputs-exercice-type {
+    width: 100%;
+}
+
+select {
+	padding-right: 26px;
+}
+
+.btn-back-type {
+    position: absolute;
+    left: 10px;
+    bottom: 12px;
+}
+
+

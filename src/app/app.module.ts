@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -56,6 +56,27 @@ import { CoachAthleteCalendarComponent } from './admin/coach/coach-athlete-calen
 import { ConfirmAccountComponent } from './auth/confirm-account/confirm-account.component';
 import { AccountNotConfirmedComponent } from './auth/account-not-confirmed/account-not-confirmed.component';
 
+import { TemplatesModalEditComponent } from './_/templates/templates-modal/templates-modal-edit/templates-modal-edit.component';
+import { TemplatesModalWorkoutDeleteComponent } from './_/templates/templates-modal/templates-modal-workout-delete/templates-modal-workout-delete.component';
+import { TemplatesModalExerciceDeleteComponent } from './_/templates/templates-modal/templates-modal-exercice-delete/templates-modal-exercice-delete.component';
+import { TemplatesModalExerciceManagerComponent } from './_/templates/templates-modal/templates-modal-exercice-manager/templates-modal-exercice-manager.component';
+
+import { TemplatesModalCreateComponent } from './_/templates/templates-modal/templates-modal-create/templates-modal-create.component';
+import { TemplatesModalDeleteComponent } from './_/templates/templates-modal/templates-modal-delete/templates-modal-delete.component';
+
+
+import { InputsExerciceTypeSimpleComponent } from './_/templates/templates-modal/templates-modal-exercice-manager/inputs-exercice-type-simple/inputs-exercice-type-simple.component';
+import { InputsExerciceTypeComplexComponent } from './_/templates/templates-modal/templates-modal-exercice-manager/inputs-exercice-type-complex/inputs-exercice-type-complex.component';
+import { InputsExerciceTypeAmrapComponent } from './_/templates/templates-modal/templates-modal-exercice-manager/inputs-exercice-type-amrap/inputs-exercice-type-amrap.component';
+import { InputsExerciceTypeTimeComponent } from './_/templates/templates-modal/templates-modal-exercice-manager/inputs-exercice-type-time/inputs-exercice-type-time.component';
+import { InputsExerciceTypeEmomComponent } from './_/templates/templates-modal/templates-modal-exercice-manager/inputs-exercice-type-emom/inputs-exercice-type-emom.component';
+import { InputsExerciceTypeOpenComponent } from './_/templates/templates-modal/templates-modal-exercice-manager/inputs-exercice-type-open/inputs-exercice-type-open.component';
+import { InputsExerciceTypeCardioComponent } from './_/templates/templates-modal/templates-modal-exercice-manager/inputs-exercice-type-cardio/inputs-exercice-type-cardio.component';
+import { InputsExerciceTypeCustomComponent } from './_/templates/templates-modal/templates-modal-exercice-manager/inputs-exercice-type-custom/inputs-exercice-type-custom.component';
+
+import { InputAutocompleteComponent } from './_/components/forms/input-autocomplete/input-autocomplete.component';
+import { AutofocusDirective } from './_/directives/autofocus.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,6 +102,22 @@ import { AccountNotConfirmedComponent } from './auth/account-not-confirmed/accou
     CoachAthleteCalendarComponent,
     ConfirmAccountComponent,
     AccountNotConfirmedComponent,
+    TemplatesModalEditComponent,
+    TemplatesModalWorkoutDeleteComponent,
+    TemplatesModalExerciceDeleteComponent,
+    TemplatesModalExerciceManagerComponent,
+    TemplatesModalCreateComponent,
+    TemplatesModalDeleteComponent,
+    InputsExerciceTypeSimpleComponent,
+    InputsExerciceTypeComplexComponent,
+    InputsExerciceTypeAmrapComponent,
+    InputsExerciceTypeTimeComponent,
+    InputsExerciceTypeEmomComponent,
+    InputsExerciceTypeOpenComponent,
+    InputsExerciceTypeCardioComponent,
+    InputsExerciceTypeCustomComponent,
+    InputAutocompleteComponent,
+    AutofocusDirective,
   ],
   imports: [
     FormsModule,

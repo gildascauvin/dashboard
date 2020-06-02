@@ -24,14 +24,14 @@
 
 									<div class="col-md-6">
 										<div class="form-group">
-											<label>{{ '#Lastname' | dgTranslate }}</label>
+											<label>{{ '#Last Name' | dgTranslate }}</label>
 											<input placeholder="Smith" [class.is-invalid]="errors.lastname" (input)="errors.lastname=false" [(ngModel)]="model.lastname" type="text" autocomplete="new-password" class="form-control">
 										</div>
 									</div>
 
 									<div class="col-md-6">
 										<div class="form-group">
-											<label>{{ '#Firstname' | dgTranslate }}</label>
+											<label>{{ '#First Name' | dgTranslate }}</label>
 											<input placeholder="John" [class.is-invalid]="errors.firstname" (input)="errors.firstname=false" [(ngModel)]="model.firstname" type="text" autocomplete="new-password" class="form-control">
 										</div>
 									</div>
@@ -202,7 +202,7 @@
 						<div class="footer">
 							<div class="row">
 								<div class="col-md-12 mb-4 text-bottom-link">
-									{{ '#Already have an account?' | dgTranslate }} <a href="#" [routerLink]="['/']">{{ '#Signup' | dgTranslate }}</a>
+									{{ '#Already have an account?' | dgTranslate }} <a href="#" [routerLink]="['/']">{{ '#Signin' | dgTranslate }}</a>
 								</div>
 								<div class="col-md-12 mt-4">
 									{{ '#Copyright' | dgTranslate }} &copy; ThePerfClub

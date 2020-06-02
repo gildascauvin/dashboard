@@ -8,7 +8,6 @@ body {
   border-radius: 5px;
   border: solid 1px #E1E1E1;
   background-color: #FFFFFF;
-  margin-left: 10px;
   color: #999 !important;
 }
 
@@ -36,6 +35,16 @@ body {
 
 .btn-primary:hover {
 	background-color: #e2622a !important;
+}
+
+.btn-secondary {
+  background-color: #F1F1F1 !important;
+  color: #d44000 !important;
+  border: 0;
+}
+
+.btn-edit-secondary {
+  padding: 5px 20px;
 }
 
 a {

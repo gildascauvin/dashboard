@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
 	base: 'http://localhost:8010/',
-	baseApi: 'http://localhost:8010/admin/',
+	baseApi: 'http://localhost:8010/customer/',
 };
 
 /*

@@ -1,0 +1,38 @@
+<div class="col-md-12" *ngIf="!model.movements.length">
+	<div class="form-group">
+		<label>{{ '#Search movement' | dgTranslate }}</label>
+		<tpc-input-autocomplete
+			[data]="movements"
+			type="workout"
+			(handleOnChangeSearch)="onChangeSearch($event)"
+			(onSelectedItem)="onSelectedItem($event)"></tpc-input-autocomplete>
+	</div>
+</div>
+
+<div class="col-md-12" *ngIf="model.movements.length">
+	<label>{{ '#Movements' | dgTranslate }}</label>
+	<ul class="list-group">
+		<li *ngFor="let movement of model.movements; let movementIndex=index;" class="list-group-item">
+			<button class="btn float-right" (click)="removeMovement(movementIndex)"><i class="fa fa-close"></i></button>
+			<div class="number-movement-list-label ml-2">{{ movement.name }}</div>
+		</li>
+	</ul>
+</div>
+
+<div class="col-md-12 mt-4" *ngIf="model.type && model.type.id != 8 && model.type.id != 7">
+	<label>{{ '#Sets/Reps' | dgTranslate }}</label>
+	<ul class="list-group">
+		<li *ngFor="let set of model.sets; let setIndex=index;" class="list-group-item">
+			<button class="btn float-right" (click)="removeSet(setIndex)"><i class="fa fa-close"></i></button>
+			<input placeholder="1" [(ngModel)]="set.set" type="number" class="form-control number-movement-list">
+			<input placeholder="1" [(ngModel)]="set.rep" type="number" class="form-control number-movement-list ml-2 mr-2">
+			<input placeholder="90" [(ngModel)]="set.value" type="number" class="form-control number-movement-list ml-2 mr-2">
+			<select [(ngModel)]="set.unit" type="number" class="form-control number-movement-list">
+				<option [value]="1">lbs</option>
+				<option [value]="2">kg</option>
+				<option [value]="3">%</option>
+			</select>
+		</li>
+	</ul>
+	<button class="btn mt-2" (click)="addSet()"><i class="fa fa-plus"></i> {{ '#Add set' | dgTranslate }}</button>
+</div>

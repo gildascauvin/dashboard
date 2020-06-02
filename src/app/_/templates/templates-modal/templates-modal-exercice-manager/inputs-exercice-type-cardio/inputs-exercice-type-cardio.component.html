@@ -1,0 +1,36 @@
+<div class="col-md-12">
+	<div class="form-group">
+		<label>{{ '#Cardio' | dgTranslate }}</label>
+		<div class="form-inline">
+			<div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]="model.cardio_type">
+			  <label ngbButtonLabel class="btn-light" *ngFor="let cardioType of configExercices.cardio.type" >
+			    <input ngbButton type="radio" [value]="cardioType.id"> {{ cardioType.name }}
+			  </label>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-12">
+	<div class="form-group">
+		<label>{{ '#Scoring' | dgTranslate }}</label>
+		<div class="form-inline">
+			<div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]="model.cardio_scoring">
+			  <label ngbButtonLabel class="btn-light" *ngFor="let cardioScoring of configExercices.cardio.scoring" >
+			    <input ngbButton type="radio" [value]="cardioScoring.id"> {{ cardioScoring.name }}
+			  </label>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-12 mb-2">
+	<label>{{ '#Plan' | dgTranslate }}</label>
+	<div class="form-inline">
+		<input type="text" [(ngModel)]="model.cardio_plan" class="form-control">
+		<select *ngIf="model.cardio_scoring == 2" class="form-control select-cardio-scoring ml-2" [(ngModel)]="model.cardio_plan_unit">
+      <option *ngFor="let unit of configExercices.cardio.unit" [value]="unit.id">{{ unit.name }}</option>
+    </select>
+    <span *ngIf="model.cardio_scoring == 1" class="ml-2">{{ '#Minutes' | dgTranslate }}</span>
+	</div>
+</div>

@@ -7,10 +7,6 @@ import { AuthService } from '../http/auth.service';
 
 import { webConfig } from '../../../web-config';
 
-let config = {
-  baseApi: webConfig.baseApi + 'api/',
-  prefixApp: 'dg_'
-};
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +20,7 @@ export class UserService {
 	constructor(private apiService: HttpService) {}
 
 	getUserInfos(reload?) {
-		let user: string = localStorage.getItem(config.prefixApp + 'user');
+		let user: string = localStorage.getItem(webConfig.prefixApp + 'user');
 		if (user) {
 			this.user = JSON.parse(user);
 		}
@@ -62,13 +58,12 @@ export class UserService {
 	}
 
 	updateUserInfos() {
-		console.log('updateUserInfos this.user');
 		this._saveIntoLocalStorage();
 		return this;
 	}
 
 	private _saveIntoLocalStorage() {
-		localStorage.setItem(config.prefixApp + 'user', JSON.stringify(this.user));
+		localStorage.setItem(webConfig.prefixApp + 'user', JSON.stringify(this.user));
 		this.onUpdate.emit(true);
 	}
 }

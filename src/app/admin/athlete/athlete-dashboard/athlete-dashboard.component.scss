@@ -1,0 +1,129 @@
+.lead-left-bar, .lead-right-bar {
+	background-color: #FFF;
+
+}
+.lead-bar-content {
+	height: 100%;
+}
+
+.lead-body {
+    background-color: #F1F1F1;
+    padding: 43px;
+	.lead-body-content {
+    	height: 100%;
+		.workout-session {
+	    	background-color: #FFFFFF;
+			padding: 37px 81px;
+			margin-top: 20px;
+			.workout-session-title {
+				border-bottom: solid 2px #F1F1F1;
+				font-family: Helvetica;
+				font-size: 22px;
+				font-weight: bold;
+				font-stretch: normal;
+				font-style: normal;
+				line-height: normal;
+				letter-spacing: -0.14px;
+				color: #000000;
+				padding-bottom: 19px;
+				margin-bottom: 19px;
+			}
+			.workout-session-exercice {
+				width: 100%;
+				-webkit-backdrop-filter: blur(20px);
+				backdrop-filter: blur(20px);
+				box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.15);
+				background-color: #ffffff;
+				padding: 17px 35px;
+				margin-top: 13px;
+
+				&.red {
+					border-left: solid 3px #FF0000;
+				}
+
+				&.bleue {
+					border-left: solid 3px #0000FF;
+				}
+
+				&.green {
+					border-left: solid 3px #00FF00;
+				}
+			}
+	    }
+	}
+}
+
+.lead-container {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	background-color: #F1F1F1;
+}
+
+.readiness-level {
+	width: 80%;
+    margin: 30px auto;
+    padding: 15px 0;
+    border-bottom: solid 1px #F1F1F1;
+	text-align: center;
+
+    .readiness-level-title {
+		font-size: 12pt;
+		font-weight: 700;
+    }
+}
+
+.weekly-overload {
+	width: 80%;
+    margin: 30px auto;
+    padding: 15px 0;
+    border-bottom: solid 1px #F1F1F1;
+	text-align: center;
+
+    .weekly-overload-title {
+		font-size: 12pt;
+		font-weight: 700;
+    }
+}
+
+
+.strenght-level {
+	width: 80%;
+    margin: 30px auto;
+    padding: 15px 0;
+    border-bottom: solid 1px #F1F1F1;
+	text-align: center;
+
+	.strenght-level-title {
+		font-size: 12pt;
+		font-weight: 700;
+    }
+}
+
+.mrv-score {
+	width: 105px;
+    border: solid 6px #d44000;
+    border-radius: 49%;
+    height: 105px;
+    margin: 30px auto;
+    text-align: center;
+    background-color: #fbfbfb;
+
+    .mrv-score-icon {
+    	font-family: Lato;
+		margin-top: 5px;
+		margin-bottom: -10px;
+    }
+
+    .mrv-score-number {
+		font-size: 33px;
+		font-family: Lato;
+		font-weight: bold;
+		margin-bottom: -5px;
+    }
+
+    .mrv-score-label {
+    	font-family: Lato;
+		font-size: 12px;
+    }
+}

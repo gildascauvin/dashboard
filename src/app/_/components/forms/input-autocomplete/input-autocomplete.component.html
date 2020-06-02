@@ -7,13 +7,17 @@
 	  (selected)='selectEvent($event)'
 	  (inputChanged)='onChangeSearch($event)'
 	  (inputFocused)='onFocused($event)'
+	  (inputCleared)='onInputCleared()'
 	  [itemTemplate]="itemTemplate">
 	</ng-autocomplete>
 	<ng-template #itemTemplate let-item>
 		<div *ngIf="type==='normal'">
 			<a [innerHTML]="item.category_root_name + ' - ' + item.category_parent_name + ' - ' + item.name"></a>
 		</div>
-		<div *ngIf="type==='workout'">
+		<div *ngIf="type==='workout' || type==='profile'">
+			<a [innerHTML]="item.name"></a>
+		</div>
+		<div *ngIf="type==='template'">
 			<a [innerHTML]="item.name"></a>
 		</div>
 	</ng-template>
