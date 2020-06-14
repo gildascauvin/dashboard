@@ -11,29 +11,43 @@
 
 <div class="col-md-12 mb-2" *ngIf="model.movements.length">
 	<label>{{ '#Movements' | dgTranslate }}</label>
-	<ul class="list-group">
-		<li *ngFor="let movement of model.movements; let movementIndex=index;" class="list-group-item">
-			<div class="row">
-				<div class="col">
-					<input placeholder="1" type="number" [(ngModel)]="movement.quantity" class="form-control">
-				</div>
-				<div class="col">{{ movement.name }}</div>
-				<div class="col">
-					<input placeholder="130" type="number" [(ngModel)]="movement.value" class="form-control">
-				</div>
-				<div class="col">
-					<select [(ngModel)]="movement.unit" class="form-control">
-						<option [value]="1">lbs</option>
-						<option [value]="2">kg</option>
-						<option [value]="3">%</option>
-					</select>
-				</div>
-				<div class="col text-right">
-					<button class="btn" (click)="removeMovement(movementIndex)"><i class="fa fa-close"></i></button>
-				</div>
+	<div *ngFor="let movement of model.movements; let movementIndex=index;" class="list-group-item-step">
+		<div class="row">
+			<div class="col">
+				<input placeholder="1" type="number" [(ngModel)]="movement.quantity" class="form-control">
 			</div>
-		</li>
-	</ul>
+			<div class="col">{{ movement.name }}</div>
+			<div class="col">
+				<input placeholder="130" type="number" [(ngModel)]="movement.value" class="form-control">
+			</div>
+			<div class="col">
+				<select [(ngModel)]="movement.unit" class="form-control">
+					<option [value]="1">lbs</option>
+					<option [value]="2">kg</option>
+					<option [value]="3">%</option>
+				</select>
+			</div>
+			<div class="col text-right">
+				<button class="btn" (click)="removeMovement(movementIndex)"><i class="fa fa-close"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-12 mb-2">
+	<div class="form-inline form-select-subtype">
+		<div [(ngModel)]="typeChoice" (ngModelChange)="onTypeChoiceChanged($event)" class="btn-group btn-group-toggle" ngbRadioGroup>
+		  <label ngbButtonLabel class="btn-light">
+		    <input ngbButton type="radio" [value]="3"> AMRAP
+		  </label>
+		  <label ngbButtonLabel class="btn-light">
+		    <input ngbButton type="radio" [value]="4"> For time
+		  </label>
+		  <label ngbButtonLabel class="btn-light">
+		    <input ngbButton type="radio" [value]="5"> EMOM
+		  </label>
+		</div>
+	</div>
 </div>
 
 <div class="col-md-12" *ngIf="model.type && model.type.id == 3">

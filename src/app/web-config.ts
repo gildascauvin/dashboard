@@ -51,12 +51,19 @@ export const webConfig = {
  			{ id: 1, name: 'kg'},
 	 		{ id: 2, name: 'lbs'},
  		],
+ 		section: [
+ 			{ id: 1, name: 'Simple exercices', label: 'An exercice for reps, meters...' },
+ 			{ id: 2, name: 'Complex exercices', label: 'Set of multiple movments (complex, supersets, plyo + Sprints...)' },
+ 			{ id: 3, name: 'Timed exercices', label: 'Circuit and cross training: Hiit, Amrap, For time, Emoms...' },
+ 			{ id: 4, name: 'Cardio & intervals', label: 'Long distance/time and intervals' },
+ 			{ id: 8, name: 'Custom', label: 'Do you own thing !' },
+ 		],
  		types: [
 	 		{ id: 1, name: 'Single Movement'},
 	 		{ id: 2, name: 'Complex Movements'},
-	 		{ id: 3, name: 'Amrap'},
+	 		// { id: 3, name: 'Amrap'},
 	 		{ id: 4, name: 'For Time'},
-	 		{ id: 5, name: 'EMOM'},
+	 		// { id: 5, name: 'EMOM'},
 	 		// { id: 6, name: 'Open Workouts'},
 	 		{ id: 7, name: 'Cardio'},
 	 		{ id: 8, name: 'Custom'},
@@ -102,6 +109,10 @@ export const webConfig = {
 	 		scoring: [
 	 			{ id: 1, name: 'Time'},
 	 			{ id: 2, name: 'Distance'},
+	 		],
+	 		cardio: [
+	 			{ id: 1, name: 'Cardio'},
+	 			{ id: 2, name: 'Intervals'},
 	 		],
 	 		unit: [
 	 			{ id: 1, name: 'Meters'},

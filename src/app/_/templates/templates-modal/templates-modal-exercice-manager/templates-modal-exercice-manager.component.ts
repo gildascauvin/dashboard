@@ -32,6 +32,8 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
 
   modelClone: any = {};
 
+  workouts: any[] = [];
+
   isPlanning: boolean = false;
 
 	modelId: number = 0;
@@ -64,15 +66,14 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
   ngOnInit(): void {
     this.modelClone = _.cloneDeep(this.model);
 
+    console.log('workouts', this.workouts);
     let today = new Date();
 
     this.startedAtModel.year = today.getFullYear();
     this.startedAtModel.month = today.getMonth()+1;
     this.startedAtModel.day = today.getDate();
 
-    this.model.sets = this.model.sets || [{
-      unit: 1
-    }];
+    this.model.sets = this.model.sets || 1;
   }
 
   ngOnDestroy(): void {
@@ -87,20 +88,6 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
   save() {
     this.startLoading();
 
-    let sets = this.model.sets.map((set) => {
-      this.setUnitLabel(set, 'unit', 'unit_label');
-
-      return {
-        unit: parseInt('' + set.unit) || 1,
-        set: set.set || 1,
-        rep: set.rep || 1,
-        value: set.value || 90,
-        unit_label: set.unit_label,
-      };
-    });
-
-
-
     let movements = this.model.movements.map((movement) => {
       if (!movement.value) {
         movement.value = 90;
@@ -108,40 +95,61 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
 
       this.setUnitLabel(movement, 'unit', 'unit_label');
 
+      let sets = movement.sets.map((set) => {
+        this.setUnitLabel(set, 'unit', 'unit_label');
+
+        return {
+          unit: parseInt('' + set.unit) || 1,
+          set: set.set || 1,
+          rep: set.rep || 1,
+          value: set.value || 90,
+          unit_label: set.unit_label,
+        };
+      });
+
+      movement.sets = sets;
+
       return movement;
     });
 
     this.model.step = 2;
-    this.model.sets = sets;
-    this.templatesService.onTemplateUpdated.emit(true);
+    // this.model.sets = sets;
 
-    if (this.isPlanning) {
-      // this.usersService.onWorkoutSaved.emit({});
-      this.model.started_at = `${this.startedAtModel.year}-${this.startedAtModel.month}-${this.startedAtModel.day} 00:00:00`;
+    console.log(this.model);
+    // this.templatesService.onTemplateUpdated.emit(true);
 
-      this.model.day = `${this.startedAtModel.year}-${this.startedAtModel.month}-${this.startedAtModel.day}`;
 
-      this.model.hour = ``;
+    // if (this.isPlanning) {
+    //   // this.usersService.onWorkoutSaved.emit({});
+    //   this.model.started_at = `${this.startedAtModel.year}-${this.startedAtModel.month}-${this.startedAtModel.day} 00:00:00`;
 
-      let body = {
-        user_id: this.userId,
-        type_id: this.model.type.id,
-        day: this.model.day,
-        hour: this.model.hour,
-        program_json: JSON.stringify(this.model),
-        started_at: this.model.started_at,
-      };
+    //   this.model.day = `${this.startedAtModel.year}-${this.startedAtModel.month}-${this.startedAtModel.day}`;
 
-      this.usersService.createWorkout(body).subscribe((response) => {
-        this.toastrService.success('#Workout created!');
-        this.usersService.onUserUpdated.emit(true);
-      });
-    }
+    //   this.model.hour = ``;
+
+    //   let body = {
+    //     user_id: this.userId,
+    //     type_id: this.model.type.id,
+    //     day: this.model.day,
+    //     hour: this.model.hour,
+    //     program_json: JSON.stringify(this.model),
+    //     started_at: this.model.started_at,
+    //   };
+
+    //   this.usersService.createWorkout(body).subscribe((response) => {
+    //     this.toastrService.success('#Workout created!');
+    //     this.usersService.onUserUpdated.emit(true);
+    //   });
+    // }
 
     this.bsModalRef.hide();
   }
 
   onSelectedItem(item) {
+    item.sets = [{
+      unit: 1
+    }];
+
     this.model.movements.push(item);
   }
 
@@ -152,6 +160,7 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
       this.sub = this.usersService.getAllMovements(val).subscribe((response: any) => {
         if (response && response.content) {
           this.movements = response.content;
+
         }
       });
     }
@@ -175,8 +184,12 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
     }
   }
 
-  selectType(exerciceType) {
+  selectType(id, name) {
     this.model.step = 2;
-    this.model.type = exerciceType;
+
+    this.model.type = {
+      id: id,
+      name: name
+    };
   }
 }

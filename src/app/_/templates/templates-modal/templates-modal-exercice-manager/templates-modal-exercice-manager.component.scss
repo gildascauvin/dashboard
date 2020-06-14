@@ -9,22 +9,25 @@
 }
 
 .exercice-type-select {
+    text-align: left;
 	border: solid 1px #F1F1F1;
     border-radius: 0;
-    padding: 23px 14px;
-    min-width: 110px;
     margin: 21px;
+    min-height: 114px;
     font-weight: 600;
     color: #666;
-    background: #F1F1F1;
-	-webkit-box-shadow: 0 8px 6px -6px black;
-    -moz-box-shadow: 0 8px 6px -6px black;
-    box-shadow: 0 8px 6px -6px black;
+    width: 90%;
+    box-shadow: 0 0 10px 0 rgba(138, 138, 138, 0.2);
+    background-color: #ffffff;
+
+    h4 {
+        margin-bottom: 5px;
+        color: #000000;
+    }
 }
 
 .exercice-type-select:hover {
-    background: #111;
-    color: #F1F1F1;
+    background: #F1F1F1;
 }
 
 .inputs-exercice-type {
@@ -41,4 +44,11 @@ select {
     bottom: 12px;
 }
 
+.img-exercice-icon {
+    width: 51px;
+    vertical-align: middle;
+}
 
+.form-select-subtype {
+    width: 100;
+}

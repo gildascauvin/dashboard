@@ -22,6 +22,12 @@
 	}
 }
 
+#fixed-calendar-planning {
+	max-height: 600px;
+	overflow: scroll;
+	padding: 20px 30px;
+}
+
 .box-header-template {
 	border: solid 1px #BBB;
 	min-height: 200px;
@@ -107,6 +113,7 @@
 	background-color: #FFFFFF;
 	padding: 5px;
 	margin: 8px 0;
+	z-index: 1000;
 
 	i {
 		font-size: 14px
@@ -228,7 +235,7 @@
 	}
 
 	.movement-content {
-
+		font-weight: 100;
 	}
 }
 
@@ -379,25 +386,6 @@
 	content: none;
 }
 
-.action-workout-box {
-	background-color: #FFFFFF;
-	margin: 8px 5px;
-	padding: 5px;
-
-	i {
-		font-size: 14px
-	}
-}
-
-.action-workout-box-execrice {
-	background-color: #FFFFFF;
-	padding: 5px;
-	margin: 8px 0;
-
-	i {
-		font-size: 14px
-	}
-}
 
 .box-exercice {
 	padding: 0;
@@ -509,8 +497,8 @@
     border-left: solid 3px #d44000;
 	margin-bottom: 10px;
 	min-height: 40px;
-	-webkit-backdrop-filter: blur(20px);
-	backdrop-filter: blur(20px);
+	// -webkit-backdrop-filter: blur(20px);
+	// backdrop-filter: blur(20px);
 	box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.15);
 	background-color: #ffffff;
 

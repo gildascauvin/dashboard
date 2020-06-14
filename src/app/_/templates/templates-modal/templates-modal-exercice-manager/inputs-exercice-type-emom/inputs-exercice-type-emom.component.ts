@@ -14,6 +14,7 @@ export class InputsExerciceTypeEmomComponent implements OnInit {
   configExercices: any = webConfig.exercices;
   movements: any[] = [];
   sub: any;
+  typeChoice: number = 5;
 
   constructor(
   	private usersService: UsersService,
@@ -27,6 +28,19 @@ export class InputsExerciceTypeEmomComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.sub && this.sub.unsubscribe();
+  }
+
+  onTypeChoiceChanged(event) {
+    let name = event === 3
+      ? 'AMRAP'
+      : event === 4
+        ? 'For time'
+        : 'EMOM';
+
+    this.model.type = {
+      id: event,
+      name: name
+    };
   }
 
   onSelectedItem(item) {

@@ -28,8 +28,15 @@ export class InputsExerciceTypeComplexComponent implements OnInit {
   }
 
   onSelectedItem(item) {
-  	item.unit = 1;
-    this.model.movements.push(item);
+    let clone = _.cloneDeep(item);
+
+  	clone.unit = 1;
+    clone.sets = [{
+      unit: 3
+    }];
+
+    console.log('clone', clone);
+    this.model.movements.push(clone);
   }
 
   onChangeSearch(val) {
@@ -44,18 +51,17 @@ export class InputsExerciceTypeComplexComponent implements OnInit {
     }
   }
 
-  addSet() {
-    this.model.sets.push({
-      unit: 1
-    });
-  }
-
   removeMovement(index) {
     _.pullAt(this.model.movements, [index]);
   }
 
-  removeSet(index) {
-    _.pullAt(this.model.sets, [index]);
+  addSet(sets) {
+    sets.push({
+      unit: 3
+    });
   }
 
+  removeSet(sets, index) {
+    _.pullAt(sets, [index]);
+  }
 }
