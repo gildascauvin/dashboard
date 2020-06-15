@@ -35,7 +35,6 @@ export class InputsExerciceTypeComplexComponent implements OnInit {
       unit: 3
     }];
 
-    console.log('clone', clone);
     this.model.movements.push(clone);
   }
 

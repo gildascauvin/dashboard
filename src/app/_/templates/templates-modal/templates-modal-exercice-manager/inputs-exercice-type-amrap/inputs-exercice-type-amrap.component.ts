@@ -42,8 +42,14 @@ export class InputsExerciceTypeAmrapComponent implements OnInit {
   }
 
   onSelectedItem(item) {
-  	item.unit = 1;
-    this.model.movements.push(item);
+  	let clone = _.cloneDeep(item);
+
+    clone.unit = 1;
+    clone.sets = [{
+      unit: 3
+    }];
+
+    this.model.movements.push(clone);
   }
 
   onChangeSearch(val) {

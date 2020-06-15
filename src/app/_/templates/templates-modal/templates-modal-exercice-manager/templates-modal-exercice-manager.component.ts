@@ -73,7 +73,7 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
     this.startedAtModel.month = today.getMonth()+1;
     this.startedAtModel.day = today.getDate();
 
-    this.model.sets = this.model.sets || 1;
+    this.model.sets = this.model.sets || 5;
   }
 
   ngOnDestroy(): void {

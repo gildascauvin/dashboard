@@ -16,11 +16,15 @@
 					  			placement="top"
 					  			ngbTooltip="{{ '#Add workout' | dgTranslate }}"
 					  			(click)="addWorkoutToWeek(day, i, y)"></i>
-							<div *ngIf="copyWorkouts.length" ngbDropdownMenu class="dropdown-menu">
-								<button ngbDropdownItem (click)="pasteWorkout(day, i, y)">
+							<div *ngIf="copyWorkouts.length" ngbDropdown class="dropdown-menu">
+								<i class="fa fa-plus add-workout-btn ml-1"
+							  			ngbDropdownToggle
+							  			placement="top"
+							  			ngbTooltip="{{ '#Add workout' | dgTranslate }}"></i>
+								<button ngbDropdownItem (click)="pasteWorkout(day.workouts, i, y)">
 									<i class="fa fa-paste"></i> {{ '#Paste workout' | dgTranslate }}
 								</button>
-				        <button ngbDropdownItem (click)="addWorkoutToWeek(day.workouts, i, y)">
+				        <button ngbDropdownItem (click)="addWorkoutToWeek(day, i, y)">
 				        	<i class="fa fa-plus"></i> {{ '#Add workout' | dgTranslate }}
 				        </button>
 				      </div>
@@ -98,8 +102,8 @@
 				   											<div class="movement-title">
 				   												<span *ngFor="let movement of exercice.movements; let indMov=index;"><span *ngIf="indMov>0"> +</span> {{ movement.quantity }} {{ movement.name }}</span>
 
-				   												<div class="movement-content" *ngFor="let set of exercice.sets">
-																		<span *ngIf="set.set">{{ set.set }} x {{ set.rep }} @ {{ set.value }}{{ set.unit_label }}</span>
+				   												<div class="movement-content">
+																		<span>{{ exercice.sets }} {{ '#Sets' | dgTranslate }}</span>
 																	</div>
 				   											</div>
 				   										</div>
