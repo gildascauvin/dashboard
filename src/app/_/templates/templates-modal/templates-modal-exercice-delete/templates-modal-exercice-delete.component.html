@@ -4,14 +4,13 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-<div class="modal-body">
+<div class="modal-body" *ngIf="model.name">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="form-group">
 				<label>{{ '#Name' | dgTranslate }}</label> : {{ model.name }}
 			</div>
 		</div>
-
 	</div>
 </div>
 <div class="modal-footer">

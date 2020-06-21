@@ -35,7 +35,7 @@ export class UsersService {
     let page = {
       totalElements: 0,
       pageNumber: 0,
-      size: 10,
+      size: 20,
       name: val
     };
 
@@ -119,5 +119,13 @@ export class UsersService {
 
   createWorkout(model) {
     return this.httpService.post(`workout`, model);
+  }
+
+  updateWorkout(model) {
+    return this.httpService.put(`workout/${model.workout_id}`, model);
+  }
+
+  removeWorkout(id) {
+    return this.httpService.delete(`workout/${id}`);
   }
 }

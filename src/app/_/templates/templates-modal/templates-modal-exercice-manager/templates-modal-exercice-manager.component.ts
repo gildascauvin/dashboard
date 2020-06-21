@@ -17,8 +17,7 @@ import * as _ from 'lodash';
   styleUrls: ['./templates-modal-exercice-manager.component.scss']
 })
 export class TemplatesModalExerciceManagerComponent  extends FormModalCore implements OnInit {
-
-	model: any = {
+  model: any = {
     movements: [],
     name: '',
     step: 1
@@ -32,11 +31,9 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
 
   modelClone: any = {};
 
-  workouts: any[] = [];
-
   isPlanning: boolean = false;
 
-	modelId: number = 0;
+  modelId: number = 0;
 
   movements: any[] = [];
 
@@ -54,26 +51,32 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
   seeMore: boolean = false;
 
   userId: number = 0;
+  workout: any = {};
 
-	constructor(
-  	public bsModalRef: BsModalRef,
-  	private usersService: UsersService,
+  day: any = [];
+
+  constructor(
+    public bsModalRef: BsModalRef,
+    private usersService: UsersService,
     private templatesService: TemplatesService,
-  	private toastrService: ToastrService,) {
+    private toastrService: ToastrService,) {
     super();
   }
 
   ngOnInit(): void {
     this.modelClone = _.cloneDeep(this.model);
 
-    console.log('workouts', this.workouts);
-    let today = new Date();
+    let _date = this.isPlanning && this.workout.date ? this.workout.date : 'now';
+    let today = new Date(_date);
 
     this.startedAtModel.year = today.getFullYear();
     this.startedAtModel.month = today.getMonth()+1;
     this.startedAtModel.day = today.getDate();
 
     this.model.sets = this.model.sets || 5;
+    this.model.updated = true;
+
+    console.log('this', this);
   }
 
   ngOnDestroy(): void {
@@ -114,35 +117,55 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
 
     this.model.step = 2;
     // this.model.sets = sets;
+    this.templatesService.onTemplateUpdated.emit(true);
 
-    console.log(this.model);
-    // this.templatesService.onTemplateUpdated.emit(true);
+    if (this.isPlanning) {
+      this.model.hour = ``;
 
+      // this.usersService.onWorkoutSaved.emit({});
+      // this.model.day = `${this.startedAtModel.year}-${this.startedAtModel.month}-${this.startedAtModel.day}`;
+      // this.model.started_at = `${this.startedAtModel.year}-${this.startedAtModel.month}-${this.startedAtModel.day} 00:00:00`;
 
-    // if (this.isPlanning) {
-    //   // this.usersService.onWorkoutSaved.emit({});
-    //   this.model.started_at = `${this.startedAtModel.year}-${this.startedAtModel.month}-${this.startedAtModel.day} 00:00:00`;
+      this.workout.program.name = this.workout.name;
 
-    //   this.model.day = `${this.startedAtModel.year}-${this.startedAtModel.month}-${this.startedAtModel.day}`;
+      let body: any = {
+        user_id: this.userId,
+        day: this.workout.day,
+        date: this.workout.date,
+        hour: this.workout.hour,
+        month: this.workout.month,
+        program_json: JSON.stringify(this.workout.program),
+        started_at: `${this.workout.date} 00:00:00`//this.workout.started_at,
+      };
 
-    //   this.model.hour = ``;
+      if (!this.workout.workout_id) {
+        this.usersService.createWorkout(body).subscribe((response: any) => {
+          if (response.errors) {
+            this.toastrService.error(response.message);
+          } else {
+            this.toastrService.success('#Workout created!');
+            this.workout.workout_id = response.workout.workout_id;
+            this.workout.program_id = response.workout.program_id;
 
-    //   let body = {
-    //     user_id: this.userId,
-    //     type_id: this.model.type.id,
-    //     day: this.model.day,
-    //     hour: this.model.hour,
-    //     program_json: JSON.stringify(this.model),
-    //     started_at: this.model.started_at,
-    //   };
+            this.usersService.onWorkoutSaved.emit(this.workout);
+            this.bsModalRef.hide();
+          }
+        });
+      } else {
+        body.workout_id = this.workout.workout_id;
+        body.started_at = this.workout.started_at;
 
-    //   this.usersService.createWorkout(body).subscribe((response) => {
-    //     this.toastrService.success('#Workout created!');
-    //     this.usersService.onUserUpdated.emit(true);
-    //   });
-    // }
-
-    this.bsModalRef.hide();
+        this.usersService.updateWorkout(body).subscribe((response: any) => {
+          if (response.errors) {
+            this.toastrService.error(response.message);
+          } else {
+            this.toastrService.success('#Workout updated!');
+            this.usersService.onWorkoutSaved.emit(this.workout);
+            this.bsModalRef.hide();
+          }
+        });
+      }
+    }
   }
 
   onSelectedItem(item) {

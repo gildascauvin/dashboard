@@ -10,6 +10,9 @@ import { webConfig } from '../../../web-config';
 
 import { AuthService } from '../../../_/services/http/auth.service';
 import { UserService } from '../../../_/services/model/user.service';
+import { UsersService } from '../../../_/templates/users.service';
+
+import { DeepDiffMapperService } from '../../../_/services/deep-diff-mapper.service';
 
 import { TemplatesModalEditComponent } from '../../../_/templates/templates-modal/templates-modal-edit/templates-modal-edit.component';
 import { TemplatesModalWorkoutDeleteComponent } from '../../../_/templates/templates-modal/templates-modal-workout-delete/templates-modal-workout-delete.component';
@@ -68,12 +71,15 @@ export class AthleteCalendarComponent implements OnInit {
   isLoadingScroll: boolean = false;
 
   currentMonth: string = '';
+  cloneWeeks: any = [];
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private toastrService: ToastrService,
     private authService: AuthService,
     private userService: UserService,
+    private usersService: UsersService,
+    private deepDiffMapperService: DeepDiffMapperService,
     private modalService: BsModalService
     ) {
 
@@ -85,6 +91,16 @@ export class AthleteCalendarComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.getUserData();
+
+    this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe((o) => {
+      console.log('o', o);
+      this.authService.getUserInfos(true);
+      setTimeout(() => {
+        this.user = this.authService.getUserData();
+      }, 1000)
+    });
+
+    console.log('this.user', this.user);
     if (this.user && this.user.workouts) {
       this.workouts = _.cloneDeep(this.user.workouts);
     }
@@ -95,7 +111,6 @@ export class AthleteCalendarComponent implements OnInit {
         this.workouts = _.cloneDeep(this.user.workouts);
       }
     });
-    console.log(this.user);
 
 		this._init();
 
@@ -110,11 +125,8 @@ export class AthleteCalendarComponent implements OnInit {
     let bodyTop = bodyScroll.getBoundingClientRect().top;
 
   	bodyScroll.onscroll = () => {
-
 			let weeksScroll = this.document.querySelectorAll(".week-scroll");
-
-  		let stickyFooter = footerScroll.offsetTop - 700;
-
+      let stickyFooter = footerScroll.offsetTop - 700;
 
   		weeksScroll.forEach((weekNode: any) => {
   			// let weekNodeEl = this.document.querySelector(weekNode);
@@ -150,110 +162,158 @@ export class AthleteCalendarComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    this.sub.templates && this.sub.templates.unsubscribe();
+    this.sub.onWorkoutSaved && this.sub.onWorkoutSaved.unsubscribe();
+  }
+
   private _init() {
-  	this._addWeeks();
+    this._addWeeks();
   }
 
   private _addWeeks() {
+    for (let y = 0; y < 5; ++y) {
+      let days = [];
+      let date = new Date(this.startDay);
+      for (let i = 0; i < this.ngOfWeeks; ++i) {
+        let formatedDate = format(date, 'yyyy-MM-dd');
+        let formatedDay = format(date, 'dd');
+        let formatedMonth = format(date, 'MM');
+        let formatedYear = format(date, 'yyyy');
+        let currentDay = {
+          name: this._getWeekName(i),
+          date: formatedDate,
+          day: formatedDay,
+          month: formatedMonth,
+          monthText: this._getMonthName(formatedMonth),
+          year: formatedYear,
+          workouts: []
+        };
 
-  	for (let y = 0; y < 5; ++y) {
-	  	let days = [];
-	  	let date = new Date(this.startDay);
-	  	for (let i = 0; i < this.ngOfWeeks; ++i) {
-	  		let formatedDate = format(date, 'yyyy-MM-dd');
-	  		let formatedDay = format(date, 'dd');
-	  		let formatedMonth = format(date, 'MM');
-	  		let formatedYear = format(date, 'yyyy');
-	  		let currentDay = {
-	  			name: this._getWeekName(i),
-	  			date: formatedDate,
-	  			day: formatedDay,
-	  			month: formatedMonth,
-	  			monthText: this._getMonthName(formatedMonth),
-	  			year: formatedYear,
-	  			workouts: []
-	  		};
 
+        if (this.workouts && this.workouts[formatedDate]) {
+          currentDay.workouts = this.workouts[formatedDate];
+        }
 
-	  		if (this.workouts && this.workouts[formatedDate]) {
-	  			currentDay.workouts = this.workouts[formatedDate];
-	  		}
+        days.push(currentDay);
 
-	  		days.push(currentDay);
+        date = addHours(date, 24);
+        this.startDay = date;
+      }
 
-	  		date = addHours(date, 24);
-	  		this.startDay = date;
-	  	}
+      this.weeks.push(days);
+    }
 
-	  	this.weeks.push(days);
-	  }
+    this.cloneWeeks = _.cloneDeep(this.weeks);
 
-		this.isLoadingScroll = false;
+    this.isLoadingScroll = false;
   }
 
   private _getWeekName(pos) {
-  	switch (pos) {
-  		case 0:
-  			return '#Monday'
-  		case 1:
-  			return '#Tuesday'
-  		case 2:
-  			return '#Wednesday'
-  		case 3:
-  			return '#Thurday'
-  		case 4:
-  			return '#Friday'
-  		case 5:
-  			return '#Saturday'
-  		case 6:
-  			return '#Sunday'
-  	}
+    switch (pos) {
+      case 0:
+        return '#Monday'
+      case 1:
+        return '#Tuesday'
+      case 2:
+        return '#Wednesday'
+      case 3:
+        return '#Thurday'
+      case 4:
+        return '#Friday'
+      case 5:
+        return '#Saturday'
+      case 6:
+        return '#Sunday'
+    }
   }
 
   private _getMonthName(pos) {
-  	switch (pos) {
-  		case 1:
-  		case '01':
-  			return '#January'
-  		case 2:
-  		case '02':
-  			return '#February'
-  		case 3:
-  		case '03':
-  			return '#March'
-  		case 4:
-  		case '04':
-  			return '#April'
-  		case 5:
-  		case '05':
-  			return '#May'
-  		case 6:
-  		case '06':
-  			return '#June'
-  		case 7:
-  		case '07':
-  			return '#July'
-  		case 8:
-  		case '08':
-  			return '#August'
-  		case 9:
-  		case '09':
-  			return '#September'
-  		case 10:
-  		case '10':
-  			return '#October'
-  		case 11:
-  		case '11':
-  			return '#November'
-  		case 12:
-  		case '12':
-  			return '#December'
+    switch (pos) {
+      case 1:
+      case '01':
+        return '#January'
+      case 2:
+      case '02':
+        return '#February'
+      case 3:
+      case '03':
+        return '#March'
+      case 4:
+      case '04':
+        return '#April'
+      case 5:
+      case '05':
+        return '#May'
+      case 6:
+      case '06':
+        return '#June'
+      case 7:
+      case '07':
+        return '#July'
+      case 8:
+      case '08':
+        return '#August'
+      case 9:
+      case '09':
+        return '#September'
+      case 10:
+      case '10':
+        return '#October'
+      case 11:
+      case '11':
+        return '#November'
+      case 12:
+      case '12':
+        return '#December'
 
-  	}
+    }
   }
 
   autoSave() {
+    this.save();
+  }
 
+  save() {
+    let diff = this.deepDiffMapperService.difference(this.weeks, this.cloneWeeks);
+
+    let workoutToSave = [];
+
+    _.forEach(this.weeks, (week) => {
+      _.forEach(week, (day) => {
+        if (day.workouts.length) {
+          _.forEach(day.workouts, (workout) => {
+            _.forEach(workout.program.exercices, (exercice) => {
+              if (exercice.updated) {
+                workoutToSave.push(workout);
+                // exercice.updated = false;
+              }
+            });
+          });
+        }
+      });
+    });
+
+    _.forEach(workoutToSave, (workout) => {
+
+      // let body = {
+      //     user_id: this.id,
+      //     type_id: this.model.type.id,
+      //     day: this.model.day,
+      //     hour: this.model.hour,
+      //     program_json: JSON.stringify(this.model),
+      //     started_at: this.model.started_at,
+      //   };
+
+      if (workout.workout_id) {
+        console.log('Updated');
+      } else {
+        console.log('Created');
+        // this.usersService.createWorkout(body).subscribe((savedWorkout) => {
+        //   console.log('savedWorkout', savedWorkout);
+        // });
+      }
+    });
   }
 
   duplicateWorkout(workout) {
@@ -266,11 +326,9 @@ export class AthleteCalendarComponent implements OnInit {
   }
 
   addWorkoutToWeek(day, i, y) {
-    console.log(day.workouts, i, y);
+    day.workouts.push(this.getWokout(day));
 
-    day.workouts.push(this.getWokout());
     this.markAsOver(i + '-' + y + '-' + (day.workouts.length - 1) , 'w-' + i);
-
     this.addExerciceToWorkout(day, day.workouts[day.workouts.length - 1].program.exercices, day.workouts[day.workouts.length - 1]);
   }
 
@@ -282,9 +340,9 @@ export class AthleteCalendarComponent implements OnInit {
     workouts.push(this.copyWorkouts[0]);
   }
 
-  addExerciceToWorkout(day, exercices, workouts) {
+  addExerciceToWorkout(day, exercices, workout) {
     exercices.push(this.getExercice());
-    this.openExerciceManagerModal(exercices[exercices.length - 1], workouts, day);
+    this.openExerciceManagerModal(exercices[exercices.length - 1], workout, day);
   }
 
   addSetToExercice(movements) {
@@ -308,7 +366,7 @@ export class AthleteCalendarComponent implements OnInit {
 
   openEditModal() {
     const initialState = {
-      model: _.cloneDeep(this.model)
+      model: _.cloneDeep(this.model),
     };
 
     this.bsModalRef = this.modalService.show(TemplatesModalEditComponent, {
@@ -318,22 +376,9 @@ export class AthleteCalendarComponent implements OnInit {
     });
   }
 
-  openWorkoutDeleteModal(model, position, workouts) {
-    const initialState = {
-      model: model,
-      position: position,
-      workouts: workouts,
-    };
-
-    this.bsModalRef = this.modalService.show(TemplatesModalWorkoutDeleteComponent, {
-      keyboard: false,
-      initialState: initialState,
-      class: 'modal-xs'
-    });
-  }
-
   openCopiedWorkoutDeleteModal() {
     const initialState = {
+      isPlanning: true,
       isMultiple: true,
       copiedWorkouts: this.selectedWorkoutsData,
       weeks: this.weeks,
@@ -345,13 +390,33 @@ export class AthleteCalendarComponent implements OnInit {
       initialState: initialState,
       class: 'modal-xs'
     });
+
   }
 
-  openExerciceDeleteModal(model, position, exercices) {
+  openWorkoutDeleteModal(model, position, workouts) {
+    console.log('++++++++++++++++++', model, position, workouts, '++++++++++++++++++');
+
     const initialState = {
       model: model,
       position: position,
+      workouts: workouts,
+      isPlanning: true,
+    };
+
+    this.bsModalRef = this.modalService.show(TemplatesModalWorkoutDeleteComponent, {
+      keyboard: false,
+      initialState: initialState,
+      class: 'modal-xs'
+    });
+  }
+
+  openExerciceDeleteModal(model, position, exercices, workout) {
+    const initialState = {
+      model: model,
+      workout: workout,
+      position: position,
       exercices: exercices,
+      isPlanning: true,
     };
 
     this.bsModalRef = this.modalService.show(TemplatesModalExerciceDeleteComponent, {
@@ -362,7 +427,7 @@ export class AthleteCalendarComponent implements OnInit {
 
   }
 
-  openExerciceManagerModal(model, workouts, day) {
+  openExerciceManagerModal(model, workout, day) {
     if (!model.step) {
       model.step = 1
     }
@@ -370,7 +435,9 @@ export class AthleteCalendarComponent implements OnInit {
     const initialState = {
       day: day,
       model: model,
-      workouts: workouts,
+      workout: workout,
+      isPlanning: true,
+      userId: this.user.id
       // model: _.cloneDeep(model),
     };
 
@@ -483,8 +550,13 @@ export class AthleteCalendarComponent implements OnInit {
     }
   }
 
-  getWokout() {
+  getWokout(day?) {
+    day = day || {};
     return {
+      day: day.day,
+      date: day.date,
+      month: day.month,
+      year: day.year,
       program: {
         name: '',
         exercices: [

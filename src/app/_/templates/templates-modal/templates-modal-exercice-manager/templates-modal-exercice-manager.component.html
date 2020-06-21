@@ -13,7 +13,7 @@
 				class="btn exercice-type-select">
 				<div class="row">
 					<div class="col-md-2 col-xs-12 text-center">
-						<img class="img-exercice-icon" src="assets/img/facebook.png">
+						<img class="img-exercice-icon" src="assets/img/icon3.png">
 					</div>
 					<div class="col-md-10 col-xs-12">
 						<h4>{{ 'Simple exercices' | dgTranslate }}</h4>
@@ -28,7 +28,7 @@
 				class="btn exercice-type-select">
 				<div class="row">
 					<div class="col-md-2 col-xs-12 text-center">
-						<img class="img-exercice-icon" src="assets/img/facebook.png">
+						<img class="img-exercice-icon" src="assets/img/icon2.png">
 					</div>
 					<div class="col-md-10 col-xs-12">
 						<h4>{{ 'Complex exercices' | dgTranslate }}</h4>
@@ -43,7 +43,7 @@
 				class="btn exercice-type-select">
 				<div class="row">
 					<div class="col-md-2 col-xs-12 text-center">
-						<img class="img-exercice-icon" src="assets/img/facebook.png">
+						<img class="img-exercice-icon" src="assets/img/icon1.png">
 					</div>
 					<div class="col-md-10 col-xs-12">
 						<h4>{{ 'Timed exercices' | dgTranslate }}</h4>
@@ -59,7 +59,7 @@
 				class="btn exercice-type-select">
 				<div class="row">
 					<div class="col-md-2 col-xs-12 text-center">
-						<img class="img-exercice-icon" src="assets/img/facebook.png">
+						<img class="img-exercice-icon" src="assets/img/icon4.png">
 					</div>
 					<div class="col-md-10 col-xs-12">
 						<h4>{{ 'Cardio & intervals' | dgTranslate }}</h4>
@@ -76,7 +76,7 @@
 				class="btn exercice-type-select">
 				<div class="row">
 					<div class="col-md-2 col-xs-12 text-center">
-						<img class="img-exercice-icon" src="assets/img/facebook.png">
+						<img class="img-exercice-icon" src="assets/img/icon5.png">
 					</div>
 					<div class="col-md-10 col-xs-12">
 						<h4>{{ 'Custom' | dgTranslate }}</h4>
@@ -97,17 +97,6 @@
 		   <tpc-inputs-exercice-type-open [model]="model" *ngSwitchCase="6"></tpc-inputs-exercice-type-open>
 		   <tpc-inputs-exercice-type-cardio [model]="model" *ngSwitchCase="7"></tpc-inputs-exercice-type-cardio>
 		   <tpc-inputs-exercice-type-custom [model]="model" *ngSwitchCase="8"></tpc-inputs-exercice-type-custom>
-		</div>
-
-		<div class="col-md-6" *ngIf="isPlanning">
-			<label>{{ '#Date' | dgTranslate }}</label>
-			<div class="input-group">
-	      <input class="form-control" [class.is-invalid]="errors.started_at" (input)="errors.started_at=false" placeholder="yyyy-mm-dd"
-	             name="dp" [(ngModel)]="startedAtModel" ngbDatepicker #d="ngbDatepicker">
-	      <div class="input-group-append">
-	        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="fa fa-calendar"></i></button>
-	      </div>
-	    </div>
 		</div>
 
 		<div class="col-md-12 mt-2">

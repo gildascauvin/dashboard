@@ -5,7 +5,7 @@
   </button>
 </div>
 <div class="modal-body">
-	<div class="row" *ngIf="!isMultiple">
+	<div class="row" *ngIf="!isMultiple && model.name">
 		<div class="col-md-12">
 			<div class="form-group">
 				<label>{{ '#Name' | dgTranslate }}</label> : {{ model.name }}

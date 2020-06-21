@@ -16,6 +16,7 @@ export class UserService {
 	user: any = {};
 
   onUpdate: EventEmitter<any> = new EventEmitter();
+  onWorkoutSaved: EventEmitter<any> = new EventEmitter();
 
 	constructor(private apiService: HttpService) {}
 

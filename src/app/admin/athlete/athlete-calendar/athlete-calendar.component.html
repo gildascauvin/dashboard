@@ -70,13 +70,13 @@
 						  					placement="top"
 						  					ngbTooltip="{{ '#Delete' | dgTranslate }}"
 						  					(click)="openWorkoutDeleteModal(workout, in, day.workouts)"></i>
-						  				<i class="fa fa-plus i-btn" (click)="addExerciceToWorkout(day, workout.program.exercices, day.workouts)" placement="top" ngbTooltip="{{ '#Add exercice' | dgTranslate }}"></i>
+						  				<i class="fa fa-plus i-btn" (click)="addExerciceToWorkout(day, workout.program.exercices, workout)" placement="top" ngbTooltip="{{ '#Add exercice' | dgTranslate }}"></i>
 						  			</div>
 
 						  			<ul class="list-group" >
 						  				<li class="list-group-item box-exercice"
-
 						  					*ngFor="let exercice of workout.program.exercices; let indexExercice=index;">
+
 						  					<div class="action-workout-box-execrice float-right" *ngIf="hover[i + '-' + y + '-' + in] && !showFooterAction">
 								  				<i class="fa fa-pencil i-btn mr-4"
 								  					placement="top" ngbTooltip="{{ '#Edit' | dgTranslate }}"
@@ -84,7 +84,7 @@
 								  				<i class="fa fa-trash i-btn pze-ez"
 								  					placement="top"
 								  					ngbTooltip="{{ '#Delete' | dgTranslate }}"
-								  					(click)="openExerciceDeleteModal(exercice, indexExercice, workout.program.exercices)"></i>
+								  					(click)="openExerciceDeleteModal(exercice, indexExercice, workout.program.exercices, workout)"></i>
 								  			</div>
 						  					<div *ngIf="!hideLocalBox" class="movement-container movement-type-{{ (exercice.type && exercice.type.id) }}">
 
@@ -149,8 +149,8 @@
 				   											<div class="movement-content">{{ exercice.custom }}</div>
 				   										</div>
 						  						</div>
-
 						  					</div>
+
 						  				</li>
 						  			</ul>
 									</div>
