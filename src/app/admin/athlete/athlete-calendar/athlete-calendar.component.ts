@@ -92,6 +92,16 @@ export class AthleteCalendarComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.getUserData();
 
+    this.authService.getUserInfos(true);
+      setTimeout(() => {
+        this.user = this.authService.getUserData();
+        if (this.user && this.user.workouts) {
+          this.workouts = _.cloneDeep(this.user.workouts);
+        }
+
+        this._init(true);
+      }, 1000);
+
     this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe((o) => {
       console.log('o', o);
       this.authService.getUserInfos(true);
@@ -155,7 +165,7 @@ export class AthleteCalendarComponent implements OnInit {
       if (changes.hasOwnProperty(propName)) {
         switch (propName) {
           case 'workouts': {
-            this._init();
+            // this._init();
           }
         }
       }
@@ -167,7 +177,17 @@ export class AthleteCalendarComponent implements OnInit {
     this.sub.onWorkoutSaved && this.sub.onWorkoutSaved.unsubscribe();
   }
 
-  private _init() {
+  private _init(reset?) {
+    if (reset) {
+      let today = startOfWeek(new Date(), {weekStartsOn: 1});
+      this.currentMonth = this._getMonthName(format(today, 'MM')) + ' ' + format(today, 'yyyy');
+
+      this.endDay = endOfWeek(new Date(), {weekStartsOn: 1});
+      this.startDay = startOfWeek(new Date(), {weekStartsOn: 1});
+
+      this.weeks = [];
+    }
+
     this._addWeeks();
   }
 

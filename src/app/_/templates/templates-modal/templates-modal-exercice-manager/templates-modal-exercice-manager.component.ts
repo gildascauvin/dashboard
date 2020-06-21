@@ -55,6 +55,8 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
 
   day: any = [];
 
+  showDate: boolean = false;
+
   constructor(
     public bsModalRef: BsModalRef,
     private usersService: UsersService,
@@ -66,7 +68,7 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
   ngOnInit(): void {
     this.modelClone = _.cloneDeep(this.model);
 
-    let _date = this.isPlanning && this.workout.date ? this.workout.date : 'now';
+    let _date = this.showDate && this.workout.date ? this.workout.date : 'now';
     let today = new Date(_date);
 
     this.startedAtModel.year = today.getFullYear();
@@ -115,16 +117,33 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
       return movement;
     });
 
+    // Cardio
+    if (this.model.type.id === 7) {
+      if (this.model.cardio_scoring === 1) {
+        this.setCardioUnitLabel(this.model.cardio_cardio_movement, 'unit', 'unit_label');
+      } else if(this.model.cardio_scoring === 2) {
+        console.log('Grouped');
+        let sets = this.model.cardio_intervals_movement.sets.map((set) => {
+          this.setCardioUnitLabel(set, 'unit', 'unit_label');
+
+          return {
+            unit: parseInt('' + set.unit) || 1,
+            set: set.set || 1,
+            interval: set.interval || 1,
+            value: set.value || 90,
+            unit_label: set.unit_label,
+          };
+        });
+
+        this.model.cardio_intervals_movement.sets = sets;
+      }
+    }
+
     this.model.step = 2;
     // this.model.sets = sets;
     this.templatesService.onTemplateUpdated.emit(true);
 
     if (this.isPlanning) {
-      this.model.hour = ``;
-
-      // this.usersService.onWorkoutSaved.emit({});
-      // this.model.day = `${this.startedAtModel.year}-${this.startedAtModel.month}-${this.startedAtModel.day}`;
-      // this.model.started_at = `${this.startedAtModel.year}-${this.startedAtModel.month}-${this.startedAtModel.day} 00:00:00`;
 
       this.workout.program.name = this.workout.name;
 
@@ -134,6 +153,7 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
         date: this.workout.date,
         hour: this.workout.hour,
         month: this.workout.month,
+        name: this.workout.name,
         program_json: JSON.stringify(this.workout.program),
         started_at: `${this.workout.date} 00:00:00`//this.workout.started_at,
       };
@@ -203,6 +223,24 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
 
       default:
         model[labelKey] = 'lbs';
+        break;
+    }
+  }
+
+  setCardioUnitLabel(model, key, labelKey) {
+    model[labelKey] = 'Meters';
+    switch (model[key]) {
+      case 2:
+      case "2":
+        model[labelKey] = 'Miles';
+        break;
+      case 3:
+      case "3":
+        model[labelKey] = 'Yards';
+        break;
+
+      default:
+        model[labelKey] = 'Meters';
         break;
     }
   }

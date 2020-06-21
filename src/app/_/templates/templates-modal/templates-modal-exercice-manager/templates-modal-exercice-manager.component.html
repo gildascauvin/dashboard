@@ -99,6 +99,18 @@
 		   <tpc-inputs-exercice-type-custom [model]="model" *ngSwitchCase="8"></tpc-inputs-exercice-type-custom>
 		</div>
 
+		<div class="col-md-6" *ngIf="showDate">
+			<label>{{ '#Date' | dgTranslate }}</label>
+			<div class="input-group">
+	      <input class="form-control" [class.is-invalid]="errors.started_at" (input)="errors.started_at=false" placeholder="yyyy-mm-dd"
+	             name="dp" [(ngModel)]="startedAtModel" ngbDatepicker #d="ngbDatepicker">
+	      <div class="input-group-append">
+	        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="fa fa-calendar"></i></button>
+	      </div>
+	    </div>
+		</div>
+
+
 		<div class="col-md-12 mt-2">
 			<div class="form-group">
 				<label>{{ '#Notes' | dgTranslate }}</label>

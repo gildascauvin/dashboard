@@ -57,10 +57,10 @@
 						  					[sortableIndex]="in"
 						  					(onDragStart)="onDragStart()"
 								  			[dragData]="workout"
-						  					ngbTooltip="{{ '#Move workout' | dgTranslate }}: {{ workout.program.name | dgTranslate }}"></i>
+						  					ngbTooltip="{{ '#Move workout' | dgTranslate }}: {{ workout.name | dgTranslate }}"></i>
 
-						  				<input type="text" placeholder="{{ '#Workout name' | dgTranslate }}" class="box-body-workout-inputs ml-4" [autofocus]="true" [(ngModel)]="workout.program.name">
-						  				<span class="box-body-workout-views ml-4" placement="top" ngbTooltip="{{ workout.program.name }}"> {{ workout.program.name }}</span>
+						  				<input type="text" placeholder="{{ '#Workout name' | dgTranslate }}" class="box-body-workout-inputs ml-4" [autofocus]="true" [(ngModel)]="workout.name">
+						  				<span class="box-body-workout-views ml-4" placement="top" ngbTooltip="{{ workout.name }}"> {{ workout.name }}</span>
 						  			</h6>
 
 
@@ -136,10 +136,16 @@
 				   											<div class="movement-title" *ngIf="exercice.cardio_type">
 				   												{{ configExercices.cardio.flatType[exercice.cardio_type] }}
 				   											</div>
-				   											<div class="movement-content" *ngIf="exercice.cardio_type">
-				   												<span *ngIf="exercice.cardio_scoring==1">{{ exercice.cardio_plan }} {{ '#minutes' | dgTranslate }}</span>
-				   												<span *ngIf="exercice.cardio_scoring==2">{{ exercice.cardio_plan }}  {{configExercices.cardio.flatUnit[exercice.cardio_plan_unit]}}</span>
+
+				   											<div class="movement-content" *ngIf="exercice.cardio_scoring==1">
+				   												<span>{{ exercice.cardio_cardio_movement.interval }} {{ exercice.cardio_cardio_movement.unit_label }} @ {{ exercice.cardio_cardio_movement.value }} % </span>
 				   											</div>
+				   											<div *ngIf="exercice.cardio_scoring==2">
+				   												<div class="movement-content" *ngFor="let set of exercice.cardio_intervals_movement.sets">
+																		<span *ngIf="set.set">{{ set.set }} x {{ set.interval }} {{ set.unit_label }} @ {{ set.value }} %</span>
+																	</div>
+																</div>
+
 				   										</div>
 				   										<div *ngSwitchCase="8">
 				   											<div class="movement-title">

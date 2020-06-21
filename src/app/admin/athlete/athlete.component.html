@@ -27,7 +27,7 @@
 		        </div>
             <div class="nav-bottom-header">
             	<div class="content-header">
-	            	<button class="btn btn-primary float-right mr-4"><i class="fa fa-plus"></i> {{ '#Create a workout' | dgTranslate }}</button>
+	            	<button class="btn btn-primary float-right mr-4" (click)="openExerciceManagerModal()"><i class="fa fa-plus"></i> {{ '#Create a workout' | dgTranslate }}</button>
 	            	<ul class="navbar-nav flex-row mb-md-1 mt-md-0 mb-3 mt-2">
 	                <li class="nav-item">
 	                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/athlete', 'dashboard']">
