@@ -41,6 +41,7 @@ import { AthleteDashboardComponent } from './admin/athlete/athlete-dashboard/ath
 import { AthleteProfileComponent } from './admin/athlete/athlete-profile/athlete-profile.component';
 import { AthleteStatsComponent } from './admin/athlete/athlete-stats/athlete-stats.component';
 import { AthleteCalendarComponent } from './admin/athlete/athlete-calendar/athlete-calendar.component';
+import { AthleteProgramsComponent } from './admin/athlete/athlete-programs/athlete-programs.component';
 
 import { CoachComponent } from './admin/coach/coach.component';
 import { CoachCalendarComponent } from './admin/coach/coach-calendar/coach-calendar.component';
@@ -118,6 +119,7 @@ import { AutofocusDirective } from './_/directives/autofocus.directive';
     InputsExerciceTypeCustomComponent,
     InputAutocompleteComponent,
     AutofocusDirective,
+    AthleteProgramsComponent,
   ],
   imports: [
     FormsModule,

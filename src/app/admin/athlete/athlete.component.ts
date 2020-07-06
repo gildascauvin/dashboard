@@ -21,6 +21,8 @@ export class AthleteComponent implements OnInit {
     role: {}
   };
 
+  sub: any = {};
+
   constructor(
   	private authService: AuthService,
     private userService: UserService,
@@ -31,10 +33,13 @@ export class AthleteComponent implements OnInit {
     this._document.body.style.background = '#FFF';
     this.user = this.authService.getUserData();
 
-    this.userService.onUpdate.subscribe((user) => {
+    this.sub.onUpdate = this.userService.onUpdate.subscribe((user) => {
       this.user = this.authService.getUserData();
-      console.log(this.user);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.sub.onUpdate && this.sub.onUpdate.unsubscribe();
   }
 
   logout() {
@@ -43,13 +48,13 @@ export class AthleteComponent implements OnInit {
 
   openExerciceManagerModal() {
     let model: any = {
+      movements: [],
       step: 1
     };
 
     const initialState = {
-      day: '2020-12-06',
-      model: {},
-      workout: {},
+      model: model,
+      workout: this.getWokout(),
       isPlanning: true,
       showDate: true,
       userId: this.user.id
@@ -61,5 +66,27 @@ export class AthleteComponent implements OnInit {
       initialState: initialState,
       class: 'modal-lg'
     });
+  }
+
+  getExercice(withoutName?) {
+    return {
+      name: '',
+      movements: []
+    }
+  }
+
+  getWokout(day?) {
+    day = day || {};
+    return {
+      day: day.day,
+      date: day.date,
+      month: day.month,
+      year: day.year,
+      program: {
+        name: '',
+        exercices: [
+        ]
+      }
+    };
   }
 }

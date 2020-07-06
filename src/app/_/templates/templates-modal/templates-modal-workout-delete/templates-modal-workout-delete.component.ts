@@ -59,20 +59,28 @@ export class TemplatesModalWorkoutDeleteComponent extends FormModalCore implemen
         let week = parseInt('' +values[1]);
         let position = parseInt('' +values[2]);
 
-        workoutsToDelete.push(this.weeks[week][day].workouts[position].workout_id);
-        _.pullAt(this.weeks[week][day].workouts, [position]);
+        if (this.weeks[week][day].workouts[position]) {
+          workoutsToDelete.push(this.weeks[week][day].workouts[position].workout_id);
+          _.pullAt(this.weeks[week][day].workouts, [position]);
 
-        this.templatesService.onWorkoutsGroupReset.emit(true);
+          this.templatesService.onWorkoutsGroupReset.emit(true);
+        }
+
       }
     }
 
     if (this.isPlanning) {
       _.forEach(workoutsToDelete, (workoutId) => {
         console.log('Deleted workout_id: ' + workoutId);
-        this.usersService.removeWorkout(workoutId).subscribe(() => {
+        if (workoutId) {
+          this.usersService.removeWorkout(workoutId).subscribe(() => {
+            this.cancel();
+            this.usersService.onWorkoutSaved.emit(true);
+          });
+        } else {
           this.cancel();
           this.usersService.onWorkoutSaved.emit(true);
-        });
+        }
       });
     } else {
       this.cancel();

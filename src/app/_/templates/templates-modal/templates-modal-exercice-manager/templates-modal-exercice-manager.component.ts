@@ -68,8 +68,12 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
   ngOnInit(): void {
     this.modelClone = _.cloneDeep(this.model);
 
-    let _date = this.showDate && this.workout.date ? this.workout.date : 'now';
-    let today = new Date(_date);
+    let today: any;
+    if (this.showDate || !this.workout.date) {
+      today = new Date();
+    } else {
+      today = new Date(this.workout.date);
+    }
 
     this.startedAtModel.year = today.getFullYear();
     this.startedAtModel.month = today.getMonth()+1;
@@ -77,8 +81,6 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
 
     this.model.sets = this.model.sets || 5;
     this.model.updated = true;
-
-    console.log('this', this);
   }
 
   ngOnDestroy(): void {
@@ -144,6 +146,15 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
     this.templatesService.onTemplateUpdated.emit(true);
 
     if (this.isPlanning) {
+
+      if (this.showDate) {
+        this.workout.day = `${this.startedAtModel.year}-${this.startedAtModel.month}-${this.startedAtModel.day}`;
+        this.workout.date = `${this.workout.day}`;
+
+        this.workout.program = {
+          exercices: [this.model]
+        }
+      }
 
       this.workout.program.name = this.workout.name;
 

@@ -1,1 +1,168 @@
-<p>athlete-stats works!</p>
+<div class="row">
+	<div class="col-md-12 calendar-top">
+		<form class="form-inline">
+		  <div class="form-group hidden">
+		    <div class="input-group">
+		      <input name="datepicker"
+		             class="form-control"
+		             ngbDatepicker
+		             #datepicker="ngbDatepicker"
+		             [autoClose]="'outside'"
+		             (dateSelect)="onDateSelection($event, datepicker)"
+		             [displayMonths]="2"
+		             [dayTemplate]="t"
+		             outsideDays="hidden"
+		             [startDate]="fromDate!">
+		      <ng-template #t let-date let-focused="focused">
+		        <span class="custom-day"
+		              [class.focused]="focused"
+		              [class.range]="isRange(date)"
+		              [class.faded]="isHovered(date) || isInside(date)"
+		              (mouseenter)="hoveredDate = date"
+		              (mouseleave)="hoveredDate = null">
+		          {{ date.day }}
+		        </span>
+		      </ng-template>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <div class="input-group">
+		      <input #dpFromDate
+		             class="form-control" placeholder="yyyy-mm-dd"
+		             name="dpFromDate"
+		             [value]="formatter.format(fromDate)"
+		             (input)="fromDate = validateInput(fromDate, dpFromDate.value)">
+		      <div class="input-group-append">
+		        <button class="btn btn-outline-secondary" (click)="datepicker.toggle()" type="button"><i class="fa fa-calendar"></i></button>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="form-group ml-2">
+		    <div class="input-group">
+		      <input #dpToDate
+		             class="form-control" placeholder="yyyy-mm-dd"
+		             name="dpToDate"
+		             [value]="formatter.format(toDate)"
+		             (input)="toDate = validateInput(toDate, dpToDate.value)">
+		      <div class="input-group-append">
+		        <button class="btn btn-outline-secondary" (click)="datepicker.toggle()" type="button"><i class="fa fa-calendar"></i></button>
+		      </div>
+		    </div>
+		  </div>
+		</form>
+	</div>
+	<div class="col-md-7">
+		<div class="box-stats-left">
+			<div class="box-stats-title">
+				<div>
+				  <div>
+				    <div style="display: block">
+				      <canvas baseChart
+				        [datasets]="barChartData"
+				        [labels]="barChartLabels"
+				        [options]="barChartOptions"
+				        [plugins]="barChartPlugins"
+				        [legend]="barChartLegend"
+				        [chartType]="barChartType">
+				      </canvas>
+				    </div>
+				  </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-5">
+		<div class="box-stats-right">
+			<ul ngbNav #nav="ngbNav" class="nav-tabs">
+			  <li ngbNavItem>
+			    <a ngbNavLink>{{ '#Categories' | dgTranslate }}</a>
+			    <ng-template ngbNavContent>
+			      <ul class="list-group">
+							<li class="list-group-item" *ngIf="stats.categories[1].volume">
+								<h3>{{stats.categories[1].label}}</h3>
+								<p>{{ stats.categories[1].movements.length}} {{ '#exercices' | dgTranslate }}</p>
+								<p>
+									<span class="badge mr-2 badge-dark">v: {{stats.categories[1].volume}}</span>
+									<span class="badge mr-2 badge-secondary">t: {{stats.categories[1].tonnage}} </span>
+									<span class="badge mr-2 badge-danger">i: {{stats.categories[1].intensity}} %</span>
+								</p>
+							</li>
+							<li class="list-group-item" *ngIf="stats.categories[2].volume">
+								<h3>{{stats.categories[2].label}}</h3>
+								<p>{{ stats.categories[2].movements.length}} {{ '#exercices' | dgTranslate }}</p>
+								<p>
+									<span class="badge mr-2 badge-dark">v: {{stats.categories[2].volume}}</span>
+									<span class="badge mr-2 badge-secondary">t: {{stats.categories[2].tonnage}}</span>
+									<span class="badge mr-2 badge-danger">i: {{stats.categories[2].intensity}} %</span>
+								</p>
+							</li>
+							<li class="list-group-item" *ngIf="stats.categories[3].volume">
+								<h3>{{stats.categories[3].label}}</h3>
+								<p>{{ stats.categories[3].movements.length}} {{ '#exercices' | dgTranslate }}</p>
+								<p>
+									<span class="badge mr-2 badge-dark">v: {{stats.categories[3].volume}}</span>
+									<span class="badge mr-2 badge-secondary">t: {{stats.categories[3].tonnage}}</span>
+									<span class="badge mr-2 badge-danger">i: {{stats.categories[3].intensity}} %</span>
+								</p>
+							</li>
+							<li class="list-group-item" *ngIf="stats.categories[4].volume">
+								<h3>{{stats.categories[4].label}}</h3>
+								<p>{{ stats.categories[4].movements.length}} {{ '#exercices' | dgTranslate }}</p>
+								<p>
+									<span class="badge mr-2 badge-dark">v: {{stats.categories[4].volume}}</span>
+									<span class="badge mr-2 badge-secondary">t: {{stats.categories[4].tonnage}}</span>
+									<span class="badge mr-2 badge-danger">i: {{stats.categories[4].intensity}} %</span>
+								</p>
+							</li>
+							<li class="list-group-item" *ngIf="stats.categories[5].volume">
+								<h3>{{stats.categories[5].label}}</h3>
+								<p>{{ stats.categories[5].movements.length}} {{ '#exercices' | dgTranslate }}</p>
+								<p>
+									<span class="badge mr-2 badge-dark">v: {{stats.categories[5].volume}}</span>
+									<span class="badge mr-2 badge-secondary">t: {{stats.categories[5].tonnage}}</span>
+									<span class="badge mr-2 badge-danger">i: {{stats.categories[5].intensity}} %</span>
+								</p>
+							</li>
+							<li class="list-group-item" *ngIf="stats.categories[6].volume">
+								<h3>{{stats.categories[6].label}}</h3>
+								<p>{{ stats.categories[6].movements.length}} {{ '#exercices' | dgTranslate }}</p>
+								<p>
+									<span class="badge mr-2 badge-dark">v: {{stats.categories[6].volume}}</span>
+									<span class="badge mr-2 badge-secondary">t: {{stats.categories[6].tonnage}}</span>
+									<span class="badge mr-2 badge-danger">i: {{stats.categories[6].intensity}} %</span>
+								</p>
+							</li>
+							<li class="list-group-item" *ngIf="stats.categories[7].volume">
+								<h3>{{stats.categories[7].label}}</h3>
+								<p>{{ stats.categories[7].movements.length}} {{ '#exercices' | dgTranslate }}</p>
+								<p>
+									<span class="badge mr-2 badge-dark">v: {{stats.categories[7].volume}}</span>
+									<span class="badge mr-2 badge-secondary">t: {{stats.categories[7].tonnage}}</span>
+									<span class="badge mr-2 badge-danger">i: {{stats.categories[7].intensity}} %</span>
+								</p>
+							</li>
+						</ul>
+			    </ng-template>
+			  </li>
+			  <li ngbNavItem>
+			    <a ngbNavLink>{{ '#Exercices' | dgTranslate }}</a>
+			    <ng-template ngbNavContent>
+			    </ng-template>
+			  </li>
+			</ul>
+
+			<div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-7">
+		<div class="box-stats-left"></div>
+	</div>
+	<div class="col-md-5">
+		<div class="box-stats-right"></div>
+	</div>
+</div>
+

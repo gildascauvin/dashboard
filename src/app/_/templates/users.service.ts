@@ -53,12 +53,44 @@ export class UsersService {
     return this.httpService.get(`template/?page=${page.pageNumber}&size=${page.size}&name=${page.name}`);
   }
 
+  getAllWorkout(date?) {
+    let page: any = {
+      totalElements: 0,
+      pageNumber: 0,
+      size: 500,
+    };
+
+    if (date) {
+      page.date = date;
+    }
+
+    return this.httpService.get(`workout/?page=${page.pageNumber}&size=${page.size}&date=${page.date}`);
+  }
+
+  getAllWorkouts(fromDate, toDate, strictDate?) {
+    let page: any = {
+      totalElements: 0,
+      pageNumber: 0,
+      size: 500,
+    };
+
+    let query = `workout/?page=${page.pageNumber}&size=${page.size}&date=${fromDate}&date_end=${toDate}`;
+    query += strictDate
+      ? '&strict_date=1'
+      : '';
+    return this.httpService.get(query);
+  }
+
   getProgram(id) {
     return this.httpService.get(`program/one/${id}`);
   }
 
   getOne(id) {
     return this.httpService.get(`user/${id}`);
+  }
+
+  getUser() {
+    return this.httpService.get(`user`);
   }
 
   createUserProfile(id, model) {
@@ -116,6 +148,17 @@ export class UsersService {
     };
     return this.httpService.post(`user/${userId}/program/${programId}/client/${clientId}`, model);
   }
+
+  // activeClientToProgram(userId, programId, clientId, isActive, dateStart, dayStart){
+  //   let model = {
+  //     is_active: !!isActive,
+  //     started_at: dateStart,
+  //     started_day: parseInt('' + dayStart),
+  //   };
+
+  //   console.log('model', model);
+  //   return this.httpService.post(`user/${userId}/program/${programId}/client/${clientId}`, model);
+  // }
 
   createWorkout(model) {
     return this.httpService.post(`workout`, model);

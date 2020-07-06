@@ -14,11 +14,19 @@
   width: 100%;
   background-color: #000000;
 }
+.links-menu {
+	float: right;
+	text-decoration: none;
+	color: #F1F1F1;
+  	position: absolute;
+  	top: 20px;
+  	right: 150px;
+}
 .profile-menu {
 	float: right;
   position: absolute;
   top: 13px;
-  right: 0;
+  right: 20px;
   color: #FFF;
 
   #navbarDropdownMenuLink {

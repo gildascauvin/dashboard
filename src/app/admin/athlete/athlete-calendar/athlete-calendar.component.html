@@ -2,12 +2,12 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div id="navbar-planning">
-			  <dir class="navbar-planning-content">
-			  	<button class="btn btn-light mr-2 btn-sm"><i class="fa fa-arrow-left"></i></button>
-			  	<button class="btn btn-light btn-sm"><i class="fa fa-arrow-right"></i></button>
-			  	<span class="date-title">{{ currentMonth | uppercase }}</span>
-			  </dir>
+				<div class="input-group calendar-top float-left mr-2">
+		      <input class="form-control" name="dp" (ngModelChange)="onDateSelected($event)" (click)="d.toggle()" [ngModel]="startedAtModel" ngbDatepicker #d="ngbDatepicker">
+		    </div>
+		  	<div class="date-title">{{ currentMonth | uppercase }}</div>
 			</div>
+
 			<div id="fixed-calendar-planning">
 				<div *ngFor="let week of weeks; let y=index" class="row calendar-planning">
 					<div *ngFor="let day of week; let i=index" class="col box-header-template">
@@ -34,7 +34,8 @@
 				  	</div>
 
 				  	<div class="box-body-template-day" [class.box-body-week-active]="hover['w-' + i]">
-				  		<div dnd-sortable-container [sortableData]="day.workouts" >
+				  		<div dnd-sortable-container
+				  			[sortableData]="day.workouts">
 					  		<div class="box-body-workout"
 					  			[class.box-body-workout-active]="hover[i + '-' + y + '-' + in]"
 					  			*ngFor="let workout of day.workouts; let in=index;">
@@ -51,11 +52,12 @@
 						  				<i class="fa fa-arrows i-btn float-right"
 						  					*ngIf="!showFooterAction"
 						  					placement="top"
+								  			dnd-sortable
 						  					dnd-draggable
 								  			[dragEnabled]="true"
-								  			dnd-sortable
+					  						[dropEnabled]="true"
 						  					[sortableIndex]="in"
-						  					(onDragStart)="onDragStart()"
+						  					(onDragStart)="onDragStart($event)"
 								  			[dragData]="workout"
 						  					ngbTooltip="{{ '#Move workout' | dgTranslate }}: {{ workout.name | dgTranslate }}"></i>
 
@@ -163,20 +165,28 @@
 
 					  		</div>
 					  		<div class="box-body-workout" *ngIf="day.workouts.length">
-				  				<div class="paste-zone-workouts" *ngIf="showPasteCopiedWorkouts" (click)="pasteCopiedWorkouts(day.workouts)">{{ '#Paste Workouts' | dgTranslate }}</div>
+				  				<div class="paste-zone-workouts" *ngIf="showPasteCopiedWorkouts" (click)="pasteCopiedWorkouts(day.workouts, day)">{{ '#Paste Workouts' | dgTranslate }}</div>
 				  			</div>
 
 					  		<div *ngIf="day.workouts.length === 0"
 					  			class="zone-drop-legal"
 					  			dnd-droppable
-					  			dnd-sortable>
-				  					<div class="paste-zone-workouts" *ngIf="showPasteCopiedWorkouts" (click)="pasteCopiedWorkouts(day.workouts)">{{ '#Paste Workouts' | dgTranslate }}</div>
+					  			dnd-sortable
+					  			(onDropEnd)="onDropSuccess('onDropEnd')"
+					  			(onDropSuccess)="onDropSuccess('onDropSuccess')"
+					  			[dragEnabled]="true"
+					  			[dropEnabled]="true"
+					  			>
+				  					<div class="paste-zone-workouts" *ngIf="showPasteCopiedWorkouts" (click)="pasteCopiedWorkouts(day.workouts, day)">{{ '#Paste Workouts' | dgTranslate }}</div>
 				  			</div>
 					  	</div>
 				  	</div>
 					</div>
 				</div>
+
+
 			</div>
+
 			<div id="footer-scroll"></div>
 
 			<div *ngIf="showFooterAction" class="footer-action">

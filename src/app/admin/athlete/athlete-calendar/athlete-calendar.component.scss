@@ -26,6 +26,7 @@
 	max-height: 600px;
 	overflow: scroll;
 	padding: 20px 30px;
+	width: 100%;
 }
 
 .box-header-template {
@@ -244,28 +245,28 @@
 }
 
 .movement-type-1 {
-	border-left: solid 5px #FF0000;
+	border-left: solid 5px #666666;
 }
 .movement-type-2 {
-	border-left: solid 5px #FFFF00;
+	border-left: solid 5px #D44000;
 }
 .movement-type-3 {
-	border-left: solid 5px #00FF00;
+	border-left: solid 5px #000000;
 }
 .movement-type-4 {
-	border-left: solid 5px #00FFFF;
+	border-left: solid 5px #000000;
 }
 .movement-type-5 {
-	border-left: solid 5px #FF00FF;
+	border-left: solid 5px #000000;
 }
 .movement-type-6 {
-	border-left: solid 5px #A533FF;
+	border-left: solid 5px #C1C1C1;
 }
 .movement-type-7 {
-	border-left: solid 5px #0000FF;
+	border-left: solid 5px #8D6767;
 }
 .movement-type-8 {
-	border-left: solid 5px #000000;
+	border-left: solid 5px #E37242;
 }
 
 .footer-action {
@@ -298,13 +299,14 @@
   width: 106%;
   padding-top: 5px;
   padding-bottom: 5px;
-  margin-left: -30px;
-
+  margin-left: -10px;
+	padding: 20px 30px 10px;
 
   .date-title {
   	font-size: 13pt;
   	font-weight: bold;
   	margin-left: 10px;
+  	margin-top: 7px;
   }
 }
 
@@ -568,5 +570,10 @@
 	background-color: #F1F1F1;
 }
 
+.calendar-top {
+	width: 109px;
+}
 
-
+.spinner-ctnr {
+	margin-top: 200px;
+}
