@@ -35,11 +35,21 @@ export class AthleteStatsComponent implements OnInit {
   stats: any = {
     weekly: {
       intensite: [],
+      intensiteRound: 0,
       volume: [],
+      volumeRound: 0,
       tonnage: [],
+      tonnageRound: 0,
     },
-    categories: {}
+    categories: {},
+    movements: {},
+    cardio: {
+      volume: [],
+      intensity: [],
+    },
   }
+
+  movements: any = [];
 
   endDay: any = endOfWeek(new Date(), {weekStartsOn: 1});
   startDay: any = startOfWeek(new Date(), {weekStartsOn: 1});
@@ -61,41 +71,85 @@ export class AthleteStatsComponent implements OnInit {
     },
     plugins: {
       datalabels: {
-        // anchor: 'end',
-        // align: 'end',
+        labels: {
+          title: null
+        },
+        anchor: 'end',
+        align: 'end',
       }
     }
   };
-  public barChartLabels: Label[] = [];
-  public barChartType: ChartType = 'bar';
-  public barChartLegend = true;
-  public barChartPlugins = [pluginDataLabels];
 
-  public barChartData: ChartDataSets[] = [
+  barChartCardioOptions: ChartOptions = {
+    responsive: true,
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: {
+      yAxes: [
+        {
+          id: 'y-axis-0',
+          position: 'left',
+        },
+        {
+          id: 'y-axis-1',
+          position: 'right',
+        }
+      ]
+    },
+    plugins: {
+      datalabels: {
+        labels: {
+          title: null
+        },
+        anchor: 'end',
+        align: 'end',
+      }
+    }
+  };
+
+  barChartLabels: Label[] = [];
+  barChartType: ChartType = 'bar';
+  barChartLegend = true;
+  barChartPlugins = [pluginDataLabels];
+
+  barChartData: ChartDataSets[] = [
     {
       data: this.stats.weekly.intensite,
       label: 'Intensité',
       backgroundColor: "#cc0202",
-      borderColor: '#FFFFFF',
       hoverBackgroundColor: "#cc0202",
-      barThickness: 6,
+      barThickness: 4,
     },
     {
       data: this.stats.weekly.volume,
       label: 'Volume',
-      borderColor: '#FFFFFF',
       backgroundColor: "#000000",
       hoverBackgroundColor: "#000000",
-      barThickness: 6,
+      barThickness: 4,
     },
     {
       data: this.stats.weekly.tonnage,
       label: 'Tonnage',
       backgroundColor: "#C1C1C1",
-      borderColor: '#FFFFFF',
       hoverBackgroundColor: "#C1C1C1",
-      barThickness: 6,
+      barThickness: 4,
       yAxisID: 'y-axis-1'
+    }
+  ];
+
+  barChartCardioData: ChartDataSets[] = [
+    {
+      data: this.stats.cardio.intensity,
+      label: 'Intensity',
+      backgroundColor: "#cc0202",
+      hoverBackgroundColor: "#cc0202",
+      barThickness: 4,
+      yAxisID: 'y-axis-1',
+    },{
+      data: this.stats.cardio.volume,
+      label: 'Volume',
+      backgroundColor: "#000000",
+      hoverBackgroundColor: "#000000",
+      barThickness: 4,
     }
   ];
 
@@ -237,6 +291,9 @@ export class AthleteStatsComponent implements OnInit {
         this.workouts = _.cloneDeep(workouts);
 
         this.barChartLabels = [];
+        this.stats.movements = {};
+        this.movements = [];
+
         let allKeys = Object.keys(workouts);
         let isEmpty = allKeys.length == 0;
         // let isDaily = allKeys.length <= 30;
@@ -270,7 +327,6 @@ export class AthleteStatsComponent implements OnInit {
         let modulo = isDaily ? 1 : 7;
 
         for(let i = 0; i < diff; i++) {
-          console.log(i % modulo, modulo, diff);
           if (i % modulo == 0) {
             let property = format(currentDate, 'yyyy-MM-dd');
             let propertyKey = format(currentDate, 'MM/dd');
@@ -292,28 +348,322 @@ export class AthleteStatsComponent implements OnInit {
 
         if (isDaily) {
           this.tabs.map((part) => {
-            if (this.workouts[part.date]) {
-              part.workouts = this.workouts[part.date];
+            this._initPart(part);
+            return part;
+          });
+        } else {
+          this.tabs.map((part) => {
+            this._initPartWeek(part);
+            return part;
+          });
+        }
 
-              let volume = 0;
-              let tonnage = 0;
-              let intensite = 0;
-              let intensiteSize = 0;
-              let parentId = 0;
+        this.isLoading = false;
+    });
+  }
 
-              part.workouts.map((workout) => {
-                workout.program.exercices.map((exercice) => {
+  private _initPartWeek(part) {
+    let startDay = startOfWeek(new Date(part.date), {weekStartsOn: 1});
+    let selectedDay;
+    for (let workoutKey in this.workouts) {
+      selectedDay = startOfWeek(new Date(workoutKey), {weekStartsOn: 1});
+      if (format(startDay, 'yyyy-MM-dd') === format(selectedDay, 'yyyy-MM-dd')) {
+        // console.log(workout);
+        part.workouts = _.concat(part.workouts, this.workouts[workoutKey]);
+      }
+    }
+
+    let volume = 0;
+    let tonnage = 0;
+    let intensite = 0;
+    let intensiteSize = 0;
+    let parentId = 0;
+
+    let cardioVolume = 0;
+    let cardioIntensite = 0;
+    let cardioIntensiteSize = 0;
+
+    part.workouts.map((workout) => {
+      workout.program && workout.program.exercices.map((exercice) => {
+        // Exercice simple
+        if (exercice.type.id === 1) {
+          exercice.movements && exercice.movements.map((movement) => {
+            parentId = this.categories[movement.category_id];
+
+
+            movement.sets.map((set) => {
+              volume += set.rep * set.set;
+              tonnage += set.rep * set.set * set.value;
+              intensite += set.value;
+              intensiteSize++
+            });
+
+            if (parentId) {
+              this._calcMovements(movement, volume, tonnage, intensite, intensiteSize);
+
+              this.stats.categories[parentId].movements.push(movement);
+              this.stats.categories[parentId].volume += volume;
+              this.stats.categories[parentId].tonnage += tonnage;
+              this.stats.categories[parentId].intensite += intensite;
+
+              this.stats.categories[parentId].intensiteSize += intensiteSize;
+            }
+          });
+        // Exercice complex - AMRAP
+        } else if (exercice.type.id === 2 || exercice.type.id === 3) {
+          exercice.movements && exercice.movements.map((movement) => {
+            parentId = this.categories[movement.category_id];
+
+            movement.sets.map((set) => {
+              volume += set.rep * exercice.sets;
+              tonnage += set.rep * exercice.sets * set.value;
+              intensite += set.value;
+              intensiteSize++
+            });
+
+            if (parentId) {
+              this._calcMovements(movement, volume, tonnage, intensite, intensiteSize);
+
+              this.stats.categories[parentId].movements.push(movement);
+              this.stats.categories[parentId].volume += volume;
+              this.stats.categories[parentId].tonnage += tonnage;
+              this.stats.categories[parentId].intensite += intensite;
+
+              this.stats.categories[parentId].intensiteSize += intensiteSize;
+            }
+          });
+        // Exercice complex - For Time
+        } else if (exercice.type.id === 4) {
+          if (exercice.time_style == 1) {
+            exercice.movements && exercice.movements.map((movement) => {
+              parentId = this.categories[movement.category_id];
+
+              movement.sets.map((set) => {
+                volume += set.rep * exercice.time_style_fixed;
+                tonnage += set.rep * exercice.time_style_fixed * set.value;
+                intensite += set.value;
+                intensiteSize++
+              });
+
+              if (parentId) {
+                this._calcMovements(movement, volume, tonnage, intensite, intensiteSize);
+
+                this.stats.categories[parentId].movements.push(movement);
+                this.stats.categories[parentId].volume += volume;
+                this.stats.categories[parentId].tonnage += tonnage;
+                this.stats.categories[parentId].intensite += intensite;
+
+                this.stats.categories[parentId].intensiteSize += intensiteSize;
+              }
+            });
+          } else if (exercice.time_style == 2) {
+            let setKeys = exercice.time_style_varying.split(' ');
+            if (setKeys.length) {
+              setKeys.map((sets) => {
+
+                exercice.movements && exercice.movements.map((movement) => {
+                  parentId = this.categories[movement.category_id];
+
+                  movement.sets.map((set) => {
+                    volume += set.rep * sets;
+                    tonnage += set.rep * sets * set.value;
+                    intensite += set.value;
+                    intensiteSize++
+                  });
+
+                  if (parentId) {
+                    this._calcMovements(movement, volume, tonnage, intensite, intensiteSize);
+
+                    this.stats.categories[parentId].movements.push(movement);
+                    this.stats.categories[parentId].volume += volume;
+                    this.stats.categories[parentId].tonnage += tonnage;
+                    this.stats.categories[parentId].intensite += intensite;
+
+                    this.stats.categories[parentId].intensiteSize += intensiteSize;
+                  }
+                });
+              });
+            }
+          }
+        // Exercice complex - EMOM
+        } else if (exercice.type.id === 5) {
+          let sets = parseInt('' + (exercice.emom_duration * 60 / exercice.emom_seconds));
+
+          exercice.movements && exercice.movements.map((movement) => {
+            parentId = this.categories[movement.category_id];
+
+            movement.sets.map((set) => {
+              volume += set.rep * sets;
+              tonnage += set.rep * sets * set.value;
+              intensite += set.value;
+              intensiteSize++
+            });
+
+            if (parentId) {
+              this._calcMovements(movement, volume, tonnage, intensite, intensiteSize);
+
+              this.stats.categories[parentId].movements.push(movement);
+              this.stats.categories[parentId].volume += volume;
+              this.stats.categories[parentId].tonnage += tonnage;
+              this.stats.categories[parentId].intensite += intensite;
+
+              this.stats.categories[parentId].intensiteSize += intensiteSize;
+            }
+          });
+        // Exercice complex - Cardio
+        } else if (exercice.type.id === 7) {
+          if (exercice.cardio_scoring == 1) {
+            cardioVolume += exercice.cardio_cardio_movement.interval;
+            cardioIntensite += exercice.cardio_cardio_movement.value;
+            cardioIntensiteSize++
+          } else if (exercice.cardio_scoring == 2) {
+            exercice.cardio_intervals_movement.sets.map((set) => {
+              cardioVolume += set.interval * set.set;
+              cardioIntensite += set.value;
+              cardioIntensiteSize++
+            });
+          }
+        }
+      })
+    });
+
+    this.stats.categories[1].intensity = parseInt('' + this.stats.categories[1].intensite / this.stats.categories[1].intensiteSize);
+    this.stats.categories[2].intensity = parseInt('' + this.stats.categories[2].intensite / this.stats.categories[2].intensiteSize);
+    this.stats.categories[3].intensity = parseInt('' + this.stats.categories[3].intensite / this.stats.categories[3].intensiteSize);
+    this.stats.categories[4].intensity = parseInt('' + this.stats.categories[4].intensite / this.stats.categories[4].intensiteSize);
+    this.stats.categories[5].intensity = parseInt('' + this.stats.categories[5].intensite / this.stats.categories[5].intensiteSize);
+    this.stats.categories[6].intensity = parseInt('' + this.stats.categories[6].intensite / this.stats.categories[6].intensiteSize);
+    this.stats.categories[7].intensity = parseInt('' + this.stats.categories[7].intensite / this.stats.categories[7].intensiteSize);
+
+    this.stats.weekly.intensite.push(parseInt('' + intensite / intensiteSize) | 0);
+    this.stats.weekly.volume.push(volume | 0);
+    this.stats.weekly.tonnage.push(tonnage | 0);
+
+    this.stats.cardio.volume.push(cardioVolume | 0);
+    this.stats.cardio.intensity.push(parseInt('' + cardioIntensite / cardioIntensiteSize) | 0);
+
+    this.barChartData[0].data = this.stats.weekly.intensite;
+    this.barChartData[1].data = this.stats.weekly.volume;
+    this.barChartData[2].data = this.stats.weekly.tonnage;
+
+    let noEmptyData = _.filter(this.barChartData[0].data, (data) => data > 0);
+    this.stats.weekly.intensiteRound = parseInt('' + _.reduce(this.barChartData[0].data, (a: number, b: number) => a + b, 0) / noEmptyData.length);
+
+
+    this.stats.weekly.volumeRound = _.reduce(this.barChartData[1].data, (a: number, b: number) => a + b, 0);
+    this.stats.weekly.tonnageRound = _.reduce(this.barChartData[2].data, (a: number, b: number) => a + b, 0);
+
+    this.barChartData[0].data = this.stats.weekly.intensite;
+
+    this.barChartCardioData[0].data = this.stats.cardio.intensity;
+    this.barChartCardioData[1].data = this.stats.cardio.volume;
+  }
+
+  private _initPart(part) {
+    if (this.workouts[part.date]) {
+      part.workouts = this.workouts[part.date];
+
+      let volume = 0;
+      let tonnage = 0;
+      let intensite = 0;
+      let intensiteSize = 0;
+      let parentId = 0;
+
+      let cardioVolume = 0;
+      let cardioIntensite = 0;
+      let cardioIntensiteSize = 0;
+
+      part.workouts.map((workout) => {
+        workout.program.exercices.map((exercice) => {
+          // Exercice simple
+          if (exercice.type.id === 1) {
+            exercice.movements && exercice.movements.map((movement) => {
+              parentId = this.categories[movement.category_id];
+
+
+              movement.sets.map((set) => {
+                volume += set.rep * set.set;
+                tonnage += set.rep * set.set * set.value;
+                intensite += set.value;
+                intensiteSize++
+              });
+
+              if (parentId) {
+                this._calcMovements(movement, volume, tonnage, intensite, intensiteSize);
+
+                this.stats.categories[parentId].movements.push(movement);
+                this.stats.categories[parentId].volume += volume;
+                this.stats.categories[parentId].tonnage += tonnage;
+                this.stats.categories[parentId].intensite += intensite;
+
+                this.stats.categories[parentId].intensiteSize += intensiteSize;
+              }
+            });
+          // Exercice complex - AMRAP
+          } else if (exercice.type.id === 2 || exercice.type.id === 3) {
+            exercice.movements && exercice.movements.map((movement) => {
+              parentId = this.categories[movement.category_id];
+
+              movement.sets.map((set) => {
+                volume += set.rep * exercice.sets;
+                tonnage += set.rep * exercice.sets * set.value;
+                intensite += set.value;
+                intensiteSize++
+              });
+
+              if (parentId) {
+                this._calcMovements(movement, volume, tonnage, intensite, intensiteSize);
+
+                this.stats.categories[parentId].movements.push(movement);
+                this.stats.categories[parentId].volume += volume;
+                this.stats.categories[parentId].tonnage += tonnage;
+                this.stats.categories[parentId].intensite += intensite;
+
+                this.stats.categories[parentId].intensiteSize += intensiteSize;
+              }
+            });
+          // Exercice complex - For Time
+          } else if (exercice.type.id === 4) {
+            if (exercice.time_style == 1) {
+              exercice.movements && exercice.movements.map((movement) => {
+                parentId = this.categories[movement.category_id];
+
+                movement.sets.map((set) => {
+                  volume += set.rep * exercice.time_style_fixed;
+                  tonnage += set.rep * exercice.time_style_fixed * set.value;
+                  intensite += set.value;
+                  intensiteSize++
+                });
+
+                if (parentId) {
+                  this._calcMovements(movement, volume, tonnage, intensite, intensiteSize);
+
+                  this.stats.categories[parentId].movements.push(movement);
+                  this.stats.categories[parentId].volume += volume;
+                  this.stats.categories[parentId].tonnage += tonnage;
+                  this.stats.categories[parentId].intensite += intensite;
+
+                  this.stats.categories[parentId].intensiteSize += intensiteSize;
+                }
+              });
+            } else if (exercice.time_style == 2) {
+              let setKeys = exercice.time_style_varying.split(' ');
+              if (setKeys.length) {
+                setKeys.map((sets) => {
+
                   exercice.movements && exercice.movements.map((movement) => {
                     parentId = this.categories[movement.category_id];
 
                     movement.sets.map((set) => {
-                      volume += set.rep * set.set;
-                      tonnage += set.rep * set.set * set.value;
+                      volume += set.rep * sets;
+                      tonnage += set.rep * sets * set.value;
                       intensite += set.value;
                       intensiteSize++
                     });
 
                     if (parentId) {
+                      this._calcMovements(movement, volume, tonnage, intensite, intensiteSize);
+
                       this.stats.categories[parentId].movements.push(movement);
                       this.stats.categories[parentId].volume += volume;
                       this.stats.categories[parentId].tonnage += tonnage;
@@ -321,40 +671,114 @@ export class AthleteStatsComponent implements OnInit {
 
                       this.stats.categories[parentId].intensiteSize += intensiteSize;
                     }
-                  })
-                })
+                  });
+                });
+              }
+            }
+          // Exercice complex - EMOM
+          } else if (exercice.type.id === 5) {
+            let sets = parseInt('' + (exercice.emom_duration * 60 / exercice.emom_seconds));
+
+            exercice.movements && exercice.movements.map((movement) => {
+              parentId = this.categories[movement.category_id];
+
+              movement.sets.map((set) => {
+                volume += set.rep * sets;
+                tonnage += set.rep * sets * set.value;
+                intensite += set.value;
+                intensiteSize++
               });
 
-              this.stats.categories[1].intensity = parseInt('' + this.stats.categories[1].intensite / this.stats.categories[1].intensiteSize);
-              this.stats.categories[2].intensity = parseInt('' + this.stats.categories[2].intensite / this.stats.categories[2].intensiteSize);
-              this.stats.categories[3].intensity = parseInt('' + this.stats.categories[3].intensite / this.stats.categories[3].intensiteSize);
-              this.stats.categories[4].intensity = parseInt('' + this.stats.categories[4].intensite / this.stats.categories[4].intensiteSize);
-              this.stats.categories[5].intensity = parseInt('' + this.stats.categories[5].intensite / this.stats.categories[5].intensiteSize);
-              this.stats.categories[6].intensity = parseInt('' + this.stats.categories[6].intensite / this.stats.categories[6].intensiteSize);
-              this.stats.categories[7].intensity = parseInt('' + this.stats.categories[7].intensite / this.stats.categories[7].intensiteSize);
+              if (parentId) {
+                this._calcMovements(movement, volume, tonnage, intensite, intensiteSize);
 
-              this.stats.weekly.intensite.push(parseInt('' + intensite / intensiteSize));
-              this.stats.weekly.volume.push(volume);
-              this.stats.weekly.tonnage.push(tonnage);
-            } else {
-              part.workouts = [];
-              this.stats.weekly.intensite.push(0);
-              this.stats.weekly.volume.push(0);
-              this.stats.weekly.tonnage.push(0);
+                this.stats.categories[parentId].movements.push(movement);
+                this.stats.categories[parentId].volume += volume;
+                this.stats.categories[parentId].tonnage += tonnage;
+                this.stats.categories[parentId].intensite += intensite;
+
+                this.stats.categories[parentId].intensiteSize += intensiteSize;
+              }
+            });
+          // Exercice complex - Cardio
+          } else if (exercice.type.id === 7) {
+            if (exercice.cardio_scoring == 1) {
+              cardioVolume += exercice.cardio_cardio_movement.interval;
+              cardioIntensite += exercice.cardio_cardio_movement.value;
+              cardioIntensiteSize++
+            } else if (exercice.cardio_scoring == 2) {
+              exercice.cardio_intervals_movement.sets.map((set) => {
+                cardioVolume += set.interval * set.set;
+                cardioIntensite += set.value;
+                cardioIntensiteSize++
+              });
             }
+          }
+        })
+      });
 
-            this.barChartData[0].data = this.stats.weekly.intensite;
-            this.barChartData[1].data = this.stats.weekly.volume;
-            this.barChartData[2].data = this.stats.weekly.tonnage;
+      this.stats.categories[1].intensity = parseInt('' + this.stats.categories[1].intensite / this.stats.categories[1].intensiteSize);
+      this.stats.categories[2].intensity = parseInt('' + this.stats.categories[2].intensite / this.stats.categories[2].intensiteSize);
+      this.stats.categories[3].intensity = parseInt('' + this.stats.categories[3].intensite / this.stats.categories[3].intensiteSize);
+      this.stats.categories[4].intensity = parseInt('' + this.stats.categories[4].intensite / this.stats.categories[4].intensiteSize);
+      this.stats.categories[5].intensity = parseInt('' + this.stats.categories[5].intensite / this.stats.categories[5].intensiteSize);
+      this.stats.categories[6].intensity = parseInt('' + this.stats.categories[6].intensite / this.stats.categories[6].intensiteSize);
+      this.stats.categories[7].intensity = parseInt('' + this.stats.categories[7].intensite / this.stats.categories[7].intensiteSize);
 
-            return part;
-          });
-        } else {
+      this.stats.weekly.intensite.push(parseInt('' + intensite / intensiteSize) | 0);
+      this.stats.weekly.volume.push(volume | 0);
+      this.stats.weekly.tonnage.push(tonnage | 0);
 
-        }
+      this.stats.cardio.volume.push(cardioVolume | 0);
+      this.stats.cardio.intensity.push(parseInt('' + cardioIntensite / cardioIntensiteSize) | 0);
+    } else {
+      part.workouts = [];
+      this.stats.weekly.intensite.push(0);
+      this.stats.weekly.volume.push(0);
+      this.stats.weekly.tonnage.push(0);
+    }
 
-        this.isLoading = false;
-    });
+    this.barChartData[0].data = this.stats.weekly.intensite;
+    this.barChartData[1].data = this.stats.weekly.volume;
+    this.barChartData[2].data = this.stats.weekly.tonnage;
+
+    let noEmptyData = _.filter(this.barChartData[0].data, (data) => data > 0);
+    this.stats.weekly.intensiteRound = parseInt('' + _.reduce(this.barChartData[0].data, (a: number, b: number) => a + b, 0) / noEmptyData.length);
+
+
+    this.stats.weekly.volumeRound = _.reduce(this.barChartData[1].data, (a: number, b: number) => a + b, 0);
+    this.stats.weekly.tonnageRound = _.reduce(this.barChartData[2].data, (a: number, b: number) => a + b, 0);
+
+    this.barChartData[0].data = this.stats.weekly.intensite;
+
+    this.barChartCardioData[0].data = this.stats.cardio.intensity;
+    this.barChartCardioData[1].data = this.stats.cardio.volume;
+  }
+
+  private _calcMovements(movement, volume, tonnage, intensite, intensiteSize) {
+    if (!this.stats.movements[movement.movement_id]) {
+      this.stats.movements[movement.movement_id] = {
+        movements: [movement],
+        volume: volume,
+        tonnage: tonnage,
+        intensite: intensite,
+        intensiteSize: intensiteSize,
+        name: movement.name,
+      };
+    } else {
+      this.stats.movements[movement.movement_id].movements.push(movement);
+      this.stats.movements[movement.movement_id].volume += volume;
+      this.stats.movements[movement.movement_id].tonnage += tonnage;
+      this.stats.movements[movement.movement_id].intensite += intensite;
+      this.stats.movements[movement.movement_id].intensiteSize += intensiteSize;
+    }
+
+    this.movements = []
+    for(let mvt in this.stats.movements) {
+      this.stats.movements[mvt].intensity = parseInt('' + this.stats.movements[mvt].intensite / this.stats.movements[mvt].intensiteSize);
+      this.movements.push(this.stats.movements[mvt]);
+    }
+
   }
 
   private _clean() {

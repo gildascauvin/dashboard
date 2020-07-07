@@ -114,6 +114,8 @@ export class AthleteCalendarComponent implements OnInit {
 
     this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe((o) => {
       this._syncWorkouts(null, true);
+
+      console.log(o);
     });
 
     this.sub.workoutsGroupReset = this.templatesService.onWorkoutsGroupReset.subscribe(() => {

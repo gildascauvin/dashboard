@@ -53,6 +53,30 @@
 	</div>
 	<div class="col-md-7">
 		<div class="box-stats-left">
+			<h3 class="text-center mt-4 mb-4">{{ '#Weekly overload' | dgTranslate }}</h3>
+			<div class="row mt-4 mb-4">
+				<div class="col-md-4 text-center">
+					<div class="mrv-score black">
+						<div class="mrv-score-icon"></div>
+						<div class="mrv-score-number">{{ stats.weekly.volumeRound }}</div>
+					</div>
+					{{ '#Volume' | dgTranslate | uppercase}}
+				</div>
+				<div class="col-md-4 text-center">
+					<div class="mrv-score grey">
+						<div class="mrv-score-icon"></div>
+						<div class="mrv-score-number">{{ stats.weekly.tonnageRound }}</div>
+					</div>
+					{{ '#Tonnage' | dgTranslate | uppercase}}
+				</div>
+				<div class="col-md-4 text-center">
+					<div class="mrv-score red">
+						<div class="mrv-score-icon"></div>
+						<div class="mrv-score-number">{{ stats.weekly.intensiteRound }}</div>
+					</div>
+					{{ '#Av. weight' | dgTranslate | uppercase}}
+				</div>
+			</div>
 			<div class="box-stats-title">
 				<div>
 				  <div>
@@ -61,6 +85,24 @@
 				        [datasets]="barChartData"
 				        [labels]="barChartLabels"
 				        [options]="barChartOptions"
+				        [plugins]="barChartPlugins"
+				        [legend]="barChartLegend"
+				        [chartType]="barChartType">
+				      </canvas>
+				    </div>
+				  </div>
+				</div>
+			</div>
+
+			<h3 class="text-center mt-4 mb-4">{{ '#Cardio' | dgTranslate }}</h3>
+			<div class="box-stats-title">
+				<div>
+				  <div>
+				    <div style="display: block">
+				      <canvas baseChart
+				        [datasets]="barChartCardioData"
+				        [labels]="barChartLabels"
+				        [options]="barChartCardioOptions"
 				        [plugins]="barChartPlugins"
 				        [legend]="barChartLegend"
 				        [chartType]="barChartType">
@@ -79,67 +121,67 @@
 			    <ng-template ngbNavContent>
 			      <ul class="list-group">
 							<li class="list-group-item" *ngIf="stats.categories[1].volume">
-								<h3>{{stats.categories[1].label}}</h3>
-								<p>{{ stats.categories[1].movements.length}} {{ '#exercices' | dgTranslate }}</p>
-								<p>
+								<h5>{{stats.categories[1].label}}</h5>
+								<span class="float-right">
 									<span class="badge mr-2 badge-dark">v: {{stats.categories[1].volume}}</span>
 									<span class="badge mr-2 badge-secondary">t: {{stats.categories[1].tonnage}} </span>
 									<span class="badge mr-2 badge-danger">i: {{stats.categories[1].intensity}} %</span>
-								</p>
+								</span>
+								<p>{{ stats.categories[1].movements.length}} {{ '#exercices' | dgTranslate }}</p>
 							</li>
 							<li class="list-group-item" *ngIf="stats.categories[2].volume">
-								<h3>{{stats.categories[2].label}}</h3>
-								<p>{{ stats.categories[2].movements.length}} {{ '#exercices' | dgTranslate }}</p>
-								<p>
+								<h5>{{stats.categories[2].label}}</h5>
+								<span class="float-right">
 									<span class="badge mr-2 badge-dark">v: {{stats.categories[2].volume}}</span>
 									<span class="badge mr-2 badge-secondary">t: {{stats.categories[2].tonnage}}</span>
 									<span class="badge mr-2 badge-danger">i: {{stats.categories[2].intensity}} %</span>
-								</p>
+								</span>
+								<p>{{ stats.categories[2].movements.length}} {{ '#exercices' | dgTranslate }}</p>
 							</li>
 							<li class="list-group-item" *ngIf="stats.categories[3].volume">
-								<h3>{{stats.categories[3].label}}</h3>
-								<p>{{ stats.categories[3].movements.length}} {{ '#exercices' | dgTranslate }}</p>
-								<p>
+								<h5>{{stats.categories[3].label}}</h5>
+								<span class="float-right">
 									<span class="badge mr-2 badge-dark">v: {{stats.categories[3].volume}}</span>
 									<span class="badge mr-2 badge-secondary">t: {{stats.categories[3].tonnage}}</span>
 									<span class="badge mr-2 badge-danger">i: {{stats.categories[3].intensity}} %</span>
-								</p>
+								</span>
+								<p>{{ stats.categories[3].movements.length}} {{ '#exercices' | dgTranslate }}</p>
 							</li>
 							<li class="list-group-item" *ngIf="stats.categories[4].volume">
-								<h3>{{stats.categories[4].label}}</h3>
-								<p>{{ stats.categories[4].movements.length}} {{ '#exercices' | dgTranslate }}</p>
-								<p>
+								<h5>{{stats.categories[4].label}}</h5>
+								<span class="float-right">
 									<span class="badge mr-2 badge-dark">v: {{stats.categories[4].volume}}</span>
 									<span class="badge mr-2 badge-secondary">t: {{stats.categories[4].tonnage}}</span>
 									<span class="badge mr-2 badge-danger">i: {{stats.categories[4].intensity}} %</span>
-								</p>
+								</span>
+								<p>{{ stats.categories[4].movements.length}} {{ '#exercices' | dgTranslate }}</p>
 							</li>
 							<li class="list-group-item" *ngIf="stats.categories[5].volume">
-								<h3>{{stats.categories[5].label}}</h3>
-								<p>{{ stats.categories[5].movements.length}} {{ '#exercices' | dgTranslate }}</p>
-								<p>
+								<h5>{{stats.categories[5].label}}</h5>
+								<span class="float-right">
 									<span class="badge mr-2 badge-dark">v: {{stats.categories[5].volume}}</span>
 									<span class="badge mr-2 badge-secondary">t: {{stats.categories[5].tonnage}}</span>
 									<span class="badge mr-2 badge-danger">i: {{stats.categories[5].intensity}} %</span>
-								</p>
+								</span>
+								<p>{{ stats.categories[5].movements.length}} {{ '#exercices' | dgTranslate }}</p>
 							</li>
 							<li class="list-group-item" *ngIf="stats.categories[6].volume">
-								<h3>{{stats.categories[6].label}}</h3>
-								<p>{{ stats.categories[6].movements.length}} {{ '#exercices' | dgTranslate }}</p>
-								<p>
+								<h5>{{stats.categories[6].label}}</h5>
+								<span class="float-right">
 									<span class="badge mr-2 badge-dark">v: {{stats.categories[6].volume}}</span>
 									<span class="badge mr-2 badge-secondary">t: {{stats.categories[6].tonnage}}</span>
 									<span class="badge mr-2 badge-danger">i: {{stats.categories[6].intensity}} %</span>
-								</p>
+								</span>
+								<p>{{ stats.categories[6].movements.length}} {{ '#exercices' | dgTranslate }}</p>
 							</li>
 							<li class="list-group-item" *ngIf="stats.categories[7].volume">
-								<h3>{{stats.categories[7].label}}</h3>
-								<p>{{ stats.categories[7].movements.length}} {{ '#exercices' | dgTranslate }}</p>
-								<p>
+								<h5>{{stats.categories[7].label}}</h5>
+								<span class="float-right">
 									<span class="badge mr-2 badge-dark">v: {{stats.categories[7].volume}}</span>
 									<span class="badge mr-2 badge-secondary">t: {{stats.categories[7].tonnage}}</span>
 									<span class="badge mr-2 badge-danger">i: {{stats.categories[7].intensity}} %</span>
-								</p>
+								</span>
+								<p>{{ stats.categories[7].movements.length}} {{ '#exercices' | dgTranslate }}</p>
 							</li>
 						</ul>
 			    </ng-template>
@@ -147,6 +189,17 @@
 			  <li ngbNavItem>
 			    <a ngbNavLink>{{ '#Exercices' | dgTranslate }}</a>
 			    <ng-template ngbNavContent>
+			    	<ul class="list-group">
+							<li class="list-group-item" *ngFor="let mvt of movements">
+								<h5>{{ mvt.name }}</h5>
+								<span class="float-right">
+									<span class="badge mr-2 badge-dark">v: {{mvt.volume}}</span>
+									<span class="badge mr-2 badge-secondary">t: {{mvt.tonnage}}</span>
+									<span class="badge mr-2 badge-danger">i: {{mvt.intensity}} %</span>
+								</span>
+								<p>{{ mvt.movements && mvt.movements.length}} {{ '#exercices' | dgTranslate }}</p>
+							</li>
+						</ul>
 			    </ng-template>
 			  </li>
 			</ul>

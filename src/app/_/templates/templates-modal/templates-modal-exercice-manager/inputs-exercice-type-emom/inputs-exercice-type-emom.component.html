@@ -63,16 +63,16 @@
 	</div>
 </div>
 
-<div class="col-md-12">
+<div class="col-md-12 mb-3">
 	<label>{{ '#Duration/Interval' | dgTranslate }}</label>
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-5">
 			<div class="form-inline">
 				<input type="text" [(ngModel)]="model.emom_duration" class="form-control emom-interval-inputs">
 		    	{{ '#Duration/Every' | dgTranslate }}
 			</div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-3">
 			<div class="form-inline">
 				<input type="text" [(ngModel)]="model.emom_seconds" class="form-control emom-interval-inputs">
 		    	{{ '#Seconds' | dgTranslate }}

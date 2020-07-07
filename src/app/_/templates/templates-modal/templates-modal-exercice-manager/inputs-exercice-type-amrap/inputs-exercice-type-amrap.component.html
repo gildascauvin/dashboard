@@ -50,9 +50,20 @@
 	</div>
 </div>
 
-<div class="col-md-12" *ngIf="model.type && model.type.id == 3">
-	<div class="form-group">
-		<label>{{ '#Timecap' | dgTranslate }}</label>
-		<input type="number" [(ngModel)]="model.amrap_timecap" placeholder="10" class="form-control">
+<div class="col-md-12">
+	<div class="row">
+		<div class="col-md-3">
+			<div class="form-group">
+				<label>{{ '#Timecap' | dgTranslate }}</label>
+				<input type="number" [(ngModel)]="model.amrap_timecap" placeholder="10" class="form-control">
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="form-group">
+				<label>{{ '#Sets' | dgTranslate }}</label>
+				<input placeholder="5" [(ngModel)]="model.sets" type="number" class="form-control">
+		  </div>
+		</div>
 	</div>
 </div>
+

@@ -41,3 +41,39 @@
 .custom-day.faded {
   background-color: rgba(2, 117, 216, 0.5);
 }
+.mrv-score {
+	width: 85px;
+    border: solid 6px #d44000;
+    border-radius: 49%;
+    height: 85px;
+    margin: 20px auto 5px;
+    text-align: center;
+    background-color: #fbfbfb;
+	&.red {
+    	border: solid 6px #d44000;
+	}
+	&.black {
+    	border: solid 6px #000000;
+
+	}
+	&.grey {
+    	border: solid 6px #C1C1C1;
+
+	}
+    .mrv-score-icon {
+    	font-family: Lato;
+    }
+
+    .mrv-score-number {
+		margin-top: 25px;
+		font-size: 18px;
+		font-family: Lato;
+		font-weight: bold;
+		margin-bottom: -5px;
+    }
+
+    .mrv-score-label {
+    	font-family: Lato;
+		font-size: 12px;
+    }
+}

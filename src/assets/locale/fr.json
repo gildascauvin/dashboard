@@ -304,5 +304,11 @@
   "#minutes": "minutes",
   "#Sets": "Sets",
   "#rounds for time": "rounds for time",
-  "#exercices": "exercices"
+  "#exercices": "exercices",
+  "#Duration/Every": "Duration/Every",
+  "#Seconds": "Seconds",
+  "#Weekly overload": "Weekly overload",
+  "#Volume": "Volume",
+  "#Tonnage": "Tonnage",
+  "#Av. weight": "Av. weight"
 }
