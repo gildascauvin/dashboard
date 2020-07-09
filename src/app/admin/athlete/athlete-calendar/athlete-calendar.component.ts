@@ -577,8 +577,11 @@ export class AthleteCalendarComponent implements OnInit {
       workout.program_json = JSON.stringify(workout.program);
 
       if (workout) {
-        this.usersService.createWorkout(workout).subscribe((response: any) => {});
-        workouts.push(workout);
+        this.usersService.createWorkout(workout).subscribe((response: any) => {
+          if (response.workout) {
+            workouts.push(_.cloneDeep(response.workout));
+          }
+        });
       }
     }
 

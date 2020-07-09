@@ -120,69 +120,17 @@
 			    <a ngbNavLink>{{ '#Categories' | dgTranslate }}</a>
 			    <ng-template ngbNavContent>
 			      <ul class="list-group">
-							<li class="list-group-item" *ngIf="stats.categories[1].volume">
-								<h5>{{stats.categories[1].label}}</h5>
-								<span class="float-right">
-									<span class="badge mr-2 badge-dark">v: {{stats.categories[1].volume}}</span>
-									<span class="badge mr-2 badge-secondary">t: {{stats.categories[1].tonnage}} </span>
-									<span class="badge mr-2 badge-danger">i: {{stats.categories[1].intensity}} %</span>
-								</span>
-								<p>{{ stats.categories[1].movements.length}} {{ '#exercices' | dgTranslate }}</p>
-							</li>
-							<li class="list-group-item" *ngIf="stats.categories[2].volume">
-								<h5>{{stats.categories[2].label}}</h5>
-								<span class="float-right">
-									<span class="badge mr-2 badge-dark">v: {{stats.categories[2].volume}}</span>
-									<span class="badge mr-2 badge-secondary">t: {{stats.categories[2].tonnage}}</span>
-									<span class="badge mr-2 badge-danger">i: {{stats.categories[2].intensity}} %</span>
-								</span>
-								<p>{{ stats.categories[2].movements.length}} {{ '#exercices' | dgTranslate }}</p>
-							</li>
-							<li class="list-group-item" *ngIf="stats.categories[3].volume">
-								<h5>{{stats.categories[3].label}}</h5>
-								<span class="float-right">
-									<span class="badge mr-2 badge-dark">v: {{stats.categories[3].volume}}</span>
-									<span class="badge mr-2 badge-secondary">t: {{stats.categories[3].tonnage}}</span>
-									<span class="badge mr-2 badge-danger">i: {{stats.categories[3].intensity}} %</span>
-								</span>
-								<p>{{ stats.categories[3].movements.length}} {{ '#exercices' | dgTranslate }}</p>
-							</li>
-							<li class="list-group-item" *ngIf="stats.categories[4].volume">
-								<h5>{{stats.categories[4].label}}</h5>
-								<span class="float-right">
-									<span class="badge mr-2 badge-dark">v: {{stats.categories[4].volume}}</span>
-									<span class="badge mr-2 badge-secondary">t: {{stats.categories[4].tonnage}}</span>
-									<span class="badge mr-2 badge-danger">i: {{stats.categories[4].intensity}} %</span>
-								</span>
-								<p>{{ stats.categories[4].movements.length}} {{ '#exercices' | dgTranslate }}</p>
-							</li>
-							<li class="list-group-item" *ngIf="stats.categories[5].volume">
-								<h5>{{stats.categories[5].label}}</h5>
-								<span class="float-right">
-									<span class="badge mr-2 badge-dark">v: {{stats.categories[5].volume}}</span>
-									<span class="badge mr-2 badge-secondary">t: {{stats.categories[5].tonnage}}</span>
-									<span class="badge mr-2 badge-danger">i: {{stats.categories[5].intensity}} %</span>
-								</span>
-								<p>{{ stats.categories[5].movements.length}} {{ '#exercices' | dgTranslate }}</p>
-							</li>
-							<li class="list-group-item" *ngIf="stats.categories[6].volume">
-								<h5>{{stats.categories[6].label}}</h5>
-								<span class="float-right">
-									<span class="badge mr-2 badge-dark">v: {{stats.categories[6].volume}}</span>
-									<span class="badge mr-2 badge-secondary">t: {{stats.categories[6].tonnage}}</span>
-									<span class="badge mr-2 badge-danger">i: {{stats.categories[6].intensity}} %</span>
-								</span>
-								<p>{{ stats.categories[6].movements.length}} {{ '#exercices' | dgTranslate }}</p>
-							</li>
-							<li class="list-group-item" *ngIf="stats.categories[7].volume">
-								<h5>{{stats.categories[7].label}}</h5>
-								<span class="float-right">
-									<span class="badge mr-2 badge-dark">v: {{stats.categories[7].volume}}</span>
-									<span class="badge mr-2 badge-secondary">t: {{stats.categories[7].tonnage}}</span>
-									<span class="badge mr-2 badge-danger">i: {{stats.categories[7].intensity}} %</span>
-								</span>
-								<p>{{ stats.categories[7].movements.length}} {{ '#exercices' | dgTranslate }}</p>
-							</li>
+			      	<ng-container *ngFor="let category of categoriesData">
+								<li class="list-group-item" *ngIf="category && category.volume">
+									<h5>{{ category.label }}</h5>
+									<span class="float-right">
+										<span class="badge mr-2 badge-dark">v: {{category.volume}}</span>
+										<span class="badge mr-2 badge-secondary">t: {{category.tonnage}}</span>
+										<span class="badge mr-2 badge-danger">i: {{category.intensity}} %</span>
+									</span>
+									<p>{{ category.movements.length}} {{ '#exercices' | dgTranslate }}</p>
+								</li>
+							</ng-container>
 						</ul>
 			    </ng-template>
 			  </li>

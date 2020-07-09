@@ -61,7 +61,7 @@
 								  			[dragData]="workout"
 						  					ngbTooltip="{{ '#Move workout' | dgTranslate }}: {{ workout.name | dgTranslate }}"></i>
 
-						  				<input type="text" placeholder="{{ '#Workout name' | dgTranslate }}" class="box-body-workout-inputs ml-4" [autofocus]="true" [(ngModel)]="workout.name">
+						  				<input [disabled]="true" type="text" placeholder="{{ '#Workout name' | dgTranslate }}" class="box-body-workout-inputs ml-4" [autofocus]="true" [(ngModel)]="workout.name">
 						  				<span class="box-body-workout-views ml-4" placement="top" ngbTooltip="{{ workout.name }}"> {{ workout.name }}</span>
 						  			</h6>
 

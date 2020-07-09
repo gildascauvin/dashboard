@@ -1,0 +1,51 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left"><i class="fa fa-cog"></i> {{ '#Manage athletes' | dgTranslate }}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" [disabled]="isLoading" (click)="cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<div class="list-group list-group-flush">
+		<ng-container *ngFor="let athlete of athletes">
+			<div *ngIf="athlete.profile" class="list-group-item">
+				<div class="row">
+					<div class="col-md-12">
+						{{ athlete.profile.firstname + ' ' + athlete.profile.lastname }}
+						<label class="switch pull-right">
+						  <input type="checkbox"
+						  	[(ngModel)]="model[athlete.client_id]"
+						  	(ngModelChange)="onChangeActive($event, athlete)">
+						  <span class="slider round"></span>
+						</label>
+					</div>
+					<div class="col-md-7" *ngIf="!model[athlete.client_id]">
+						<form class="form-inline">
+						  <div class="form-group">
+						    <div class="input-group">
+						      <input [(ngModel)]="athlete.dateStart" [disabled]="model[athlete.client_id]" class="form-control"  placeholder="yyyy-mm-dd"
+						             name="dp" ngbDatepicker #d="ngbDatepicker">
+						      <div class="input-group-append">
+						        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="fa fa-calendar"></i></button>
+						      </div>
+						    </div>
+						  </div>
+						</form>
+					</div>
+					<div class="col-md-5" *ngIf="!model[athlete.client_id]">
+						<select [(ngModel)]="athlete.dayStart" [disabled]="model[athlete.client_id]" class="ml-2">
+						  <optgroup *ngFor="let i of Arr(program.weeks_count).fill(1); let in=index;" label="{{ '#Week' | dgTranslate }} {{ in + 1 }}">
+						    <option *ngFor="let y of Arr(7).fill(1); let ind=index;" [value]="(ind + i) + (in * 7)">{{ '#Day'  | dgTranslate }} {{ (ind + i) + (in * 7) }}</option>
+						  </optgroup>
+						</select>
+					</div>
+				</div>
+			</div>
+		</ng-container>
+	</div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-light mr-4" [disabled]="isLoading" (click)="cancel()">
+		<i class="fa fa-close"></i> {{ '#Close' | dgTranslate }}
+	</button>
+</div>
+

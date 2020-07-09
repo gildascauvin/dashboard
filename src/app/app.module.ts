@@ -75,6 +75,13 @@ import { InputsExerciceTypeOpenComponent } from './_/templates/templates-modal/t
 import { InputsExerciceTypeCardioComponent } from './_/templates/templates-modal/templates-modal-exercice-manager/inputs-exercice-type-cardio/inputs-exercice-type-cardio.component';
 import { InputsExerciceTypeCustomComponent } from './_/templates/templates-modal/templates-modal-exercice-manager/inputs-exercice-type-custom/inputs-exercice-type-custom.component';
 
+import { UsersModalProgramCreateComponent } from './_/templates/programs/users-modal-program-create/users-modal-program-create.component';
+import { UsersModalProgramEditComponent } from './_/templates/programs/users-modal-program-edit/users-modal-program-edit.component';
+import { UsersModalProgramDeleteComponent } from './_/templates/programs/users-modal-program-delete/users-modal-program-delete.component';
+import { UsersModalProgramAthleteManagerComponent } from './_/templates/programs/users-modal-program-athlete-manager/users-modal-program-athlete-manager.component';
+import { UsersModalProgramDuplicateComponent } from './_/templates/programs/users-modal-program-duplicate/users-modal-program-duplicate.component';
+import { UsersModalProgramAssignComponent } from './_/templates/programs/users-modal-program-assign/users-modal-program-assign.component';
+
 import { InputAutocompleteComponent } from './_/components/forms/input-autocomplete/input-autocomplete.component';
 import { AutofocusDirective } from './_/directives/autofocus.directive';
 
@@ -120,6 +127,12 @@ import { AutofocusDirective } from './_/directives/autofocus.directive';
     InputAutocompleteComponent,
     AutofocusDirective,
     AthleteProgramsComponent,
+    UsersModalProgramCreateComponent,
+    UsersModalProgramEditComponent,
+    UsersModalProgramDeleteComponent,
+    UsersModalProgramAthleteManagerComponent,
+    UsersModalProgramDuplicateComponent,
+    UsersModalProgramAssignComponent,
   ],
   imports: [
     FormsModule,

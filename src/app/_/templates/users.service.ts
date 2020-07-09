@@ -81,8 +81,18 @@ export class UsersService {
     return this.httpService.get(query);
   }
 
+  getAllPrograms() {
+    let page: any = {
+      totalElements: 0,
+      pageNumber: 0,
+      size: 500,
+    };
+
+    return this.httpService.get(`program`);
+  }
+
   getProgram(id) {
-    return this.httpService.get(`program/one/${id}`);
+    return this.httpService.get(`program/${id}`);
   }
 
   getOne(id) {
@@ -142,7 +152,7 @@ export class UsersService {
     return this.httpService.post(`user/${id}/client/${invitationId}/response/${clientId}`, model);
   }
 
-  activeClientToProgram(userId, programId, clientId, isActive){
+  activeClientToProgram(userId, programId, clientId, isActive, dateStart?, dayStart?){
     let model = {
       is_active: !!isActive
     };

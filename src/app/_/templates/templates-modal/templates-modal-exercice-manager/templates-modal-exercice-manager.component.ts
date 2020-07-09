@@ -81,6 +81,8 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
 
     this.model.sets = this.model.sets || 5;
     this.model.updated = true;
+
+    console.log(this);
   }
 
   ngOnDestroy(): void {
