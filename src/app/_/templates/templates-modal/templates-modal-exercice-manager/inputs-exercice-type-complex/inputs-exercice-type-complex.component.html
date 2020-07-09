@@ -20,7 +20,7 @@
 				<button class="btn float-right" *ngIf="movement.sets.length > 1" (click)="removeSet(movement.sets, setIndex)"><i class="fa fa-close"></i></button>
 
 				<div class="form-row align-items-center">
-    			<div class="col-auto">
+    			<div class="col-auto" *ngIf="movement.has_repetitions">
 						<div class="input-group">
 							<input placeholder="1" [(ngModel)]="set.rep" type="number" class="form-control number-movement-list">
 							<div class="input-group-apppend">
@@ -28,10 +28,10 @@
 			        </div>
 			      </div>
 			    </div>
-			    <div class="col-auto">
+			    <div class="col-auto" *ngIf="movement.has_value">
 						<input placeholder="90" [(ngModel)]="set.value" type="number" class="form-control number-movement-list ml-2 mr-2">
 			    </div>
-			    <div class="col-auto">
+			    <div class="col-auto" *ngIf="movement.has_unit">
 						<select [(ngModel)]="set.unit" type="number" class="form-control number-movement-list">
 							<option [value]="1">lbs</option>
 							<option [value]="2">kg</option>
