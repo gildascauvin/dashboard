@@ -34,12 +34,16 @@ export class AthleteStatsComponent implements OnInit {
 
   stats: any = {
     weekly: {
-      intensite: [],
-      intensiteRound: 0,
       volume: [],
-      volumeRound: 0,
       tonnage: [],
+      intensite: [],
+
+      realIntensite: [],
+      realIntensiteSize: [],
+
+      volumeRound: 0,
       tonnageRound: 0,
+      intensiteRound: 0,
     },
     categories: {},
     movements: {},
@@ -465,6 +469,9 @@ export class AthleteStatsComponent implements OnInit {
     this.stats.weekly.volume.push(this.liveStats.volume | 0);
     this.stats.weekly.tonnage.push(this.liveStats.tonnage | 0);
 
+    this.stats.weekly.realIntensite.push(this.liveStats.intensite);
+    this.stats.weekly.realIntensiteSize.push(this.liveStats.intensiteSize);
+
     this.stats.cardio.volume.push(cardioVolume | 0);
     this.stats.cardio.intensity.push(parseInt('' + cardioIntensite / cardioIntensiteSize) | 0);
 
@@ -473,8 +480,11 @@ export class AthleteStatsComponent implements OnInit {
     this.barChartData[2].data = this.stats.weekly.tonnage;
 
     let noEmptyData = _.filter(this.barChartData[0].data, (data) => data > 0);
-    this.stats.weekly.intensiteRound = parseInt('' + _.reduce(this.barChartData[0].data, (a: number, b: number) => a + b, 0) / noEmptyData.length);
 
+    let totalIntensite = _.reduce(this.stats.weekly.realIntensite, (a: number, b: number) => a + b, 0);
+    let totalIntensiteSize = _.reduce(this.stats.weekly.realIntensiteSize, (a: number, b: number) => a + b, 0);
+
+    this.stats.weekly.intensiteRound = parseInt('' + totalIntensite/totalIntensiteSize);
 
     this.stats.weekly.volumeRound = _.reduce(this.barChartData[1].data, (a: number, b: number) => a + b, 0);
     this.stats.weekly.tonnageRound = _.reduce(this.barChartData[2].data, (a: number, b: number) => a + b, 0);
@@ -604,6 +614,10 @@ export class AthleteStatsComponent implements OnInit {
       this.stats.weekly.volume.push(this.liveStats.volume | 0);
       this.stats.weekly.tonnage.push(this.liveStats.tonnage | 0);
 
+      this.stats.weekly.realIntensite.push(this.liveStats.intensite);
+      this.stats.weekly.realIntensiteSize.push(this.liveStats.intensiteSize);
+
+
       this.stats.cardio.volume.push(cardioVolume | 0);
       this.stats.cardio.intensity.push(parseInt('' + cardioIntensite / cardioIntensiteSize) | 0);
     } else {
@@ -611,6 +625,8 @@ export class AthleteStatsComponent implements OnInit {
       this.stats.weekly.intensite.push(0);
       this.stats.weekly.volume.push(0);
       this.stats.weekly.tonnage.push(0);
+      this.stats.weekly.realIntensite.push(0);
+      this.stats.weekly.realIntensiteSize.push(0);
     }
 
     this.barChartData[0].data = this.stats.weekly.intensite;
@@ -618,8 +634,10 @@ export class AthleteStatsComponent implements OnInit {
     this.barChartData[2].data = this.stats.weekly.tonnage;
 
     let noEmptyData = _.filter(this.barChartData[0].data, (data) => data > 0);
-    this.stats.weekly.intensiteRound = parseInt('' + _.reduce(this.barChartData[0].data, (a: number, b: number) => a + b, 0) / noEmptyData.length);
+    let totalIntensite = _.reduce(this.stats.weekly.realIntensite, (a: number, b: number) => a + b, 0);
+    let totalIntensiteSize = _.reduce(this.stats.weekly.realIntensiteSize, (a: number, b: number) => a + b, 0);
 
+    this.stats.weekly.intensiteRound = parseInt('' + totalIntensite/totalIntensiteSize);
 
     this.stats.weekly.volumeRound = _.reduce(this.barChartData[1].data, (a: number, b: number) => a + b, 0);
     this.stats.weekly.tonnageRound = _.reduce(this.barChartData[2].data, (a: number, b: number) => a + b, 0);
@@ -661,7 +679,7 @@ export class AthleteStatsComponent implements OnInit {
       this.movements.push(this.stats.movements[mvt]);
     }
 
-    this.movements = _.sortBy(this.movements, 'intensity').reverse();
+    this.movements = _.sortBy(this.movements, 'volume').reverse();
 
     if (this.stats.categories[parentId]) {
       this.stats.categories[parentId].movements.push(movement);
@@ -675,18 +693,20 @@ export class AthleteStatsComponent implements OnInit {
     for (let category in this.stats.categories) {
       this.categoriesData.push(this.stats.categories[category]);
     }
-    this.categoriesData = _.sortBy(this.categoriesData, 'intensity').reverse();
+    this.categoriesData = _.sortBy(this.categoriesData, 'volume').reverse();
   }
 
   private _clean() {
     this.stats = {
       weekly: {
-        intensite: [],
-        intensiteRound: 0,
         volume: [],
-        volumeRound: 0,
         tonnage: [],
+        intensite: [],
+        realIntensite: [],
+        realIntensiteSize: [],
+        volumeRound: 0,
         tonnageRound: 0,
+        intensiteRound: 0,
       },
       categories: {},
       movements: {},
