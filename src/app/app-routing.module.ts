@@ -17,6 +17,7 @@ import { AthleteStatsComponent } from './admin/athlete/athlete-stats/athlete-sta
 import { AthleteCalendarComponent } from './admin/athlete/athlete-calendar/athlete-calendar.component';
 import { AthleteNotificationsComponent } from './admin/athlete/athlete-notifications/athlete-notifications.component';
 import { AthleteProgramsComponent } from './admin/athlete/athlete-programs/athlete-programs.component';
+import { AthleteProgramsDetailComponent } from './admin/athlete/athlete-programs/athlete-programs-detail/athlete-programs-detail.component';
 
 import { CoachCalendarComponent } from './admin/coach/coach-calendar/coach-calendar.component';
 import { CoachDashboardComponent } from './admin/coach/coach-dashboard/coach-dashboard.component';
@@ -85,6 +86,9 @@ const routes: Routes = [{
       },{
         path: 'programs',
         component: AthleteProgramsComponent
+      },{
+        path: 'programs/:programId',
+        component: AthleteProgramsDetailComponent
       },{
         path: 'stats',
         component: AthleteStatsComponent

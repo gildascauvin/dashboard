@@ -216,7 +216,6 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
       this.sub = this.usersService.getAllMovements(val).subscribe((response: any) => {
         if (response && response.content) {
           this.movements = response.content;
-
         }
       });
     }
@@ -232,6 +231,14 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
       case 3:
       case "3":
         model[labelKey] = '%';
+        break;
+      case 4:
+      case "4":
+        model[labelKey] = 'watts';
+        break;
+      case 5:
+      case "5":
+        model[labelKey] = 'km/h';
         break;
 
       default:

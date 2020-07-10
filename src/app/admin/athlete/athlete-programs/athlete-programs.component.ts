@@ -35,6 +35,10 @@ export class AthleteProgramsComponent implements OnInit {
 
   ngOnInit(): void {
   	this._syncPrograms();
+
+    this.sub.updateUsers = this.usersService.onUserUpdated.subscribe(() => {
+      this._syncPrograms();
+    });
   }
 
   ngOnDestoy(): void {

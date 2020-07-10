@@ -42,6 +42,7 @@ import { AthleteProfileComponent } from './admin/athlete/athlete-profile/athlete
 import { AthleteStatsComponent } from './admin/athlete/athlete-stats/athlete-stats.component';
 import { AthleteCalendarComponent } from './admin/athlete/athlete-calendar/athlete-calendar.component';
 import { AthleteProgramsComponent } from './admin/athlete/athlete-programs/athlete-programs.component';
+import { AthleteProgramsDetailComponent } from './admin/athlete/athlete-programs/athlete-programs-detail/athlete-programs-detail.component';
 
 import { CoachComponent } from './admin/coach/coach.component';
 import { CoachCalendarComponent } from './admin/coach/coach-calendar/coach-calendar.component';
@@ -84,6 +85,7 @@ import { UsersModalProgramAssignComponent } from './_/templates/programs/users-m
 
 import { InputAutocompleteComponent } from './_/components/forms/input-autocomplete/input-autocomplete.component';
 import { AutofocusDirective } from './_/directives/autofocus.directive';
+import { UsersModalProgramAthleteManagerMeComponent } from './admin/users/users-modal/users-modal-program-athlete-manager-me/users-modal-program-athlete-manager-me.component';
 
 @NgModule({
   declarations: [
@@ -133,6 +135,8 @@ import { AutofocusDirective } from './_/directives/autofocus.directive';
     UsersModalProgramAthleteManagerComponent,
     UsersModalProgramDuplicateComponent,
     UsersModalProgramAssignComponent,
+    AthleteProgramsDetailComponent,
+    UsersModalProgramAthleteManagerMeComponent,
   ],
   imports: [
     FormsModule,

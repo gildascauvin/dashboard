@@ -682,7 +682,10 @@ export class AthleteStatsComponent implements OnInit {
     this.movements = _.sortBy(this.movements, 'volume').reverse();
 
     if (this.stats.categories[parentId]) {
-      this.stats.categories[parentId].movements.push(movement);
+      if (!_.find(this.stats.categories[parentId].movements, { 'movement_id': movement.movement_id })) {
+        this.stats.categories[parentId].movements.push(movement);
+      }
+
       this.stats.categories[parentId].volume += this.liveStats.volume;
       this.stats.categories[parentId].tonnage += this.liveStats.tonnage;
       this.stats.categories[parentId].intensite += this.liveStats.intensite;

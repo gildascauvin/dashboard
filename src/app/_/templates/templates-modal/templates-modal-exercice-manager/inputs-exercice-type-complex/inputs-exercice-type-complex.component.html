@@ -33,9 +33,7 @@
 			    </div>
 			    <div class="col-auto" *ngIf="movement.has_unit">
 						<select [(ngModel)]="set.unit" type="number" class="form-control number-movement-list">
-							<option [value]="1">lbs</option>
-							<option [value]="2">kg</option>
-							<option [value]="3">%</option>
+							<option *ngFor="let unit of configExercices.size" [value]="unit.id">{{ unit.name }}</option>
 						</select>
 			    </div>
 			  </div>

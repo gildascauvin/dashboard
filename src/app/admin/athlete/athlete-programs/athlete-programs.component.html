@@ -14,7 +14,7 @@
 					    <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
 					  </button>
 					  <div class="ngb-dropdown-menu" ngbDropdownMenu>
-					    <button ngbDropdownItem>
+					    <button ngbDropdownItem [routerLink]="['/athlete', 'programs', program.program_id ]">
 					      <i class="fa fa-pencil mr-2"></i> {{ '#Edit' | dgTranslate }}
 					    </button>
 
@@ -31,9 +31,7 @@
 					<span class="float-right mr-4"><b>{{ program.workouts_count }}</b> {{ '#workouts' | dgTranslate }}</span>
 					<span class="float-right mr-4"><b>{{ program.days_count }}</b> {{ '#days' | dgTranslate }}</span>
 					<span class="float-right mr-4"><b>{{ program.weeks_count }}</b> {{ '#weeks' | dgTranslate }}</span>
-
-					<span class="float-right mr-4"><b>{{ program.linked && program.linked.length || 0 }}</b> {{ '#athlets' | dgTranslate }}</span>
-					<a href="#" >{{ program.name }}</a>
+					<a href="#" [routerLink]="['/athlete', 'programs', program.program_id ]" >{{ program.name }}</a>
 
 				</div>
 			</div>

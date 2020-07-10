@@ -50,6 +50,9 @@ export const webConfig = {
  		size: [
  			{ id: 1, name: 'kg'},
 	 		{ id: 2, name: 'lbs'},
+	 		{ id: 3, name: '%'},
+	 		{ id: 4, name: 'watts'},
+	 		{ id: 5, name: 'km/h'},
  		],
  		section: [
  			{ id: 1, name: 'Simple exercices', label: 'An exercice for reps, meters...' },
