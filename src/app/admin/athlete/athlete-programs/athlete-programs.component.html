@@ -10,7 +10,7 @@
 			<div class="list-group list-group-flush">
 				<div *ngFor="let program of programs; let i=index" class="list-group-item">
 					<div ngbDropdown class="d-inline-block float-right">
-					  <button class="btn btn-outline-secondary btn-toogle-select" ngbDropdownToggle>
+					  <button class="btn btn-outline-secondary btn-sm btn-toogle-select" ngbDropdownToggle>
 					    <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
 					  </button>
 					  <div class="ngb-dropdown-menu" ngbDropdownMenu>
@@ -27,7 +27,9 @@
 					    </button>
 					  </div>
 					</div>
-
+					<button class="btn btn-outline-secondary btn-sm float-right mr-2" (click)="openProgramAthleteManagerMeModal(program)">
+						<i class="fa fa-link"></i> {{ '#Assign to me' | dgTranslate }}
+					</button>
 					<span class="float-right mr-4"><b>{{ program.workouts_count }}</b> {{ '#workouts' | dgTranslate }}</span>
 					<span class="float-right mr-4"><b>{{ program.days_count }}</b> {{ '#days' | dgTranslate }}</span>
 					<span class="float-right mr-4"><b>{{ program.weeks_count }}</b> {{ '#weeks' | dgTranslate }}</span>
@@ -38,4 +40,3 @@
 		</div>
 	</div>
 </div>
-

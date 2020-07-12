@@ -159,6 +159,13 @@ export class UsersService {
     return this.httpService.post(`user/${userId}/program/${programId}/client/${clientId}`, model);
   }
 
+  activeClientToProgramToMe(programId, clientId, isActive, dateStart?, dayStart?){
+    let model = {
+      is_active: !!isActive
+    };
+    return this.httpService.post(`program/${programId}/client/${clientId}`, model);
+  }
+
   // activeClientToProgram(userId, programId, clientId, isActive, dateStart, dayStart){
   //   let model = {
   //     is_active: !!isActive,

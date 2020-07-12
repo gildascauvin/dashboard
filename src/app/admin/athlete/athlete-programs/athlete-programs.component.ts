@@ -6,7 +6,10 @@ import * as _ from 'lodash';
 import { UsersModalProgramCreateComponent } from '../../../_/templates/programs/users-modal-program-create/users-modal-program-create.component';
 import { UsersModalProgramEditComponent } from '../../../_/templates/programs/users-modal-program-edit/users-modal-program-edit.component';
 import { UsersModalProgramDeleteComponent } from '../../../_/templates/programs/users-modal-program-delete/users-modal-program-delete.component';
+
 import { UsersModalProgramAthleteManagerComponent } from '../../../_/templates/programs/users-modal-program-athlete-manager/users-modal-program-athlete-manager.component';
+import { UsersModalProgramAthleteManagerMeComponent } from '../../../_/templates/programs/users-modal-program-athlete-manager-me/users-modal-program-athlete-manager-me.component';
+
 import { UsersModalProgramDuplicateComponent } from '../../../_/templates/programs/users-modal-program-duplicate/users-modal-program-duplicate.component';
 import { UsersModalProgramAssignComponent } from '../../../_/templates/programs/users-modal-program-assign/users-modal-program-assign.component';
 
@@ -99,6 +102,20 @@ export class AthleteProgramsComponent implements OnInit {
       modelProgram: _.cloneDeep(program)
     };
     this.bsModalRef = this.modalService.show(UsersModalProgramDeleteComponent, {
+      keyboard: false,
+      initialState: initialState,
+      class: 'modal-xs'
+    });
+  }
+
+  openProgramAthleteManagerMeModal(program) {
+    const initialState = {
+      modelId: program.program_id,
+      athletes: program.clients,
+      program: _.cloneDeep(program)
+    };
+
+    this.bsModalRef = this.modalService.show(UsersModalProgramAthleteManagerMeComponent, {
       keyboard: false,
       initialState: initialState,
       class: 'modal-xs'

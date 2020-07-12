@@ -18,6 +18,10 @@ import { UsersModalProgramCreateComponent } from '../../../../_/templates/progra
 import { UsersModalProgramEditComponent } from '../../../../_/templates/programs/users-modal-program-edit/users-modal-program-edit.component';
 import { UsersModalProgramDeleteComponent } from '../../../../_/templates/programs/users-modal-program-delete/users-modal-program-delete.component';
 import { UsersModalProgramDuplicateComponent } from '../../../../_/templates/programs/users-modal-program-duplicate/users-modal-program-duplicate.component';
+
+import { UsersModalProgramAthleteManagerComponent } from '../../../../_/templates/programs/users-modal-program-athlete-manager/users-modal-program-athlete-manager.component';
+import { UsersModalProgramAthleteManagerMeComponent } from '../../../../_/templates/programs/users-modal-program-athlete-manager-me/users-modal-program-athlete-manager-me.component';
+
 import { UsersModalProgramAssignComponent } from '../../../../_/templates/programs/users-modal-program-assign/users-modal-program-assign.component';
 
 import { UsersService } from '../../../../_/templates/users.service';
@@ -86,7 +90,7 @@ export class AthleteProgramsDetailComponent implements OnInit {
     this._initTemplate();
 
 	  this.sub.updateUsers = this.usersService.onUserUpdated.subscribe(() => {
-	    this._initUser();
+      this._initTemplate();
 	  });
 
     this.sub.templates = this.templatesService.onTemplateUpdated.subscribe(() => {
@@ -116,11 +120,11 @@ export class AthleteProgramsDetailComponent implements OnInit {
     this.sub.workoutsGroupReset && this.sub.workoutsGroupReset.unsubscribe();
   }
 
-  private _initUser() {
-    this.sub.model = this.usersService.getOne(this.currentModel.id).subscribe((userData) => {
-      this.currentModel = userData;
-    });
-  }
+  // private _initUser() {
+  //   this.sub.model = this.usersService.getOne(this.currentModel.id).subscribe((userData) => {
+  //     this.currentModel = userData;
+  //   });
+  // }
 
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event:
     KeyboardEvent) {
@@ -301,6 +305,34 @@ export class AthleteProgramsDetailComponent implements OnInit {
       keyboard: false,
       initialState: initialState,
       class: 'modal-lg'
+    });
+  }
+
+  openProgramAthleteManagerModal() {
+    const initialState = {
+      modelId: this.id,
+      athletes: this.currentModel.clients,
+      program: _.cloneDeep(this.weeks)
+    };
+
+    this.bsModalRef = this.modalService.show(UsersModalProgramAthleteManagerComponent, {
+      keyboard: false,
+      initialState: initialState,
+      class: 'modal-xs'
+    });
+  }
+
+  openProgramAthleteManagerMeModal() {
+    const initialState = {
+      modelId: this.id,
+      athletes: this.currentModel.clients,
+      program: _.cloneDeep(this.weeks)
+    };
+
+    this.bsModalRef = this.modalService.show(UsersModalProgramAthleteManagerMeComponent, {
+      keyboard: false,
+      initialState: initialState,
+      class: 'modal-xs'
     });
   }
 

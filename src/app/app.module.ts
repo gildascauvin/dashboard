@@ -82,10 +82,10 @@ import { UsersModalProgramDeleteComponent } from './_/templates/programs/users-m
 import { UsersModalProgramAthleteManagerComponent } from './_/templates/programs/users-modal-program-athlete-manager/users-modal-program-athlete-manager.component';
 import { UsersModalProgramDuplicateComponent } from './_/templates/programs/users-modal-program-duplicate/users-modal-program-duplicate.component';
 import { UsersModalProgramAssignComponent } from './_/templates/programs/users-modal-program-assign/users-modal-program-assign.component';
+import { UsersModalProgramAthleteManagerMeComponent } from './_/templates/programs/users-modal-program-athlete-manager-me/users-modal-program-athlete-manager-me.component';
 
 import { InputAutocompleteComponent } from './_/components/forms/input-autocomplete/input-autocomplete.component';
 import { AutofocusDirective } from './_/directives/autofocus.directive';
-import { UsersModalProgramAthleteManagerMeComponent } from './admin/users/users-modal/users-modal-program-athlete-manager-me/users-modal-program-athlete-manager-me.component';
 
 @NgModule({
   declarations: [
@@ -133,10 +133,10 @@ import { UsersModalProgramAthleteManagerMeComponent } from './admin/users/users-
     UsersModalProgramEditComponent,
     UsersModalProgramDeleteComponent,
     UsersModalProgramAthleteManagerComponent,
+    UsersModalProgramAthleteManagerMeComponent,
     UsersModalProgramDuplicateComponent,
     UsersModalProgramAssignComponent,
     AthleteProgramsDetailComponent,
-    UsersModalProgramAthleteManagerMeComponent,
   ],
   imports: [
     FormsModule,

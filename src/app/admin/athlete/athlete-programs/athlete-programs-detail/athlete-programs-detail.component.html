@@ -3,7 +3,7 @@
 		<button class="btn btn-primary ml-4 btn-sm float-right" (click)="openEditModal()"><i class="fa fa-pencil"></i></button>
 		{{ model.name }}
 
-		<button class="btn btn-outline-secondary btn-sm float-right">
+		<button class="btn btn-outline-secondary btn-sm float-right" (click)="openProgramAthleteManagerMeModal()">
 			<i class="fa fa-link"></i> {{ '#Assign to me' | dgTranslate }}
 		</button>
 		<small *ngIf="model.description"><br />{{ model.description }}</small>

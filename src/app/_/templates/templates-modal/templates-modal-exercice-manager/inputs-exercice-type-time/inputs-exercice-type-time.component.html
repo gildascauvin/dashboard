@@ -14,14 +14,14 @@
 	<div *ngFor="let movement of model.movements; let movementIndex=index;" class="list-group-item-step">
 		<div class="row">
 			<div class="col" *ngIf="movement.has_repetitions">
-				<input placeholder="1" type="number" [(ngModel)]="movement.quantity" class="form-control">
+				<input placeholder="1" type="number" [(ngModel)]="movement.sets[0].quantity" class="form-control">
 			</div>
 			<div class="col">{{ movement.name }}</div>
 			<div class="col" *ngIf="movement.has_value">
-				<input placeholder="130" type="number" [(ngModel)]="movement.value" class="form-control">
+				<input placeholder="130" type="number" [(ngModel)]="movement.sets[0].value" class="form-control">
 			</div>
 			<div class="col" *ngIf="movement.has_unit">
-				<select [(ngModel)]="movement.unit" class="form-control">
+				<select [(ngModel)]="movement.sets[0].unit" class="form-control">
 					<option *ngFor="let unit of configExercices.size" [value]="unit.id">{{ unit.name }}</option>
 				</select>
 			</div>
@@ -49,19 +49,6 @@
 </div>
 
 <div class="col-md-12">
-	<div class="form-group">
-		<label>{{ '#Style' | dgTranslate }}</label>
-		<div class="form-inline">
-			<div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]="model.time_style">
-			  <label ngbButtonLabel class="btn-light" *ngFor="let exerciceTime of configExercices.time" >
-			    <input ngbButton type="radio" [value]="exerciceTime.id"> {{ exerciceTime.name }}
-			  </label>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="col-md-12" *ngIf="model.time_style == 1">
 	<div class="form-inline mb-3">
 		<div class="form-group">
 	    <input class="form-control mr-3 style-time-rounds" type="number" [(ngModel)]="model.time_style_fixed">
@@ -70,17 +57,8 @@
 	    </label>
 	  </div>
 	</div>
-
 </div>
 
-<div class="col-md-12" *ngIf="model.time_style == 2">
-	<div class="mb-2">
-		<span class="badge badge-pill badge-dark mr-1" *ngFor="let time of varyingStyle">{{ time }}</span>
-	</div>
-	<div class="form-group">
-		<input type="text" [(ngModel)]="model.time_style_varying" (ngModelChange)="updateVaryingStyle($event)" class="form-control">
-	</div>
-</div>
 
 
 
