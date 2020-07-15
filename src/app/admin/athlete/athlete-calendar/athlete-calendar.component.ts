@@ -388,7 +388,7 @@ export class AthleteCalendarComponent implements OnInit {
       return;
     }
 
-    workouts.push(this.copyWorkouts[0]);
+    workouts.push(_.cloneDeep(this.copyWorkouts[0]));
   }
 
   addExerciceToWorkout(day, exercices, workout) {
