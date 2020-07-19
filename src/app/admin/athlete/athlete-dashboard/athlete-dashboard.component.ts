@@ -6,12 +6,14 @@ import { format, addHours, startOfISOWeek, startOfWeek, endOfWeek } from 'date-f
 import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
 import { DoorgetsTranslateService } from 'doorgets-ng-translate';
+import { delay } from 'rxjs/operators';
 
 import { webConfig } from '../../../web-config';
 
 import { AuthService } from '../../../_/services/http/auth.service';
 import { UserService } from '../../../_/services/model/user.service';
 import { UsersService } from '../../../_/templates/users.service';
+import { ResizeService } from '../../../_/services/ui/resize-service.service';
 
 import { TemplatesModalExerciceManagerComponent } from '../../../_/templates/templates-modal/templates-modal-exercice-manager/templates-modal-exercice-manager.component';
 
@@ -34,9 +36,13 @@ export class AthleteDashboardComponent implements OnInit {
   isEmpty = false;
   isLoading = false;
 
+  size: number = 1;
+  responsiveSize: number = 768;
+
   constructor(
     private authService: AuthService,
     private userService: UserService,
+    private resizeSvc: ResizeService,
     private usersService: UsersService,
     private modalService: BsModalService,
     private doorgetsTranslateService: DoorgetsTranslateService
@@ -56,6 +62,14 @@ export class AthleteDashboardComponent implements OnInit {
       this.user = this.authService.getUserData();
   		this._checkEmpty();
     });
+
+    this.resizeSvc.onResize$
+      .pipe(delay(0))
+        .subscribe(x => {
+          this.size = x;
+
+          console.log('-------------------', this.size);
+        });
   }
 
   ngOnDestroy(): void {

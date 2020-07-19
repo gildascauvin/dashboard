@@ -1,5 +1,5 @@
 <div class="row lead-container">
-	<div class="col-md-3 lead-left-bar">
+	<div class="col-md-3 lead-left-bar" *ngIf="size > responsiveSize">
 		<div class="lead-bar-content">
 			<div class="readiness-level">
 				<h3 class="readiness-level-title">{{ '#Your readiness level' | dgTranslate }}</h3>
@@ -104,7 +104,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-3 lead-right-bar">
+	<div class="col-md-3 lead-right-bar" *ngIf="size > responsiveSize">
 		<div class="lead-bar-content">
 			<div class="weekly-overload">
 				<h3 class="weekly-overload-title">{{ '#Weekly overload' | dgTranslate }}</h3>

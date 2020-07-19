@@ -534,15 +534,25 @@ export class AthleteStatsComponent implements OnInit {
             exercice.movements && exercice.movements.map((movement) => {
               parentId = this.categories[movement.category_id];
 
+              let _volume = 0;
+              let _tonnage = 0;
+              let _intensite = 0;
+              let _intensiteSize = 0;
+
               movement.sets.map((set) => {
-                volume += set.rep * set.set;
-                tonnage += set.rep * set.set * set.value;
-                intensite += set.rep * set.set * set.value;
-                intensiteSize += set.rep * set.set;
+                _volume += set.rep * set.set;
+                _tonnage += set.rep * set.set * set.value;
+                _intensite += set.rep * set.set * set.value;
+                _intensiteSize += set.rep * set.set;
               });
 
+              volume += _volume;
+              tonnage += _tonnage;
+              intensite += _intensite;
+              intensiteSize += _intensiteSize;
+
               if (parentId) {
-                this._calcMovements(movement, parentId, volume, tonnage, intensite, intensiteSize);
+                this._calcMovements(movement, parentId, _volume, _tonnage, _intensite, _intensiteSize);
               }
             });
           // Exercice complex
@@ -550,28 +560,25 @@ export class AthleteStatsComponent implements OnInit {
              exercice.movements && exercice.movements.map((movement) => {
               parentId = this.categories[movement.category_id];
 
-              console.log('Exercice complex', exercice);
-              console.log('---------------- BEFORE --------------------');
-              console.log('volume', volume);
-              console.log('tonnage', tonnage);
-              console.log('intensite', intensite);
-              console.log('intensiteSize', intensiteSize);
+              let _volume = 0;
+              let _tonnage = 0;
+              let _intensite = 0;
+              let _intensiteSize = 0;
 
               movement.sets.map((set) => {
-                volume += set.rep * exercice.sets;
-                tonnage += set.rep * exercice.sets * set.value;
-                intensite += set.rep * exercice.sets * set.value;
-                intensiteSize += set.rep * exercice.sets;
-
-                console.log('---------------- AFTER --------------------');
-                console.log('volume', volume, set.rep , exercice.sets);
-                console.log('tonnage', tonnage, set.rep, exercice.sets, set.value);
-                console.log('intensite', intensite);
-                console.log('intensiteSize', intensiteSize);
+                _volume += set.rep * exercice.sets;
+                _tonnage += set.rep * exercice.sets * set.value;
+                _intensite += set.rep * exercice.sets * set.value;
+                _intensiteSize += set.rep * exercice.sets;
               });
 
+              volume += _volume;
+              tonnage += _tonnage;
+              intensite += _intensite;
+              intensiteSize += _intensiteSize;
+
               if (parentId) {
-                this._calcMovements(movement, parentId, volume, tonnage, intensite, intensiteSize);
+                this._calcMovements(movement, parentId, _volume, _tonnage, _intensite, _intensiteSize);
               }
             });
           // Exercice AMRAP

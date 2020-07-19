@@ -1,67 +1,130 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav *ngIf="size > responsiveSize" class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container">
         <h1 class="pb-2 ml-md-0 ml-sm-3 ml-0 mr-3 pt-2">
-        	<a href="#" class="img-logo-brand"><img src="/assets/img/logo.png" width="82" height="82" alt=""></a>
+          <a href="#" class="img-logo-brand"><img src="/assets/img/logo.png" width="82" height="82" alt=""></a>
         </h1>
-        <button class="navbar-toggler my-2" type="button" data-toggle="collapse" data-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse ml-lg-2 ml-0" id="navbarCollapse">
-        	<div class="nav-top-header">
-            	<div class="content-header">
-            		<a class="links-menu" routerLinkActive="active" [routerLink]="['/athlete', 'programs']">
-            			<i class="fa fa-folder"></i> {{ '#Programs' | dgTranslate }}
-            		</a>
-		            <div class="dropdown profile-menu">
-					        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					          {{ user.data.firstname }} {{ user.data.lastname }}
-					        </a>
-					        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-					          <a class="dropdown-item" href="#">{{ '#Dashboard' | dgTranslate }}</a>
-					          <a class="dropdown-item" href="#">{{ '#Programs' | dgTranslate }}</a>
-					          <div class="dropdown-divider"></div>
-					          <a class="dropdown-item" href="#">{{ '#Settings' | dgTranslate }}</a>
-					          <a class="dropdown-item" href="#">{{ '#Documentation' | dgTranslate }}</a>
-					          <div class="dropdown-divider"></div>
-					          <button class="dropdown-item" (click)="logout()" href="#">{{ '#Logout' | dgTranslate }}</button>
-					        </div>
-					      </div>
-		          </div>
-		        </div>
+          <div class="nav-top-header">
+              <div class="content-header">
+                <a class="links-menu" routerLinkActive="active" [routerLink]="['/athlete', 'programs']">
+                  <i class="fa fa-folder"></i> {{ '#Programs' | dgTranslate }}
+                </a>
+                <div class="dropdown profile-menu">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ user.data.firstname }} {{ user.data.lastname }}
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">{{ '#Dashboard' | dgTranslate }}</a>
+                    <a class="dropdown-item" href="#">{{ '#Programs' | dgTranslate }}</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">{{ '#Settings' | dgTranslate }}</a>
+                    <a class="dropdown-item" href="#">{{ '#Documentation' | dgTranslate }}</a>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item" (click)="logout()" href="#">{{ '#Logout' | dgTranslate }}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="nav-bottom-header">
-            	<div class="content-header">
-	            	<button class="btn btn-primary float-right mr-4" (click)="openExerciceManagerModal()"><i class="fa fa-plus"></i> {{ '#Create a workout' | dgTranslate }}</button>
-	            	<ul class="navbar-nav flex-row mb-md-1 mt-md-0 mb-3 mt-2">
-	                <li class="nav-item">
-	                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/athlete', 'dashboard']">
-	                    	<i class="fa fa-user-circle-o mr-2"></i>
-	                    	{{ '#Overview' | dgTranslate }}
-	                    </a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/athlete', 'profile']">
-	                    	<i class="fa fa-heartbeat mr-1"></i>
-	                    	{{ '#Profile' | dgTranslate }}
-	                    </a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/athlete', 'calendar']">
-	                    	<i class="fa fa-calendar-o mr-1"></i>
-	                    	{{ '#Planning' | dgTranslate }}
-	                    </a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/athlete', 'stats']">
-	                    	<i class="fa fa-bar-chart mr-1"></i>
-	                    	{{ '#Statistics' | dgTranslate }}
-	                    </a>
-	                </li>
-		            </ul>
-	            </div>
-	          </div>
+              <div class="content-header">
+                <button class="btn btn-primary float-right mr-4" (click)="openExerciceManagerModal()"><i class="fa fa-plus"></i> {{ '#Create a workout' | dgTranslate }}</button>
+                <ul class="navbar-nav flex-row mb-md-1 mt-md-0 mb-3 mt-2">
+                  <li class="nav-item">
+                      <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/athlete', 'dashboard']">
+                        <i class="fa fa-user-circle-o mr-2"></i>
+                        {{ '#Overview' | dgTranslate }}
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/athlete', 'profile']">
+                        <i class="fa fa-heartbeat mr-1"></i>
+                        {{ '#Profile' | dgTranslate }}
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/athlete', 'calendar']">
+                        <i class="fa fa-calendar-o mr-1"></i>
+                        {{ '#Planning' | dgTranslate }}
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/athlete', 'stats']">
+                        <i class="fa fa-bar-chart mr-1"></i>
+                        {{ '#Statistics' | dgTranslate }}
+                      </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
         </div>
     </div>
 </nav>
+
+<nav *ngIf="size <= responsiveSize">
+  <div class="container-fluid top-custom-nav">
+    <div class="row">
+      <div class="col-10 text-left">
+        <span class="left-menu-title"><img src="/assets/img/logo.png" width="30" height="30" alt=""> ThePerfClub</span>
+        <button class="btn" (click)="toogleLeftMenu()"><i class="fa fa-bars"></i></button>
+      </div>
+      <div class="col-2 text-right"><button class="btn" (click)="toogleRightMenu()"><i class="fa fa-cog"></i></button></div>
+    </div>
+  </div>
+</nav>
+
+<div [class.cover-menu]="showLeftMenu || showRightMenu"></div>
+
+<div class="responsive-left-menu text-white" [class.responsive-left-menu-toogled]="!showLeftMenu">
+  <div class="text-right pb-2" (click)="showLeftMenu=false"><i class="fa fa-close"></i></div>
+  <div>
+    <div class="left-menu-title"><img src="/assets/img/logo.png" width="30" height="30" alt=""> ThePerfClub</div>
+    <div class="list-group list-group-flush">
+      <a class="list-group-item list-group-item-action list-group-item-dark" (click)="hiddenMenu()" routerLinkActive="active" [routerLink]="['/athlete', 'dashboard']">
+        <i class="fa fa-user-circle-o mr-2"></i>
+        {{ '#Overview' | dgTranslate }}
+      </a>
+      <a class="list-group-item list-group-item-action list-group-item-dark" (click)="hiddenMenu()" routerLinkActive="active" [routerLink]="['/athlete', 'profile']">
+        <i class="fa fa-heartbeat mr-1"></i>
+        {{ '#Profile' | dgTranslate }}
+      </a>
+      <a class="list-group-item list-group-item-action list-group-item-dark" (click)="hiddenMenu()" routerLinkActive="active" [routerLink]="['/athlete', 'calendar']">
+        <i class="fa fa-calendar-o mr-1"></i>
+        {{ '#Planning' | dgTranslate }}
+      </a>
+      <a class="list-group-item list-group-item-action list-group-item-dark" (click)="hiddenMenu()" routerLinkActive="active" [routerLink]="['/athlete', 'stats']">
+        <i class="fa fa-bar-chart mr-1"></i>
+        {{ '#Statistics' | dgTranslate }}
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<div class="responsive-right-menu" [class.responsive-right-menu-toogled]="!showRightMenu">
+  <div class="text-left pb-2" (click)="showRightMenu=false"><i class="fa fa-close"></i></div>
+   <div>
+    <div class="list-group list-group-flush">
+      <a class="list-group-item list-group-item-action" (click)="hiddenMenu()" routerLinkActive="active" [routerLink]="['/athlete', 'programs']">
+        <i class="fa fa-folder mr-2"></i>
+        {{ '#Programs' | dgTranslate }}
+      </a>
+      <a class="list-group-item list-group-item-action" (click)="hiddenMenu()" routerLinkActive="active" [routerLink]="['/athlete', 'other']">
+        <i class="fa fa-cog mr-1"></i>
+        {{ '#Settings' | dgTranslate }}
+      </a>
+      <a class="list-group-item list-group-item-action" (click)="hiddenMenu()" routerLinkActive="active" [routerLink]="['/athlete', 'other']">
+        <i class="fa fa-question mr-1"></i>
+        {{ '#Documentation' | dgTranslate }}
+      </a>
+      <a class="list-group-item list-group-item-action" (click)="logout()" href="#">
+        <i class="fa fa-sign-out mr-1"></i>
+        {{ '#Logout' | dgTranslate }}
+      </a>
+    </div>
+  </div>
+</div>
+
+
 <div class="container-fluid body-content-sections">
     <router-outlet></router-outlet>
 </div>
