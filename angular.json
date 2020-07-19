@@ -36,6 +36,7 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/popper.js/dist/umd/popper.min.js",
               "node_modules/lodash/lodash.js"
             ]
           },
@@ -130,6 +131,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "dashboard-app"
+    }
+  },
+  "defaultProject": "dashboard-app",
+  "cli": {
+    "analytics": "3f872e7d-f514-4206-966b-3b35b2d4407a"
+  }
 }
