@@ -11,6 +11,8 @@ import * as _ from 'lodash';
 })
 export class InputsExerciceTypeSimpleComponent implements OnInit {
 	@Input() model: any = {};
+  @Input() isPlanning: boolean = false;
+
   configExercices: any = webConfig.exercices;
   movements: any[] = [];
   sub: any;

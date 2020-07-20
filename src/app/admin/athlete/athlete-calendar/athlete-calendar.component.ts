@@ -114,8 +114,6 @@ export class AthleteCalendarComponent implements OnInit {
 
     this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe((o) => {
       this._syncWorkouts(null, true);
-
-      console.log(o);
     });
 
     this.sub.workoutsGroupReset = this.templatesService.onWorkoutsGroupReset.subscribe(() => {
@@ -164,7 +162,6 @@ export class AthleteCalendarComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log('changes', changes);
 
     for (const propName in changes) {
       if (changes.hasOwnProperty(propName)) {
@@ -174,7 +171,7 @@ export class AthleteCalendarComponent implements OnInit {
           }
 
           case 'weeks': {
-            console.log('weeks');
+            // console.log('weeks');
             // this._init();
           }
         }
@@ -198,7 +195,6 @@ export class AthleteCalendarComponent implements OnInit {
       this.endDay = endOfWeek(new Date(), {weekStartsOn: 1});
       this.startDay = startOfWeek(new Date(), {weekStartsOn: 1});
 
-      console.log('this', this);
       this.weeks = [];
     }
 
@@ -247,7 +243,6 @@ export class AthleteCalendarComponent implements OnInit {
     let today = startOfWeek(new Date(this.startedAtModel.year, this.startedAtModel.month - 1, this.startedAtModel.day), {weekStartsOn: 1});
 
     this.currentMonth = this._getMonthName(format(today, 'MM')) + ' ' + format(today, 'yyyy');
-    console.log('startedAtModel', today, startedAtModel, this.currentMonth);
 
     this.endDay = endOfWeek(new Date(this.startedAtModel.year, this.startedAtModel.month - 1, this.startedAtModel.day), {weekStartsOn: 1});
     this.startDay = startOfWeek(new Date(this.startedAtModel.year, this.startedAtModel.month - 1, this.startedAtModel.day), {weekStartsOn: 1});
@@ -352,9 +347,9 @@ export class AthleteCalendarComponent implements OnInit {
       //   };
 
       if (workout.workout_id) {
-        console.log('Updated');
+        // console.log('Updated');
       } else {
-        console.log('Created');
+        // console.log('Created');
         // this.usersService.createWorkout(body).subscribe((savedWorkout) => {
         //   console.log('savedWorkout', savedWorkout);
         // });
@@ -645,7 +640,6 @@ export class AthleteCalendarComponent implements OnInit {
     this.sub.onGetAllWorkout && this.sub.onGetAllWorkout.unsubscribe();
 
     let date = this.startedAtModel.year + '-' + this.startedAtModel.month + '-' + this.startedAtModel.day;
-    console.log('this.startedAtModel', this.startedAtModel);
     this.sub.onGetAllWorkout = this.usersService.getAllWorkout(date)
       .subscribe((workouts: any) => {
         if (workouts) {

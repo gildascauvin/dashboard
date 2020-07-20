@@ -8,6 +8,8 @@ import { webConfig } from '../../../../../web-config';
 })
 export class InputsExerciceTypeCustomComponent implements OnInit {
 	@Input() model: any = {};
+	@Input() isPlanning: boolean = false;
+
 
   configExercices: any = webConfig.exercices;
 

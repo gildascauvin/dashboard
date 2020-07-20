@@ -20,10 +20,13 @@
 			<div class="col" *ngIf="movement.has_value">
 				<input placeholder="130" type="number" [(ngModel)]="movement.sets[0].value" class="form-control">
 			</div>
-			<div class="col" *ngIf="movement.has_unit">
+			<div class="col" *ngIf="movement.has_unit && isPlanning">
 				<select [(ngModel)]="movement.sets[0].unit" class="form-control">
 					<option *ngFor="let unit of configExercices.size" [value]="unit.id">{{ unit.name }}</option>
 				</select>
+			</div>
+			<div class="col" *ngIf="movement.has_unit && !isPlanning">
+				%
 			</div>
 			<div class="col text-right">
 				<button class="btn" (click)="removeMovement(movementIndex)"><i class="fa fa-close"></i></button>

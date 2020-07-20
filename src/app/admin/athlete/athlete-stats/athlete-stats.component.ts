@@ -181,8 +181,6 @@ export class AthleteStatsComponent implements OnInit {
     this._init();
 
     this._syncWorkouts();
-
-    console.log('this', this);
   }
 
   onDateSelection(date: NgbDate, datepicker) {
@@ -701,8 +699,6 @@ export class AthleteStatsComponent implements OnInit {
 
     this.barChartCardioData[0].data = this.stats.cardio.intensity;
     this.barChartCardioData[1].data = this.stats.cardio.volume;
-
-    console.log(this);
   }
 
   private _setStats(rep, set, value) {

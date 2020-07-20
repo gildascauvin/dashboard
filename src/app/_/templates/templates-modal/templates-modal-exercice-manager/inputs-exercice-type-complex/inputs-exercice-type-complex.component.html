@@ -28,14 +28,19 @@
 			        </div>
 			      </div>
 			    </div>
+
 			    <div class="col-auto" *ngIf="movement.has_value">
 						<input placeholder="90" [(ngModel)]="set.value" type="number" class="form-control number-movement-list ml-2 mr-2">
 			    </div>
-			    <div class="col-auto" *ngIf="movement.has_unit">
+
+			    <div class="col-auto" *ngIf="movement.has_unit && isPlanning">
 						<select [(ngModel)]="set.unit" type="number" class="form-control number-movement-list">
 							<option *ngFor="let unit of configExercices.size" [value]="unit.id">{{ unit.name }}</option>
 						</select>
 			    </div>
+			    <div class="col" *ngIf="movement.has_unit && !isPlanning">
+						%
+					</div>
 			  </div>
 			</li>
 		</ul>

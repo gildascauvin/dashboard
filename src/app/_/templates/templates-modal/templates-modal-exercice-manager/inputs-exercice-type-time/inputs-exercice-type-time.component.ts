@@ -11,6 +11,8 @@ import * as _ from 'lodash';
 })
 export class InputsExerciceTypeTimeComponent implements OnInit {
 	@Input() model: any = {};
+  @Input() isPlanning: boolean = false;
+
   configExercices: any = webConfig.exercices;
   movements: any[] = [];
   varyingStyle: any[] = [12, 8, 5];
@@ -48,7 +50,7 @@ export class InputsExerciceTypeTimeComponent implements OnInit {
   onSelectedItem(item) {
   	let clone = _.cloneDeep(item);
 
-    clone.unit = 1;
+    clone.unit = 3;
     clone.sets = [{
       unit: 3
     }];

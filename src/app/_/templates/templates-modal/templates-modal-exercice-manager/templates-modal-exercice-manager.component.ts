@@ -108,7 +108,7 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
         this.setUnitLabel(set, 'unit', 'unit_label');
 
         return {
-          unit: parseInt('' + set.unit) || 1,
+          unit: parseInt('' + set.unit) || 3,
           set: set.set || 1,
           rep: set.rep || 1,
           value: set.value || 1,
@@ -200,6 +200,8 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
           }
         });
       }
+    } else {
+      this.bsModalRef.hide();
     }
   }
 
@@ -224,8 +226,11 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
   }
 
   setUnitLabel(model, key, labelKey) {
-    model[labelKey] = 'lbs';
+    model[labelKey] = '%';
     switch (model[key]) {
+      case 1:
+      case "1":
+        model[labelKey] = 'lbs';
       case 2:
       case "2":
         model[labelKey] = 'kg';
@@ -244,7 +249,7 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
         break;
 
       default:
-        model[labelKey] = 'lbs';
+        model[labelKey] = '%';
         break;
     }
   }

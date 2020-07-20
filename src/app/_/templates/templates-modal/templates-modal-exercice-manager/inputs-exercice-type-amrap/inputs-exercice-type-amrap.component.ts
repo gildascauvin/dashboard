@@ -10,7 +10,9 @@ import * as _ from 'lodash';
   styleUrls: ['./inputs-exercice-type-amrap.component.scss']
 })
 export class InputsExerciceTypeAmrapComponent implements OnInit {
-	@Input() model: any = {};
+  @Input() model: any = {};
+	@Input() isPlanning: boolean = false;
+
   configExercices: any = webConfig.exercices;
   movements: any[] = [];
   sub: any;

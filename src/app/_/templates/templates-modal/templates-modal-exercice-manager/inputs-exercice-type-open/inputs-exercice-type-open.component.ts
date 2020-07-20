@@ -9,6 +9,8 @@ import { webConfig } from '../../../../../web-config';
 })
 export class InputsExerciceTypeOpenComponent implements OnInit {
 	@Input() model: any = {};
+  @Input() isPlanning: boolean = false;
+
   configExercices: any = webConfig.exercices;
   movements: any[] = [];
   sub: any;

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, SimpleChanges, HostListener } from '@angular/core';
+import { Component, OnInit, Inject, Input, SimpleChanges, HostListener, ElementRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { DOCUMENT } from '@angular/common';
 
@@ -36,7 +36,7 @@ export class AthleteDashboardComponent implements OnInit {
   isEmpty = false;
   isLoading = false;
 
-  size: number = 1;
+  size: number = 768;
   responsiveSize: number = 768;
 
   constructor(
@@ -45,7 +45,10 @@ export class AthleteDashboardComponent implements OnInit {
     private resizeSvc: ResizeService,
     private usersService: UsersService,
     private modalService: BsModalService,
-    private doorgetsTranslateService: DoorgetsTranslateService
+    private doorgetsTranslateService: DoorgetsTranslateService,
+    private elementRef: ElementRef,
+    @Inject(DOCUMENT) private _document,
+
   	) { }
 
   ngOnInit(): void {
@@ -63,18 +66,15 @@ export class AthleteDashboardComponent implements OnInit {
   		this._checkEmpty();
     });
 
-    this.resizeSvc.onResize$
-      .pipe(delay(0))
-        .subscribe(x => {
-          this.size = x;
-
-          console.log('-------------------', this.size);
-        });
+    this.detectScreenSize();
   }
 
   ngOnDestroy(): void {
+    console.log('AthleteDashboardComponent::ngOnDestroy');
+
     this.sub.onUpdate && this.sub.onUpdate.unsubscribe();
-  	this.sub.userInfo && this.sub.userInfo.unsubscribe();
+    this.sub.userInfo && this.sub.userInfo.unsubscribe();
+  	this.sub.resizeSvc && this.sub.resizeSvc.unsubscribe();
   }
 
   private _initUser() {
@@ -114,7 +114,6 @@ export class AthleteDashboardComponent implements OnInit {
 
   private _checkEmpty() {
 		this.isEmpty = false;
-		console.log('this.user.workouts', this.flatWorkouts);
   	if (!this.flatWorkouts.length) {
 			this.isEmpty = true;
 		}
@@ -204,6 +203,18 @@ export class AthleteDashboardComponent implements OnInit {
         ]
       }
     };
+  }
+
+  @HostListener("window:resize", [])
+  private onResize() {
+    this.detectScreenSize();
+  }
+
+  private detectScreenSize() {
+    const currentSize = this._document.body.clientWidth;
+    console.log('detectScreenSize');
+    this.size = currentSize;
+    this.resizeSvc.onResize(currentSize);
   }
 
 }

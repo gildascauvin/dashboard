@@ -48,13 +48,7 @@ export class AthleteComponent implements OnInit {
       this.user = this.authService.getUserData();
     });
 
-    this.resizeSvc.onResize$
-      .pipe(delay(0))
-      .subscribe(x => {
-        this.size = x;
-
-        console.log('-------------------', this.size);
-      });
+    this.detectScreenSize();
   }
 
   ngOnDestroy(): void {
@@ -116,11 +110,11 @@ export class AthleteComponent implements OnInit {
 
   @HostListener("window:resize", [])
   private onResize() {
-    this.detectScreenSize();
+    // this.detectScreenSize();
   }
 
   ngAfterViewInit() {
-    this.detectScreenSize();
+    // this.detectScreenSize();
   }
 
   toogleLeftMenu() {
@@ -144,7 +138,8 @@ export class AthleteComponent implements OnInit {
 
   private detectScreenSize() {
     const currentSize = this._document.body.clientWidth;
-    console.log('currentSize', currentSize);
+    console.log('detectScreenSize');
+    this.size = currentSize;
     this.resizeSvc.onResize(currentSize);
   }
 }
