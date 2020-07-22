@@ -50,7 +50,6 @@ export const webConfig = {
  		gender: [
  			{ id: 1, name: 'Men'},
  			{ id: 2, name: 'Women'},
- 			{ id: 3, name: 'No'},
  		],
  		weight: [
  			{ id: 1, name: 'Very heavy (+90kg / +120kg)'},
