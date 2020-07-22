@@ -2,7 +2,87 @@
 	<div class="col-md-6 profile-left-bar">
 		<div class="profile-form">
 			<div class="profile-form-title">Your information</div>
-			<div class="profile-form-content"></div>
+			<div class="profile-form-content">
+				<div class="row">
+					<div class="col-md-12 mt-2">
+						<label>{{ '#Gender' | dgTranslate }}</label>
+						<select class="form-control" [(ngModel)]="user.data.gender">
+							<option *ngFor="let gender of configMrv.gender" [value]="gender.id">{{ gender.name }}</option>
+						</select>
+					</div>
+
+					<div class="col-md-12 mt-2">
+						<label>{{ '#Age' | dgTranslate }}</label>
+						<select class="form-control" [(ngModel)]="user.data.age">
+							<option *ngFor="let age of configMrv.age" [value]="age.id">{{ age.name }}</option>
+						</select>
+					</div>
+
+					<div class="col-md-12 mt-2">
+						<label>{{ '#Height' | dgTranslate }}</label>
+						<select class="form-control" [(ngModel)]="user.data.height">
+							<option *ngFor="let height of configMrv.height" [value]="height.id">{{ height.name }}</option>
+						</select>
+					</div>
+
+					<div class="col-md-12 mt-2">
+						<label>{{ '#Weight' | dgTranslate }}</label>
+						<select class="form-control" [(ngModel)]="user.data.weight">
+							<option *ngFor="let weight of configMrv.weight" [value]="weight.id">{{ weight.name }}</option>
+						</select>
+					</div>
+
+					<div class="col-md-12 mt-2">
+						<label>{{ '#Strenght' | dgTranslate }}</label>
+						<select class="form-control" [(ngModel)]="user.data.strenght">
+							<option *ngFor="let strenght of configMrv.strenght" [value]="strenght.id">{{ strenght.name }}</option>
+						</select>
+					</div>
+
+					<div class="col-md-12 mt-2">
+						<label>{{ '#Experience' | dgTranslate }}</label>
+						<select class="form-control" [(ngModel)]="user.data.experience">
+							<option *ngFor="let experience of configMrv.experience" [value]="experience.id">{{ experience.name }}</option>
+						</select>
+					</div>
+
+					<div class="col-md-12 mt-2">
+						<label>{{ '#Diet' | dgTranslate }}</label>
+						<select class="form-control" [(ngModel)]="user.data.diet">
+							<option *ngFor="let diet of configMrv.diet" [value]="diet.id">{{ diet.name }}</option>
+						</select>
+					</div>
+
+					<div class="col-md-12 mt-2">
+						<label>{{ '#Sleep' | dgTranslate }}</label>
+						<select class="form-control" [(ngModel)]="user.data.sleep">
+							<option *ngFor="let sleep of configMrv.sleep" [value]="sleep.id">{{ sleep.name }}</option>
+						</select>
+					</div>
+
+					<div class="col-md-12 mt-2">
+						<label>{{ '#Stress' | dgTranslate }}</label>
+						<select class="form-control" [(ngModel)]="user.data.stress">
+							<option *ngFor="let stress of configMrv.stress" [value]="stress.id">{{ stress.name }}</option>
+						</select>
+					</div>
+
+					<div class="col-md-12 mt-2">
+						<label>{{ '#Recovery' | dgTranslate }}</label>
+						<select class="form-control" [(ngModel)]="user.data.recovery">
+							<option *ngFor="let recovery of configMrv.recovery" [value]="recovery.id">{{ recovery.name }}</option>
+						</select>
+					</div>
+
+					<div class="col-md-12 mt-2">
+						<div class="form-group no-margin">
+							<button type="submit" (click)="save()" [disabled]="isLoading" class="btn btn-primary btn-block">
+								{{ '#Save' | dgTranslate }}
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="col-md-6 profile-right-bar">
@@ -11,10 +91,10 @@
 			<div class="profile-mrv-content">
 				<div class="mrv-score">
 					<div class="mrv-score-icon"><i class="fa fa-heartbeat"></i></div>
-					<div class="mrv-score-number">8/10</div>
+					<div class="mrv-score-number">{{user.data.mrv_score}}/10</div>
 					<div class="mrv-score-label">{{ '#Score MRV' | dgTranslate }}</div>
 				</div>
-				<p>{{ '#Hint to guide the volume level. A strong note indicates that you can have a high volume level. This index is also useful for comparing multiple athletes, and scheduling them accordingly.' | dgTranslate}}
+				<p>{{ '#Hint to guide the volume level. A strong note indicates that you can have a high volume level. This index is also useful for comparing multiple athletes, and scheduling them accordingly.' | dgTranslate}}</p>
 			</div>
 		</div>
 	</div>

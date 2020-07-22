@@ -119,8 +119,8 @@ export class UsersService {
     return this.httpService.post(`user`, model);
   }
 
-  updateUser(id, model) {
-    return this.httpService.put(`user/${id}`, model);
+  updateUser(model) {
+    return this.httpService.put(`user`, model);
   }
 
   removeUser(id, model) {

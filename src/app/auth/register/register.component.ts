@@ -58,6 +58,7 @@ export class RegisterComponent extends FormCore implements OnInit {
   errorsMessage: string = '';
 
   timezone: any[] = webConfig.timezone;
+  configMrv: any = webConfig.mrv;
 
   constructor(
     private router: Router,

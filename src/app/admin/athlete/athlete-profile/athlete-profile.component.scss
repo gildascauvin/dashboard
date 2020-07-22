@@ -5,13 +5,13 @@
 	.profile-left-bar {
 		.profile-form {
 			background-color: #FFFFFF;
-		    text-align: center;
 		    min-height: 600px;
 		    margin: 44px 60px;
 		    padding: 44px;
 			.profile-form-title {
 				font-size: 12pt;
 				font-weight: 700;
+				margin-bottom: 30px;
 			}
 			.profile-form-content {
 
@@ -39,6 +39,7 @@
 		}
 	}
 }
+
 .mrv-score {
 	width: 105px;
     border: solid 6px #d44000;

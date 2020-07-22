@@ -46,6 +46,65 @@ export const webConfig = {
         { name: "(GMT +13:00) Apia, Nukualofa", value: "+13:00"},
         { name: "(GMT +14:00) Line Islands, Tokelau", value: "+14:00"}
  	],
+ 	mrv: {
+ 		gender: [
+ 			{ id: 1, name: 'Men'},
+ 			{ id: 2, name: 'Women'},
+ 			{ id: 3, name: 'No'},
+ 		],
+ 		weight: [
+ 			{ id: 1, name: 'Very heavy (+90kg / +120kg)'},
+ 			{ id: 2, name: 'Heavy (75-90kg / 90-120kg)'},
+ 			{ id: 3, name: 'Medium (57-75kg / 75-90kg)'},
+ 			{ id: 4, name: 'Light (-57kg / -75 kg)'},
+ 		],
+ 		height: [
+ 			{ id: 1, name: 'Very tall (+175cm / +195cm)'},
+ 			{ id: 2, name: 'Tall (167-175cm / 182-195cm)'},
+ 			{ id: 3, name: 'Medium (160-167cm / 170-182cm)'},
+ 			{ id: 4, name: 'Small (-160cm / -170cm)'},
+ 		],
+ 		strenght: [
+ 			{ id: 1, name: 'Very strong'},
+ 			{ id: 2, name: 'Strong'},
+ 			{ id: 3, name: 'Medium'},
+ 			{ id: 4, name: 'Weak'},
+ 		],
+ 		experience: [
+ 			{ id: 1, name: 'Very advanced (+12 years)'},
+ 			{ id: 2, name: 'Advanced (8-12 years)'},
+ 			{ id: 3, name: 'Intermediate (4-8 years)'},
+ 			{ id: 4, name: 'Weak'},
+ 		],
+ 		age: [
+ 			{ id: 1, name: '50+'},
+ 			{ id: 2, name: '40-50'},
+ 			{ id: 3, name: '30-40'},
+ 			{ id: 4, name: '20-30'},
+ 			{ id: 5, name: '<19'},
+ 		],
+ 		diet: [
+ 			{ id: 1, name: 'Bad (not enough calories)'},
+ 			{ id: 2, name: 'Average (cals ok but bad macros / timing)'},
+ 			{ id: 3, name: 'Good (Cals ok with good macros and nutrient timing)'},
+ 		],
+ 		sleep: [
+ 			{ id: 1, name: 'Bad (< 5hrs / night)'},
+ 			{ id: 2, name: 'Average (5 - 7 hrs / night)'},
+ 			{ id: 3, name: 'Good (+7 hrs / night)'},
+ 		],
+ 		stress: [
+ 			{ id: 1, name: 'High'},
+ 			{ id: 2, name: 'Average'},
+ 			{ id: 3, name: 'Low'},
+ 		],
+ 		recovery: [
+ 			{ id: 1, name: 'Low'},
+ 			{ id: 2, name: 'Average'},
+ 			{ id: 3, name: 'Good'},
+ 			{ id: 4, name: 'Very good'},
+ 		]
+ 	},
  	exercices: {
  		size: [
  			{ id: 1, name: 'kg'},
