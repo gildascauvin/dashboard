@@ -31,6 +31,11 @@ import { CoachAthleteCalendarComponent } from './admin/coach/coach-athlete-calen
 import { ConfirmAccountComponent } from './auth/confirm-account/confirm-account.component';
 import { AccountNotConfirmedComponent } from './auth/account-not-confirmed/account-not-confirmed.component';
 
+import { AthleteSettingsComponent } from './admin/athlete/athlete-settings/athlete-settings.component';
+import { AthleteSettingsPlanComponent } from './admin/athlete/athlete-settings/athlete-settings-plan/athlete-settings-plan.component';
+import { AthleteSettingsProfileComponent } from './admin/athlete/athlete-settings/athlete-settings-profile/athlete-settings-profile.component';
+import { AthleteSettingsPasswordComponent } from './admin/athlete/athlete-settings/athlete-settings-password/athlete-settings-password.component';
+
 const routes: Routes = [{
     path: '',
     component: AuthComponent,
@@ -89,6 +94,19 @@ const routes: Routes = [{
       },{
         path: 'programs/:programId',
         component: AthleteProgramsDetailComponent
+      },{
+        path: 'settings',
+        component: AthleteSettingsComponent,
+        children: [{
+            path: 'profile',
+            component: AthleteSettingsProfileComponent
+          },{
+            path: 'password',
+            component: AthleteSettingsPasswordComponent
+          },{
+            path: 'plan',
+            component: AthleteSettingsPlanComponent
+        }]
       },{
         path: 'stats',
         component: AthleteStatsComponent

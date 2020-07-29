@@ -1,0 +1,46 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left"><i class="fa fa-plus"></i> {{ '#Add review' | dgTranslate }}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label>{{ '#Search movement' | dgTranslate }}</label>
+				<tpc-input-autocomplete
+					[data]="movements"
+					type="profile"
+					[clear]="false"
+					[class.is-invalid]="errors.movement_id"
+					(handleOnChangeSearch)="onChangeSearch($event)"
+					(onSelectedItem)="onSelectedItem($event)"></tpc-input-autocomplete>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group">
+				<label>{{ '#Max 1 RM' | dgTranslate }}</label>
+				<input [class.is-invalid]="errors.record" placeholder="150 kg" (input)="errors.record=false" [(ngModel)]="model.record" type="record" autocomplete="new-password" class="form-control">
+			</div>
+		</div>
+		<div class="col-md-5">
+			<div class="form-group">
+				<label>{{ '#Type' | dgTranslate }}</label>
+				<select [(ngModel)]="model.record_unit">
+					<option *ngFor="let size of configExercices.size" [value]="size.id">{{ size.name }}</option>
+				</select>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-light mr-4" (click)="cancel()">
+		<i class="fa fa-close"></i> {{ '#Cancel' | dgTranslate }}
+	</button>
+	<button class="btn btn-primary" (click)="save()">
+		<i class="fa fa-save"></i>
+		{{ '#Save' | dgTranslate }}
+	</button>
+</div>
+

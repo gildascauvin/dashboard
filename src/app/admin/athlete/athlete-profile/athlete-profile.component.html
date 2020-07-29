@@ -1,4 +1,19 @@
-<div class="row profile-container">
+<div class="row">
+	<div class="col-md-12 text-center p4">
+		<div class="form-inline form-center-radio">
+			<div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]="currentTab">
+			  <label ngbButtonLabel class="btn-light">
+			    <input ngbButton type="radio" [value]="0"> {{ '#Readiness' | dgTranslate }}
+			  </label>
+			  <label ngbButtonLabel class="btn-light">
+			    <input ngbButton type="radio" [value]="1"> {{ '#Perfomance' | dgTranslate }}
+			  </label>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row profile-container" *ngIf="currentTab === 0">
 	<div class="col-md-6 profile-left-bar">
 		<div class="profile-form">
 			<div class="profile-form-title">Your information</div>
@@ -82,6 +97,7 @@
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
 	</div>
@@ -97,5 +113,36 @@
 				<p>{{ '#Hint to guide the volume level. A strong note indicates that you can have a high volume level. This index is also useful for comparing multiple athletes, and scheduling them accordingly.' | dgTranslate}}</p>
 			</div>
 		</div>
+	</div>
+</div>
+
+<div class="row profile-container" *ngIf="currentTab === 1">
+	<div class="col-md-6">
+		<div class="profile-review-form">
+			<div class="list-group list-group-flush">
+				<div class="list-group-item">
+					<button class="btn btn-primary float-right" (click)="openCreateModal()">
+						<i class="fa fa-plus"></i>
+						{{ '#Review' | dgTranslate }}
+					</button>
+					<h4 class="movement-review-header">{{ user.profil.length }} {{ '#Movements' | dgTranslate }}</h4>
+				</div>
+				<div *ngFor="let profile of user.profil" class="list-group-item">
+					{{ profile.movement.name }} = {{ profile.record }} {{ profile.record_unit == 1 ? 'kg' : 'lbs' }}
+					<button (click)="openDeleteModal(profile)" class="btn float-right btn-light mr-2" ><i class="fa fa-trash text-danger"></i></button>
+					<button (click)="openEditModal(profile)" class="btn float-right btn-light ml-4 mr-2" ><i class="fa fa-pencil text-success"></i></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6 mt-4">
+		<div style="display: block">
+	      <canvas baseChart
+	        [datasets]="radarChartData"
+	        [options]="radarChartOptions"
+	        [labels]="radarChartLabels"
+	        [chartType]="radarChartType">
+	      </canvas>
+	    </div>
 	</div>
 </div>

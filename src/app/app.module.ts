@@ -86,6 +86,16 @@ import { UsersModalProgramAthleteManagerMeComponent } from './_/templates/progra
 
 import { InputAutocompleteComponent } from './_/components/forms/input-autocomplete/input-autocomplete.component';
 import { AutofocusDirective } from './_/directives/autofocus.directive';
+import { AthleteProfileModalProfileCreateComponent } from './admin/athlete/athlete-profile/athlete-profile-modal/athlete-profile-modal-profile-create/athlete-profile-modal-profile-create.component';
+import { AthleteProfileModalProfileEditComponent } from './admin/athlete/athlete-profile/athlete-profile-modal/athlete-profile-modal-profile-edit/athlete-profile-modal-profile-edit.component';
+import { AthleteProfileModalProfileDeleteComponent } from './admin/athlete/athlete-profile/athlete-profile-modal/athlete-profile-modal-profile-delete/athlete-profile-modal-profile-delete.component';
+import { CustomerStatsComponent } from './_/components/ui/customer-stats/customer-stats.component';
+import { CustomerStatsRangeComponent } from './_/components/ui/customer-stats-range/customer-stats-range.component';
+import { CustomerStatsExerciceComponent } from './_/components/ui/customer-stats-exercice/customer-stats-exercice.component';
+import { AthleteSettingsComponent } from './admin/athlete/athlete-settings/athlete-settings.component';
+import { AthleteSettingsPlanComponent } from './admin/athlete/athlete-settings/athlete-settings-plan/athlete-settings-plan.component';
+import { AthleteSettingsProfileComponent } from './admin/athlete/athlete-settings/athlete-settings-profile/athlete-settings-profile.component';
+import { AthleteSettingsPasswordComponent } from './admin/athlete/athlete-settings/athlete-settings-password/athlete-settings-password.component';
 
 @NgModule({
   declarations: [
@@ -137,6 +147,16 @@ import { AutofocusDirective } from './_/directives/autofocus.directive';
     UsersModalProgramDuplicateComponent,
     UsersModalProgramAssignComponent,
     AthleteProgramsDetailComponent,
+    AthleteProfileModalProfileCreateComponent,
+    AthleteProfileModalProfileEditComponent,
+    AthleteProfileModalProfileDeleteComponent,
+    CustomerStatsComponent,
+    CustomerStatsRangeComponent,
+    CustomerStatsExerciceComponent,
+    AthleteSettingsComponent,
+    AthleteSettingsPlanComponent,
+    AthleteSettingsProfileComponent,
+    AthleteSettingsPasswordComponent,
   ],
   imports: [
     FormsModule,

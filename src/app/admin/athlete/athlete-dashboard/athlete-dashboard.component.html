@@ -105,10 +105,11 @@
 		</div>
 	</div>
 	<div class="col-md-3 lead-right-bar" *ngIf="size >= responsiveSize">
-		<div class="lead-bar-content">
-			<div class="weekly-overload">
-				<h3 class="weekly-overload-title">{{ '#Weekly overload' | dgTranslate }}</h3>
-			</div>
+		<div class="lead-bar-content lead-bar-content-right">
+			<app-customer-stats-range [showRange]="false"></app-customer-stats-range>
+			<app-customer-stats [showCardio]="false"></app-customer-stats>
+			<hr />
+			<app-customer-stats-exercice></app-customer-stats-exercice>
 		</div>
 	</div>
 </div>

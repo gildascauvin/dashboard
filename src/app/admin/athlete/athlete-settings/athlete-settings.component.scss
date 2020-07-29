@@ -1,0 +1,22 @@
+.container-settings {
+	margin-top: 50px;
+	background-color: #FFFFFF;
+	padding: 30px 15px;
+}
+
+.content-settings {
+	margin-top: 10px;
+	width: 300px;
+}
+
+a {
+	text-decoration: none;
+}
+
+.list-group-item.active {
+    z-index: 2;
+    color: #444;
+    font-weight: 500;
+    background-color: rgba(0,0,0,.125);
+    border-color: #fff;
+}

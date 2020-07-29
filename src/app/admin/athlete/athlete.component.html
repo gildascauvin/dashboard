@@ -14,11 +14,10 @@
                     {{ user.data.firstname }} {{ user.data.lastname }}
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">{{ '#Dashboard' | dgTranslate }}</a>
-                    <a class="dropdown-item" href="#">{{ '#Programs' | dgTranslate }}</a>
+                    <a class="dropdown-item" [routerLink]="['/athlete', 'dashboard']">{{ '#Dashboard' | dgTranslate }}</a>
+                    <a class="dropdown-item"[routerLink]="['/athlete', 'programs']">{{ '#Programs' | dgTranslate }}</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">{{ '#Settings' | dgTranslate }}</a>
-                    <a class="dropdown-item" href="#">{{ '#Documentation' | dgTranslate }}</a>
+                    <a class="dropdown-item" [routerLink]="['/athlete', 'settings', 'profile']">{{ '#Settings' | dgTranslate }}</a>
                     <div class="dropdown-divider"></div>
                     <button class="dropdown-item" (click)="logout()" href="#">{{ '#Logout' | dgTranslate }}</button>
                   </div>

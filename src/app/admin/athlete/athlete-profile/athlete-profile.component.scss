@@ -1,6 +1,5 @@
 .profile-container {
 	background-color: #F1F1F1;
-	height: 100%;
 
 	.profile-left-bar {
 		.profile-form {
@@ -66,4 +65,20 @@
     	font-family: Lato;
 		font-size: 12px;
     }
+}
+
+.profile-review-form {
+    padding: 30px 50px;
+}
+
+.movement-review-header {
+	margin-top: 5px;
+	margin-bottom: 0px;
+	font-weight: 500;
+}
+
+.form-center-radio {
+	width: 300px;
+	margin: auto;
+	margin-top: 25px;
 }

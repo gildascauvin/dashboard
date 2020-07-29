@@ -103,16 +103,16 @@ export class UsersService {
     return this.httpService.get(`user`);
   }
 
-  createUserProfile(id, model) {
-    return this.httpService.post(`user/${id}/profile`, model);
+  createUserProfile(model) {
+    return this.httpService.post(`user/profile`, model);
   }
 
-  updateUserProfile(id, model) {
-    return this.httpService.put(`user/${id}/profile/${model.user_profile_id}`, model);
+  updateUserProfile(model) {
+    return this.httpService.put(`user/profile/${model.user_profile_id}`, model);
   }
 
-  removeUserProfile(id, model) {
-    return this.httpService.delete(`user/${id}/profile/${model.user_profile_id}`);
+  removeUserProfile(model) {
+    return this.httpService.delete(`user/profile/${model.user_profile_id}`);
   }
 
   createUser(model) {
@@ -121,6 +121,10 @@ export class UsersService {
 
   updateUser(model) {
     return this.httpService.put(`user`, model);
+  }
+
+  resetUserPassword(model) {
+    return this.httpService.post(`user/reset-password`, model);
   }
 
   removeUser(id, model) {

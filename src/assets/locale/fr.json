@@ -324,5 +324,15 @@
   "#Stress": "Stress",
   "#Recovery": "Recovery",
   "#Age": "Age",
-  "#Strenght": "Strenght"
+  "#Strenght": "Strenght",
+  "#Readiness": "Readiness",
+  "#Perfomance": "Perfomance",
+  "#Your readiness level": "Your readiness level",
+  "#Score MRV": "Score MRV",
+  "#Your strenght level": "Your strenght level",
+  "#Edit information": "Edit information",
+  "#Edit perfomances": "Edit perfomances",
+  "#Edit profile": "Edit profile",
+  "#Change password": "Change password",
+  "#Your current password": "Your current password"
 }
