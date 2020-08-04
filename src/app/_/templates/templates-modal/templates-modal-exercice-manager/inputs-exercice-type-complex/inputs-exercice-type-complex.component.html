@@ -16,6 +16,23 @@
 		<div class="number-movement-list-label ml-2">{{ movement.name }}</div>
 
 		<ul class="list-group">
+			<li class="list-group-item">
+				<div class="form-row align-items-center">
+			  	<div class="col-auto">
+						<div class="input-group">
+							<div class="input-group-prepppend">
+			          <span class="input-group-text">REPMAX</span>
+			        </div>
+							<input placeholder="1" [(ngModel)]="movement.max_value" type="number" class="form-control number-movement-list">
+			      </div>
+			    </div>
+			    <div class="col-auto" *ngIf="movement.has_unit && isPlanning">
+						<select [(ngModel)]="movement.max_unit" type="number" class="form-control number-movement-list">
+							<option *ngFor="let unit of configExercices.size" [value]="unit.id">{{ unit.name }}</option>
+						</select>
+			    </div>
+			  </div>
+			</li>
 			<li *ngFor="let set of movement.sets; let setIndex=index;" class="list-group-item">
 				<button class="btn float-right" *ngIf="movement.sets.length > 1" (click)="removeSet(movement.sets, setIndex)"><i class="fa fa-close"></i></button>
 
@@ -33,13 +50,11 @@
 						<input placeholder="90" [(ngModel)]="set.value" type="number" class="form-control number-movement-list ml-2 mr-2">
 			    </div>
 
-			    <div class="col-auto" *ngIf="movement.has_unit && isPlanning">
-						<select [(ngModel)]="set.unit" type="number" class="form-control number-movement-list">
-							<option *ngFor="let unit of configExercices.size" [value]="unit.id">{{ unit.name }}</option>
-						</select>
-			    </div>
-			    <div class="col" *ngIf="movement.has_unit && !isPlanning">
+			    <div class="col">
 						%
+						<span *ngIf="set.value" class="ml-4 badge badge-success">
+							{{ set.value | unitSizeLabel : movement.max_value : movement.max_unit }}
+						</span>
 					</div>
 			  </div>
 			</li>

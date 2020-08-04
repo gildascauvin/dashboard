@@ -16,7 +16,7 @@
 <div class="row profile-container" *ngIf="currentTab === 0">
 	<div class="col-md-6 profile-left-bar">
 		<div class="profile-form">
-			<div class="profile-form-title">Your information</div>
+			<div class="profile-form-title">{{ '#Your information' | dgTranslate }}</div>
 			<div class="profile-form-content">
 				<div class="row">
 					<div class="col-md-12 mt-2">
@@ -33,17 +33,31 @@
 						</select>
 					</div>
 
-					<div class="col-md-12 mt-2">
+					<div class="col-md-12 mt-2" *ngIf="user.data.gender == 1">
 						<label>{{ '#Height' | dgTranslate }}</label>
 						<select class="form-control" [(ngModel)]="user.data.height">
 							<option *ngFor="let height of configMrv.height" [value]="height.id">{{ height.name }}</option>
 						</select>
 					</div>
 
-					<div class="col-md-12 mt-2">
+					<div class="col-md-12 mt-2" *ngIf="user.data.gender == 1">
 						<label>{{ '#Weight' | dgTranslate }}</label>
 						<select class="form-control" [(ngModel)]="user.data.weight">
 							<option *ngFor="let weight of configMrv.weight" [value]="weight.id">{{ weight.name }}</option>
+						</select>
+					</div>
+
+					<div class="col-md-12 mt-2" *ngIf="user.data.gender == 2">
+						<label>{{ '#Height' | dgTranslate }}</label>
+						<select class="form-control" [(ngModel)]="user.data.height">
+							<option *ngFor="let height of configMrv.heightWomen" [value]="height.id">{{ height.name }}</option>
+						</select>
+					</div>
+
+					<div class="col-md-12 mt-2" *ngIf="user.data.gender == 2">
+						<label>{{ '#Weight' | dgTranslate }}</label>
+						<select class="form-control" [(ngModel)]="user.data.weight">
+							<option *ngFor="let weight of configMrv.weightWomen" [value]="weight.id">{{ weight.name }}</option>
 						</select>
 					</div>
 
@@ -103,7 +117,7 @@
 	</div>
 	<div class="col-md-6 profile-right-bar">
 		<div class="profile-mrv">
-			<div class="profile-mrv-title">Your readiness level</div>
+			<div class="profile-mrv-title">{{ '#Your readiness level' | dgTranslate }}</div>
 			<div class="profile-mrv-content">
 				<div class="mrv-score">
 					<div class="mrv-score-icon"><i class="fa fa-heartbeat"></i></div>

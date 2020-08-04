@@ -32,6 +32,7 @@ export class UsersModalProgramEditComponent extends FormModalCore implements OnI
   }
 
   ngOnInit(): void {
+    console.log(this);
   }
 
   cancel() {

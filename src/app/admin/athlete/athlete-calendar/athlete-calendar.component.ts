@@ -487,7 +487,8 @@ export class AthleteCalendarComponent implements OnInit {
       model: model,
       workout: workout,
       isPlanning: true,
-      userId: this.user.id
+      userId: this.user.id,
+      profil: this.user.profil || []
       // model: _.cloneDeep(model),
     };
 

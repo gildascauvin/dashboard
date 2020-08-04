@@ -6,20 +6,27 @@
         <div class="collapse navbar-collapse ml-lg-2 ml-0" id="navbarCollapse">
           <div class="nav-top-header">
               <div class="content-header">
-                <a class="links-menu" routerLinkActive="active" [routerLink]="['/athlete', 'programs']">
-                  <i class="fa fa-folder"></i> {{ '#Programs' | dgTranslate }}
-                </a>
-                <div class="dropdown profile-menu">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ user.data.firstname }} {{ user.data.lastname }}
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" [routerLink]="['/athlete', 'dashboard']">{{ '#Dashboard' | dgTranslate }}</a>
-                    <a class="dropdown-item"[routerLink]="['/athlete', 'programs']">{{ '#Programs' | dgTranslate }}</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" [routerLink]="['/athlete', 'settings', 'profile']">{{ '#Settings' | dgTranslate }}</a>
-                    <div class="dropdown-divider"></div>
-                    <button class="dropdown-item" (click)="logout()" href="#">{{ '#Logout' | dgTranslate }}</button>
+                <div class="row">
+                  <div class="col-md-12 text-right">
+                    <div class="btn-group">
+                      <a class="links-menu mr-2" routerLinkActive="active" [routerLink]="['/athlete', 'programs']">
+                        <i class="fa fa-folder"></i> {{ '#Programs' | dgTranslate }}
+                      </a>
+
+                      <div class="dropdown profile-menu">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          {{ user.data.firstname }} {{ user.data.lastname }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" [routerLink]="['/athlete', 'dashboard']">{{ '#Dashboard' | dgTranslate }}</a>
+                          <a class="dropdown-item"[routerLink]="['/athlete', 'programs']">{{ '#Programs' | dgTranslate }}</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" [routerLink]="['/athlete', 'settings', 'profile']">{{ '#Settings' | dgTranslate }}</a>
+                          <div class="dropdown-divider"></div>
+                          <button class="dropdown-item" (click)="logout()" href="#">{{ '#Logout' | dgTranslate }}</button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

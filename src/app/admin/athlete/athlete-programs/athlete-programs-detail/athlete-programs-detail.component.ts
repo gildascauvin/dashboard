@@ -236,10 +236,10 @@ export class AthleteProgramsDetailComponent implements OnInit {
 
   openEditModal() {
     const initialState = {
-      model: _.cloneDeep(this.model)
+      modelProgram: _.cloneDeep(this.model)
     };
 
-    this.bsModalRef = this.modalService.show(TemplatesModalEditComponent, {
+    this.bsModalRef = this.modalService.show(UsersModalProgramEditComponent, {
       keyboard: false,
       initialState: initialState,
       class: 'modal-xs'

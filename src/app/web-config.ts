@@ -85,7 +85,6 @@ export const webConfig = {
  			{ id: 1, name: 'Very advanced (+12 ans)'},
  			{ id: 2, name: 'Advanced (8-12 years)'},
  			{ id: 3, name: 'Intermediate (4-8 years)'},
- 			{ id: 4, name: 'Weak'},
  		],
  		age: [
  			{ id: 1, name: '50+'},
@@ -120,7 +119,7 @@ export const webConfig = {
  		size: [
  			{ id: 1, name: 'kg'},
 	 		{ id: 2, name: 'lbs'},
-	 		{ id: 3, name: '%'},
+	 		// { id: 3, name: '%'},
 	 		{ id: 4, name: 'watts'},
 	 		{ id: 5, name: 'km/h'},
  		],

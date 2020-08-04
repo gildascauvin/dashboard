@@ -13,20 +13,39 @@
 	<label>{{ '#Movements' | dgTranslate }}</label>
 	<div *ngFor="let movement of model.movements; let movementIndex=index;" class="list-group-item-step">
 		<div class="row">
+			<div class="col-md-12">
+				<div class="form-row align-items-center">
+			  	<div class="col-auto">
+						<div class="input-group">
+							<div class="input-group-prepppend">
+			          <span class="input-group-text">REPMAX</span>
+			        </div>
+							<input placeholder="1" [(ngModel)]="movement.max_value" type="number" class="form-control number-movement-list">
+			      </div>
+			    </div>
+			    <div class="col-auto" *ngIf="movement.has_unit && isPlanning">
+						<select [(ngModel)]="movement.max_unit" type="number" class="form-control number-movement-list">
+							<option *ngFor="let unit of configExercices.size" [value]="unit.id">{{ unit.name }}</option>
+						</select>
+			    </div>
+			  </div>
+			</div>
+		</div>
+		<hr />
+		<div class="row">
 			<div class="col" *ngIf="movement.has_repetitions">
-				<input placeholder="1" type="number" [(ngModel)]="movement.sets[0].quantity" class="form-control">
+				<input placeholder="1" type="number" [(ngModel)]="movement.sets[0].quantity" class="form-control number-movement-list">
 			</div>
 			<div class="col">{{ movement.name }}</div>
-			<div class="col" *ngIf="movement.has_value">
-				<input placeholder="130" type="number" [(ngModel)]="movement.sets[0].value" class="form-control">
-			</div>
-			<div class="col" *ngIf="movement.has_unit && isPlanning">
-				<select [(ngModel)]="movement.sets[0].unit" class="form-control">
-					<option *ngFor="let unit of configExercices.size" [value]="unit.id">{{ unit.name }}</option>
-				</select>
-			</div>
-			<div class="col" *ngIf="movement.has_unit && !isPlanning">
+			<div class="col-auto" *ngIf="movement.has_value">
+				<input placeholder="90" [(ngModel)]="movement.sets[0].value" type="number" class="form-control number-movement-list ml-2">
+	    </div>
+
+	    <div class="col-auto">
 				%
+				<span *ngIf="movement.sets[0].value" class="ml-4 badge badge-success">
+					{{ movement.sets[0].value | unitSizeLabel : movement.max_value : movement.max_unit }}
+				</span>
 			</div>
 			<div class="col text-right">
 				<button class="btn" (click)="removeMovement(movementIndex)"><i class="fa fa-close"></i></button>

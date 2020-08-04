@@ -96,6 +96,7 @@ import { AthleteSettingsComponent } from './admin/athlete/athlete-settings/athle
 import { AthleteSettingsPlanComponent } from './admin/athlete/athlete-settings/athlete-settings-plan/athlete-settings-plan.component';
 import { AthleteSettingsProfileComponent } from './admin/athlete/athlete-settings/athlete-settings-profile/athlete-settings-profile.component';
 import { AthleteSettingsPasswordComponent } from './admin/athlete/athlete-settings/athlete-settings-password/athlete-settings-password.component';
+import { UnitSizeLabelPipe } from './_/pipes/unit-size-label.pipe';
 
 @NgModule({
   declarations: [
@@ -157,6 +158,7 @@ import { AthleteSettingsPasswordComponent } from './admin/athlete/athlete-settin
     AthleteSettingsPlanComponent,
     AthleteSettingsProfileComponent,
     AthleteSettingsPasswordComponent,
+    UnitSizeLabelPipe,
   ],
   imports: [
     FormsModule,

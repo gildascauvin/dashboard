@@ -12,6 +12,7 @@ import * as _ from 'lodash';
 export class InputsExerciceTypeComplexComponent implements OnInit {
 	@Input() model: any = {};
   @Input() isPlanning: boolean = false;
+  @Input() profil: any[] = [];
 
   configExercices: any = webConfig.exercices;
   movements: any[] = [];
@@ -23,6 +24,7 @@ export class InputsExerciceTypeComplexComponent implements OnInit {
 
   ngOnInit(): void {
   	this.model.amrap_timecap = this.model.amrap_timecap || 10;
+    this._initMax();
   }
 
   ngOnDestroy(): void {
@@ -37,6 +39,15 @@ export class InputsExerciceTypeComplexComponent implements OnInit {
       unit: 3
     }];
 
+    let profil = _.find(this.profil, {
+      movement_id: clone.movement_id
+    });
+
+    if (profil) {
+      clone.max_unit = profil.record_unit;
+      clone.max_value = profil.record;
+    }
+
     this.model.movements.push(clone);
   }
 
@@ -50,6 +61,20 @@ export class InputsExerciceTypeComplexComponent implements OnInit {
         }
       });
     }
+  }
+
+  private _initMax() {
+    _.forEach(this.model.movements, (mvt) => {
+      console.log('mvt', mvt);
+      let profil = _.find(this.profil, {
+        movement_id: mvt.movement_id
+      });
+
+      if (profil && !mvt.max_value) {
+        mvt.max_unit = profil.record_unit;
+        mvt.max_value = profil.record;
+      }
+    })
   }
 
   removeMovement(index) {

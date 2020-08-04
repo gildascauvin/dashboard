@@ -7,36 +7,51 @@
 			<button class="btn btn-primary" (click)="openProgramCreateModal()"><i class="fa fa-plus"></i> {{ '#Create a program' | dgTranslate }}</button>
 		</div>
 		<div class="col-md-12">
-			<div class="list-group list-group-flush">
-				<div *ngFor="let program of programs; let i=index" class="list-group-item">
-					<div ngbDropdown class="d-inline-block float-right">
-					  <button class="btn btn-outline-secondary btn-sm btn-toogle-select" ngbDropdownToggle>
-					    <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-					  </button>
-					  <div class="ngb-dropdown-menu" ngbDropdownMenu>
-					    <button ngbDropdownItem [routerLink]="['/athlete', 'programs', program.program_id ]">
-					      <i class="fa fa-pencil mr-2"></i> {{ '#Edit' | dgTranslate }}
-					    </button>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th scope="col">{{ '#Days' | dgTranslate }}</th>
+						<th scope="col">{{ '#Name' | dgTranslate }}</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let program of programs; let i=index">
+						<td>
+							<span class="fa-stack fa-2x">
+							  <i class="fa fa-calendar-o fa-stack-1x"></i>
+							  <strong class="fa-stack-1x calendar-text">{{ program.days_count }}</strong>
+							</span>
+						</td>
+						<td><a href="#" [routerLink]="['/athlete', 'programs', program.program_id ]" >{{ program.name }}</a></td>
+						<td class="text-right">
+							<button class="btn btn-outline-secondary btn-sm mr-2" (click)="openProgramAthleteManagerMeModal(program)">
+								<i class="fa fa-link"></i> {{ '#Assign to me' | dgTranslate }}
+							</button>
 
-					    <button ngbDropdownItem (click)="openProgramDuplicateModal(program)">
-					      <i class="fa fa-copy mr-2"></i> {{ '#Duplicate' | dgTranslate }}
-					    </button>
+							<div ngbDropdown class="d-inline-block">
+							  <button class="btn btn-outline-secondary btn-sm btn-toogle-select" ngbDropdownToggle>
+							    <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+							  </button>
+							  <div class="ngb-dropdown-menu" ngbDropdownMenu>
+							    <button ngbDropdownItem [routerLink]="['/athlete', 'programs', program.program_id ]">
+							      <i class="fa fa-pencil mr-2"></i> {{ '#Edit' | dgTranslate }}
+							    </button>
 
-					    <button ngbDropdownItem (click)="openProgramDeleteModal(program)">
-					      <i class="fa fa-trash mr-2 text-danger"></i> {{ '#Delete' | dgTranslate }}
-					    </button>
-					  </div>
-					</div>
-					<button class="btn btn-outline-secondary btn-sm float-right mr-2" (click)="openProgramAthleteManagerMeModal(program)">
-						<i class="fa fa-link"></i> {{ '#Assign to me' | dgTranslate }}
-					</button>
-					<span class="float-right mr-4"><b>{{ program.workouts_count }}</b> {{ '#workouts' | dgTranslate }}</span>
-					<span class="float-right mr-4"><b>{{ program.days_count }}</b> {{ '#days' | dgTranslate }}</span>
-					<span class="float-right mr-4"><b>{{ program.weeks_count }}</b> {{ '#weeks' | dgTranslate }}</span>
-					<a href="#" [routerLink]="['/athlete', 'programs', program.program_id ]" >{{ program.name }}</a>
+							    <button ngbDropdownItem (click)="openProgramDuplicateModal(program)">
+							      <i class="fa fa-copy mr-2"></i> {{ '#Duplicate' | dgTranslate }}
+							    </button>
 
-				</div>
-			</div>
+							    <button ngbDropdownItem (click)="openProgramDeleteModal(program)">
+							      <i class="fa fa-trash mr-2 text-danger"></i> {{ '#Delete' | dgTranslate }}
+							    </button>
+							  </div>
+							</div>
+
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>

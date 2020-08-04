@@ -57,6 +57,8 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
 
   showDate: boolean = false;
 
+  profil: any[] = [];
+
   constructor(
     public bsModalRef: BsModalRef,
     private usersService: UsersService,
@@ -82,7 +84,7 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
     this.model.sets = this.model.sets || 5;
     this.model.updated = true;
 
-    console.log(this);
+    console.log(this.profil, this.model);
   }
 
   ngOnDestroy(): void {
@@ -226,14 +228,17 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
   }
 
   setUnitLabel(model, key, labelKey) {
+
+
     model[labelKey] = '%';
     switch (model[key]) {
       case 1:
       case "1":
-        model[labelKey] = 'lbs';
+        model[labelKey] = 'kg';
+        break;
       case 2:
       case "2":
-        model[labelKey] = 'kg';
+        model[labelKey] = 'lbs';
         break;
       case 3:
       case "3":
@@ -252,6 +257,9 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
         model[labelKey] = '%';
         break;
     }
+
+    console.log(model[key]);
+    console.log(model[labelKey]);
   }
 
   setCardioUnitLabel(model, key, labelKey) {

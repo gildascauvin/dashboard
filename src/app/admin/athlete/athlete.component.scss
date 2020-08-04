@@ -15,18 +15,11 @@
   background-color: #000000;
 }
 .links-menu {
-	float: right;
 	text-decoration: none;
 	color: #F1F1F1;
-  	position: absolute;
-  	top: 20px;
-  	right: 150px;
+	margin-top: 7px;
 }
 .profile-menu {
-	float: right;
-  position: absolute;
-  top: 13px;
-  right: 20px;
   color: #FFF;
 
   #navbarDropdownMenuLink {
@@ -169,4 +162,18 @@
     color: #C1C1C1 !important;
     font-size: 25pt;
   }
+}
+
+.nav > li{
+  position: static !important;
+}
+.dropdown-menu {
+  left: 0 !important;
+  right: 0 !important;
+}
+.dropdown-menu > li{
+  float: left !important;
+}
+.dropdown-menu > li > a{
+  width: auto !important;
 }
