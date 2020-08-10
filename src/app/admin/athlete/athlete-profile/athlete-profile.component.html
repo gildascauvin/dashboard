@@ -141,8 +141,9 @@
 					</button>
 					<h4 class="movement-review-header">{{ user.profil.length }} {{ '#Movements' | dgTranslate }}</h4>
 				</div>
+
 				<div *ngFor="let profile of user.profil" class="list-group-item">
-					{{ profile.movement.name }} = {{ profile.record }} {{ profile.record_unit == 1 ? 'kg' : 'lbs' }}
+					{{ profile.movement.name }} = {{ profile.record }} {{ profile.record_unit == 1 ? 'kg' : 'lbs' }} {{ profile | ratioMovement: user.profil }}
 					<button (click)="openDeleteModal(profile)" class="btn float-right btn-light mr-2" ><i class="fa fa-trash text-danger"></i></button>
 					<button (click)="openEditModal(profile)" class="btn float-right btn-light ml-4 mr-2" ><i class="fa fa-pencil text-success"></i></button>
 				</div>
