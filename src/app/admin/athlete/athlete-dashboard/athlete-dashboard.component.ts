@@ -23,6 +23,8 @@ import { TemplatesModalExerciceManagerComponent } from '../../../_/templates/tem
   styleUrls: ['./athlete-dashboard.component.scss']
 })
 export class AthleteDashboardComponent implements OnInit {
+  @Input() isFromUrl = true;
+
   bsModalRef: BsModalRef;
 
   sub: any = {};
@@ -48,11 +50,15 @@ export class AthleteDashboardComponent implements OnInit {
     private doorgetsTranslateService: DoorgetsTranslateService,
     private elementRef: ElementRef,
     @Inject(DOCUMENT) private _document,
+  	) {
 
-  	) { }
+  }
 
   ngOnInit(): void {
-    this.user = this.authService.getUserData();
+    this.user = this.isFromUrl
+      ? this.authService.getUserData()
+      : this.authService.getUserClientData();
+
     this._initWorkouts();
 
     this._initUser();
@@ -62,16 +68,18 @@ export class AthleteDashboardComponent implements OnInit {
     });
 
     this.sub.onUpdate = this.userService.onUpdate.subscribe((user) => {
-      this.user = this.authService.getUserData();
-  		this._checkEmpty();
+      // this.user = this.authService.getUserData();
+      this.user = this.isFromUrl
+        ? this.authService.getUserData()
+        : this.authService.getUserClientData();
+
+      this._checkEmpty();
     });
 
     this.detectScreenSize();
   }
 
   ngOnDestroy(): void {
-    console.log('AthleteDashboardComponent::ngOnDestroy');
-
     this.sub.onUpdate && this.sub.onUpdate.unsubscribe();
     this.sub.userInfo && this.sub.userInfo.unsubscribe();
   	this.sub.resizeSvc && this.sub.resizeSvc.unsubscribe();
@@ -81,19 +89,41 @@ export class AthleteDashboardComponent implements OnInit {
 		this.isLoading = true;
   	this.sub.userInfo && this.sub.userInfo.unsubscribe();
 
-  	this.sub.userInfo = this.usersService.getUser().subscribe((user: any) => {
-    	if (user) {
-	    	this.user = user;
-	    	// this.user.workouts = [];
+    if (this.isFromUrl) {
+      this.sub.userInfo = this.usersService.getUser().subscribe((user: any) => {
+        if (user) {
+          this.user = user;
+          // this.user.workouts = [];
 
-    		this._initWorkouts();
+          this._initWorkouts();
 
-	    	this.userService.initUserInfos(user);
-    		this.isLoading = false;
+          this.userService.initUserInfos(user);
+          this.isLoading = false;
 
-    		this._checkEmpty();
-    	}
-    });
+          this._checkEmpty();
+        }
+      });
+    } else {
+      let userClientId = this.authService.getCurrentAthletId();
+
+      this.sub.userInfo = this.usersService.getUserClient(userClientId).subscribe((user: any) => {
+        if (user) {
+          this.user = user;
+          // this.user.workouts = [];
+
+          this._initWorkouts();
+
+          if (this.isFromUrl) {
+            this.userService.initUserInfos(user);
+          } else {
+            this.userService.initUserClientInfos(user);
+          }
+          this.isLoading = false;
+
+          this._checkEmpty();
+        }
+      });
+    }
   }
 
   private _initWorkouts() {
@@ -157,7 +187,6 @@ export class AthleteDashboardComponent implements OnInit {
       case 12:
       case '12':
         return this.doorgetsTranslateService.instant('#December');
-
     }
   }
 
@@ -212,7 +241,6 @@ export class AthleteDashboardComponent implements OnInit {
 
   private detectScreenSize() {
     const currentSize = this._document.body.clientWidth;
-    console.log('detectScreenSize');
     this.size = currentSize;
     this.resizeSvc.onResize(currentSize);
   }

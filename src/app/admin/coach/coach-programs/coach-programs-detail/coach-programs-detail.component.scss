@@ -1,0 +1,256 @@
+.box-header-template {
+	border: solid 1px #BBB;
+	min-height: 200px;
+	padding: 0;
+
+	.box-header-template-day {
+		background-color: #555;
+		text-align: right;
+		padding: 4px 10px;
+		font-weight: 600;
+		min-height: 28px;
+	}
+}
+
+.box-body-workout {
+    background-color: #F1F1F1;
+    padding: 8px 7px;
+    font-size: 9px;
+}
+
+.zone-drop-legal {
+	height: 86%;
+	width: 95%;
+	// background-color: #F9F9F9;
+	// border: dashed 1px #888;
+	padding: 5px;
+	margin: 5px;
+	position: absolute;
+	border-radius: 4px;
+	cursor: auto;
+}
+
+.paste-zone-workouts {
+	border: dashed 3px #919191;
+	background: #F1F1F1;
+	text-align: center;
+	padding: 20px 10px;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.text-color-box {
+	font-size: 12px;
+	color: #F1F1F1;
+}
+
+.add-workout-btn, .i-btn {
+	cursor: pointer;
+}
+
+.add-workout-btn {
+	color: #d44000;
+    border: solid 1px #FFFF;
+    padding: 4px 5px;
+    border-radius: 11px;
+    margin-right: -8px;
+    font-size: 10px;
+    background-color: #F1F1F0;
+}
+
+.dropdown-toggle::after {
+	content: none;
+}
+
+.action-workout-box {
+	background-color: #FFFFFF;
+	margin: 8px 5px;
+	padding: 5px;
+
+	i {
+		font-size: 14px
+	}
+}
+
+.action-workout-box-execrice {
+	background-color: #FFFFFF;
+	padding: 5px;
+	margin: 8px 0;
+
+	i {
+		font-size: 14px
+	}
+}
+
+.box-exercice {
+	padding: 0;
+    border: 0;
+    background: none;
+}
+
+.box-exercice:hover {
+	background-color: #F9F9F9;
+}
+
+.box-body-workout-inputs {
+	display: none;
+}
+
+.box-body-workout-inputs {
+	color: #555555;
+	width: 80%;
+    background-color: #F1F1F1;
+    border: none;
+}
+
+.box-body-exercice-inputs {
+	width: 100%;
+	font-size: 13px;
+	margin-left: 0;
+    border: none;
+}
+
+.zone-rest-day {
+	display: block;
+	padding: 5px 8px;
+
+	h5 {
+		font-size: 15px;
+		font-weight: 600;
+		padding-bottom: 4px;
+		border-bottom: solid 1px #F1F1F1;
+	}
+
+	textarea.textarea-restday {
+		width: 95%;
+		font-size: 11px;
+		min-height: 40px;
+		border: none;
+	}
+}
+
+
+
+.view-description-restday {
+	min-height: 50px;
+	font-size: 9px;
+}
+
+.box-body-workout-views, .box-body-workout-inputs {
+	margin-left: 30px !important;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.box-body-week-active {
+	.zone-drop-legal {
+		width: 400px;
+	    position: relative;
+	    height: 100px;
+	}
+
+	.zone-rest-day {
+		width: 400px;
+	}
+
+	.view-description-restday-inputs{
+		width: 400px;
+		display: block;
+	}
+
+	.box-body-workout-active {
+		width: 400px;
+		border: solid 3px #333;
+
+		.box-body-workout-inputs, .box-body-exercice-inputs {
+			display: inline-block;
+		}
+
+		.box-body-workout-views {
+			display: none;
+		}
+
+		.zone-rest-day.box-body-rest-active {
+			width: 400px;
+
+		}
+	}
+
+	.zone-rest-day.box-body-rest-active {
+		border: solid 3px #333;
+	}
+
+	.box-body-workout {
+		width: 400px;
+	}
+}
+
+.movement-container {
+	background-color: #FFFFFF;
+    padding: 10px;
+    font-size: 12px;
+    border-left: solid 3px #d44000;
+	margin-bottom: 10px;
+	min-height: 40px;
+
+	.movement-title {
+		font-weight: 700;
+    	margin-bottom: 8px;
+	}
+
+	.movement-content {
+		font-weight: 100;
+	}
+}
+
+.container-calendar-template {
+	margin-bottom: 100px;
+	padding: 20px;
+}
+
+.movement-type-1 {
+	border-left: solid 5px #666666;
+}
+.movement-type-2 {
+	border-left: solid 5px #D44000;
+}
+.movement-type-3 {
+	border-left: solid 5px #000000;
+}
+.movement-type-4 {
+	border-left: solid 5px #000000;
+}
+.movement-type-5 {
+	border-left: solid 5px #000000;
+}
+.movement-type-6 {
+	border-left: solid 5px #C1C1C1;
+}
+.movement-type-7 {
+	border-left: solid 5px #8D6767;
+}
+.movement-type-8 {
+	border-left: solid 5px #E37242;
+}
+
+.footer-action {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #d44000;
+  color: white;
+  text-align: center;
+  height: 70px;
+
+  .footer-item-actions {
+		margin: 15px;
+	    font-size: 19px;
+	    font-weight: 500;
+	    color: #FFFFFF;
+
+	    i {
+	    	color: #FFFFFF !important;
+	    }
+	}
+}

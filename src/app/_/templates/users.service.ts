@@ -67,6 +67,20 @@ export class UsersService {
     return this.httpService.get(`workout/?page=${page.pageNumber}&size=${page.size}&date=${page.date}`);
   }
 
+  getAllClientWorkout(clientId, date?) {
+    let page: any = {
+      totalElements: 0,
+      pageNumber: 0,
+      size: 500,
+    };
+
+    if (date) {
+      page.date = date;
+    }
+
+    return this.httpService.get(`workout/${clientId}?page=${page.pageNumber}&size=${page.size}&date=${page.date}`);
+  }
+
   getAllWorkouts(fromDate, toDate, strictDate?) {
     let page: any = {
       totalElements: 0,
@@ -75,6 +89,20 @@ export class UsersService {
     };
 
     let query = `workout/?page=${page.pageNumber}&size=${page.size}&date=${fromDate}&date_end=${toDate}`;
+    query += strictDate
+      ? '&strict_date=1'
+      : '';
+    return this.httpService.get(query);
+  }
+
+  getAllClientWorkouts(clientId, fromDate, toDate, strictDate?) {
+    let page: any = {
+      totalElements: 0,
+      pageNumber: 0,
+      size: 500,
+    };
+
+    let query = `workout/${clientId}?page=${page.pageNumber}&size=${page.size}&date=${fromDate}&date_end=${toDate}`;
     query += strictDate
       ? '&strict_date=1'
       : '';
@@ -101,6 +129,10 @@ export class UsersService {
 
   getUser() {
     return this.httpService.get(`user`);
+  }
+
+  getUserClient(clientId) {
+    return this.httpService.get(`user/${clientId}`);
   }
 
   createUserProfile(model) {
@@ -131,12 +163,12 @@ export class UsersService {
     return this.httpService.delete(`user/${id}`);
   }
 
-  createClient(id, model) {
-    return this.httpService.post(`user/${id}/client`, model);
+  createClient(model) {
+    return this.httpService.post(`user/client`, model);
   }
 
-  removeClient(id, clientId) {
-    return this.httpService.delete(`user/${id}/client/${clientId}`);
+  removeClient(clientId) {
+    return this.httpService.delete(`user/client/${clientId}`);
   }
 
   createProgram(id, model) {
@@ -152,8 +184,8 @@ export class UsersService {
     return this.httpService.delete(`program/${model.program_id}`);
   }
 
-  responseInvitation(id, invitationId, clientId, model) {
-    return this.httpService.post(`user/${id}/client/${invitationId}/response/${clientId}`, model);
+  responseInvitation(model) {
+    return this.httpService.post(`user/client/${model.user_client_id}/response`, model);
   }
 
   activeClientToProgram(userId, programId, clientId, isActive, dateStart?, dayStart?){

@@ -14,11 +14,12 @@
   width: 100%;
   background-color: #000000;
 }
+.links-menu {
+	text-decoration: none;
+	color: #F1F1F1;
+	margin-top: 7px;
+}
 .profile-menu {
-	float: right;
-  position: absolute;
-  top: 13px;
-  right: 0;
   color: #FFF;
 
   #navbarDropdownMenuLink {
@@ -37,7 +38,7 @@
   height: 65px;
   padding: 8px 0 10px 164px;
   width: 100%;
-  background-color: #111111;
+  background-color: #161616;
 
 
 
@@ -59,9 +60,11 @@
 }
 
 .body-content-sections {
-	padding-top: 120px;
-	padding: 120px 40px 0;
+	padding-top: 90px;
+	padding-left: 0;
+	padding-right: 0;
 	height: 100%;
+	background-color: #F1F1F1;
 }
 
 .selection-program {
@@ -72,4 +75,110 @@
 		color: #FFFFFF;
 		margin-top: 0;
 	}
+}
+
+.responsive-left-menu {
+  height: 100%;
+  width: 327px;
+  position: fixed;
+  background-color: #000000;
+  overflow-x: hidden;
+  padding: 10px;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+
+  a {
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .list-group-item-dark {
+    background-color: #000000;
+    color: #C1C1C1;
+  }
+
+  .list-group-item-dark.active {
+    background-color: #1b1e21;
+    color: #FFFFFF;
+  }
+}
+
+.responsive-left-menu-toogled {
+  -webkit-transform: translateX(-352px);
+  -moz-transform: translateX(-352px);
+  -ms-transform: translateX(-352px);
+  -o-transform: translateX(-352px);
+  transform: translateX(-352px);
+}
+
+.responsive-right-menu {
+  height: 100%;
+  width: 327px;
+  position: fixed;
+  background-color: #FFFFFF;
+  overflow-x: hidden;
+  padding: 10px;
+  z-index: 1001;
+  text-transform: uppercase;
+  right: 0;
+  top: 0;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.responsive-right-menu-toogled {
+  -webkit-transform: translateX(352px);
+  -moz-transform: translateX(352px);
+  -ms-transform: translateX(352px);
+  -o-transform: translateX(352px);
+  transform: translateX(352px);
+}
+
+.cover-menu {
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1000;
+  top: 0px;
+}
+
+.left-menu-title {
+  font-size: 19pt;
+  font-weight: bold;
+  margin-bottom: 15px;
+  vertical-align: middle;
+}
+
+.top-custom-nav {
+  height: 50px;
+  background-color: #000000;
+  color: #F1F1F1;
+
+  i {
+    color: #C1C1C1 !important;
+    font-size: 25pt;
+  }
+}
+
+.nav > li{
+  position: static !important;
+}
+.dropdown-menu {
+  left: 0 !important;
+  right: 0 !important;
+}
+.dropdown-menu > li{
+  float: left !important;
+}
+.dropdown-menu > li > a{
+  width: auto !important;
+}
+
+.select-menu-athlet {
+  width: 200px;
+  margin-top: 6px;
 }

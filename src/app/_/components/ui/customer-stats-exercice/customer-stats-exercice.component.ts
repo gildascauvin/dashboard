@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CustomerStatsService } from '../customer-stats-range/customer-stats-range.service';
 
 @Component({
@@ -7,6 +7,8 @@ import { CustomerStatsService } from '../customer-stats-range/customer-stats-ran
   styleUrls: ['./customer-stats-exercice.component.scss']
 })
 export class CustomerStatsExerciceComponent implements OnInit {
+  @Input() isFromUrl = true;
+
 	movements: any = [];
   categoriesData: any = [];
   sub: any = {};

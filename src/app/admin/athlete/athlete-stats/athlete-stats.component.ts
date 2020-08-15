@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { format, addHours, startOfISOWeek, startOfWeek, endOfWeek, differenceInDays } from 'date-fns';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
@@ -19,6 +19,7 @@ import { webConfig } from '../../../web-config';
   styleUrls: ['./athlete-stats.component.scss']
 })
 export class AthleteStatsComponent implements OnInit {
+  @Input() isFromUrl = true;
 
   constructor() {
   }

@@ -12,6 +12,8 @@ import * as _ from 'lodash';
 import { UsersService } from '../../../../_/templates/users.service';
 import { CustomerStatsService } from './customer-stats-range.service';
 
+import { AuthService } from '../../../../_/services/http/auth.service';
+
 import { webConfig } from '../../../../web-config';
 
 @Component({
@@ -21,6 +23,7 @@ import { webConfig } from '../../../../web-config';
 })
 export class CustomerStatsRangeComponent implements OnInit {
 	@Input() showRange: boolean = true;
+  @Input() isFromUrl = true;
 
   isLoading: boolean = false;
 
@@ -169,6 +172,7 @@ export class CustomerStatsRangeComponent implements OnInit {
   categories: any = webConfig.categories;
 
   constructor(
+    private authService: AuthService,
     private usersService: UsersService,
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter,
@@ -264,85 +268,170 @@ export class CustomerStatsRangeComponent implements OnInit {
 
     this.tabs = [];
 
-    this.sub.onGetAllWorkout = this.usersService.getAllWorkouts(fromDate, toDate, 1)
-      .subscribe((workouts: any) => {
-        this.workouts = _.cloneDeep(workouts);
+    if (this.isFromUrl) {
+      this.sub.onGetAllWorkout = this.usersService.getAllWorkouts(fromDate, toDate, 1)
+        .subscribe((workouts: any) => {
+          this.workouts = _.cloneDeep(workouts);
 
-        this.barChartLabels = [];
-        this.stats.movements = {};
-        this.movements = [];
+          this.barChartLabels = [];
+          this.stats.movements = {};
+          this.movements = [];
 
-        let allKeys = Object.keys(workouts);
-        let isEmpty = allKeys.length == 0;
+          let allKeys = Object.keys(workouts);
+          let isEmpty = allKeys.length == 0;
 
-        if (isEmpty || workouts.length == 0) {
-          this._clean();
-          return;
-        }
-        // let isDaily = allKeys.length <= 30;
+          if (isEmpty || workouts.length == 0) {
+            this._clean();
+            return;
+          }
+          // let isDaily = allKeys.length <= 30;
 
-        // this.endDay = endOfWeek(new Date(), {weekStartsOn: 1});
-        // this.startDay = startOfWeek(new Date(), {weekStartsOn: 1});
+          // this.endDay = endOfWeek(new Date(), {weekStartsOn: 1});
+          // this.startDay = startOfWeek(new Date(), {weekStartsOn: 1});
 
-        let endWeekDay = endOfWeek(new Date(), {weekStartsOn: 1});
-        let startWeekDay = startOfWeek(new Date(), {weekStartsOn: 1});
+          let endWeekDay = endOfWeek(new Date(), {weekStartsOn: 1});
+          let startWeekDay = startOfWeek(new Date(), {weekStartsOn: 1});
 
-        let dates = [];
-        if (!isEmpty) {
-          for (const property in workouts) {
-            dates.push(property);
+          let dates = [];
+          if (!isEmpty) {
+            for (const property in workouts) {
+              dates.push(property);
+            }
+
+            endWeekDay = startOfWeek(new Date(dates[0]), {weekStartsOn: 1})
+            startWeekDay = endOfWeek(new Date(dates[dates.length - 1]), {weekStartsOn: 1});
           }
 
-          endWeekDay = startOfWeek(new Date(dates[0]), {weekStartsOn: 1})
-          startWeekDay = endOfWeek(new Date(dates[dates.length - 1]), {weekStartsOn: 1});
-        }
+          let nbDays = 7;
+          let diff = Math​.abs(differenceInDays(startWeekDay, endWeekDay));
+          let isDaily = diff < 30;
 
-        let nbDays = 7;
-        let diff = Math​.abs(differenceInDays(startWeekDay, endWeekDay));
-        let isDaily = diff < 30;
-
-        if (diff < nbDays) {
-          diff = nbDays;
-        }
+          if (diff < nbDays) {
+            diff = nbDays;
+          }
 
 
-        let currentDate = endWeekDay;
-        let modulo = isDaily ? 1 : 7;
+          let currentDate = endWeekDay;
+          let modulo = isDaily ? 1 : 7;
 
-        for(let i = 0; i < diff; i++) {
-          if (i % modulo == 0) {
-            let property = format(currentDate, 'yyyy-MM-dd');
-            let propertyKey = format(currentDate, 'MM/dd');
-            this.barChartLabels.push(propertyKey);
+          for(let i = 0; i < diff; i++) {
+            if (i % modulo == 0) {
+              let property = format(currentDate, 'yyyy-MM-dd');
+              let propertyKey = format(currentDate, 'MM/dd');
+              this.barChartLabels.push(propertyKey);
 
-            this.tabs.push({
-              stats: {
-                intensite: 0,
-                volume: 0,
-                tonnage: 0,
-              },
-              date: property,
-              workouts: []
+              this.tabs.push({
+                stats: {
+                  intensite: 0,
+                  volume: 0,
+                  tonnage: 0,
+                },
+                date: property,
+                workouts: []
+              });
+            }
+
+            currentDate = addHours(currentDate, 24);
+          }
+
+          if (isDaily) {
+            this.tabs.map((part) => {
+              this._initPart(part);
+              return part;
+            });
+          } else {
+            this.tabs.map((part) => {
+              this._initPartWeek(part);
+              return part;
             });
           }
 
-          currentDate = addHours(currentDate, 24);
-        }
+          this.isLoading = false;
+      });
+    } else {
+      let clientId = this.authService.getCurrentAthletId();
 
-        if (isDaily) {
-          this.tabs.map((part) => {
-            this._initPart(part);
-            return part;
-          });
-        } else {
-          this.tabs.map((part) => {
-            this._initPartWeek(part);
-            return part;
-          });
-        }
+      this.sub.onGetAllWorkout = this.usersService.getAllClientWorkouts(clientId, fromDate, toDate, 1)
+        .subscribe((workouts: any) => {
+          this.workouts = _.cloneDeep(workouts);
 
-        this.isLoading = false;
-    });
+          this.barChartLabels = [];
+          this.stats.movements = {};
+          this.movements = [];
+
+          let allKeys = Object.keys(workouts);
+          let isEmpty = allKeys.length == 0;
+
+          if (isEmpty || workouts.length == 0) {
+            this._clean();
+            return;
+          }
+          // let isDaily = allKeys.length <= 30;
+
+          // this.endDay = endOfWeek(new Date(), {weekStartsOn: 1});
+          // this.startDay = startOfWeek(new Date(), {weekStartsOn: 1});
+
+          let endWeekDay = endOfWeek(new Date(), {weekStartsOn: 1});
+          let startWeekDay = startOfWeek(new Date(), {weekStartsOn: 1});
+
+          let dates = [];
+          if (!isEmpty) {
+            for (const property in workouts) {
+              dates.push(property);
+            }
+
+            endWeekDay = startOfWeek(new Date(dates[0]), {weekStartsOn: 1})
+            startWeekDay = endOfWeek(new Date(dates[dates.length - 1]), {weekStartsOn: 1});
+          }
+
+          let nbDays = 7;
+          let diff = Math​.abs(differenceInDays(startWeekDay, endWeekDay));
+          let isDaily = diff < 30;
+
+          if (diff < nbDays) {
+            diff = nbDays;
+          }
+
+
+          let currentDate = endWeekDay;
+          let modulo = isDaily ? 1 : 7;
+
+          for(let i = 0; i < diff; i++) {
+            if (i % modulo == 0) {
+              let property = format(currentDate, 'yyyy-MM-dd');
+              let propertyKey = format(currentDate, 'MM/dd');
+              this.barChartLabels.push(propertyKey);
+
+              this.tabs.push({
+                stats: {
+                  intensite: 0,
+                  volume: 0,
+                  tonnage: 0,
+                },
+                date: property,
+                workouts: []
+              });
+            }
+
+            currentDate = addHours(currentDate, 24);
+          }
+
+          if (isDaily) {
+            this.tabs.map((part) => {
+              this._initPart(part);
+              return part;
+            });
+          } else {
+            this.tabs.map((part) => {
+              this._initPartWeek(part);
+              return part;
+            });
+          }
+
+          this.isLoading = false;
+      });
+    }
+
   }
 
   private _initPartWeek(part) {

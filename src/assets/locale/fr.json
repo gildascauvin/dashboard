@@ -335,5 +335,13 @@
   "#Edit profile": "Edit profile",
   "#Change password": "Change password",
   "#Your current password": "Your current password",
-  "#Your information": "Your information"
+  "#Your information": "Your information",
+  "#Clients": "Clients",
+  "#My athlets": "My athlets",
+  "#My coachs": "My coachs",
+  "#Choose an athlet": "Choose an athlet",
+  "#Create an athlet": "Create an athlet",
+  "#See all athlets": "See all athlets",
+  "#Create an program": "Create an program",
+  "#See all programs": "See all programs"
 }

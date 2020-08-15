@@ -83,7 +83,17 @@ export class AuthService {
     let user: string = localStorage.getItem(webConfig.prefixApp + 'user');
     return  !!user ? JSON.parse(user) : {
       data: {},
-      role: {}
+      role: {},
+      clients: []
+    };
+  }
+
+  getUserClientData() {
+    let user: string = localStorage.getItem(webConfig.prefixApp + 'user_client');
+    return  !!user ? JSON.parse(user) : {
+      data: {},
+      role: {},
+      clients: []
     };
   }
 
@@ -138,6 +148,28 @@ export class AuthService {
     let token = localStorage.getItem(config.prefixApp + 'token');
 
     // this._initUserFromToken(token)
+  }
+
+  setCurrentAthletId(athletId) {
+    localStorage.setItem(webConfig.prefixApp + 'athlet_id', athletId || 0);
+  }
+
+  getCurrentAthletId() {
+    return localStorage.getItem(webConfig.prefixApp + 'athlet_id') || 0;
+  }
+
+  setCurrentAthlet(athlet) {
+    localStorage.setItem(webConfig.prefixApp + 'athlet', JSON.stringify(athlet));
+  }
+
+  getCurrentAthlet() {
+    let athlet = localStorage.getItem(webConfig.prefixApp + 'athlet');
+    if (athlet) {
+      try {
+        athlet = JSON.parse(athlet);
+      } catch(e) {}
+    }
+    return athlet || {};
   }
 
   private _initUserFromToken() {

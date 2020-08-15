@@ -1,0 +1,237 @@
+<div class="container-calendar-template">
+	<h3 class="title-rubrique">
+		<button class="btn btn-primary ml-4 btn-sm float-right" (click)="openEditModal()"><i class="fa fa-pencil"></i></button>
+		{{ model.name }}
+
+		<button class="btn btn-outline-secondary btn-sm float-right" (click)="openProgramAthleteManagerMeModal()">
+			<i class="fa fa-link"></i> {{ '#Assign to me' | dgTranslate }}
+		</button>
+		<small *ngIf="model.description"><br />{{ model.description }}</small>
+		<br />
+	</h3>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				{{ '#Workouts' | dgTranslate }}
+				<label class="float-right">
+					<div class="checkbox">
+	            <label>
+	                <input type="checkbox" [(ngModel)]="hideLocalBox">
+	                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+	                {{ '#Truncate' | dgTranslate }}
+	            </label>
+	        </div>
+				</label>
+				<button class="btn btn-light btn-sm mr-2 float-right" *ngIf="copyWorkouts.length" (click)="clearDuplicate()">
+					<i class="fa fa-trash text-danger" ></i> {{ '#Clear duplicate' | dgTranslate }}
+				</button>
+			</div>
+		</div>
+
+		<div class="row" *ngFor="let week of weeks; let y=index">
+		  <div class="col box-header-template"  *ngFor="let day of week; let i=index">
+		  	<div class="box-header-template-day text-color-box">
+		  		<span *ngIf="!i" class="float-left">{{ '#Week' | dgTranslate }} {{ y + 1}}</span>
+		  		{{ '#Day' | dgTranslate }} {{ (i + 1)  + (y * 7) }}
+		  		<i *ngIf="day.workouts.length && !copyWorkouts.length && !day.restDay.isRestDay" class="fa fa-plus add-workout-btn ml-1"
+			  			placement="top"
+			  			ngbTooltip="{{ '#Add workout' | dgTranslate }}"
+			  			(click)="addWorkoutToWeek(day, i, y)"></i>
+		  		<div ngbDropdown placement="top-right" class="d-inline-block" *ngIf="!(day.workouts.length && !copyWorkouts.length ) && !day.restDay.isRestDay">
+			  		<i class="fa fa-plus add-workout-btn ml-1"
+			  			ngbDropdownToggle
+			  			placement="top"
+			  			ngbTooltip="{{ '#Add workout' | dgTranslate }}"></i>
+		  			<div ngbDropdownMenu class="dropdown-menu">
+		  				<button ngbDropdownItem  *ngIf="copyWorkouts.length" (click)="pasteWorkout(day.workouts, i, y)"><i class="fa fa-paste"></i> {{ '#Paste workout' | dgTranslate }}</button>
+			        <button ngbDropdownItem (click)="addWorkoutToWeek(day, i, y)"><i class="fa fa-plus"></i> {{ '#Add workout' | dgTranslate }}</button>
+			        <button *ngIf="!day.workouts.length" ngbDropdownItem (click)="markAsRestDay(day, i, y)"><i class="fa fa-flag"></i> {{ '#Rest day' | dgTranslate }}</button>
+			      </div>
+		  		</div>
+		  	</div>
+
+		  	<div class="box-body-template-day" [class.box-body-week-active]="hover['w-' + i]">
+		  		<div dnd-sortable-container [sortableData]="day.workouts" >
+			  		<div class="box-body-workout"
+			  			[class.box-body-workout-active]="hover[i + '-' + y + '-' + in]"
+			  			*ngFor="let workout of day.workouts; let in=index;">
+
+							<div class="checkbox float-left">
+		            <label>
+	                <input type="checkbox" (change)="onChangeSelection($event, i + '-' + y + '-' + in, workout)" [(ngModel)]="selectedWorkouts[i + '-' + y + '-' + in]">
+	                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+		            </label>
+			        </div>
+
+							<div (click)="markAsOver(i + '-' + y + '-' + in, 'w-' + i)">
+								<h6>
+				  				<i class="fa fa-arrows i-btn float-right"
+				  					*ngIf="!showFooterAction"
+				  					placement="top"
+				  					dnd-draggable
+						  			[dragEnabled]="true"
+						  			dnd-sortable
+				  					[sortableIndex]="in"
+				  					(onDragStart)="onDragStart()"
+						  			[dragData]="workout"
+				  					ngbTooltip="{{ '#Move workout' | dgTranslate }}: {{ workout.name | dgTranslate }}"></i>
+
+				  				<input type="text" placeholder="{{ '#Workout name' | dgTranslate }}" class="box-body-workout-inputs ml-4" [autofocus]="true" [(ngModel)]="workout.name">
+				  				<span class="box-body-workout-views ml-4" placement="top" ngbTooltip="{{ workout.name }}"> {{ workout.name }}</span>
+				  			</h6>
+
+				  			<div *ngIf="hover[i + '-' + y + '-' + in] && !showFooterAction" class="action-workout-box text-center">
+				  				<i class="fa fa-copy i-btn ml-4 mr-4" placement="top" ngbTooltip="{{ '#Duplicate' | dgTranslate }}" (click)="duplicateWorkout(workout)"></i>
+				  				<i class="fa fa-trash i-btn mr-4"
+				  					placement="top"
+				  					ngbTooltip="{{ '#Delete' | dgTranslate }}"
+				  					(click)="openWorkoutDeleteModal(workout, in, day.workouts)"></i>
+				  				<i class="fa fa-plus i-btn" (click)="addExerciceToWorkout(day, workout.exercices, day.workouts)" placement="top" ngbTooltip="{{ '#Add exercice' | dgTranslate }}"></i>
+				  			</div>
+
+				  			<ul class="list-group" >
+				  				<li class="list-group-item box-exercice"
+				  					*ngFor="let exercice of workout.exercices; let indexExercice=index;">
+				  					<div class="action-workout-box-execrice float-right" *ngIf="hover[i + '-' + y + '-' + in] && !showFooterAction">
+						  				<i class="fa fa-pencil i-btn mr-4"
+						  					placement="top" ngbTooltip="{{ '#Edit' | dgTranslate }}"
+						  					(click)="openExerciceManagerModal(exercice, workout, day)"></i>
+						  				<i class="fa fa-trash i-btn"
+						  					placement="top"
+						  					ngbTooltip="{{ '#Delete' | dgTranslate }}"
+						  					(click)="openExerciceDeleteModal(exercice, indexExercice, workout.exercices)"></i>
+						  			</div>
+				  					<div *ngIf="!hideLocalBox" class="movement-container movement-type-{{ (exercice.type && exercice.type.id) }}">
+
+				  						<div class="inputs-exercice-type" *ngIf="exercice.type" [ngSwitch]="exercice.type.id">
+	   										<div *ngSwitchCase="1">
+	   											<div class="movement-title" *ngFor="let movement of exercice.movements">
+	   												{{ movement.name }}
+	   												<div class="movement-content" *ngFor="let set of movement.sets">
+															<span *ngIf="set.set">{{ set.set }} x {{ set.rep }} @ {{ set.value }}{{ set.unit_label }}</span>
+														</div>
+	   											</div>
+
+	   										</div>
+	   										<div *ngSwitchCase="2">
+	   											<div class="movement-title">
+	   												<span *ngFor="let movement of exercice.movements; let indMov=index;"><span *ngIf="indMov>0"> +</span> {{ movement.quantity }} {{ movement.name }}</span>
+
+	   												<div class="movement-content">
+															<span>{{ exercice.sets }} {{ '#Sets' | dgTranslate }}</span>
+														</div>
+	   											</div>
+	   										</div>
+	   										<div *ngSwitchCase="3">
+	   											<div class="movement-title" *ngFor="let movement of exercice.movements">
+	   												{{ movement.quantity }} {{ movement.name }} @ {{ movement.value }}{{ movement.unit_label }}
+	   											</div>
+	   											<div class="movement-content">
+	   												AMRAP: {{ exercice.amrap_timecap }} {{ '#minutes' | dgTranslate }}
+	   											</div>
+	   										</div>
+	   										<div *ngSwitchCase="4">
+	   											<div class="movement-title" *ngFor="let movement of exercice.movements">
+	   												{{ movement.quantity }} {{ movement.name }} @ {{ movement.value }}{{ movement.unit_label }}
+	   											</div>
+	   											<div class="movement-content">
+	   												<span *ngIf="exercice.time_style == 1">{{ exercice.time_style_fixed }} {{ '#rounds for time' | dgTranslate }}</span>
+	   												<span *ngIf="exercice.time_style == 2">{{ exercice.time_style_varying }} {{ '#rounds for time' | dgTranslate }}</span>
+	   											</div>
+	   										</div>
+	   										<div *ngSwitchCase="5">
+	   											<div class="movement-title" *ngFor="let movement of exercice.movements">
+	   												{{ movement.quantity }} {{ movement.name }} @ {{ movement.value }}{{ movement.unit_label }}
+	   											</div>
+												<div class="movement-content">
+													EMOM ({{ exercice.emom_duration }} min every {{ exercice.emom_seconds }} sec)
+												</div>
+	   										</div>
+	   										<div *ngSwitchCase="7">
+	   											<div class="movement-title" *ngIf="exercice.cardio_type">
+	   												{{ configExercices.cardio.flatType[exercice.cardio_type] }}
+	   											</div>
+
+	   											<div class="movement-content" *ngIf="exercice.cardio_scoring==1">
+	   												<span>{{ exercice.cardio_cardio_movement.interval }} {{ exercice.cardio_cardio_movement.unit_label }} @ {{ exercice.cardio_cardio_movement.value }} % </span>
+	   											</div>
+	   											<div *ngIf="exercice.cardio_scoring==2">
+	   												<div class="movement-content" *ngFor="let set of exercice.cardio_intervals_movement.sets">
+															<span *ngIf="set.set">{{ set.set }} x {{ set.interval }} {{ set.unit_label }} @ {{ set.value }} %</span>
+														</div>
+													</div>
+
+	   										</div>
+	   										<div *ngSwitchCase="8">
+	   											<div class="movement-title">
+	   												{{ exercice.name }}
+	   												<small>({{configExercices.flatCustom[exercice.custom_scoring]}})</small>
+	   											</div>
+	   											<div class="movement-content">{{ exercice.custom }}</div>
+	   										</div>
+			  							</div>
+				  					</div>
+				  				</li>
+				  			</ul>
+							</div>
+
+			  		</div>
+			  		<div class="box-body-workout" *ngIf="day.workouts.length">
+		  				<div class="paste-zone-workouts" *ngIf="showPasteCopiedWorkouts" (click)="pasteCopiedWorkouts(day.workouts)">{{ '#Paste Workouts' | dgTranslate }}</div>
+		  			</div>
+
+			  		<div *ngIf="!day.restDay.isRestDay && day.workouts.length === 0"
+			  			class="zone-drop-legal"
+			  			dnd-droppable
+			  			dnd-sortable>
+		  					<div class="paste-zone-workouts" *ngIf="showPasteCopiedWorkouts" (click)="pasteCopiedWorkouts(day.workouts)">{{ '#Paste Workouts' | dgTranslate }}</div>
+			  			</div>
+
+			  		<div *ngIf="day.restDay.isRestDay">
+					  	<div class="zone-rest-day" [class.box-body-rest-active]="hover['r-' + i + '-' + y]">
+					  		<h5 (click)="markAsOver('r-' + i + '-' + y, 'w-' + i)"><i class="fa fa-flag"></i> {{ '#Rest day' | dgTranslate }}</h5>
+					  		<div class="view-description-restday"
+					  			(click)="markAsOver('r-' + i + '-' + y, 'w-' + i)"
+					  			*ngIf="!hover['r-' + i + '-' + y]">
+					  			{{ day.restDay.description }}
+					  		</div>
+					  		<div class="view-description-restday-inputs" *ngIf="hover['r-' + i + '-' + y]">
+					  			<textarea placeholder="{{ '#Description' | dgTranslate }}"
+					  				class="textarea-restday"
+					  				[(ngModel)]="day.restDay.description"></textarea>
+							  	<button class="btn btn-light text-danger mt-2"
+							  		(click)="removeRestDay(day)"><i class="fa fa-trash"></i></button>
+					  		</div>
+						  </div>
+					  </div>
+
+			  	</div>
+		  	</div>
+		  </div>
+		</div>
+	</div>
+
+	<div class="mt-4">
+		<button class="btn btn-light" (click)="add()"><i class="fa fa-plus"></i> {{ '#Add week' | dgTranslate }}</button>
+		<button *ngIf="weeks.length > 1" class="btn btn-light ml-2" (click)="remove()"><i class="fa fa-minus"></i> {{ '#Remove week' | dgTranslate }}</button>
+	</div>
+</div>
+
+<div *ngIf="showFooterAction" class="footer-action">
+  <div class="footer-item-actions">
+  	{{ '#Workouts Selected' | dgTranslate }}: {{ selectedWorkoutsCount }}
+  	<button class="btn mr-4 ml-4"
+  		placement="top"
+		ngbTooltip="{{ '#Duplicate' | dgTranslate }}"
+		(click)="showCopyBoxes()"><i class="fa fa-copy"></i></button>
+  	<button class="btn mr-4"
+  		placement="top"
+		ngbTooltip="{{ '#Delete' | dgTranslate }}"
+		(click)="openCopiedWorkoutDeleteModal()"><i class="fa fa-trash"></i></button>
+  	<button class="btn mr-4"
+  		placement="top"
+		ngbTooltip="{{ '#Close' | dgTranslate }}"
+		(click)="closeFooterActions()"><i class="fa fa-close"></i></button>
+  </div>
+</div>

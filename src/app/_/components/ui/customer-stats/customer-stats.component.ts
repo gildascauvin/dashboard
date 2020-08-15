@@ -21,6 +21,7 @@ import { webConfig } from '../../../../web-config';
 })
 export class CustomerStatsComponent implements OnInit {
 	@Input() showCardio: boolean = true;
+  @Input() isFromUrl = true;
 
 	stats: any = {
     weekly: {

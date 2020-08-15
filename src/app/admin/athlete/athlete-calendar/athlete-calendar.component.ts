@@ -29,6 +29,7 @@ import { TemplatesModalExerciceManagerComponent } from '../../../_/templates/tem
   styleUrls: ['./athlete-calendar.component.scss']
 })
 export class AthleteCalendarComponent implements OnInit {
+  @Input() isFromUrl = true;
 
   bsModalRef: BsModalRef;
 
@@ -109,7 +110,10 @@ export class AthleteCalendarComponent implements OnInit {
     this.startedAtModel.month = todayCalendar.getMonth()+1;
     this.startedAtModel.day = todayCalendar.getDate();
 
-    this.user = this.authService.getUserData();
+    this.user = this.isFromUrl
+      ? this.authService.getUserData()
+      : this.authService.getUserClientData();
+
     this._syncWorkouts();
 
     this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe((o) => {
@@ -121,7 +125,9 @@ export class AthleteCalendarComponent implements OnInit {
     });
 
     this.sub.onUpdate = this.userService.onUpdate.subscribe((user) => {
-      this.user = this.authService.getUserData();
+      this.user = this.isFromUrl
+        ? this.authService.getUserData()
+        : this.authService.getUserClientData();
       this._syncWorkouts(null, true);
     });
 
@@ -641,13 +647,28 @@ export class AthleteCalendarComponent implements OnInit {
     this.sub.onGetAllWorkout && this.sub.onGetAllWorkout.unsubscribe();
 
     let date = this.startedAtModel.year + '-' + this.startedAtModel.month + '-' + this.startedAtModel.day;
-    this.sub.onGetAllWorkout = this.usersService.getAllWorkout(date)
-      .subscribe((workouts: any) => {
-        if (workouts) {
-          this.workouts = _.cloneDeep(workouts);
-        }
-        this.isLoading = false;
-        this._init(!reset);
-    });
+
+
+    if (this.isFromUrl) {
+      this.sub.onGetAllWorkout = this.usersService.getAllWorkout(date)
+        .subscribe((workouts: any) => {
+          if (workouts) {
+            this.workouts = _.cloneDeep(workouts);
+          }
+          this.isLoading = false;
+          this._init(!reset);
+      });
+    } else {
+      let clientId = this.authService.getCurrentAthletId();
+      this.sub.onGetAllWorkout = this.usersService.getAllClientWorkout(clientId, date)
+        .subscribe((workouts: any) => {
+          if (workouts) {
+            this.workouts = _.cloneDeep(workouts);
+          }
+          this.isLoading = false;
+          this._init(!reset);
+      });
+    }
+
   }
 }

@@ -1,0 +1,28 @@
+<div class="container">
+	<div class="row container-program">
+		<div class="col-md-12">
+			<h4>{{ '#My coachs' | dgTranslate }}</h4>
+		</div>
+		<div class="col-md-12">
+			<div *ngIf="user.invitations">
+				<div class="alert alert-info" *ngFor="let invitation of user.invitations">
+					{{ '#Invitation from' | dgTranslate }}: {{ invitation.profile.firstname + ' ' + invitation.profile.lastname }}
+					<span *ngIf="invitation.profile.email">({{ invitation.profile.email }})</span>
+					<button class="btn btn-danger" (click)="responseInvitation(invitation, false)">{{ '#Decline' | dgTranslate }}</button>
+					<button class="btn btn-success mr-4 ml-4" (click)="responseInvitation(invitation, true)">{{ '#Accept' | dgTranslate }}</button>
+				</div>
+			</div>
+			<div class="list-group list-group-flush">
+				<div *ngFor="let coach of user.coachs">
+					<div *ngIf="coach.profile" class="list-group-item">
+						<button class="btn btn-light float-right ml-4" (click)="openInvitationDeleteModal(coach)"><i class="fa fa-trash text-danger"></i> {{ '#Delete' | dgTranslate }}</button>
+						{{ coach.profile.firstname + ' ' + coach.profile.lastname }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+

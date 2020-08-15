@@ -1,1 +1,19 @@
-<p>coach-settings works!</p>
+<div class="container container-settings">
+	<div class="row">
+		<div class="col-md-3">
+			<h3>{{ '#Settings' | dgTranslate }}</h3>
+			<div class="list-group list-group-flush">
+				<a class="list-group-item" routerLinkActive="active" [routerLink]="['/coach', 'settings', 'profile']">{{ '#Edit profile' | dgTranslate }}</a>
+				<a class="list-group-item" routerLinkActive="active" [routerLink]="['/coach', 'settings', 'password']">{{ '#Change password' | dgTranslate }}</a>
+				<a class="list-group-item" routerLinkActive="active" [routerLink]="['/coach', 'settings', 'plan']">{{ '#Plan' | dgTranslate }}</a>
+			</div>
+		</div>
+		<div class="col-md-9">
+			<div class="content-settings">
+				<router-outlet></router-outlet>
+			</div>
+		</div>
+	</div>
+</div>
+
+

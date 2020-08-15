@@ -1,0 +1,22 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="form-group">
+			<label>{{ '#Last Name' | dgTranslate }}</label>
+			<input placeholder="Smith" [class.is-invalid]="errors.lastname" (input)="errors.lastname=false" [(ngModel)]="user.data.lastname" type="text" autocomplete="new-password" class="form-control">
+		</div>
+	</div>
+
+	<div class="col-md-12">
+		<div class="form-group">
+			<label>{{ '#First Name' | dgTranslate }}</label>
+			<input placeholder="John" [class.is-invalid]="errors.firstname" (input)="errors.firstname=false" [(ngModel)]="user.data.firstname" type="text" autocomplete="new-password" class="form-control">
+		</div>
+	</div>
+
+	<div class="col-md-12">
+		<button type="submit" (click)="save()" [disabled]="isLoading" class="btn btn-primary btn-block btn-sm">
+			{{ '#Save' | dgTranslate }}
+		</button>
+	</div>
+</div>
+

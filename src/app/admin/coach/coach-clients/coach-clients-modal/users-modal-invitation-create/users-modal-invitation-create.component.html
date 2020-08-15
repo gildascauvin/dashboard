@@ -1,0 +1,30 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left"><i class="fa fa-plus"></i> {{ '#Add Athlete' | dgTranslate }}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" [disabled]="isLoading" (click)="cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<div class="col-md-12">
+		<div class="form-group">
+			<label>{{ '#Name' | dgTranslate }}</label>
+			<input placeholder="John Smith" [class.is-invalid]="errors.client_name" (input)="errors.client_name=false"  [(ngModel)]="modelClient.client_name" type="text" autocomplete="off" class="form-control">
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="form-group">
+			<label>{{ '#Email' | dgTranslate }}</label>
+			<input placeholder="example@gmail.com" [class.is-invalid]="errors.client_email" (input)="errors.client_email=false"  [(ngModel)]="modelClient.client_email" type="text" autocomplete="off" class="form-control">
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-light mr-4" [disabled]="isLoading" (click)="cancel()">
+		<i class="fa fa-close"></i> {{ '#Cancel' | dgTranslate }}
+	</button>
+	<button class="btn btn-primary" [disabled]="isLoading" (click)="saveClient()">
+		<i class="fa fa-save"></i>
+		{{ '#Add Athlete' | dgTranslate }}
+	</button>
+</div>
+

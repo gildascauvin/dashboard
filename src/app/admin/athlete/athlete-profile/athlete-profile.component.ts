@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -24,6 +24,8 @@ import * as _ from 'lodash';
   styleUrls: ['./athlete-profile.component.scss']
 })
 export class AthleteProfileComponent implements OnInit {
+  @Input() isFromUrl = true;
+
   bsModalRef: BsModalRef;
 
   currentTab: number = 0;
@@ -85,7 +87,10 @@ export class AthleteProfileComponent implements OnInit {
   	) { }
 
   ngOnInit(): void {
-  	this.user = this.authService.getUserData();
+  	this.user = this.isFromUrl
+      ? this.authService.getUserData()
+      : this.authService.getUserClientData();
+
     this._initUser();
 
     this.sub.subjectUpdateUsers = this.usersService.onUserUpdated.subscribe(() => {
@@ -159,10 +164,19 @@ export class AthleteProfileComponent implements OnInit {
 		this.isLoading = true;
   	this.sub.userInfo && this.sub.userInfo.unsubscribe();
 
-  	this.sub.userInfo = this.usersService.getUser().subscribe((user: any) => {
-    	this._initData(user);
-      this.isLoading = false;
-    });
+    if (this.isFromUrl) {
+    	this.sub.userInfo = this.usersService.getUser().subscribe((user: any) => {
+      	this._initData(user);
+        this.isLoading = false;
+      });
+    } else {
+      let userClientId = this.authService.getCurrentAthletId();
+
+      this.sub.userInfo = this.usersService.getUserClient(userClientId).subscribe((user: any) => {
+        this._initData(user);
+        this.isLoading = false;
+      });
+    }
   }
 
   private _initData(user) {
@@ -177,7 +191,11 @@ export class AthleteProfileComponent implements OnInit {
 	      this.birthdayModel.year = parseInt(date[0]);
 	    }
 
-	  	this.userService.initUserInfos(user);
+      if (this.isFromUrl) {
+	  	  this.userService.initUserInfos(user);
+      } else {
+        this.userService.initUserClientInfos(user);
+      }
 			this.isLoading = false;
 		}
   }

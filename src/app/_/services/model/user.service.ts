@@ -14,6 +14,7 @@ import { webConfig } from '../../../web-config';
 export class UserService {
 
 	user: any = {};
+	userClient: any = {};
 
   onUpdate: EventEmitter<any> = new EventEmitter();
   onWorkoutSaved: EventEmitter<any> = new EventEmitter();
@@ -58,6 +59,17 @@ export class UserService {
 		return this;
 	}
 
+	initUserClientInfos(userClient) {
+		if (!userClient) {
+			return this;
+		}
+
+		this.userClient = userClient || {};
+
+		this._saveClientIntoLocalStorage();
+		return this;
+	}
+
 	updateUserInfos() {
 		this._saveIntoLocalStorage();
 		return this;
@@ -65,6 +77,11 @@ export class UserService {
 
 	private _saveIntoLocalStorage() {
 		localStorage.setItem(webConfig.prefixApp + 'user', JSON.stringify(this.user));
+		this.onUpdate.emit(true);
+	}
+
+	private _saveClientIntoLocalStorage() {
+		localStorage.setItem(webConfig.prefixApp + 'user_client', JSON.stringify(this.userClient));
 		this.onUpdate.emit(true);
 	}
 }
