@@ -108,9 +108,13 @@ export class AthleteProfileComponent implements OnInit {
     this.user.data.birthday = `${this.birthdayModel.year}-${this.birthdayModel.month}-${this.birthdayModel.day}`;
 
     // console.log('this.user', this.user);
-  	this.usersService.updateUser(this.user).subscribe((user: any) => {
-      this.toastrService.success('MRV updated!');
-    	this._initUser();
+  	this.usersService[(this.isFromUrl ? 'updateUser' : 'updateClientUser' )](this.user).subscribe((user: any) => {
+      if (!user.errors) {
+        this.toastrService.success('MRV updated!');
+        this._initUser();
+      } else {
+        this.toastrService.error('An error has occurred');
+      }
 
   		this.isLoading = false;
   	}, error => this.toastrService.error('An error has occurred'));
@@ -118,18 +122,21 @@ export class AthleteProfileComponent implements OnInit {
 
   openCreateModal() {
     const initialState = {
+      userId: this.user.id,
+      isFromUrl: this.isFromUrl,
     };
 
     this.bsModalRef = this.modalService.show(AthleteProfileModalProfileCreateComponent, {
       keyboard: false,
       initialState: initialState,
-      class: 'modal-xs'
+      class: 'modal-xs',
     });
   }
 
   openDeleteModal(profile) {
     const initialState = {
       model: profile,
+      isFromUrl: this.isFromUrl,
     };
 
     this.bsModalRef = this.modalService.show(AthleteProfileModalProfileDeleteComponent, {
@@ -142,6 +149,7 @@ export class AthleteProfileComponent implements OnInit {
   openEditModal(profile) {
     const initialState = {
       model: profile,
+      isFromUrl: this.isFromUrl,
     };
 
     this.bsModalRef = this.modalService.show(AthleteProfileModalProfileEditComponent, {

@@ -117,6 +117,7 @@ export class AthleteCalendarComponent implements OnInit {
     this._syncWorkouts();
 
     this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe((o) => {
+      console.log(o);
       this._syncWorkouts(null, true);
     });
 
@@ -457,6 +458,7 @@ export class AthleteCalendarComponent implements OnInit {
       position: position,
       workouts: workouts,
       isPlanning: true,
+      isFromUrl: this.isFromUrl,
     };
 
     this.bsModalRef = this.modalService.show(TemplatesModalWorkoutDeleteComponent, {
@@ -494,9 +496,12 @@ export class AthleteCalendarComponent implements OnInit {
       workout: workout,
       isPlanning: true,
       userId: this.user.id,
-      profil: this.user.profil || []
+      profil: this.user.profil || [],
+      isFromUrl: this.isFromUrl,
       // model: _.cloneDeep(model),
     };
+
+    console.log(initialState);
 
     this.bsModalRef = this.modalService.show(TemplatesModalExerciceManagerComponent, {
       keyboard: false,

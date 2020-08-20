@@ -17,8 +17,11 @@ export class TemplatesModalExerciceDeleteComponent extends FormModalCore impleme
   model: any = {};
   position: number = -1;
   exercices: any[] = [];
+
   workout: any = {};
+
   isPlanning: boolean = false;
+  isFromUrl: boolean = true;
 
   errors: any = {};
 
@@ -45,6 +48,12 @@ export class TemplatesModalExerciceDeleteComponent extends FormModalCore impleme
     this.templatesService.onTemplateUpdated.emit(true);
 
     console.log('Workout', this.workout);
+
+    if (!this.workout.workout_id) {
+      this.usersService.onWorkoutSaved.emit(true);
+      this.cancel();
+      return;
+    }
 
     if (this.isPlanning) {
       let body: any = {

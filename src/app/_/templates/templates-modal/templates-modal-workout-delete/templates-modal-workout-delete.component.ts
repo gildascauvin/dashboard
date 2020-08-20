@@ -20,6 +20,7 @@ export class TemplatesModalWorkoutDeleteComponent extends FormModalCore implemen
   copiedWorkouts: any = {};
   isMultiple: boolean = false;
   isPlanning: boolean = false;
+  isFromUrl: boolean = true;
 
   model: any = {};
   position: number = -1;
@@ -65,7 +66,6 @@ export class TemplatesModalWorkoutDeleteComponent extends FormModalCore implemen
 
           this.templatesService.onWorkoutsGroupReset.emit(true);
         }
-
       }
     }
 
@@ -73,7 +73,7 @@ export class TemplatesModalWorkoutDeleteComponent extends FormModalCore implemen
       _.forEach(workoutsToDelete, (workoutId) => {
         console.log('Deleted workout_id: ' + workoutId);
         if (workoutId) {
-          this.usersService.removeWorkout(workoutId).subscribe(() => {
+          this.usersService[(this.isFromUrl ? 'removeWorkout' : 'removeClientWorkout' )](workoutId).subscribe(() => {
             this.cancel();
             this.usersService.onWorkoutSaved.emit(true);
           });

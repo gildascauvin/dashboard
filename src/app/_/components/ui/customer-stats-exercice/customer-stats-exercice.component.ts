@@ -21,7 +21,6 @@ export class CustomerStatsExerciceComponent implements OnInit {
   		.subscribe((component) => {
 				this.movements = component.movements;
 				this.categoriesData = component.categoriesData;
-				console.log(this);
     });
 
   	this.sub.onStatsUpdatedStart = this.customerStatsService

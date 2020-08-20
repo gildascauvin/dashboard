@@ -11,6 +11,7 @@ import { UsersService } from '../../../../../_/templates/users.service';
   styleUrls: ['./athlete-profile-modal-profile-delete.component.scss']
 })
 export class AthleteProfileModalProfileDeleteComponent implements OnInit {
+  isFromUrl: boolean = true;
 
   model: any = {
     record_unit: 1,
@@ -21,6 +22,8 @@ export class AthleteProfileModalProfileDeleteComponent implements OnInit {
 
   errors: any = {}
   errorsMessage: string = '';
+
+  userId: number = 0;
 
 	constructor(
   	public bsModalRef: BsModalRef,
@@ -40,7 +43,7 @@ export class AthleteProfileModalProfileDeleteComponent implements OnInit {
   }
 
   deleteProfile() {
-    this.usersService.removeUserProfile(this.model).subscribe((data: any) => {
+    this.usersService[this.isFromUrl ? 'removeUserProfile' : 'removeClientUserProfile'](this.model).subscribe((data: any) => {
       if (!data.errors) {
         this.cancel();
         this.usersService.onUserUpdated.emit(true);

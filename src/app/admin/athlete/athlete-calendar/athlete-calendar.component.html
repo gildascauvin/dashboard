@@ -50,7 +50,7 @@
 									<div (click)="markAsOver(i + '-' + y + '-' + in, 'w-' + i)">
 										<h6>
 						  				<i class="fa fa-arrows i-btn float-right"
-						  					*ngIf="!showFooterAction"
+						  					*ngIf="!showFooterAction && false"
 						  					placement="top"
 								  			dnd-sortable
 						  					dnd-draggable
@@ -67,7 +67,7 @@
 
 
 						  			<div *ngIf="hover[i + '-' + y + '-' + in] && !showFooterAction" class="action-workout-box text-center">
-						  				<i class="fa fa-copy i-btn ml-4 mr-4" placement="top" ngbTooltip="{{ '#Duplicate' | dgTranslate }}" (click)="duplicateWorkout(workout)"></i>
+						  				<i *ngIf="false" class="fa fa-copy i-btn ml-4 mr-4" placement="top" ngbTooltip="{{ '#Duplicate' | dgTranslate }}" (click)="duplicateWorkout(workout)"></i>
 						  				<i class="fa fa-trash i-btn mr-4"
 						  					placement="top"
 						  					ngbTooltip="{{ '#Delete' | dgTranslate }}"

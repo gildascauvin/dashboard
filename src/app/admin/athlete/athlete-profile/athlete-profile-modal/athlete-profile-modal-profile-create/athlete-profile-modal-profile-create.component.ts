@@ -11,6 +11,7 @@ import { UsersService } from '../../../../../_/templates/users.service';
   styleUrls: ['./athlete-profile-modal-profile-create.component.scss']
 })
 export class AthleteProfileModalProfileCreateComponent implements OnInit {
+  isFromUrl: boolean = true;
 
   modelId: number = 0;
 	model: any = {
@@ -23,6 +24,8 @@ export class AthleteProfileModalProfileCreateComponent implements OnInit {
   sub: any;
   movements: any[] = [];
   configExercices: any = webConfig.exercices;
+
+  userId: number = 0;
 
   constructor(
   	public bsModalRef: BsModalRef,
@@ -63,7 +66,8 @@ export class AthleteProfileModalProfileCreateComponent implements OnInit {
   }
 
   save() {
-    this.usersService.createUserProfile(this.model).subscribe((data: any) => {
+    this.model.user_id = this.userId;
+    this.usersService[this.isFromUrl ? 'createUserProfile' : 'createClientUserProfile'](this.model).subscribe((data: any) => {
       if (!data.errors) {
         this.cancel();
         this.usersService.onUserUpdated.emit(true);

@@ -11,6 +11,7 @@ import { UsersService } from '../../../../../_/templates/users.service';
   styleUrls: ['./athlete-profile-modal-profile-edit.component.scss']
 })
 export class AthleteProfileModalProfileEditComponent implements OnInit {
+  isFromUrl: boolean = true;
 
   modelId: number = 0;
 	model: any = {
@@ -24,6 +25,8 @@ export class AthleteProfileModalProfileEditComponent implements OnInit {
   sub: any;
   movements: any[] = [];
   configExercices: any = webConfig.exercices;
+
+  userId: number = 0;
 
   constructor(
   	public bsModalRef: BsModalRef,
@@ -48,7 +51,7 @@ export class AthleteProfileModalProfileEditComponent implements OnInit {
   }
 
   save() {
-    this.usersService.updateUserProfile(this.model).subscribe((data: any) => {
+    this.usersService[this.isFromUrl ? 'updateUserProfile' : 'updateClientUserProfile'](this.model).subscribe((data: any) => {
       if (!data.errors) {
         this.cancel();
         this.usersService.onUserUpdated.emit(true);

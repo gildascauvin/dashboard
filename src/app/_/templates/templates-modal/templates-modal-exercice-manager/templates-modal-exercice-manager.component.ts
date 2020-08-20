@@ -17,6 +17,7 @@ import * as _ from 'lodash';
   styleUrls: ['./templates-modal-exercice-manager.component.scss']
 })
 export class TemplatesModalExerciceManagerComponent  extends FormModalCore implements OnInit {
+
   model: any = {
     movements: [],
     name: '',
@@ -59,6 +60,8 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
 
   profil: any[] = [];
 
+  isFromUrl: boolean = true;
+
   constructor(
     public bsModalRef: BsModalRef,
     private usersService: UsersService,
@@ -84,7 +87,7 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
     this.model.sets = this.model.sets || 5;
     this.model.updated = true;
 
-    console.log(this.profil, this.model);
+    console.log(this);
   }
 
   ngOnDestroy(): void {
@@ -152,7 +155,6 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
     this.templatesService.onTemplateUpdated.emit(true);
 
     if (this.isPlanning) {
-
       if (this.showDate) {
         this.workout.day = `${this.startedAtModel.year}-${this.startedAtModel.month}-${this.startedAtModel.day}`;
         this.workout.date = `${this.workout.day}`;
@@ -176,7 +178,7 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
       };
 
       if (!this.workout.workout_id) {
-        this.usersService.createWorkout(body).subscribe((response: any) => {
+        this.usersService[this.isFromUrl ? 'createWorkout' : 'createClientWorkout'](body).subscribe((response: any) => {
           if (response.errors) {
             this.toastrService.error(response.message);
           } else {
@@ -192,7 +194,7 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
         body.workout_id = this.workout.workout_id;
         body.started_at = this.workout.started_at;
 
-        this.usersService.updateWorkout(body).subscribe((response: any) => {
+        this.usersService[this.isFromUrl ? 'updateWorkout' : 'updateClientWorkout'](body).subscribe((response: any) => {
           if (response.errors) {
             this.toastrService.error(response.message);
           } else {
@@ -203,6 +205,7 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
         });
       }
     } else {
+      this.usersService.onWorkoutSaved.emit({});
       this.bsModalRef.hide();
     }
   }
@@ -228,8 +231,6 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
   }
 
   setUnitLabel(model, key, labelKey) {
-
-
     model[labelKey] = '%';
     switch (model[key]) {
       case 1:

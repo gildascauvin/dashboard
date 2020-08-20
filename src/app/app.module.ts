@@ -48,7 +48,6 @@ import { AthleteProgramsComponent } from './admin/athlete/athlete-programs/athle
 import { AthleteProgramsDetailComponent } from './admin/athlete/athlete-programs/athlete-programs-detail/athlete-programs-detail.component';
 
 import { CoachComponent } from './admin/coach/coach.component';
-import { CoachCalendarComponent } from './admin/coach/coach-calendar/coach-calendar.component';
 import { CoachDashboardComponent } from './admin/coach/coach-dashboard/coach-dashboard.component';
 import { CoachProgramsComponent } from './admin/coach/coach-programs/coach-programs.component';
 import { CoachSettingsComponent } from './admin/coach/coach-settings/coach-settings.component';
@@ -126,7 +125,6 @@ import { AthleteCoachComponent } from './admin/athlete/athlete-coach/athlete-coa
     AthleteProfileComponent,
     AthleteStatsComponent,
     AthleteCalendarComponent,
-    CoachCalendarComponent,
     CoachDashboardComponent,
     CoachProgramsComponent,
     CoachSettingsComponent,

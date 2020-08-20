@@ -78,7 +78,7 @@ export class UsersService {
       page.date = date;
     }
 
-    return this.httpService.get(`workout/${clientId}?page=${page.pageNumber}&size=${page.size}&date=${page.date}`);
+    return this.httpService.get(`workout/client/${clientId}?page=${page.pageNumber}&size=${page.size}&date=${page.date}`);
   }
 
   getAllWorkouts(fromDate, toDate, strictDate?) {
@@ -102,7 +102,7 @@ export class UsersService {
       size: 500,
     };
 
-    let query = `workout/${clientId}?page=${page.pageNumber}&size=${page.size}&date=${fromDate}&date_end=${toDate}`;
+    let query = `workout/client/${clientId}?page=${page.pageNumber}&size=${page.size}&date=${fromDate}&date_end=${toDate}`;
     query += strictDate
       ? '&strict_date=1'
       : '';
@@ -167,8 +167,24 @@ export class UsersService {
     return this.httpService.post(`user/client`, model);
   }
 
+  updateClientUser(model) {
+    return this.httpService.put(`user/client/${model.id}`, model);
+  }
+
   removeClient(clientId) {
     return this.httpService.delete(`user/client/${clientId}`);
+  }
+
+  createClientUserProfile(model) {
+    return this.httpService.post(`client/user/${model.user_id}/profile`, model);
+  }
+
+  updateClientUserProfile(model) {
+    return this.httpService.put(`client/user/${model.user_id}/profile/${model.user_profile_id}`, model);
+  }
+
+  removeClientUserProfile(model) {
+    return this.httpService.delete(`client/user/${model.user_id}/profile/${model.user_profile_id}`);
   }
 
   createProgram(id, model) {
@@ -223,5 +239,17 @@ export class UsersService {
 
   removeWorkout(id) {
     return this.httpService.delete(`workout/${id}`);
+  }
+
+  createClientWorkout(model) {
+    return this.httpService.post(`workout/client/${model.user_id}`, model);
+  }
+
+  updateClientWorkout(model) {
+    return this.httpService.put(`workout/client/${model.workout_id}`, model);
+  }
+
+  removeClientWorkout(workoutId) {
+    return this.httpService.delete(`workout/client/${workoutId}`);
   }
 }

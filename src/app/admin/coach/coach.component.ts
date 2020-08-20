@@ -120,7 +120,8 @@ export class CoachComponent implements OnInit {
       workout: this.getWokout(),
       isPlanning: true,
       showDate: true,
-      userId: this.user.id
+      userId: this.currentUserId,
+      isFromUrl: false,
       // model: _.cloneDeep(model),
     };
 
