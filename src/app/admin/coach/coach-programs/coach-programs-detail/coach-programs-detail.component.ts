@@ -25,6 +25,7 @@ import { UsersModalProgramAthleteManagerMeComponent } from '../../../../_/templa
 import { UsersModalProgramAssignComponent } from '../../../../_/templates/programs/users-modal-program-assign/users-modal-program-assign.component';
 
 import { UsersService } from '../../../../_/templates/users.service';
+import { AuthService } from '../../../../_/services/http/auth.service';
 
 @Component({
   selector: 'app-coach-programs-detail',
@@ -72,7 +73,14 @@ export class CoachProgramsDetailComponent implements OnInit {
 
   cloneWeeks: any = [];
 
+  user: any = {
+    data: {},
+    profil: [],
+    clients: []
+  };
+
   constructor(
+    private authService: AuthService,
     private toastrService: ToastrService,
     private templatesService: TemplatesService,
   	private usersService: UsersService,
@@ -81,6 +89,7 @@ export class CoachProgramsDetailComponent implements OnInit {
 	) { }
 
   ngOnInit(): void {
+    this.user = this.authService.getUserData();
 
   	this.sub.route = this.route.params.subscribe(params => {
       this.id = +params['programId'];
@@ -312,8 +321,8 @@ export class CoachProgramsDetailComponent implements OnInit {
   openProgramAthleteManagerModal() {
     const initialState = {
       modelId: this.id,
-      athletes: this.currentModel.clients,
-      program: _.cloneDeep(this.weeks)
+      program: _.cloneDeep(this.weeks),
+      athletes: this.user.clients,
     };
 
     this.bsModalRef = this.modalService.show(UsersModalProgramAthleteManagerComponent, {

@@ -26,6 +26,8 @@ import { AthleteCalendarComponent } from './admin/athlete/athlete-calendar/athle
 import { AthleteNotificationsComponent } from './admin/athlete/athlete-notifications/athlete-notifications.component';
 import { AthleteProgramsComponent } from './admin/athlete/athlete-programs/athlete-programs.component';
 import { AthleteProgramsDetailComponent } from './admin/athlete/athlete-programs/athlete-programs-detail/athlete-programs-detail.component';
+import { AthleteProfilePerformanceComponent } from './admin/athlete/athlete-profile/athlete-profile-performance/athlete-profile-performance.component';
+import { AthleteProfileReadinessComponent } from './admin/athlete/athlete-profile/athlete-profile-readiness/athlete-profile-readiness.component';
 
 import { CoachDashboardComponent } from './admin/coach/coach-dashboard/coach-dashboard.component';
 
@@ -87,7 +89,24 @@ const routes: Routes = [{
                     component: CoachAthleteLeadboardComponent
                 },{
                     path: 'profile',
-                    component: CoachAthleteProfileComponent
+                    component: CoachAthleteProfileComponent,
+                    children: [
+                        {
+                            path: '',
+                            component: AthleteProfileReadinessComponent,
+                            data: {
+                                isCoach: true,
+                                isAthlet: false,
+                            }
+                        },{
+                            path: 'performance',
+                            component: AthleteProfilePerformanceComponent,
+                            data: {
+                                isCoach: true,
+                                isAthlet: false,
+                            }
+                        }
+                    ]
                 },{
                     path: 'calendar',
                     component: CoachAthleteCalendarComponent
@@ -131,7 +150,24 @@ const routes: Routes = [{
         component: AthleteDashboardComponent
       },{
         path: 'profile',
-        component: AthleteProfileComponent
+        component: AthleteProfileComponent,
+        children: [
+            {
+                path: '',
+                component: AthleteProfileReadinessComponent,
+                data: {
+                    isCoach: false,
+                    isAthlet: true,
+                }
+            },{
+                path: 'performance',
+                component: AthleteProfilePerformanceComponent,
+                data: {
+                    isCoach: false,
+                    isAthlet: true,
+                }
+            }
+        ]
       },{
         path: 'calendar',
         component: AthleteCalendarComponent

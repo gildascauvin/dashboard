@@ -16,7 +16,7 @@
 		<div class="number-movement-list-label ml-2">{{ movement.name }}</div>
 
 		<ul class="list-group">
-			<li class="list-group-item">
+			<li class="list-group-item" *ngIf="isPlanning">
 				<div class="form-row align-items-center">
 			  	<div class="col-auto">
 						<div class="input-group">
@@ -26,7 +26,7 @@
 							<input placeholder="1" [(ngModel)]="movement.max_value" type="number" class="form-control number-movement-list">
 			      </div>
 			    </div>
-			    <div class="col-auto" *ngIf="movement.has_unit && isPlanning">
+			    <div class="col-auto" *ngIf="movement.has_unit">
 						<select [(ngModel)]="movement.max_unit" type="number" class="form-control number-movement-list">
 							<option *ngFor="let unit of configExercices.size" [value]="unit.id">{{ unit.name }}</option>
 						</select>
@@ -60,7 +60,7 @@
 
 			    <div class="col-auto">
 						%
-						<span *ngIf="set.value" class="ml-4 badge badge-success">
+						<span *ngIf="set.value && isPlanning" class="ml-4 badge badge-success">
 							{{ set.value | unitSizeLabel : movement.max_value : movement.max_unit }}
 						</span>
 					</div>

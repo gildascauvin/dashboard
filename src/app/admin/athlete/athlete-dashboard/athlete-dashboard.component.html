@@ -8,11 +8,12 @@
 					<div class="mrv-score-number">{{ user.data && user.data.mrv_score || 0 }}/10</div>
 					<div class="mrv-score-label">{{ '#Score MRV' | dgTranslate }}</div>
 				</div>
-				<button class="btn btn-secondary btn-edit-secondary">{{ '#Edit information' | dgTranslate }}</button>
+				<a class="btn btn-secondary btn-edit-secondary" [routerLink]="links.profile">{{ '#Edit information' | dgTranslate }}</a>
 			</div>
 			<div class="strenght-level">
 				<h3 class="strenght-level-title">{{ '#Your strenght level' | dgTranslate }}</h3>
-				<button class="btn btn-secondary btn-edit-secondary">{{ '#Edit perfomances' | dgTranslate }}</button>
+				<div class="mt-4 mb-4"><app-customer-profile-level [user]="user"></app-customer-profile-level></div>
+				<a class="btn btn-secondary btn-edit-secondary" [routerLink]="links.performance">{{ '#Edit perfomances' | dgTranslate }}</a>
 			</div>
 		</div>
 	</div>

@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject, ElementRef, HostListener } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
 import { DOCUMENT } from '@angular/common';
 import { delay } from 'rxjs/operators';
@@ -37,12 +38,17 @@ export class AthleteComponent implements OnInit {
     private userService: UserService,
     private modalService: BsModalService,
     private resizeSvc: ResizeService,
+    private router: Router,
     private elementRef: ElementRef,
   	@Inject(DOCUMENT) private _document) { }
 
   ngOnInit(): void {
     this._document.body.style.background = '#FFF';
     this.user = this.authService.getUserData();
+
+    if (this.user.role_id == 3) {
+      this.router.navigateByUrl('/coach/dashboard');
+    }
 
     this.sub.onUpdate = this.userService.onUpdate.subscribe((user) => {
       this.user = this.authService.getUserData();

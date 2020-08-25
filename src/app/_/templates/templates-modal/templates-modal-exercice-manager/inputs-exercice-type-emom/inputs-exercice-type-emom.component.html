@@ -12,7 +12,7 @@
 <div class="col-md-12 mb-2" *ngIf="model.movements.length">
 	<label>{{ '#Movements' | dgTranslate }}</label>
 	<div *ngFor="let movement of model.movements; let movementIndex=index;" class="list-group-item-step">
-		<div class="row">
+		<div class="row" *ngIf="isPlanning">
 			<div class="col-md-12">
 				<div class="form-row align-items-center">
 			  	<div class="col-auto">
@@ -23,7 +23,7 @@
 							<input placeholder="1" [(ngModel)]="movement.max_value" type="number" class="form-control number-movement-list">
 			      </div>
 			    </div>
-			    <div class="col-auto" *ngIf="movement.has_unit && isPlanning">
+			    <div class="col-auto" *ngIf="movement.has_unit">
 						<select [(ngModel)]="movement.max_unit" type="number" class="form-control number-movement-list">
 							<option *ngFor="let unit of configExercices.size" [value]="unit.id">{{ unit.name }}</option>
 						</select>

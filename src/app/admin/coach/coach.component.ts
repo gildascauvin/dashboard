@@ -7,7 +7,6 @@ import { delay } from 'rxjs/operators';
 import * as $ from 'jquery';
 import * as _ from 'lodash';
 
-
 import { AuthService } from '../../_/services/http/auth.service';
 import { UserService } from '../../_/services/model/user.service';
 import { ResizeService } from '../../_/services/ui/resize-service.service';
@@ -55,10 +54,13 @@ export class CoachComponent implements OnInit {
     @Inject(DOCUMENT) private _document) { }
 
   ngOnInit(): void {
-
     this._document.body.style.background = '#FFF';
 
     this.user = this.authService.getUserData();
+
+    if (this.user.role_id == 1) {
+      this.router.navigateByUrl('/athlete/dashboard');
+    }
 
     this.currentUserId = this.authService.getCurrentAthletId() || 0;
 
@@ -68,15 +70,15 @@ export class CoachComponent implements OnInit {
       // console.log('this.authService.getUserData()', this.authService.getUserData())
       this.user = this.authService.getUserData();
 
-      // this._initClient();
+      this._initClient(true);
     });
 
     this.detectScreenSize();
 
     this.isSelected = false;
     let paths = this.router.url.split('/');
-    console.log('paths', paths[2]);
-    if (paths.length === 4 && paths[2] !== 'settings' && paths[2] !== 'programs') {
+
+    if (paths.length >= 4 && paths[2] !== 'settings' && paths[2] !== 'programs') {
       this.isSelected = true;
     }
 
@@ -87,7 +89,7 @@ export class CoachComponent implements OnInit {
           this.currentUserId = 0;
 
           let paths = this.router.url.split('/');
-          if (paths.length === 4 && paths[2] !== 'settings' && paths[2] !== 'programs') {
+          if (paths.length >= 4 && paths[2] !== 'settings' && paths[2] !== 'programs') {
             this.isSelected = true;
             this.currentUserId = this.authService.getCurrentAthletId() || 0;
           }
@@ -193,8 +195,11 @@ export class CoachComponent implements OnInit {
     }
   }
 
-  private _initClient() {
-    this.clients = this.user.clients && _.cloneDeep(this.user.clients) || [];
+  private _initClient(isInit?) {
+    if (!isInit) {
+      this.clients = this.user.clients && _.cloneDeep(this.user.clients) || [];
+    }
+
 
     this.clients = this.clients.filter((client) => {
       return client.profile;

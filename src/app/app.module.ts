@@ -110,6 +110,9 @@ import { UsersModalInvitationCreateComponent } from './admin/coach/coach-clients
 import { UsersModalInvitationDeleteComponent } from './admin/coach/coach-clients/coach-clients-modal/users-modal-invitation-delete/users-modal-invitation-delete.component';
 
 import { AthleteCoachComponent } from './admin/athlete/athlete-coach/athlete-coach.component';
+import { CustomerProfileLevelComponent } from './_/components/ui/customer-profile-level/customer-profile-level.component';
+import { AthleteProfilePerformanceComponent } from './admin/athlete/athlete-profile/athlete-profile-performance/athlete-profile-performance.component';
+import { AthleteProfileReadinessComponent } from './admin/athlete/athlete-profile/athlete-profile-readiness/athlete-profile-readiness.component';
 
 @NgModule({
   declarations: [
@@ -180,7 +183,10 @@ import { AthleteCoachComponent } from './admin/athlete/athlete-coach/athlete-coa
     UsersModalInvitationDeleteComponent,
     AthleteCoachComponent,
     CoachAthleteLeadboardComponent,
-    CoachAthleteComponent
+    CoachAthleteComponent,
+    CustomerProfileLevelComponent,
+    AthleteProfilePerformanceComponent,
+    AthleteProfileReadinessComponent
   ],
   imports: [
     FormsModule,

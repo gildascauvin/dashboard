@@ -204,30 +204,32 @@ export class UsersService {
     return this.httpService.post(`user/client/${model.user_client_id}/response`, model);
   }
 
-  activeClientToProgram(userId, programId, clientId, isActive, dateStart?, dayStart?){
+  // activeClientToProgram(userId, programId, clientId, isActive, dateStart?, dayStart?){
+  //   let model = {
+  //     is_active: !!isActive
+  //   };
+  //   return this.httpService.post(`program/${programId}/client/${clientId}`, model);
+  // }
+
+  activeClientToProgram(userId, programId, clientId, isActive, dateStart, dayStart){
     let model = {
-      is_active: !!isActive
+      is_active: !!isActive,
+      started_at: dateStart,
+      started_day: parseInt('' + dayStart),
     };
-    return this.httpService.post(`user/${userId}/program/${programId}/client/${clientId}`, model);
+
+    return this.httpService.post(`program/${programId}/client/${clientId}`, model);
   }
 
   activeClientToProgramToMe(programId, clientId, isActive, dateStart?, dayStart?){
     let model = {
-      is_active: !!isActive
+      is_active: !!isActive,
+      started_at: dateStart,
+      started_day: dayStart && parseInt('' + dayStart),
     };
+
     return this.httpService.post(`program/${programId}/client/${clientId}`, model);
   }
-
-  // activeClientToProgram(userId, programId, clientId, isActive, dateStart, dayStart){
-  //   let model = {
-  //     is_active: !!isActive,
-  //     started_at: dateStart,
-  //     started_day: parseInt('' + dayStart),
-  //   };
-
-  //   console.log('model', model);
-  //   return this.httpService.post(`user/${userId}/program/${programId}/client/${clientId}`, model);
-  // }
 
   createWorkout(model) {
     return this.httpService.post(`workout`, model);

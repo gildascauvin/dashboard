@@ -41,6 +41,11 @@ export class AthleteDashboardComponent implements OnInit {
   size: number = 768;
   responsiveSize: number = 768;
 
+  links: any = {
+    profile: ['/athlete', 'profile'],
+    performance: ['/athlete', 'profile', 'performance']
+  }
+
   constructor(
     private authService: AuthService,
     private userService: UserService,
@@ -58,6 +63,13 @@ export class AthleteDashboardComponent implements OnInit {
     this.user = this.isFromUrl
       ? this.authService.getUserData()
       : this.authService.getUserClientData();
+
+    if (!this.isFromUrl) {
+      this.links = {
+        profile: ['/coach', 'athlet', 'profile'],
+        performance: ['/coach', 'athlet', 'profile', 'performance']
+      }
+    }
 
     this._initWorkouts();
 

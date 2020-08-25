@@ -23,10 +23,13 @@
 							  <strong class="fa-stack-1x calendar-text">{{ program.days_count }}</strong>
 							</span>
 						</td>
-						<td><a href="#" [routerLink]="['/coach', 'programs', program.program_id ]" >{{ program.name }}</a></td>
+						<td>
+							<a href="#" [routerLink]="['/coach', 'programs', program.program_id ]" >{{ program.name }}</a>
+						</td>
 						<td class="text-right">
-							<button class="btn btn-outline-secondary btn-sm mr-2" (click)="openProgramAthleteManagerMeModal(program)">
-								<i class="fa fa-link"></i> {{ '#Assign to me' | dgTranslate }}
+							<b class="mr-4"><i class="fa fa-users"></i> {{ program.linked && program.linked.length || 0 }}</b>
+							<button class="btn btn-outline-secondary btn-sm mr-2" (click)="openProgramAthleteManagerModal(program)">
+								<i class="fa fa-link"></i> {{ '#Assign to athlets' | dgTranslate }}
 							</button>
 
 							<div ngbDropdown class="d-inline-block">

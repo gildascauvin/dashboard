@@ -151,8 +151,11 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
     }
 
     this.model.step = 2;
+
     // this.model.sets = sets;
     this.templatesService.onTemplateUpdated.emit(true);
+
+    this.model.name = this.workout.name;
 
     if (this.isPlanning) {
       if (this.showDate) {

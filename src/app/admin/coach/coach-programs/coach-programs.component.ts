@@ -8,12 +8,12 @@ import { UsersModalProgramEditComponent } from '../../../_/templates/programs/us
 import { UsersModalProgramDeleteComponent } from '../../../_/templates/programs/users-modal-program-delete/users-modal-program-delete.component';
 
 import { UsersModalProgramAthleteManagerComponent } from '../../../_/templates/programs/users-modal-program-athlete-manager/users-modal-program-athlete-manager.component';
-import { UsersModalProgramAthleteManagerMeComponent } from '../../../_/templates/programs/users-modal-program-athlete-manager-me/users-modal-program-athlete-manager-me.component';
 
 import { UsersModalProgramDuplicateComponent } from '../../../_/templates/programs/users-modal-program-duplicate/users-modal-program-duplicate.component';
 import { UsersModalProgramAssignComponent } from '../../../_/templates/programs/users-modal-program-assign/users-modal-program-assign.component';
 
 import { UsersService } from '../../../_/templates/users.service';
+import { AuthService } from '../../../_/services/http/auth.service';
 
 @Component({
   selector: 'app-coach-programs',
@@ -32,12 +32,21 @@ export class CoachProgramsComponent implements OnInit {
 
   programs: any = [];
 
+  user: any = {
+    data: {},
+    profil: [],
+    clients: []
+  };
+
   constructor(
+    private authService: AuthService,
     private toastrService: ToastrService,
     private modalService: BsModalService,
     private usersService: UsersService) { }
 
   ngOnInit(): void {
+    this.user = this.authService.getUserData();
+
   	this._syncPrograms();
 
     this.sub.updateUsers = this.usersService.onUserUpdated.subscribe(() => {
@@ -76,7 +85,7 @@ export class CoachProgramsComponent implements OnInit {
   openProgramEditModal(program) {
     const initialState = {
       modelId: this.id,
-      modelProgram: _.cloneDeep(program)
+      modelProgram: _.cloneDeep(program),
     };
     this.bsModalRef = this.modalService.show(UsersModalProgramEditComponent, {
       keyboard: false,
@@ -109,14 +118,14 @@ export class CoachProgramsComponent implements OnInit {
     });
   }
 
-  openProgramAthleteManagerMeModal(program) {
+  openProgramAthleteManagerModal(program) {
     const initialState = {
       modelId: program.program_id,
-      athletes: program.clients,
+      athletes: this.user.clients,
       program: _.cloneDeep(program)
     };
 
-    this.bsModalRef = this.modalService.show(UsersModalProgramAthleteManagerMeComponent, {
+    this.bsModalRef = this.modalService.show(UsersModalProgramAthleteManagerComponent, {
       keyboard: false,
       initialState: initialState,
       class: 'modal-xs'
