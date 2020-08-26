@@ -59,6 +59,7 @@ export class CoachDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.getUserData();
     this.authService.setCurrentAthletId(0);
+    this.authService.setCurrentAthlet({});
 
     this._initWorkouts();
 
@@ -90,6 +91,7 @@ export class CoachDashboardComponent implements OnInit {
 
   setCurrentAthletId(clientId) {
     this.authService.setCurrentAthletId(clientId);
+    this.authService.setCurrentAthlet({});
   }
 
   private _initUser() {

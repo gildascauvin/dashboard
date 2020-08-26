@@ -24,84 +24,86 @@
 		<div class="lead-body-content" *ngIf="!isEmpty">
 			<div class="workout-date mb-4" *ngFor="let _wo of flatWorkouts;">
 				<h4>{{ _wo.label }}</h4>
-				<div class="workout-session" *ngFor="let workout of user.workouts[_wo.date];">
-					<div *ngIf="workout.program.name" class="workout-session-title">{{ workout.program.name }}</div>
-					<ul class="list-group" >
-	  				<li class="list-group-item box-exercice "
-	  					*ngFor="let exercice of workout.program.exercices; let indexExercice=index;">
-	  					<div class="movement-container movement-type-{{ (exercice.type && exercice.type.id) }}">
-	  						<div class="inputs-exercice-type" *ngIf="exercice.type" [ngSwitch]="exercice.type.id">
- 										<div *ngSwitchCase="1">
- 											<div class="movement-title" *ngFor="let movement of exercice.movements">
- 												{{ movement.name }}
- 												<div class="movement-content" *ngFor="let set of movement.sets">
-													<span *ngIf="set.set">{{ set.set }} x {{ set.rep }} @ {{ set.value }}{{ set.unit_label }}</span>
-												</div>
- 											</div>
+				<ng-container *ngIf="user.workouts && user.workouts[_wo.date]">
+					<div class="workout-session" *ngFor="let workout of user.workouts[_wo.date];">
+						<div *ngIf="workout.program.name" class="workout-session-title">{{ workout.program.name }}</div>
+						<ul class="list-group" >
+		  				<li class="list-group-item box-exercice "
+		  					*ngFor="let exercice of workout.program.exercices; let indexExercice=index;">
+		  					<div class="movement-container movement-type-{{ (exercice.type && exercice.type.id) }}">
+		  						<div class="inputs-exercice-type" *ngIf="exercice.type" [ngSwitch]="exercice.type.id">
+	 										<div *ngSwitchCase="1">
+	 											<div class="movement-title" *ngFor="let movement of exercice.movements">
+	 												{{ movement.name }}
+	 												<div class="movement-content" *ngFor="let set of movement.sets">
+														<span *ngIf="set.set">{{ set.set }} x {{ set.rep }} @ {{ set.value }}{{ set.unit_label }}</span>
+													</div>
+	 											</div>
 
- 										</div>
- 										<div *ngSwitchCase="2">
- 											<div class="movement-title">
- 												<span *ngFor="let movement of exercice.movements; let indMov=index;"><span *ngIf="indMov>0"> +</span> {{ movement.quantity }} {{ movement.name }}</span>
+	 										</div>
+	 										<div *ngSwitchCase="2">
+	 											<div class="movement-title">
+	 												<span *ngFor="let movement of exercice.movements; let indMov=index;"><span *ngIf="indMov>0"> +</span> {{ movement.quantity }} {{ movement.name }}</span>
 
- 												<div class="movement-content">
-													<span>{{ exercice.sets }} {{ '#Sets' | dgTranslate }}</span>
-												</div>
- 											</div>
- 										</div>
- 										<div *ngSwitchCase="3">
- 											<div class="movement-title" *ngFor="let movement of exercice.movements">
- 												{{ movement.quantity }} {{ movement.name }} @ {{ movement.value }}{{ movement.unit_label }}
- 											</div>
- 											<div class="movement-content">
- 												AMRAP: {{ exercice.amrap_timecap }} {{ '#minutes' | dgTranslate }}
- 											</div>
- 										</div>
- 										<div *ngSwitchCase="4">
- 											<div class="movement-title" *ngFor="let movement of exercice.movements">
- 												{{ movement.quantity }} {{ movement.name }} @ {{ movement.value }}{{ movement.unit_label }}
- 											</div>
- 											<div class="movement-content">
- 												<span *ngIf="exercice.time_style == 1">{{ exercice.time_style_fixed }} {{ '#rounds for time' | dgTranslate }}</span>
- 												<span *ngIf="exercice.time_style == 2">{{ exercice.time_style_varying }} {{ '#rounds for time' | dgTranslate }}</span>
- 											</div>
- 										</div>
- 										<div *ngSwitchCase="5">
- 											<div class="movement-title" *ngFor="let movement of exercice.movements">
- 												{{ movement.quantity }} {{ movement.name }} @ {{ movement.value }}{{ movement.unit_label }}
- 											</div>
-										<div class="movement-content">
-											EMOM ({{ exercice.emom_duration }} min every {{ exercice.emom_seconds }} sec)
-										</div>
- 										</div>
- 										<div *ngSwitchCase="7">
- 											<div class="movement-title" *ngIf="exercice.cardio_type">
- 												{{ configExercices.cardio.flatType[exercice.cardio_type] }}
- 											</div>
-
- 											<div class="movement-content" *ngIf="exercice.cardio_scoring==1">
- 												<span>{{ exercice.cardio_cardio_movement.interval }} {{ exercice.cardio_cardio_movement.unit_label }} @ {{ exercice.cardio_cardio_movement.value }} % </span>
- 											</div>
- 											<div *ngIf="exercice.cardio_scoring==2">
- 												<div class="movement-content" *ngFor="let set of exercice.cardio_intervals_movement.sets">
-													<span *ngIf="set.set">{{ set.set }} x {{ set.interval }} {{ set.unit_label }} @ {{ set.value }} %</span>
-												</div>
+	 												<div class="movement-content">
+														<span>{{ exercice.sets }} {{ '#Sets' | dgTranslate }}</span>
+													</div>
+	 											</div>
+	 										</div>
+	 										<div *ngSwitchCase="3">
+	 											<div class="movement-title" *ngFor="let movement of exercice.movements">
+	 												{{ movement.quantity }} {{ movement.name }} @ {{ movement.value }}{{ movement.unit_label }}
+	 											</div>
+	 											<div class="movement-content">
+	 												AMRAP: {{ exercice.amrap_timecap }} {{ '#minutes' | dgTranslate }}
+	 											</div>
+	 										</div>
+	 										<div *ngSwitchCase="4">
+	 											<div class="movement-title" *ngFor="let movement of exercice.movements">
+	 												{{ movement.quantity }} {{ movement.name }} @ {{ movement.value }}{{ movement.unit_label }}
+	 											</div>
+	 											<div class="movement-content">
+	 												<span *ngIf="exercice.time_style == 1">{{ exercice.time_style_fixed }} {{ '#rounds for time' | dgTranslate }}</span>
+	 												<span *ngIf="exercice.time_style == 2">{{ exercice.time_style_varying }} {{ '#rounds for time' | dgTranslate }}</span>
+	 											</div>
+	 										</div>
+	 										<div *ngSwitchCase="5">
+	 											<div class="movement-title" *ngFor="let movement of exercice.movements">
+	 												{{ movement.quantity }} {{ movement.name }} @ {{ movement.value }}{{ movement.unit_label }}
+	 											</div>
+											<div class="movement-content">
+												EMOM ({{ exercice.emom_duration }} min every {{ exercice.emom_seconds }} sec)
 											</div>
+	 										</div>
+	 										<div *ngSwitchCase="7">
+	 											<div class="movement-title" *ngIf="exercice.cardio_type">
+	 												{{ configExercices.cardio.flatType[exercice.cardio_type] }}
+	 											</div>
 
- 										</div>
- 										<div *ngSwitchCase="8">
- 											<div class="movement-title">
- 												{{ exercice.name }}
- 												<small>({{configExercices.flatCustom[exercice.custom_scoring]}})</small>
- 											</div>
- 											<div class="movement-content">{{ exercice.custom }}</div>
- 										</div>
-	  						</div>
-	  					</div>
+	 											<div class="movement-content" *ngIf="exercice.cardio_scoring==1">
+	 												<span>{{ exercice.cardio_cardio_movement.interval }} {{ exercice.cardio_cardio_movement.unit_label }} @ {{ exercice.cardio_cardio_movement.value }} % </span>
+	 											</div>
+	 											<div *ngIf="exercice.cardio_scoring==2">
+	 												<div class="movement-content" *ngFor="let set of exercice.cardio_intervals_movement.sets">
+														<span *ngIf="set.set">{{ set.set }} x {{ set.interval }} {{ set.unit_label }} @ {{ set.value }} %</span>
+													</div>
+												</div>
 
-	  				</li>
-	  			</ul>
-				</div>
+	 										</div>
+	 										<div *ngSwitchCase="8">
+	 											<div class="movement-title">
+	 												{{ exercice.name }}
+	 												<small>({{configExercices.flatCustom[exercice.custom_scoring]}})</small>
+	 											</div>
+	 											<div class="movement-content">{{ exercice.custom }}</div>
+	 										</div>
+		  						</div>
+		  					</div>
+
+		  				</li>
+		  			</ul>
+					</div>
+				</ng-container>
 			</div>
 		</div>
 	</div>

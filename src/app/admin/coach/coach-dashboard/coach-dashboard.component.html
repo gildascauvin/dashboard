@@ -5,7 +5,9 @@
 				<h3 class="readiness-level-title">{{ '#My athlets' | dgTranslate }}</h3>
 				<ng-container *ngFor="let client of user.clients">
 					<div class="athlets-item" *ngIf="client.profile">
-						<a [routerLink]="['/coach', 'athlet', 'dashboard']" (click)="setCurrentAthletId(client.client_id)">{{ client.profile?.firstname }} {{ client.profile?.lastname }}</a>
+						<a [routerLink]="['/coach', 'athlet', 'dashboard']" (click)="setCurrentAthletId(client.client_id)">
+							<i class="fa fa-user-circle"></i> {{ client.profile?.firstname }} {{ client.profile?.lastname }}
+						</a>
 					</div>
 				</ng-container>
 				<button class="btn btn-primary btn-edit-secondary" (click)="openInvitationCreateModal()"><i class="fa fa-plus"></i> {{ '#Create an athlet' | dgTranslate }}</button>

@@ -66,12 +66,6 @@ export class AthleteProfileReadinessComponent implements OnInit {
   	) { }
 
   ngOnInit(): void {
-  	this.user = this.isFromUrl
-      ? this.authService.getUserData()
-      : this.authService.getUserClientData();
-
-    this._initUser();
-
     this.sub.subjectUpdateUsers = this.usersService.onUserUpdated.subscribe(() => {
       this._initUser();
     });
@@ -80,6 +74,12 @@ export class AthleteProfileReadinessComponent implements OnInit {
       .data
       .subscribe((params) => {
         this.isCoach = params && params.isCoach || false;
+
+        this.user = !this.isCoach
+          ? this.authService.getUserData()
+          : this.authService.getUserClientData();
+
+        this._initUser();
 
         if (this.isCoach) {
           this.links = {
@@ -101,7 +101,7 @@ export class AthleteProfileReadinessComponent implements OnInit {
     this.user.data.birthday = `${this.birthdayModel.year}-${this.birthdayModel.month}-${this.birthdayModel.day}`;
 
     // console.log('this.user', this.user);
-  	this.usersService[(this.isFromUrl ? 'updateUser' : 'updateClientUser' )](this.user).subscribe((user: any) => {
+  	this.usersService[(!this.isCoach ? 'updateUser' : 'updateClientUser' )](this.user).subscribe((user: any) => {
       if (!user.errors) {
         this.toastrService.success('MRV updated!');
         this._initUser();
@@ -111,45 +111,6 @@ export class AthleteProfileReadinessComponent implements OnInit {
 
   		this.isLoading = false;
   	}, error => this.toastrService.error('An error has occurred'));
-  }
-
-  openCreateModal() {
-    const initialState = {
-      userId: this.user.id,
-      isFromUrl: this.isFromUrl,
-    };
-
-    this.bsModalRef = this.modalService.show(AthleteProfileModalProfileCreateComponent, {
-      keyboard: false,
-      initialState: initialState,
-      class: 'modal-xs',
-    });
-  }
-
-  openDeleteModal(profile) {
-    const initialState = {
-      model: profile,
-      isFromUrl: this.isFromUrl,
-    };
-
-    this.bsModalRef = this.modalService.show(AthleteProfileModalProfileDeleteComponent, {
-      keyboard: false,
-      initialState: initialState,
-      class: 'modal-xs'
-    });
-  }
-
-  openEditModal(profile) {
-    const initialState = {
-      model: profile,
-      isFromUrl: this.isFromUrl,
-    };
-
-    this.bsModalRef = this.modalService.show(AthleteProfileModalProfileEditComponent, {
-      keyboard: false,
-      initialState: initialState,
-      class: 'modal-xs'
-    });
   }
 
   // events
@@ -165,7 +126,7 @@ export class AthleteProfileReadinessComponent implements OnInit {
 		this.isLoading = true;
   	this.sub.userInfo && this.sub.userInfo.unsubscribe();
 
-    if (this.isFromUrl) {
+    if (!this.isCoach) {
     	this.sub.userInfo = this.usersService.getUser().subscribe((user: any) => {
       	this._initData(user);
         this.isLoading = false;
@@ -191,11 +152,7 @@ export class AthleteProfileReadinessComponent implements OnInit {
 	      this.birthdayModel.year = parseInt(date[0]);
 	    }
 
-      if (this.isFromUrl) {
-	  	  this.userService.initUserInfos(user);
-      } else {
-        this.userService.initUserClientInfos(user);
-      }
+      this.userService[(!this.isCoach ? 'initUserInfos' : 'initUserClientInfos' )](user);
 			this.isLoading = false;
 		}
   }

@@ -22,7 +22,7 @@
 						<i class="fa fa-plus"></i>
 						{{ '#Review' | dgTranslate }}
 					</button>
-					<h4 class="movement-review-header">{{ user.profil.length }} {{ '#Movements' | dgTranslate }}</h4>
+					<h4 class="movement-review-header">{{ user.profil?.length }} {{ '#Movements' | dgTranslate }}</h4>
 				</div>
 
 				<div *ngFor="let profile of user.profil" class="list-group-item">

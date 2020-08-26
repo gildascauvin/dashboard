@@ -60,7 +60,10 @@ export class LoginComponent extends FormCore implements OnInit {
             this.loginService.setUserType(response.role_id);
             this.loginService.setUserId(response.user_id);
 
-            this.router.navigateByUrl(this.loginService.getUserPath());
+            let timer = setTimeout(() => {
+              this.router.navigateByUrl(this.loginService.getUserPath());
+              clearTimeout(timer);
+            }, 1000);
           }
 
           if (response.status == 1) {

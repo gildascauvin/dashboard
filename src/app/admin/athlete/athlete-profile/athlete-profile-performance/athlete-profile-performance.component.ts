@@ -67,12 +67,6 @@ export class AthleteProfilePerformanceComponent implements OnInit {
   	) { }
 
   ngOnInit(): void {
-  	this.user = this.isFromUrl
-      ? this.authService.getUserData()
-      : this.authService.getUserClientData();
-
-    this._initUser();
-
     this.sub.subjectUpdateUsers = this.usersService.onUserUpdated.subscribe(() => {
       this._initUser();
     });
@@ -81,6 +75,12 @@ export class AthleteProfilePerformanceComponent implements OnInit {
       .data
       .subscribe((params) => {
         this.isCoach = params && params.isCoach || false;
+
+        this.user = !this.isCoach
+          ? this.authService.getUserData()
+          : this.authService.getUserClientData();
+
+        this._initUser();
 
         if (this.isCoach) {
           this.links = {
@@ -96,28 +96,10 @@ export class AthleteProfilePerformanceComponent implements OnInit {
     this.sub.isCoach && this.sub.isCoach.unsubscribe();
   }
 
-  save() {
-		this.isLoading = true;
-
-    this.user.data.birthday = `${this.birthdayModel.year}-${this.birthdayModel.month}-${this.birthdayModel.day}`;
-
-    // console.log('this.user', this.user);
-  	this.usersService[(this.isFromUrl ? 'updateUser' : 'updateClientUser' )](this.user).subscribe((user: any) => {
-      if (!user.errors) {
-        this.toastrService.success('MRV updated!');
-        this._initUser();
-      } else {
-        this.toastrService.error('An error has occurred');
-      }
-
-  		this.isLoading = false;
-  	}, error => this.toastrService.error('An error has occurred'));
-  }
-
   openCreateModal() {
     const initialState = {
       userId: this.user.id,
-      isFromUrl: this.isFromUrl,
+      isFromUrl: !this.isCoach,
     };
 
     this.bsModalRef = this.modalService.show(AthleteProfileModalProfileCreateComponent, {
@@ -130,7 +112,7 @@ export class AthleteProfilePerformanceComponent implements OnInit {
   openDeleteModal(profile) {
     const initialState = {
       model: profile,
-      isFromUrl: this.isFromUrl,
+      isFromUrl: !this.isCoach,
     };
 
     this.bsModalRef = this.modalService.show(AthleteProfileModalProfileDeleteComponent, {
@@ -143,7 +125,7 @@ export class AthleteProfilePerformanceComponent implements OnInit {
   openEditModal(profile) {
     const initialState = {
       model: profile,
-      isFromUrl: this.isFromUrl,
+      isFromUrl: !this.isCoach,
     };
 
     this.bsModalRef = this.modalService.show(AthleteProfileModalProfileEditComponent, {
@@ -151,6 +133,23 @@ export class AthleteProfilePerformanceComponent implements OnInit {
       initialState: initialState,
       class: 'modal-xs'
     });
+  }
+
+  save() {
+		this.isLoading = true;
+
+    this.user.data.birthday = `${this.birthdayModel.year}-${this.birthdayModel.month}-${this.birthdayModel.day}`;
+
+  	this.usersService[(!this.isCoach ? 'updateUser' : 'updateClientUser' )](this.user).subscribe((user: any) => {
+      if (!user.errors) {
+        this.toastrService.success('MRV updated!');
+        this._initUser();
+      } else {
+        this.toastrService.error('An error has occurred');
+      }
+
+  		this.isLoading = false;
+  	}, error => this.toastrService.error('An error has occurred'));
   }
 
   // events
@@ -166,7 +165,8 @@ export class AthleteProfilePerformanceComponent implements OnInit {
 		this.isLoading = true;
   	this.sub.userInfo && this.sub.userInfo.unsubscribe();
 
-    if (this.isFromUrl) {
+
+    if (!this.isCoach) {
     	this.sub.userInfo = this.usersService.getUser().subscribe((user: any) => {
       	this._initData(user);
         this.isLoading = false;
@@ -192,11 +192,7 @@ export class AthleteProfilePerformanceComponent implements OnInit {
 	      this.birthdayModel.year = parseInt(date[0]);
 	    }
 
-      if (this.isFromUrl) {
-	  	  this.userService.initUserInfos(user);
-      } else {
-        this.userService.initUserClientInfos(user);
-      }
+      this.userService[(!this.isCoach ? 'initUserInfos' : 'initUserClientInfos' )](user);
 			this.isLoading = false;
 		}
   }

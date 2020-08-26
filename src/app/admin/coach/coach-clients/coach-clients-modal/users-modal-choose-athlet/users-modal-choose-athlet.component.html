@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left"><i class="fa fa-plus"></i> {{ '#Choose an Athlet' | dgTranslate }}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" [disabled]="isLoading" (click)="cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<ng-container *ngFor="let client of user.clients">
+		<div class="athlets-item" *ngIf="client.profile">
+			<a [routerLink]="['/coach', 'athlet', 'dashboard']" (click)="setCurrentAthletId(client.client_id)">
+				<i class="fa fa-user-circle"></i> {{ client.profile?.firstname }} {{ client.profile?.lastname }}
+			</a>
+		</div>
+	</ng-container>
+</div>
+
+

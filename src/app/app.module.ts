@@ -113,6 +113,7 @@ import { AthleteCoachComponent } from './admin/athlete/athlete-coach/athlete-coa
 import { CustomerProfileLevelComponent } from './_/components/ui/customer-profile-level/customer-profile-level.component';
 import { AthleteProfilePerformanceComponent } from './admin/athlete/athlete-profile/athlete-profile-performance/athlete-profile-performance.component';
 import { AthleteProfileReadinessComponent } from './admin/athlete/athlete-profile/athlete-profile-readiness/athlete-profile-readiness.component';
+import { UsersModalChooseAthletComponent } from './admin/coach/coach-clients/coach-clients-modal/users-modal-choose-athlet/users-modal-choose-athlet.component';
 
 @NgModule({
   declarations: [
@@ -186,7 +187,8 @@ import { AthleteProfileReadinessComponent } from './admin/athlete/athlete-profil
     CoachAthleteComponent,
     CustomerProfileLevelComponent,
     AthleteProfilePerformanceComponent,
-    AthleteProfileReadinessComponent
+    AthleteProfileReadinessComponent,
+    UsersModalChooseAthletComponent,
   ],
   imports: [
     FormsModule,

@@ -62,7 +62,6 @@ export class HttpService {
   }
 
   auth(data) {
-    console.log('data', data);
     return this.http.post(this.baseAuth, data);
   }
 

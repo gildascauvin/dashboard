@@ -12,6 +12,7 @@ import { UserService } from '../../_/services/model/user.service';
 import { ResizeService } from '../../_/services/ui/resize-service.service';
 
 import { TemplatesModalExerciceManagerComponent } from '../../_/templates/templates-modal/templates-modal-exercice-manager/templates-modal-exercice-manager.component';
+import { UsersModalChooseAthletComponent } from './coach-clients/coach-clients-modal/users-modal-choose-athlet/users-modal-choose-athlet.component';
 
 @Component({
   selector: 'app-coach',
@@ -23,7 +24,8 @@ export class CoachComponent implements OnInit {
 
   user: any = {
     data: {},
-    role: {}
+    role: {},
+    clients: []
   };
 
   clients: any = [];
@@ -40,7 +42,6 @@ export class CoachComponent implements OnInit {
 
   showLeftMenu: boolean = false;
   showRightMenu: boolean = false;
-
 
   constructor(
     private _cdr: ChangeDetectorRef,
@@ -62,15 +63,12 @@ export class CoachComponent implements OnInit {
       this.router.navigateByUrl('/athlete/dashboard');
     }
 
+    this.currentUser = this.authService.getCurrentAthlet() || {};
     this.currentUserId = this.authService.getCurrentAthletId() || 0;
 
-    this._initClient();
-
     this.sub.onUpdate = this.userService.onUpdate.subscribe((user) => {
-      // console.log('this.authService.getUserData()', this.authService.getUserData())
+      this.currentUser = this.authService.getCurrentAthlet();
       this.user = this.authService.getUserData();
-
-      this._initClient(true);
     });
 
     this.detectScreenSize();
@@ -86,11 +84,13 @@ export class CoachComponent implements OnInit {
       (event: any) => {
         if (event instanceof NavigationEnd) {
           this.isSelected = false;
+          this.currentUser = {};
           this.currentUserId = 0;
 
           let paths = this.router.url.split('/');
           if (paths.length >= 4 && paths[2] !== 'settings' && paths[2] !== 'programs') {
             this.isSelected = true;
+            this.currentUser = this.authService.getCurrentAthlet() || {};
             this.currentUserId = this.authService.getCurrentAthletId() || 0;
           }
         }
@@ -131,6 +131,19 @@ export class CoachComponent implements OnInit {
       keyboard: false,
       initialState: initialState,
       class: 'modal-lg'
+    });
+  }
+
+  openClientManagerModal() {
+    const initialState = {
+      user: this.user,
+      currentUser: this.currentUser,
+    };
+
+    this.bsModalRef = this.modalService.show(UsersModalChooseAthletComponent, {
+      keyboard: false,
+      initialState: initialState,
+      class: 'modal-sm'
     });
   }
 
@@ -195,20 +208,29 @@ export class CoachComponent implements OnInit {
     }
   }
 
-  private _initClient(isInit?) {
-    if (!isInit) {
-      this.clients = this.user.clients && _.cloneDeep(this.user.clients) || [];
-    }
+  // private _initClient(isInit?) {
+  //   this.user = this.authService.getUserData() || {
+  //     data: {},
+  //     role: {},
+  //     clients: []
+  //   };
+  //   console.log('this.user', this.user.clients);
 
+  //   // if (!isInit) {
+  //   this.clients = _.cloneDeep(this.user.clients) || [];
+  //   // }
+  //   console.log('this.clients', this.clients);
 
-    this.clients = this.clients.filter((client) => {
-      return client.profile;
-    });
+  //   this.clients = this.clients.filter((client) => {
+  //     return client.profile;
+  //   });
 
-    // this.currentUserId = parseInt('' + this.authService.getCurrentAthletId());
+  //   console.log('this.clients', this.clients);
+  //   this._cdr.detectChanges();
 
-    this._cdr.detectChanges();
-  }
+  //   // this.currentUserId = parseInt('' + this.authService.getCurrentAthletId());
+
+  // }
 
   private detectScreenSize() {
     const currentSize = this._document.body.clientWidth;

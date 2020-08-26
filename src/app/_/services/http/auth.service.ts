@@ -81,7 +81,12 @@ export class AuthService {
 
   getUserData() {
     let user: string = localStorage.getItem(webConfig.prefixApp + 'user');
-    return  !!user ? JSON.parse(user) : {
+    let _user: any;
+    try {
+      _user = JSON.parse(user);
+    } catch(e) {}
+
+    return  _user ? _user : {
       data: {},
       role: {},
       clients: []
@@ -90,7 +95,12 @@ export class AuthService {
 
   getUserClientData() {
     let user: string = localStorage.getItem(webConfig.prefixApp + 'user_client');
-    return  !!user ? JSON.parse(user) : {
+    let _user: any;
+    try {
+      _user = JSON.parse(user);
+    } catch(e) {}
+
+    return  _user ? _user : {
       data: {},
       role: {},
       clients: []
@@ -159,11 +169,11 @@ export class AuthService {
   }
 
   setCurrentAthlet(athlet) {
-    localStorage.setItem(webConfig.prefixApp + 'athlet', JSON.stringify(athlet));
+    localStorage.setItem(webConfig.prefixApp + 'user_client', JSON.stringify(athlet));
   }
 
   getCurrentAthlet() {
-    let athlet = localStorage.getItem(webConfig.prefixApp + 'athlet');
+    let athlet = localStorage.getItem(webConfig.prefixApp + 'user_client');
     if (athlet) {
       try {
         athlet = JSON.parse(athlet);

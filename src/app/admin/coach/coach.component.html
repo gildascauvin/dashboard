@@ -9,10 +9,13 @@
               <div class="row">
                 <div class="col-md-12">
                   <span>
-                    <select class="select-menu-athlet" [(ngModel)]="currentUserId" (ngModelChange)="onChangeUser($event)" >
+                    <button *ngIf="currentUser.data" class="btn btn-dark rounded-pill" (click)="openClientManagerModal()"><i class="fa fa-user-circle"></i> {{ currentUser.data?.firstname }} {{ currentUser.data?.lastname }}</button>
+                    <button *ngIf="!currentUser.data" class="btn btn-dark rounded-pill" (click)="openClientManagerModal()"><i class="fa fa-plus"></i> {{ '#Choose an athlet' | dgTranslate }}</button>
+                    <!-- <select class="select-menu-athlet" [(ngModel)]="currentUser.id" (ngModelChange)="onChangeUser($event)" >
                       <option [value]="0">{{ '#Choose an athlet' | dgTranslate }}</option>
-                      <option *ngFor="let client of clients" [value]="client.client_id" >{{ client.profile?.firstname }} {{ client.profile?.lastname }}</option>
+                      <option *ngFor="let client of user.clients" [value]="client.client_id" >{{ client.profile?.firstname }} {{ client.profile?.lastname }}</option>
                     </select>
+                    {{currentUserId}} -->
                   </span>
                   <div class="btn-group float-right">
                     <a class="links-menu mr-2" routerLinkActive="active" [routerLink]="['/coach', 'programs']">
