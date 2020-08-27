@@ -135,23 +135,6 @@ export class AthleteProfilePerformanceComponent implements OnInit {
     });
   }
 
-  save() {
-		this.isLoading = true;
-
-    this.user.data.birthday = `${this.birthdayModel.year}-${this.birthdayModel.month}-${this.birthdayModel.day}`;
-
-  	this.usersService[(!this.isCoach ? 'updateUser' : 'updateClientUser' )](this.user).subscribe((user: any) => {
-      if (!user.errors) {
-        this.toastrService.success('MRV updated!');
-        this._initUser();
-      } else {
-        this.toastrService.error('An error has occurred');
-      }
-
-  		this.isLoading = false;
-  	}, error => this.toastrService.error('An error has occurred'));
-  }
-
   // events
   public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
     console.log(event, active);

@@ -213,7 +213,8 @@ export class AthleteDashboardComponent implements OnInit {
       workout: this.getWokout(),
       isPlanning: true,
       showDate: true,
-      userId: this.user.id
+      userId: this.user.id,
+      isFromUrl: this.isFromUrl,
       // model: _.cloneDeep(model),
     };
 

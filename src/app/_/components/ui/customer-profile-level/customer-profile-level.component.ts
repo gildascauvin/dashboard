@@ -43,6 +43,12 @@ export class CustomerProfileLevelComponent implements OnInit {
       backgroundColor: null,
       borderColor: "#000000",
     },
+    {
+      data: [150, 120, 89, 120, 90],
+      label: 'Max Ref',
+      backgroundColor: null,
+      borderColor: "#FF0000",
+    },
     // { data: [12, 32, 43, 57, 90], label: 'Intensity' },
   ];
 
@@ -59,18 +65,22 @@ export class CustomerProfileLevelComponent implements OnInit {
 
   private _initChart() {
     this.radarChartData[0].data = [];
+    this.radarChartData[1].data = [];
     this.radarChartLabels = [];
 
     let radarChartLabels = [];
     let radarChartData = [];
+    let radarChartDataTwo = [];
     _.forEach(this.user.profil, (profil) => {
       if (radarChartData.length < 6) {
         radarChartData.push(profil.record);
+        radarChartDataTwo.push(profil.ratio_value);
         radarChartLabels.push(profil.movement.name);
       }
     });
 
     this.radarChartData[0].data = radarChartData;
+    this.radarChartData[1].data = radarChartDataTwo;
     this.radarChartLabels = radarChartLabels;
   }
 
