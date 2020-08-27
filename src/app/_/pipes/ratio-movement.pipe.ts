@@ -4,8 +4,8 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'ratioMovement'
 })
 export class RatioMovementPipe implements PipeTransform {
-  transform(value: any, profil): any {
-  	// console.log(value, profil);
-    return ;
+  transform(value: any): any {
+  	console.log(value);
+    return parseInt('' + value.record / value.ratio_value * 100);
   }
 }

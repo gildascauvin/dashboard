@@ -26,9 +26,15 @@
 				</div>
 
 				<div *ngFor="let profile of user.profil" class="list-group-item">
-					<b>{{ profile.movement.name }}</b> <br />
-					Value: {{ profile.record }} {{ profile.record_unit == 1 ? 'kg' : 'lbs' }} {{ profile | ratioMovement: user.profil }}
-					<span *ngIf="profile.ratio_value">- Ref: {{ profile.ratio_value }} {{ profile.record_unit == 1 ? 'kg' : 'lbs' }}</span>
+					<b>{{ profile.movement.name }}</b>
+					<span *ngIf="profile.ratio_value && profile.ratio_value !== profile.record">
+						<b class="ml-2 badge badge-light">{{ profile | ratioMovement }}%</b>
+					</span>
+					<br />
+					Value: {{ profile.record }} {{ profile.record_unit == 1 ? 'kg' : 'lbs' }}
+					<span *ngIf="profile.ratio_value && profile.ratio_value !== profile.record">
+						- Ref: {{ profile.ratio_value }} {{ profile.record_unit == 1 ? 'kg' : 'lbs' }}
+					</span>
 					<button (click)="openDeleteModal(profile)" class="btn float-right btn-light mr-2" ><i class="fa fa-trash text-danger"></i></button>
 					<button (click)="openEditModal(profile)" class="btn float-right btn-light ml-4 mr-2" ><i class="fa fa-pencil text-success"></i></button>
 				</div>
