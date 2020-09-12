@@ -5,6 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { webConfig } from '../../../../../web-config';
 import { UsersService } from '../../../../../_/templates/users.service';
 
+import * as _ from 'lodash';
+
 @Component({
   selector: 'app-athlete-profile-modal-profile-edit',
   templateUrl: './athlete-profile-modal-profile-edit.component.html',
@@ -27,6 +29,8 @@ export class AthleteProfileModalProfileEditComponent implements OnInit {
   configExercices: any = webConfig.exercices;
 
   userId: number = 0;
+  maxRefId: number = 0;
+  isRefMax: boolean = false;
 
   constructor(
   	public bsModalRef: BsModalRef,
@@ -35,6 +39,9 @@ export class AthleteProfileModalProfileEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.model.is_max_ref = this.maxRefId === this.model.movement_id;
+    this.isRefMax = _.cloneDeep(this.model.is_max_ref);
+    console.log(this.model);
   }
 
   ngOnDestroy(): void {

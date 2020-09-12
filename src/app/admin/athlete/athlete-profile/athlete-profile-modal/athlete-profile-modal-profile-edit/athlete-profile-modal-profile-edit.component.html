@@ -28,6 +28,11 @@
 				</select>
 			</div>
 		</div>
+		<div class="col-md-12">
+			<div class="form-group">
+				<label><input [disabled]="isRefMax" type="checkbox" [(ngModel)]="model.is_max_ref" /> {{ '#Max Ref' | dgTranslate }}</label>
+			</div>
+		</div>
 	</div>
 </div>
 <div class="modal-footer">

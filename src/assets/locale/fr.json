@@ -348,5 +348,7 @@
   "#Assign to me": "Assign to me",
   "#Days": "Days",
   "#athlets": "athlets",
-  "#Choose an Athlet": "Choose an Athlet"
+  "#Choose an Athlet": "Choose an Athlet",
+  "#REF": "REF",
+  "#Max Ref": "#Max Ref"
 }

@@ -125,6 +125,7 @@ export class AthleteProfilePerformanceComponent implements OnInit {
   openEditModal(profile) {
     const initialState = {
       model: profile,
+      maxRefId: this.user.data.max_ref_id,
       isFromUrl: !this.isCoach,
     };
 
