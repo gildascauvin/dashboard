@@ -73,9 +73,15 @@ export class CustomerProfileLevelComponent implements OnInit {
     let radarChartDataTwo = [];
     _.forEach(this.user.profil, (profil) => {
       if (radarChartData.length < 6) {
-        radarChartData.push(profil.record);
-        radarChartDataTwo.push(profil.ratio_value);
-        radarChartLabels.push(profil.movement.name);
+        if (this.user.data.max_ref_id === profil.movement_id) {
+          radarChartData.push(profil.record);
+          radarChartDataTwo.push(profil.record);
+          radarChartLabels.push(profil.movement.name);
+        } else {
+          radarChartData.push(profil.record);
+          radarChartDataTwo.push(profil.ratio_value);
+          radarChartLabels.push(profil.movement.name);
+        }
       }
     });
 
