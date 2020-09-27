@@ -52,8 +52,8 @@
 
 			    <div class="col-auto">
 						<select [(ngModel)]="set.unit" type="number" class="form-control number-movement-list">
-							<option [value]="1">lbs</option>
-							<option [value]="2">kg</option>
+							<option [value]="1">kg</option>
+							<option [value]="2">lbs</option>
 							<option [value]="3">%</option>
 						</select>
 						<span *ngIf="movement.max_value && set.unit == 3 && isPlanning" class="ml-4 badge badge-success">

@@ -57,10 +57,10 @@ export class UnitSizeComparPipe implements PipeTransform {
     switch (value) {
       case 1:
       case "1":
-        return 'lbs';
+        return 'kg';
       case 2:
       case "2":
-        return 'kg';
+        return 'lbs';
     }
 
     return '';
