@@ -233,7 +233,8 @@ export class AthleteCalendarComponent implements OnInit {
 
         days.push(currentDay);
 
-        date = addHours(date, 24);
+        let nbHours = formatedDate === '2020-10-25' || formatedDate === '2021-10-30' ? 25 : 24;
+        date = addHours(date, nbHours);
         this.startDay = date;
       }
 
