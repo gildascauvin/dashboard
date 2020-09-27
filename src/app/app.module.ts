@@ -29,6 +29,7 @@ export function newNgTranslate(http: HttpClient) {
 import { AuthGuard } from './auth.service';
 
 import { UnitSizeLabelPipe } from './_/pipes/unit-size-label.pipe';
+import { UnitSizeComparPipe } from './_/pipes/unit-size-compar.pipe';
 import { RatioMovementPipe } from './_/pipes/ratio-movement.pipe';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -174,6 +175,7 @@ import { UsersModalChooseAthletComponent } from './admin/coach/coach-clients/coa
     AthleteSettingsProfileComponent,
     AthleteSettingsPasswordComponent,
     UnitSizeLabelPipe,
+    UnitSizeComparPipe,
     RatioMovementPipe,
     CoachClientsComponent,
     CoachProgramsDetailComponent,

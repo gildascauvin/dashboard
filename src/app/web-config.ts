@@ -4,6 +4,14 @@ export const webConfig = {
  	base: environment.base,
  	baseApi: environment.baseApi,
  	prefixApp: 'tpc_customer_',
+ 	conversion: {
+ 		kg: {
+ 			lbs: 0.453592
+ 		},
+ 		lbs: {
+ 			kg: 2.204623
+ 		},
+ 	},
  	timezone: [
         { name: "(GMT -12:00) Eniwetok, Kwajalein", value: "-12:00"},
         { name: "(GMT -11:00) Midway Island, Samoa", value: "-11:00"},

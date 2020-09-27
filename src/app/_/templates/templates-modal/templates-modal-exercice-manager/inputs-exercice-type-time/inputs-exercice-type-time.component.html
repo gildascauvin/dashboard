@@ -50,8 +50,11 @@
 					<option [value]="2">kg</option>
 					<option [value]="3">%</option>
 				</select>
-				<span *ngIf="movement.sets[0].value && movement.sets[0].unit == 3 && isPlanning" class="ml-4 badge badge-success">
+				<span *ngIf="movement.max_value && movement.sets[0].unit == 3 && isPlanning" class="ml-4 badge badge-success">
 					{{ movement.sets[0].value | unitSizeLabel : movement.max_value : movement.max_unit }}
+				</span>
+				<span *ngIf="movement.max_value && (movement.sets[0].unit == 1 || movement.sets[0].unit == 2) && isPlanning" class="ml-4 badge badge-success">
+					{{ movement.sets[0].value | unitSizeCompar : movement.max_value : movement.max_unit : movement.sets[0].unit }}
 				</span>
 			</div>
 
