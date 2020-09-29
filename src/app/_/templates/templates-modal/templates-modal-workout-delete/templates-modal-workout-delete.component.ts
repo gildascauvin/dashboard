@@ -35,7 +35,6 @@ export class TemplatesModalWorkoutDeleteComponent extends FormModalCore implemen
     private toastrService: ToastrService,) { super(); }
 
   ngOnInit(): void {
-    console.log(this.weeks);
   }
 
   cancel() {

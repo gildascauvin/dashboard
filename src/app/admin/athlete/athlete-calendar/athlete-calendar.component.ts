@@ -442,7 +442,8 @@ export class AthleteCalendarComponent implements OnInit {
       isMultiple: true,
       copiedWorkouts: this.selectedWorkoutsData,
       weeks: this.weeks,
-      count: this.selectedWorkoutsCount
+      count: this.selectedWorkoutsCount,
+      isFromUrl: this.isFromUrl,
     };
 
     this.bsModalRef = this.modalService.show(TemplatesModalWorkoutDeleteComponent, {
@@ -475,7 +476,7 @@ export class AthleteCalendarComponent implements OnInit {
       workout: workout,
       position: position,
       exercices: exercices,
-      isPlanning: true,
+      isFromUrl: this.isFromUrl,
     };
 
     this.bsModalRef = this.modalService.show(TemplatesModalExerciceDeleteComponent, {
@@ -583,9 +584,12 @@ export class AthleteCalendarComponent implements OnInit {
       workout.workout_id = 0;
       workout.started_at = day.date + ' 00:00:00';
       workout.program_json = JSON.stringify(workout.program);
+      workout.user_id = this.user.id;
 
       if (workout) {
-        this.usersService.createWorkout(workout).subscribe((response: any) => {
+        this.usersService[this.isFromUrl ? 'createWorkout' : 'createClientWorkout'](workout)
+          .subscribe((response: any) => {
+        // this.usersService.createWorkout(workout).subscribe((response: any) => {
           if (response.workout) {
             workouts.push(_.cloneDeep(response.workout));
           }
