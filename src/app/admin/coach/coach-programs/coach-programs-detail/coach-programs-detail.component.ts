@@ -416,7 +416,7 @@ export class CoachProgramsDetailComponent implements OnInit {
     for(let i=0; i < k.length; i++) {
       let workout = this.selectedWorkoutsData[k[i]];
       if (workout) {
-        workouts.push(workout);
+        workouts.push(_.cloneDeep(workout));
       }
     }
 
