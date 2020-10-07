@@ -104,7 +104,7 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
 
     let movements = this.model.movements.map((movement) => {
       if (!movement.value) {
-        movement.value = 1;
+        movement.value = 0;
       }
 
       this.setUnitLabel(movement, 'unit', 'unit_label');
@@ -116,7 +116,7 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
           unit: parseInt('' + set.unit) || 3,
           set: set.set || 1,
           rep: set.rep || 1,
-          value: set.value || 1,
+          value: set.value || 0,
           quantity: set.quantity || 1,
           unit_label: set.unit_label,
         };
@@ -140,7 +140,7 @@ export class TemplatesModalExerciceManagerComponent  extends FormModalCore imple
             unit: parseInt('' + set.unit) || 1,
             set: set.set || 1,
             interval: set.interval || 1,
-            value: set.value || 1,
+            value: set.value || 0,
             quantity: set.quantity || 1,
             unit_label: set.unit_label,
           };
