@@ -457,7 +457,6 @@ export class CustomerStatsRangeComponent implements OnInit {
 
     part.workouts.map((workout) => {
       workout.program && workout.program.exercices.map((exercice) => {
-
         // Exercice simple
         if (exercice.type.id === 1) {
           exercice.movements && exercice.movements.map((movement) => {
@@ -535,6 +534,10 @@ export class CustomerStatsRangeComponent implements OnInit {
           exercice.movements && exercice.movements.map((movement) => {
             parentId = this.categories[movement.category_id];
 
+            if (!movement.sets[0].quantity || movement.sets[0].value) {
+              return;
+            }
+
             let _volume = movement.sets[0].quantity * sets;
             let _tonnage = movement.sets[0].quantity * sets * movement.sets[0].value;
             let _intensite = movement.sets[0].quantity * sets * movement.sets[0].value;
@@ -603,7 +606,7 @@ export class CustomerStatsRangeComponent implements OnInit {
     this.barChartCardioData[0].data = this.stats.cardio.intensity;
     this.barChartCardioData[1].data = this.stats.cardio.volume;
 
-
+    this.customerStatsService.onStatsUpdated.emit(this);
   }
 
   private _initPart(part) {
@@ -622,7 +625,7 @@ export class CustomerStatsRangeComponent implements OnInit {
 
       part.workouts.map((workout) => {
         workout.program.exercices.map((exercice) => {
-          // Exercice simple
+          // Exercice simplee
           if (exercice.type.id === 1) {
             exercice.movements && exercice.movements.map((movement) => {
               parentId = this.categories[movement.category_id];
@@ -719,6 +722,10 @@ export class CustomerStatsRangeComponent implements OnInit {
             exercice.movements && exercice.movements.map((movement) => {
               parentId = this.categories[movement.category_id];
 
+              if (!movement.sets[0].quantity || movement.sets[0].value) {
+                return;
+              }
+
               let _volume = movement.sets[0].quantity * sets;
               let _tonnage = movement.sets[0].quantity * sets * movement.sets[0].value;
               let _intensite = movement.sets[0].quantity * sets * movement.sets[0].value;
@@ -806,6 +813,10 @@ export class CustomerStatsRangeComponent implements OnInit {
   }
 
   private _calcMovements(movement, parentId, volume, tonnage, intensite, intensiteSize) {
+    if (!parentId || !volume || !tonnage || !intensite || !intensiteSize) {
+      return;
+    }
+
     if (!this.stats.movements[movement.movement_id]) {
       this.stats.movements[movement.movement_id] = {
         movements: [movement],
