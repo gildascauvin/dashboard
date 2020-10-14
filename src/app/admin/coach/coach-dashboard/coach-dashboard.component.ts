@@ -143,41 +143,41 @@ export class CoachDashboardComponent implements OnInit {
   private _getMonthName(pos) {
     switch (pos) {
       case 1:
-      case "01":
-        return this.doorgetsTranslateService.instant("#January");
+      case '01':
+        return this.doorgetsTranslateService.instant('#January');
       case 2:
-      case "02":
-        return this.doorgetsTranslateService.instant("#February");
+      case '02':
+        return this.doorgetsTranslateService.instant('#February');
       case 3:
-      case "03":
-        return this.doorgetsTranslateService.instant("#March");
+      case '03':
+        return this.doorgetsTranslateService.instant('#March');
       case 4:
-      case "04":
-        return this.doorgetsTranslateService.instant("#April");
+      case '04':
+        return this.doorgetsTranslateService.instant('#April');
       case 5:
-      case "05":
-        return this.doorgetsTranslateService.instant("#May");
+      case '05':
+        return this.doorgetsTranslateService.instant('#May');
       case 6:
-      case "06":
-        return this.doorgetsTranslateService.instant("#June");
+      case '06':
+        return this.doorgetsTranslateService.instant('#June');
       case 7:
-      case "07":
-        return this.doorgetsTranslateService.instant("#July");
+      case '07':
+        return this.doorgetsTranslateService.instant('#July');
       case 8:
-      case "08":
-        return this.doorgetsTranslateService.instant("#August");
+      case '08':
+        return this.doorgetsTranslateService.instant('#August');
       case 9:
-      case "09":
-        return this.doorgetsTranslateService.instant("#September");
+      case '09':
+        return this.doorgetsTranslateService.instant('#September');
       case 10:
-      case "10":
-        return this.doorgetsTranslateService.instant("#October");
+      case '10':
+        return this.doorgetsTranslateService.instant('#October');
       case 11:
-      case "11":
-        return this.doorgetsTranslateService.instant("#November");
+      case '11':
+        return this.doorgetsTranslateService.instant('#November');
       case 12:
-      case "12":
-        return this.doorgetsTranslateService.instant("#December");
+      case '12':
+        return this.doorgetsTranslateService.instant('#December');
     }
   }
 
@@ -201,7 +201,7 @@ export class CoachDashboardComponent implements OnInit {
       {
         keyboard: false,
         initialState: initialState,
-        class: "modal-lg",
+        class: 'modal-lg',
       }
     );
   }
@@ -215,7 +215,7 @@ export class CoachDashboardComponent implements OnInit {
     this.bsModalRef = this.modalService.show(UsersModalProgramCreateComponent, {
       keyboard: false,
       initialState: initialState,
-      class: "modal-xs",
+      class: 'modal-xs',
     });
   }
 
@@ -229,14 +229,14 @@ export class CoachDashboardComponent implements OnInit {
       {
         keyboard: false,
         initialState: initialState,
-        class: "modal-xs",
+        class: 'modal-xs',
       }
     );
   }
 
   getExercice(withoutName?) {
     return {
-      name: "",
+      name: '',
       movements: [],
     };
   }
@@ -249,20 +249,19 @@ export class CoachDashboardComponent implements OnInit {
       month: day.month,
       year: day.year,
       program: {
-        name: "",
+        name: '',
         exercices: [],
       },
     };
   }
 
-  @HostListener("window:resize", [])
+  @HostListener('window:resize', [])
   private onResize() {
     this.detectScreenSize();
   }
 
   private detectScreenSize() {
     const currentSize = this._document.body.clientWidth;
-    console.log("detectScreenSize");
     this.size = currentSize;
     this.resizeSvc.onResize(currentSize);
   }

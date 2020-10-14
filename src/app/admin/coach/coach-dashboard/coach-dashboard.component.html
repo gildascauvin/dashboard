@@ -45,15 +45,13 @@
         </ng-container>
         <button
           class="btn btn-primary btn-edit-secondary"
-          (click)="openProgramCreateModal()"
-        >
+          (click)="openProgramCreateModal()">
           <i class="fa fa-plus"></i> {{ "#Create an program" | dgTranslate }}
         </button>
         <button
           class="btn btn-secondary btn-edit-secondary mt-3"
           routerLinkActive="active"
-          [routerLink]="['/coach', 'programs']"
-        >
+          [routerLink]="['/coach', 'programs']">
           {{ "#See all programs" | dgTranslate }}
         </button>
       </div>
@@ -61,13 +59,12 @@
   </div>
   <div class="col-md-6 lead-body">
     <div class="lead-body-content" *ngIf="!isEmpty">
-      <div class="workout-date mb-4" *ngFor="let _wo of flatWorkouts">
-        <h4>{{ _wo.label }}</h4>
+      <div class="workout-date mb-4" *ngFor="let _workout of flatWorkouts">
+        <h4>{{ _workout.label }}</h4>
         <ng-container *ngIf="userWorkouts && userWorkouts">
           <div
             class="workout-session"
-            *ngFor="let workout of userWorkouts[_wo.date]"
-          >
+            *ngFor="let workout of userWorkouts[_workout.date]">
             <div class="workout-session-title">
               {{ workout.username }}
               <span class="workout-program-name" *ngIf="workout.program.name">{{
