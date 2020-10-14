@@ -1,5 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpService } from '../../_/services/http/http.service';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,10 @@ export class UsersService {
     }
 
     return this.httpService.get(`workout/?page=${page.pageNumber}&size=${page.size}&date=${page.date}`);
+  }
+
+  getAllUserWorkouts(userId) {
+    return this.httpService.get(`workout/client/user/${userId}`);
   }
 
   getAllClientWorkout(clientId, date?) {

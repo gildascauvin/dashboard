@@ -1,323 +1,329 @@
-.lead-left-bar, .lead-right-bar {
-	background-color: #FFF;
-
+.lead-left-bar,
+.lead-right-bar {
+  background-color: #fff;
 }
 .lead-bar-content {
-	height: 100%;
-	padding-top: 35px;;
+  height: 100%;
+  padding-top: 35px;
 }
 
 .lead-bar-content-right {
-	padding: 20px;
+  padding: 20px;
 }
 
 .lead-body {
-    background-color: #F1F1F1;
-    padding: 43px;
-	.lead-body-content {
-    	height: 100%;
-		.workout-session {
-	    	background-color: #FFFFFF;
-			padding: 10px 65px 30px;
-			margin-top: 20px;
-			.workout-session-title {
-				border-bottom: solid 2px #F1F1F1;
-				font-family: Helvetica;
-				font-size: 22px;
-    			font-weight: 500;
-				font-stretch: normal;
-				font-style: normal;
-				line-height: normal;
-				letter-spacing: -0.14px;
-				color: #000000;
-				padding-bottom: 19px;
-				margin-bottom: 19px;
-				margin-top: 20px;
-			}
-			.workout-session-exercice {
-				width: 100%;
-				-webkit-backdrop-filter: blur(20px);
-				backdrop-filter: blur(20px);
-				box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.15);
-				background-color: #ffffff;
-				padding: 17px 35px;
-				margin-top: 13px;
+  background-color: #f1f1f1;
+  padding: 43px;
+  .lead-body-content {
+    height: 100%;
+    .workout-session {
+      background-color: #ffffff;
+      padding: 10px 65px 30px;
+      margin-top: 20px;
+      .workout-session-title {
+        border-bottom: solid 2px #f1f1f1;
+        font-family: Helvetica;
+        font-size: 22px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: -0.14px;
+        color: #000000;
+        padding-bottom: 19px;
+        margin-bottom: 19px;
+        margin-top: 20px;
+      }
+      .workout-program-name {
+        display: block;
+        font-size: 16.5px;
+        font-weight: bold;
+        color: #51516b;
+      }
+      .workout-session-exercice {
+        width: 100%;
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.15);
+        background-color: #ffffff;
+        padding: 17px 35px;
+        margin-top: 13px;
 
-				&.red {
-					border-left: solid 3px #FF0000;
-				}
+        &.red {
+          border-left: solid 3px #ff0000;
+        }
 
-				&.bleue {
-					border-left: solid 3px #0000FF;
-				}
+        &.bleue {
+          border-left: solid 3px #0000ff;
+        }
 
-				&.green {
-					border-left: solid 3px #00FF00;
-				}
-			}
-	    }
-	}
+        &.green {
+          border-left: solid 3px #00ff00;
+        }
+      }
+    }
+  }
 }
 
 .lead-container {
-	padding: 0;
-	margin: 0;
-	margin-top: -64px;
-	height: 100%;
-	background-color: #F1F1F1;
+  padding: 0;
+  margin: 0;
+  margin-top: -64px;
+  height: 100%;
+  background-color: #f1f1f1;
 }
 
 .readiness-level {
-	width: 80%;
-    margin: 30px auto;
-    padding: 15px 0;
-    border-bottom: solid 1px #F1F1F1;
-	text-align: left;
+  width: 80%;
+  margin: 30px auto;
+  padding: 15px 0;
+  border-bottom: solid 1px #f1f1f1;
+  text-align: left;
 
-    .readiness-level-title {
-		font-size: 12pt;
-		font-weight: 700;
-    }
+  .readiness-level-title {
+    font-size: 12pt;
+    font-weight: 700;
+  }
 }
 
 .weekly-overload {
-	width: 80%;
-    margin: 30px auto;
-    padding: 15px 0;
-    border-bottom: solid 1px #F1F1F1;
-	text-align: center;
+  width: 80%;
+  margin: 30px auto;
+  padding: 15px 0;
+  border-bottom: solid 1px #f1f1f1;
+  text-align: center;
 
-    .weekly-overload-title {
-		font-size: 12pt;
-		font-weight: 700;
-    }
+  .weekly-overload-title {
+    font-size: 12pt;
+    font-weight: 700;
+  }
 }
 
-
 .strenght-level {
-	width: 80%;
-    margin: 30px auto;
-    padding: 15px 0;
-    border-bottom: solid 1px #F1F1F1;
-	text-align: left;
+  width: 80%;
+  margin: 30px auto;
+  padding: 15px 0;
+  border-bottom: solid 1px #f1f1f1;
+  text-align: left;
 
-	.strenght-level-title {
-		font-size: 12pt;
-		font-weight: 700;
-    }
+  .strenght-level-title {
+    font-size: 12pt;
+    font-weight: 700;
+  }
 }
 
 .mrv-score {
-	width: 105px;
-    border: solid 6px #d44000;
-    border-radius: 49%;
-    height: 105px;
-    margin: 30px auto;
-    text-align: center;
-    background-color: #fbfbfb;
+  width: 105px;
+  border: solid 6px #d44000;
+  border-radius: 49%;
+  height: 105px;
+  margin: 30px auto;
+  text-align: center;
+  background-color: #fbfbfb;
 
-    .mrv-score-icon {
-    	font-family: Lato;
-		margin-top: 5px;
-		margin-bottom: -10px;
-    }
+  .mrv-score-icon {
+    font-family: Lato;
+    margin-top: 5px;
+    margin-bottom: -10px;
+  }
 
-    .mrv-score-number {
-		font-size: 33px;
-		font-family: Lato;
-		font-weight: bold;
-		margin-bottom: -5px;
-    }
+  .mrv-score-number {
+    font-size: 33px;
+    font-family: Lato;
+    font-weight: bold;
+    margin-bottom: -5px;
+  }
 
-    .mrv-score-label {
-    	font-family: Lato;
-		font-size: 12px;
-    }
+  .mrv-score-label {
+    font-family: Lato;
+    font-size: 12px;
+  }
 }
 
 .box-exercice {
-	padding: 0;
-    border: 0;
-    background: none;
-    width: 100%;
-	-webkit-backdrop-filter: blur(20px);
-	backdrop-filter: blur(20px);
-	box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.15);
-	background-color: #ffffff;
-	margin-top: 13px;
+  padding: 0;
+  border: 0;
+  background: none;
+  width: 100%;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.15);
+  background-color: #ffffff;
+  margin-top: 13px;
 }
 
 .box-exercice:hover {
-	background-color: #F9F9F9;
+  background-color: #f9f9f9;
 }
 
 .box-body-workout-inputs {
-	display: none;
+  display: none;
 }
 
 .box-body-workout-inputs {
-	color: #555555;
-	width: 80%;
-    background-color: #F1F1F1;
-    border: none;
+  color: #555555;
+  width: 80%;
+  background-color: #f1f1f1;
+  border: none;
 }
 
 .box-body-exercice-inputs {
-	width: 100%;
-	font-size: 13px;
-	margin-left: 0;
-    border: none;
+  width: 100%;
+  font-size: 13px;
+  margin-left: 0;
+  border: none;
 }
 
 .zone-rest-day {
-	display: block;
-	padding: 5px 8px;
+  display: block;
+  padding: 5px 8px;
 
-	h5 {
-		font-size: 15px;
-		font-weight: 600;
-		padding-bottom: 4px;
-		border-bottom: solid 1px #F1F1F1;
-	}
+  h5 {
+    font-size: 15px;
+    font-weight: 600;
+    padding-bottom: 4px;
+    border-bottom: solid 1px #f1f1f1;
+  }
 
-	textarea.textarea-restday {
-		width: 95%;
-		font-size: 11px;
-		min-height: 40px;
-		border: none;
-	}
+  textarea.textarea-restday {
+    width: 95%;
+    font-size: 11px;
+    min-height: 40px;
+    border: none;
+  }
 }
 
 .view-description-restday {
-	min-height: 50px;
-	font-size: 9px;
+  min-height: 50px;
+  font-size: 9px;
 }
 
-.box-body-workout-views, .box-body-workout-inputs {
-	margin-left: 30px !important;
-    font-size: 14px;
-    font-weight: 600;
+.box-body-workout-views,
+.box-body-workout-inputs {
+  margin-left: 30px !important;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .box-body-week-active {
-	.zone-drop-legal {
-		width: 400px;
-	    position: relative;
-	    height: 100px;
-	}
+  .zone-drop-legal {
+    width: 400px;
+    position: relative;
+    height: 100px;
+  }
 
-	.zone-rest-day {
-		width: 400px;
-	}
+  .zone-rest-day {
+    width: 400px;
+  }
 
-	.view-description-restday-inputs{
-		width: 400px;
-		display: block;
-	}
+  .view-description-restday-inputs {
+    width: 400px;
+    display: block;
+  }
 
-	.box-body-workout-active {
-		width: 400px;
-		border: solid 3px #333;
+  .box-body-workout-active {
+    width: 400px;
+    border: solid 3px #333;
 
-		.box-body-workout-inputs, .box-body-exercice-inputs {
-			display: inline-block;
-		}
+    .box-body-workout-inputs,
+    .box-body-exercice-inputs {
+      display: inline-block;
+    }
 
-		.box-body-workout-views {
-			display: none;
-		}
+    .box-body-workout-views {
+      display: none;
+    }
 
-		.zone-rest-day.box-body-rest-active {
-			width: 400px;
+    .zone-rest-day.box-body-rest-active {
+      width: 400px;
+    }
+  }
 
-		}
-	}
+  .zone-rest-day.box-body-rest-active {
+    border: solid 3px #333;
+  }
 
-	.zone-rest-day.box-body-rest-active {
-		border: solid 3px #333;
-	}
-
-	.box-body-workout {
-		width: 400px;
-	}
+  .box-body-workout {
+    width: 400px;
+  }
 }
 
 .movement-container {
-	background-color: #FFFFFF;
-    padding: 20px 30px !important;
-    font-size: 12px;
-    border-left: solid 3px #d44000;
-	min-height: 40px;
+  background-color: #ffffff;
+  padding: 20px 30px !important;
+  font-size: 12px;
+  border-left: solid 3px #d44000;
+  min-height: 40px;
 
-	.movement-title {
-		font-weight: 700;
-		font-size: 17px;
-    	margin-bottom: 8px;
-	}
+  .movement-title {
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 8px;
+  }
 
-	.movement-content {
-		font-size: 14px;
-		font-weight: 100;
-	}
+  .movement-content {
+    font-size: 14px;
+    font-weight: 100;
+  }
 }
 
 .container-calendar-template {
-	margin-bottom: 100px;
+  margin-bottom: 100px;
 }
 
 .movement-type-1 {
-	border-left: solid 5px #666666;
+  border-left: solid 5px #666666;
 }
 .movement-type-2 {
-	border-left: solid 5px #D44000;
+  border-left: solid 5px #d44000;
 }
 .movement-type-3 {
-	border-left: solid 5px #000000;
+  border-left: solid 5px #000000;
 }
 .movement-type-4 {
-	border-left: solid 5px #000000;
+  border-left: solid 5px #000000;
 }
 .movement-type-5 {
-	border-left: solid 5px #000000;
+  border-left: solid 5px #000000;
 }
 .movement-type-6 {
-	border-left: solid 5px #C1C1C1;
+  border-left: solid 5px #c1c1c1;
 }
 .movement-type-7 {
-	border-left: solid 5px #8D6767;
+  border-left: solid 5px #8d6767;
 }
 .movement-type-8 {
-	border-left: solid 5px #E37242;
+  border-left: solid 5px #e37242;
 }
 
 .athlets-item {
-	padding: 20px 10px;
+  padding: 20px 10px;
 }
 
 .container-program {
-	margin-top: 50px;
-	background-color: #FFFFFF;
-	padding: 30px 15px;
+  margin-top: 50px;
+  background-color: #ffffff;
+  padding: 30px 15px;
 }
 
 a {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 .calendar-text {
-	margin-top: 5px;
-	font-size: 11px;
+  margin-top: 5px;
+  font-size: 11px;
 }
 
 .fa-stack {
-    position: relative;
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    line-height: 1em;
-    vertical-align: middle;
+  position: relative;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1em;
+  vertical-align: middle;
 }
 
 a {
-	text-decoration: none;
+  text-decoration: none;
 }

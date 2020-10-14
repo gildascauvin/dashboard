@@ -1,41 +1,231 @@
 <div class="row lead-container">
-	<div class="col-md-3 lead-left-bar" *ngIf="size >= responsiveSize">
-		<div class="lead-bar-content">
-			<div class="readiness-level">
-				<h3 class="readiness-level-title">{{ '#My athlets' | dgTranslate }}</h3>
-				<ng-container *ngFor="let client of user.clients">
-					<div class="athlets-item" *ngIf="client.profile">
-						<a [routerLink]="['/coach', 'athlet', 'dashboard']" (click)="setCurrentAthletId(client.client_id)">
-							<i class="fa fa-user-circle"></i> {{ client.profile?.firstname }} {{ client.profile?.lastname }}
-						</a>
-					</div>
-				</ng-container>
-				<button class="btn btn-primary btn-edit-secondary" (click)="openInvitationCreateModal()"><i class="fa fa-plus"></i> {{ '#Create an athlet' | dgTranslate }}</button>
-				<button class="btn btn-secondary btn-edit-secondary mt-3" routerLinkActive="active" [routerLink]="['/coach', 'clients']">{{ '#See all athlets' | dgTranslate }}</button>
-			</div>
-			<div class="strenght-level">
-				<h3 class="strenght-level-title">{{ '#My programs' | dgTranslate }}</h3>
-				<ng-container *ngFor="let program of user.programs">
-					<div class="athlets-item">
-						<a [routerLink]="['/coach', 'programs', program.program_id]">
-							<span class="fa-stack fa-2x">
-							  <i class="fa fa-calendar-o fa-stack-1x"></i>
-							  <strong class="fa-stack-1x calendar-text">{{ program.days_count }}</strong>
-							</span>
-							{{ program.name }}
-						</a>
-					</div>
-				</ng-container>
-				<button class="btn btn-primary btn-edit-secondary" (click)="openProgramCreateModal()"><i class="fa fa-plus"></i> {{ '#Create an program' | dgTranslate }}</button>
-				<button class="btn btn-secondary btn-edit-secondary mt-3" routerLinkActive="active" [routerLink]="['/coach', 'programs']">{{ '#See all programs' | dgTranslate }}</button>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-6 lead-body">
+  <div class="col-md-3 lead-left-bar" *ngIf="size >= responsiveSize">
+    <div class="lead-bar-content">
+      <div class="readiness-level">
+        <h3 class="readiness-level-title">{{ "#My athlets" | dgTranslate }}</h3>
+        <ng-container *ngFor="let client of user.clients">
+          <div class="athlets-item" *ngIf="client.profile">
+            <a
+              [routerLink]="['/coach', 'athlet', 'dashboard']"
+              (click)="setCurrentAthletId(client.client_id)"
+            >
+              <i class="fa fa-user-circle"></i> {{ client.profile?.firstname }}
+              {{ client.profile?.lastname }}
+            </a>
+          </div>
+        </ng-container>
+        <button
+          class="btn btn-primary btn-edit-secondary"
+          (click)="openInvitationCreateModal()"
+        >
+          <i class="fa fa-plus"></i> {{ "#Create an athlet" | dgTranslate }}
+        </button>
+        <button
+          class="btn btn-secondary btn-edit-secondary mt-3"
+          routerLinkActive="active"
+          [routerLink]="['/coach', 'clients']"
+        >
+          {{ "#See all athlets" | dgTranslate }}
+        </button>
+      </div>
+      <div class="strenght-level">
+        <h3 class="strenght-level-title">{{ "#My programs" | dgTranslate }}</h3>
+        <ng-container *ngFor="let program of user.programs">
+          <div class="athlets-item">
+            <a [routerLink]="['/coach', 'programs', program.program_id]">
+              <span class="fa-stack fa-2x">
+                <i class="fa fa-calendar-o fa-stack-1x"></i>
+                <strong class="fa-stack-1x calendar-text">{{
+                  program.days_count
+                }}</strong>
+              </span>
+              {{ program.name }}
+            </a>
+          </div>
+        </ng-container>
+        <button
+          class="btn btn-primary btn-edit-secondary"
+          (click)="openProgramCreateModal()"
+        >
+          <i class="fa fa-plus"></i> {{ "#Create an program" | dgTranslate }}
+        </button>
+        <button
+          class="btn btn-secondary btn-edit-secondary mt-3"
+          routerLinkActive="active"
+          [routerLink]="['/coach', 'programs']"
+        >
+          {{ "#See all programs" | dgTranslate }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 lead-body">
+    <div class="lead-body-content" *ngIf="!isEmpty">
+      <div class="workout-date mb-4" *ngFor="let _wo of flatWorkouts">
+        <h4>{{ _wo.label }}</h4>
+        <ng-container *ngIf="userWorkouts && userWorkouts">
+          <div
+            class="workout-session"
+            *ngFor="let workout of userWorkouts[_wo.date]"
+          >
+            <div class="workout-session-title">
+              {{ workout.username }}
+              <span class="workout-program-name" *ngIf="workout.program.name">{{
+                workout.program.name
+              }}</span>
+            </div>
 
-	</div>
-	<div class="col-md-3 lead-right-bar" *ngIf="size >= responsiveSize">
-		<div class="lead-bar-content lead-bar-content-right">
-		</div>
-	</div>
+            <ul class="list-group">
+              <li
+                class="list-group-item box-exercice"
+                *ngFor="
+                  let exercice of workout.program.exercices;
+                  let indexExercice = index
+                "
+              >
+                <div
+                  class="movement-container movement-type-{{
+                    exercice.type && exercice.type.id
+                  }}"
+                >
+                  <div
+                    class="inputs-exercice-type"
+                    *ngIf="exercice.type"
+                    [ngSwitch]="exercice.type.id"
+                  >
+                    <div *ngSwitchCase="1">
+                      <div
+                        class="movement-title"
+                        *ngFor="let movement of exercice.movements"
+                      >
+                        {{ movement.name }}
+                        <div
+                          class="movement-content"
+                          *ngFor="let set of movement.sets"
+                        >
+                          <span *ngIf="set.set"
+                            >{{ set.set }} x {{ set.rep }} @ {{ set.value
+                            }}{{ set.unit_label }}</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngSwitchCase="2">
+                      <div class="movement-title">
+                        <span
+                          *ngFor="
+                            let movement of exercice.movements;
+                            let indMov = index
+                          "
+                          ><span *ngIf="indMov > 0"> +</span>
+                          {{ movement.quantity }} {{ movement.name }}</span
+                        >
+
+                        <div class="movement-content">
+                          <span
+                            >{{ exercice.sets }}
+                            {{ "#Sets" | dgTranslate }}</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngSwitchCase="3">
+                      <div
+                        class="movement-title"
+                        *ngFor="let movement of exercice.movements"
+                      >
+                        {{ movement.quantity }} {{ movement.name }} @
+                        {{ movement.value }}{{ movement.unit_label }}
+                      </div>
+                      <div class="movement-content">
+                        AMRAP: {{ exercice.amrap_timecap }}
+                        {{ "#minutes" | dgTranslate }}
+                      </div>
+                    </div>
+                    <div *ngSwitchCase="4">
+                      <div
+                        class="movement-title"
+                        *ngFor="let movement of exercice.movements"
+                      >
+                        {{ movement.quantity }} {{ movement.name }} @
+                        {{ movement.value }}{{ movement.unit_label }}
+                      </div>
+                      <div class="movement-content">
+                        <span *ngIf="exercice.time_style == 1"
+                          >{{ exercice.time_style_fixed }}
+                          {{ "#rounds for time" | dgTranslate }}</span
+                        >
+                        <span *ngIf="exercice.time_style == 2"
+                          >{{ exercice.time_style_varying }}
+                          {{ "#rounds for time" | dgTranslate }}</span
+                        >
+                      </div>
+                    </div>
+                    <div *ngSwitchCase="5">
+                      <div
+                        class="movement-title"
+                        *ngFor="let movement of exercice.movements"
+                      >
+                        {{ movement.quantity }} {{ movement.name }} @
+                        {{ movement.value }}{{ movement.unit_label }}
+                      </div>
+                      <div class="movement-content">
+                        EMOM ({{ exercice.emom_duration }} min every
+                        {{ exercice.emom_seconds }} sec)
+                      </div>
+                    </div>
+                    <div *ngSwitchCase="7">
+                      <div class="movement-title" *ngIf="exercice.cardio_type">
+                        {{
+                          configExercices.cardio.flatType[exercice.cardio_type]
+                        }}
+                      </div>
+
+                      <div
+                        class="movement-content"
+                        *ngIf="exercice.cardio_scoring == 1"
+                      >
+                        <span
+                          >{{ exercice.cardio_cardio_movement.interval }}
+                          {{ exercice.cardio_cardio_movement.unit_label }} @
+                          {{ exercice.cardio_cardio_movement.value }} %
+                        </span>
+                      </div>
+                      <div *ngIf="exercice.cardio_scoring == 2">
+                        <div
+                          class="movement-content"
+                          *ngFor="
+                            let set of exercice.cardio_intervals_movement.sets
+                          "
+                        >
+                          <span *ngIf="set.set"
+                            >{{ set.set }} x {{ set.interval }}
+                            {{ set.unit_label }} @ {{ set.value }} %</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngSwitchCase="8">
+                      <div class="movement-title">
+                        {{ exercice.name }}
+                        <small
+                          >({{
+                            configExercices.flatCustom[exercice.custom_scoring]
+                          }})</small
+                        >
+                      </div>
+                      <div class="movement-content">{{ exercice.custom }}</div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 lead-right-bar" *ngIf="size >= responsiveSize">
+    <div class="lead-bar-content lead-bar-content-right"></div>
+  </div>
 </div>
