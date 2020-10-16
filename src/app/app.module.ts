@@ -115,6 +115,8 @@ import { CustomerProfileLevelComponent } from './_/components/ui/customer-profil
 import { AthleteProfilePerformanceComponent } from './admin/athlete/athlete-profile/athlete-profile-performance/athlete-profile-performance.component';
 import { AthleteProfileReadinessComponent } from './admin/athlete/athlete-profile/athlete-profile-readiness/athlete-profile-readiness.component';
 import { UsersModalChooseAthletComponent } from './admin/coach/coach-clients/coach-clients-modal/users-modal-choose-athlet/users-modal-choose-athlet.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TemplatesModalStartSessionComponent } from './_/templates/templates-modal/templates-modal-start-session/templates-modal-start-session.component';
 
 @NgModule({
   declarations: [
@@ -191,6 +193,7 @@ import { UsersModalChooseAthletComponent } from './admin/coach/coach-clients/coa
     AthleteProfilePerformanceComponent,
     AthleteProfileReadinessComponent,
     UsersModalChooseAthletComponent,
+    TemplatesModalStartSessionComponent,
   ],
   imports: [
     FormsModule,
@@ -213,6 +216,7 @@ import { UsersModalChooseAthletComponent } from './admin/coach/coach-clients/coa
     }),
     PasswordStrengthMeterModule,
     NgxCaptchaModule,
+    DragDropModule
   ],
   providers: [
     {

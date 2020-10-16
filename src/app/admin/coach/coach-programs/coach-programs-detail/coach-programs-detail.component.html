@@ -29,7 +29,7 @@
 			</div>
 		</div>
 
-		<div class="row" *ngFor="let week of weeks; let y=index">
+		<div cdkDropListGroup class="row" *ngFor="let week of weeks; let y=index">
 		  <div class="col box-header-template"  *ngFor="let day of week; let i=index">
 		  	<div class="box-header-template-day text-color-box">
 		  		<span *ngIf="!i" class="float-left">{{ '#Week' | dgTranslate }} {{ y + 1}}</span>
@@ -89,11 +89,12 @@
 				  					(click)="openWorkoutDeleteModal(workout, in, day.workouts)"></i>
 				  				<i class="fa fa-plus i-btn" (click)="addExerciceToWorkout(day, workout.exercices, day.workouts)" placement="top" ngbTooltip="{{ '#Add exercice' | dgTranslate }}"></i>
 				  			</div>
-
-				  			<ul class="list-group" >
+							
+				  			<ul class="list-group" cdkDropList [cdkDropListData]="workout.exercices" (cdkDropListDropped)="drop($event)" >
 				  				<li class="list-group-item box-exercice"
-				  					*ngFor="let exercice of workout.exercices; let indexExercice=index;">
-				  					<div class="action-workout-box-execrice float-right" *ngIf="hover[i + '-' + y + '-' + in] && !showFooterAction">
+				  					*ngFor="let exercice of workout.exercices; let indexExercice=index;" cdkDrag>
+									  
+									  <div class="action-workout-box-execrice float-right" *ngIf="hover[i + '-' + y + '-' + in] && !showFooterAction">
 						  				<i class="fa fa-pencil i-btn mr-4"
 						  					placement="top" ngbTooltip="{{ '#Edit' | dgTranslate }}"
 						  					(click)="openExerciceManagerModal(exercice, workout, day)"></i>

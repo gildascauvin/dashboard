@@ -1,32 +1,38 @@
-import { Component, OnInit, Inject, Input, SimpleChanges, HostListener } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { DOCUMENT } from '@angular/common';
-
-import { format, addHours, startOfISOWeek, startOfWeek, endOfWeek } from 'date-fns';
-import { ToastrService } from 'ngx-toastr';
-import * as _ from 'lodash';
-
-import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
-import { DoorgetsTranslateService } from 'doorgets-ng-translate';
-
-import { webConfig } from '../../../web-config';
-
-import { AuthService } from '../../../_/services/http/auth.service';
-import { UserService } from '../../../_/services/model/user.service';
-import { UsersService } from '../../../_/templates/users.service';
-import { TemplatesService } from '../../../_/templates/templates.service';
-
-import { DeepDiffMapperService } from '../../../_/services/deep-diff-mapper.service';
-
-import { TemplatesModalEditComponent } from '../../../_/templates/templates-modal/templates-modal-edit/templates-modal-edit.component';
-import { TemplatesModalWorkoutDeleteComponent } from '../../../_/templates/templates-modal/templates-modal-workout-delete/templates-modal-workout-delete.component';
-import { TemplatesModalExerciceDeleteComponent } from '../../../_/templates/templates-modal/templates-modal-exercice-delete/templates-modal-exercice-delete.component';
-import { TemplatesModalExerciceManagerComponent } from '../../../_/templates/templates-modal/templates-modal-exercice-manager/templates-modal-exercice-manager.component';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from "@angular/cdk/drag-drop";
+import { DOCUMENT } from "@angular/common";
+import {
+  Component,
+  HostListener,
+  Inject,
+  Input,
+  OnInit,
+  SimpleChanges,
+} from "@angular/core";
+import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
+import { addHours, endOfWeek, format, startOfWeek } from "date-fns";
+import { DoorgetsTranslateService } from "doorgets-ng-translate";
+import * as _ from "lodash";
+import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
+import { ToastrService } from "ngx-toastr";
+import { webConfig } from "../../../web-config";
+import { DeepDiffMapperService } from "../../../_/services/deep-diff-mapper.service";
+import { AuthService } from "../../../_/services/http/auth.service";
+import { UserService } from "../../../_/services/model/user.service";
+import { TemplatesModalEditComponent } from "../../../_/templates/templates-modal/templates-modal-edit/templates-modal-edit.component";
+import { TemplatesModalExerciceDeleteComponent } from "../../../_/templates/templates-modal/templates-modal-exercice-delete/templates-modal-exercice-delete.component";
+import { TemplatesModalExerciceManagerComponent } from "../../../_/templates/templates-modal/templates-modal-exercice-manager/templates-modal-exercice-manager.component";
+import { TemplatesModalWorkoutDeleteComponent } from "../../../_/templates/templates-modal/templates-modal-workout-delete/templates-modal-workout-delete.component";
+import { TemplatesService } from "../../../_/templates/templates.service";
+import { UsersService } from "../../../_/templates/users.service";
 
 @Component({
-  selector: 'app-athlete-calendar',
-  templateUrl: './athlete-calendar.component.html',
-  styleUrls: ['./athlete-calendar.component.scss']
+  selector: "app-athlete-calendar",
+  templateUrl: "./athlete-calendar.component.html",
+  styleUrls: ["./athlete-calendar.component.scss"],
 })
 export class AthleteCalendarComponent implements OnInit {
   @Input() isFromUrl = true;
@@ -48,11 +54,12 @@ export class AthleteCalendarComponent implements OnInit {
 
   hover: any = {};
   timer: any = {};
+  exerciceUpdated: any;
 
   startedAtModel: NgbDateStruct = {
     day: 1,
     month: 1,
-    year: 2002
+    year: 2002,
   };
 
   isHover: boolean = false;
@@ -61,19 +68,19 @@ export class AthleteCalendarComponent implements OnInit {
   copyWorkouts: any[] = [];
 
   selectedWorkouts: any = {};
-  selectedWorkoutsData: any = {}
+  selectedWorkoutsData: any = {};
   selectedWorkoutsCount: number = 0;
 
   waitingForCopy: boolean = false;
   showFooterAction: boolean = false;
   showPasteCopiedWorkouts: boolean = false;
 
-	workouts: any = {};
+  workouts: any = {};
 
-	endDay: any = endOfWeek(new Date(), {weekStartsOn: 1});
-	startDay: any = startOfWeek(new Date(), {weekStartsOn: 1});
+  endDay: any = endOfWeek(new Date(), { weekStartsOn: 1 });
+  startDay: any = startOfWeek(new Date(), { weekStartsOn: 1 });
 
-	weeks: any[] = [];
+  weeks: any[] = [];
 
   configExercices: any = webConfig.exercices;
 
@@ -81,10 +88,13 @@ export class AthleteCalendarComponent implements OnInit {
 
   isLoadingScroll: boolean = false;
 
-  currentMonth: string = '';
+  currentMonth: string = "";
   cloneWeeks: any = [];
 
   isLoading: boolean = false;
+
+  containerUpdated: any;
+  containerPreviousUpdated: any;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -96,10 +106,11 @@ export class AthleteCalendarComponent implements OnInit {
     private modalService: BsModalService,
     private templatesService: TemplatesService,
     private doorgetsTranslateService: DoorgetsTranslateService
-    ) {
-  }
+  ) {}
 
-  @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+  @HostListener("document:keydown.escape", ["$event"]) onKeydownHandler(
+    event: KeyboardEvent
+  ) {
     this.closeAllBoxes();
   }
 
@@ -107,7 +118,7 @@ export class AthleteCalendarComponent implements OnInit {
     let todayCalendar = new Date();
 
     this.startedAtModel.year = todayCalendar.getFullYear();
-    this.startedAtModel.month = todayCalendar.getMonth()+1;
+    this.startedAtModel.month = todayCalendar.getMonth() + 1;
     this.startedAtModel.day = todayCalendar.getDate();
 
     this.user = this.isFromUrl
@@ -116,14 +127,18 @@ export class AthleteCalendarComponent implements OnInit {
 
     this._syncWorkouts();
 
-    this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe((o) => {
-      console.log(o);
-      this._syncWorkouts(null, true);
-    });
+    this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe(
+      (o) => {
+        console.log(o);
+        this._syncWorkouts(null, true);
+      }
+    );
 
-    this.sub.workoutsGroupReset = this.templatesService.onWorkoutsGroupReset.subscribe(() => {
-      this.closeFooterActions();
-    });
+    this.sub.workoutsGroupReset = this.templatesService.onWorkoutsGroupReset.subscribe(
+      () => {
+        this.closeFooterActions();
+      }
+    );
 
     this.sub.onUpdate = this.userService.onUpdate.subscribe((user) => {
       this.user = this.isFromUrl
@@ -132,8 +147,8 @@ export class AthleteCalendarComponent implements OnInit {
       this._syncWorkouts(null, true);
     });
 
-		this._init();
-		this._initDate();
+    this._init();
+    this._initDate();
 
     let navbar = this.document.getElementById("navbar-planning");
     let sticky = navbar.offsetTop;
@@ -142,42 +157,45 @@ export class AthleteCalendarComponent implements OnInit {
     let bodyScroll = this.document.getElementById("fixed-calendar-planning");
     let bodyTop = bodyScroll.getBoundingClientRect().top;
 
-  	bodyScroll.onscroll = () => {
-			let weeksScroll = this.document.querySelectorAll(".week-scroll");
+    bodyScroll.onscroll = () => {
+      let weeksScroll = this.document.querySelectorAll(".week-scroll");
       let stickyFooter = footerScroll.offsetTop - 700;
 
-  		weeksScroll.forEach((weekNode: any) => {
-  			// let weekNodeEl = this.document.querySelector(weekNode);
+      weeksScroll.forEach((weekNode: any) => {
+        // let weekNodeEl = this.document.querySelector(weekNode);
         let nWeek = weekNode.getBoundingClientRect();
         // console.log(nWeek.top, nWeek, bodyTop, nWeek.top - bodyTop);
-  			if (nWeek.top < 100) {
-	  			this.currentMonth = weekNode.attributes['data-date'].textContent;
-  			}
-  		})
+        if (nWeek.top < 100) {
+          this.currentMonth = weekNode.attributes["data-date"].textContent;
+        }
+      });
 
-		  // if (window.pageYOffset > sticky) {
-		  //   navbar.classList.add("sticky")
-		  // } else {
-		  //   navbar.classList.remove("sticky");
-		  // }
+      // if (window.pageYOffset > sticky) {
+      //   navbar.classList.add("sticky")
+      // } else {
+      //   navbar.classList.remove("sticky");
+      // }
 
-		  if (window.pageYOffset >= stickyFooter && !this.isLoadingScroll && this.weeks.length < 30) {
-  			this.isLoadingScroll = true;
+      if (
+        window.pageYOffset >= stickyFooter &&
+        !this.isLoadingScroll &&
+        this.weeks.length < 30
+      ) {
+        this.isLoadingScroll = true;
         this._init();
-		  }
-  	}
+      }
+    };
   }
 
   ngOnChanges(changes: SimpleChanges) {
-
     for (const propName in changes) {
       if (changes.hasOwnProperty(propName)) {
         switch (propName) {
-          case 'workouts': {
+          case "workouts": {
             // this._init();
           }
 
-          case 'weeks': {
+          case "weeks": {
             // console.log('weeks');
             // this._init();
           }
@@ -196,11 +214,12 @@ export class AthleteCalendarComponent implements OnInit {
 
   private _init(reset?) {
     if (reset) {
-      let today = startOfWeek(new Date(), {weekStartsOn: 1});
-      this.currentMonth = this._getMonthName(format(today, 'MM')) + ' ' + format(today, 'yyyy');
+      let today = startOfWeek(new Date(), { weekStartsOn: 1 });
+      this.currentMonth =
+        this._getMonthName(format(today, "MM")) + " " + format(today, "yyyy");
 
-      this.endDay = endOfWeek(new Date(), {weekStartsOn: 1});
-      this.startDay = startOfWeek(new Date(), {weekStartsOn: 1});
+      this.endDay = endOfWeek(new Date(), { weekStartsOn: 1 });
+      this.startDay = startOfWeek(new Date(), { weekStartsOn: 1 });
 
       this.weeks = [];
     }
@@ -213,10 +232,10 @@ export class AthleteCalendarComponent implements OnInit {
       let days = [];
       let date = new Date(this.startDay);
       for (let i = 0; i < this.ngOfWeeks; ++i) {
-        let formatedDate = format(date, 'yyyy-MM-dd');
-        let formatedDay = format(date, 'dd');
-        let formatedMonth = format(date, 'MM');
-        let formatedYear = format(date, 'yyyy');
+        let formatedDate = format(date, "yyyy-MM-dd");
+        let formatedDay = format(date, "dd");
+        let formatedMonth = format(date, "MM");
+        let formatedYear = format(date, "yyyy");
         let currentDay = {
           name: this._getWeekName(i),
           date: formatedDate,
@@ -224,7 +243,7 @@ export class AthleteCalendarComponent implements OnInit {
           month: formatedMonth,
           monthText: this._getMonthName(formatedMonth),
           year: formatedYear,
-          workouts: []
+          workouts: [],
         };
 
         if (this.workouts && this.workouts[formatedDate]) {
@@ -233,7 +252,10 @@ export class AthleteCalendarComponent implements OnInit {
 
         days.push(currentDay);
 
-        let nbHours = formatedDate === '2020-10-25' || formatedDate === '2021-10-30' ? 25 : 24;
+        let nbHours =
+          formatedDate === "2020-10-25" || formatedDate === "2021-10-30"
+            ? 25
+            : 24;
         date = addHours(date, nbHours);
         this.startDay = date;
       }
@@ -248,12 +270,34 @@ export class AthleteCalendarComponent implements OnInit {
 
   private _initDate(startedAtModel?) {
     this.startedAtModel = startedAtModel ? startedAtModel : this.startedAtModel;
-    let today = startOfWeek(new Date(this.startedAtModel.year, this.startedAtModel.month - 1, this.startedAtModel.day), {weekStartsOn: 1});
+    let today = startOfWeek(
+      new Date(
+        this.startedAtModel.year,
+        this.startedAtModel.month - 1,
+        this.startedAtModel.day
+      ),
+      { weekStartsOn: 1 }
+    );
 
-    this.currentMonth = this._getMonthName(format(today, 'MM')) + ' ' + format(today, 'yyyy');
+    this.currentMonth =
+      this._getMonthName(format(today, "MM")) + " " + format(today, "yyyy");
 
-    this.endDay = endOfWeek(new Date(this.startedAtModel.year, this.startedAtModel.month - 1, this.startedAtModel.day), {weekStartsOn: 1});
-    this.startDay = startOfWeek(new Date(this.startedAtModel.year, this.startedAtModel.month - 1, this.startedAtModel.day), {weekStartsOn: 1});
+    this.endDay = endOfWeek(
+      new Date(
+        this.startedAtModel.year,
+        this.startedAtModel.month - 1,
+        this.startedAtModel.day
+      ),
+      { weekStartsOn: 1 }
+    );
+    this.startDay = startOfWeek(
+      new Date(
+        this.startedAtModel.year,
+        this.startedAtModel.month - 1,
+        this.startedAtModel.day
+      ),
+      { weekStartsOn: 1 }
+    );
 
     this.weeks = [];
   }
@@ -261,61 +305,60 @@ export class AthleteCalendarComponent implements OnInit {
   private _getWeekName(pos) {
     switch (pos) {
       case 0:
-        return this.doorgetsTranslateService.instant('#Monday');
+        return this.doorgetsTranslateService.instant("#Monday");
       case 1:
-        return this.doorgetsTranslateService.instant('#Tuesday');
+        return this.doorgetsTranslateService.instant("#Tuesday");
       case 2:
-        return this.doorgetsTranslateService.instant('#Wednesday');
+        return this.doorgetsTranslateService.instant("#Wednesday");
       case 3:
-        return this.doorgetsTranslateService.instant('#Thurday');
+        return this.doorgetsTranslateService.instant("#Thurday");
       case 4:
-        return this.doorgetsTranslateService.instant('#Friday');
+        return this.doorgetsTranslateService.instant("#Friday");
       case 5:
-        return this.doorgetsTranslateService.instant('#Saturday');
+        return this.doorgetsTranslateService.instant("#Saturday");
       case 6:
-        return this.doorgetsTranslateService.instant('#Sunday');
+        return this.doorgetsTranslateService.instant("#Sunday");
     }
   }
 
   private _getMonthName(pos) {
     switch (pos) {
       case 1:
-      case '01':
-        return this.doorgetsTranslateService.instant('#January');
+      case "01":
+        return this.doorgetsTranslateService.instant("#January");
       case 2:
-      case '02':
-        return this.doorgetsTranslateService.instant('#February');
+      case "02":
+        return this.doorgetsTranslateService.instant("#February");
       case 3:
-      case '03':
-        return this.doorgetsTranslateService.instant('#March');
+      case "03":
+        return this.doorgetsTranslateService.instant("#March");
       case 4:
-      case '04':
-        return this.doorgetsTranslateService.instant('#April');
+      case "04":
+        return this.doorgetsTranslateService.instant("#April");
       case 5:
-      case '05':
-        return this.doorgetsTranslateService.instant('#May');
+      case "05":
+        return this.doorgetsTranslateService.instant("#May");
       case 6:
-      case '06':
-        return this.doorgetsTranslateService.instant('#June');
+      case "06":
+        return this.doorgetsTranslateService.instant("#June");
       case 7:
-      case '07':
-        return this.doorgetsTranslateService.instant('#July');
+      case "07":
+        return this.doorgetsTranslateService.instant("#July");
       case 8:
-      case '08':
-        return this.doorgetsTranslateService.instant('#August');
+      case "08":
+        return this.doorgetsTranslateService.instant("#August");
       case 9:
-      case '09':
-        return this.doorgetsTranslateService.instant('#September');
+      case "09":
+        return this.doorgetsTranslateService.instant("#September");
       case 10:
-      case '10':
-        return this.doorgetsTranslateService.instant('#October');
+      case "10":
+        return this.doorgetsTranslateService.instant("#October");
       case 11:
-      case '11':
-        return this.doorgetsTranslateService.instant('#November');
+      case "11":
+        return this.doorgetsTranslateService.instant("#November");
       case 12:
-      case '12':
-        return this.doorgetsTranslateService.instant('#December');
-
+      case "12":
+        return this.doorgetsTranslateService.instant("#December");
     }
   }
 
@@ -324,7 +367,10 @@ export class AthleteCalendarComponent implements OnInit {
   }
 
   save() {
-    let diff = this.deepDiffMapperService.difference(this.weeks, this.cloneWeeks);
+    let diff = this.deepDiffMapperService.difference(
+      this.weeks,
+      this.cloneWeeks
+    );
 
     let workoutToSave = [];
 
@@ -344,23 +390,22 @@ export class AthleteCalendarComponent implements OnInit {
     });
 
     _.forEach(workoutToSave, (workout) => {
-
-      // let body = {
-      //     user_id: this.id,
-      //     type_id: this.model.type.id,
-      //     day: this.model.day,
-      //     hour: this.model.hour,
-      //     program_json: JSON.stringify(this.model),
-      //     started_at: this.model.started_at,
-      //   };
-
+      let body = {
+        user_id: workout.user_id,
+        type_id: workout.type_id,
+        day: workout.day,
+        hour: workout.hour,
+        program_json: JSON.stringify(workout.program),
+        started_at: workout.started_at,
+        workout_id: workout.workout_id,
+      };
       if (workout.workout_id) {
-        // console.log('Updated');
+        this.usersService.updateClientWorkout(body).subscribe();
       } else {
-        // console.log('Created');
-        // this.usersService.createWorkout(body).subscribe((savedWorkout) => {
-        //   console.log('savedWorkout', savedWorkout);
-        // });
+        console.log("Created");
+        this.usersService.createWorkout(body).subscribe((savedWorkout) => {
+          console.log("savedWorkout", savedWorkout);
+        });
       }
     });
   }
@@ -382,8 +427,12 @@ export class AthleteCalendarComponent implements OnInit {
   addWorkoutToWeek(day, i, y) {
     day.workouts.push(this.getWokout(day));
 
-    this.markAsOver(i + '-' + y + '-' + (day.workouts.length - 1) , 'w-' + i);
-    this.addExerciceToWorkout(day, day.workouts[day.workouts.length - 1].program.exercices, day.workouts[day.workouts.length - 1]);
+    this.markAsOver(i + "-" + y + "-" + (day.workouts.length - 1), "w-" + i);
+    this.addExerciceToWorkout(
+      day,
+      day.workouts[day.workouts.length - 1].program.exercices,
+      day.workouts[day.workouts.length - 1]
+    );
   }
 
   pasteWorkout(workouts, i, y) {
@@ -396,7 +445,11 @@ export class AthleteCalendarComponent implements OnInit {
 
   addExerciceToWorkout(day, exercices, workout) {
     exercices.push(this.getExercice());
-    this.openExerciceManagerModal(exercices[exercices.length - 1], workout, day);
+    this.openExerciceManagerModal(
+      exercices[exercices.length - 1],
+      workout,
+      day
+    );
   }
 
   addSetToExercice(movements) {
@@ -417,11 +470,11 @@ export class AthleteCalendarComponent implements OnInit {
   onDragStart($event) {
     this.closeAllBoxes();
 
-    console.log('onDragStart', $event);
+    console.log("onDragStart", $event);
   }
 
   onDropSuccess($event) {
-    console.log('onDropSuccess', $event);
+    console.log("onDropSuccess", $event);
   }
 
   openEditModal() {
@@ -432,7 +485,7 @@ export class AthleteCalendarComponent implements OnInit {
     this.bsModalRef = this.modalService.show(TemplatesModalEditComponent, {
       keyboard: false,
       initialState: initialState,
-      class: 'modal-xs'
+      class: "modal-xs",
     });
   }
 
@@ -446,12 +499,14 @@ export class AthleteCalendarComponent implements OnInit {
       isFromUrl: this.isFromUrl,
     };
 
-    this.bsModalRef = this.modalService.show(TemplatesModalWorkoutDeleteComponent, {
-      keyboard: false,
-      initialState: initialState,
-      class: 'modal-xs'
-    });
-
+    this.bsModalRef = this.modalService.show(
+      TemplatesModalWorkoutDeleteComponent,
+      {
+        keyboard: false,
+        initialState: initialState,
+        class: "modal-xs",
+      }
+    );
   }
 
   openWorkoutDeleteModal(model, position, workouts) {
@@ -463,11 +518,14 @@ export class AthleteCalendarComponent implements OnInit {
       isFromUrl: this.isFromUrl,
     };
 
-    this.bsModalRef = this.modalService.show(TemplatesModalWorkoutDeleteComponent, {
-      keyboard: false,
-      initialState: initialState,
-      class: 'modal-xs'
-    });
+    this.bsModalRef = this.modalService.show(
+      TemplatesModalWorkoutDeleteComponent,
+      {
+        keyboard: false,
+        initialState: initialState,
+        class: "modal-xs",
+      }
+    );
   }
 
   openExerciceDeleteModal(model, position, exercices, workout) {
@@ -479,17 +537,19 @@ export class AthleteCalendarComponent implements OnInit {
       isFromUrl: this.isFromUrl,
     };
 
-    this.bsModalRef = this.modalService.show(TemplatesModalExerciceDeleteComponent, {
-      keyboard: false,
-      initialState: initialState,
-      class: 'modal-xs'
-    });
-
+    this.bsModalRef = this.modalService.show(
+      TemplatesModalExerciceDeleteComponent,
+      {
+        keyboard: false,
+        initialState: initialState,
+        class: "modal-xs",
+      }
+    );
   }
 
   openExerciceManagerModal(model, workout, day) {
     if (!model.step) {
-      model.step = 1
+      model.step = 1;
     }
 
     const initialState = {
@@ -505,11 +565,14 @@ export class AthleteCalendarComponent implements OnInit {
 
     console.log(initialState);
 
-    this.bsModalRef = this.modalService.show(TemplatesModalExerciceManagerComponent, {
-      keyboard: false,
-      initialState: initialState,
-      class: 'modal-lg'
-    });
+    this.bsModalRef = this.modalService.show(
+      TemplatesModalExerciceManagerComponent,
+      {
+        keyboard: false,
+        initialState: initialState,
+        class: "modal-lg",
+      }
+    );
   }
 
   onSelectWorkout(event) {
@@ -517,7 +580,7 @@ export class AthleteCalendarComponent implements OnInit {
   }
 
   removeRestDay(day) {
-    day.restDay.isRestDay=false;
+    day.restDay.isRestDay = false;
     this.closeAllBoxes();
   }
 
@@ -535,12 +598,12 @@ export class AthleteCalendarComponent implements OnInit {
   markAsRestDay(day, i, y) {
     day.restDay.isRestDay = true;
 
-    this.markAsOver('r-' + i + '-' + y , 'w-' + i);
+    this.markAsOver("r-" + i + "-" + y, "w-" + i);
   }
 
   closeAllBoxes() {
     let k = Object.keys(this.hover);
-    for(let i=0; i < k.length; i++) {
+    for (let i = 0; i < k.length; i++) {
       this.hover[k[i]] = false;
     }
 
@@ -562,7 +625,7 @@ export class AthleteCalendarComponent implements OnInit {
 
     let hasSelection = false;
     let k = Object.keys(this.selectedWorkouts);
-    for(let i=0; i < k.length; i++) {
+    for (let i = 0; i < k.length; i++) {
       if (this.selectedWorkouts[k[i]]) {
         this.selectedWorkoutsCount++;
 
@@ -579,17 +642,18 @@ export class AthleteCalendarComponent implements OnInit {
 
   pasteCopiedWorkouts(workouts, day) {
     let k = Object.keys(this.selectedWorkoutsData);
-    for(let i=0; i < k.length; i++) {
+    for (let i = 0; i < k.length; i++) {
       let workout = this.selectedWorkoutsData[k[i]];
       workout.workout_id = 0;
-      workout.started_at = day.date + ' 00:00:00';
+      workout.started_at = day.date + " 00:00:00";
       workout.program_json = JSON.stringify(workout.program);
       workout.user_id = this.user.id;
 
       if (workout) {
-        this.usersService[this.isFromUrl ? 'createWorkout' : 'createClientWorkout'](workout)
-          .subscribe((response: any) => {
-        // this.usersService.createWorkout(workout).subscribe((response: any) => {
+        this.usersService[
+          this.isFromUrl ? "createWorkout" : "createClientWorkout"
+        ](workout).subscribe((response: any) => {
+          // this.usersService.createWorkout(workout).subscribe((response: any) => {
           if (response.workout) {
             workouts.push(_.cloneDeep(response.workout));
           }
@@ -613,16 +677,16 @@ export class AthleteCalendarComponent implements OnInit {
 
   getMovement() {
     return {
-      name: 'Snatch',
-      value: '2 X 3 # 75%'
+      name: "Snatch",
+      value: "2 X 3 # 75%",
     };
   }
 
   getExercice(withoutName?) {
     return {
-      name: '',
-      movements: []
-    }
+      name: "",
+      movements: [],
+    };
   }
 
   getWokout(day?) {
@@ -633,10 +697,9 @@ export class AthleteCalendarComponent implements OnInit {
       month: day.month,
       year: day.year,
       program: {
-        name: '',
-        exercices: [
-        ]
-      }
+        name: "",
+        exercices: [],
+      },
     };
   }
 
@@ -644,9 +707,9 @@ export class AthleteCalendarComponent implements OnInit {
     return {
       restDay: {
         isRestDay: false,
-        description: ''
+        description: "",
       },
-      workouts: []
+      workouts: [],
     };
   }
 
@@ -656,29 +719,56 @@ export class AthleteCalendarComponent implements OnInit {
 
     this.sub.onGetAllWorkout && this.sub.onGetAllWorkout.unsubscribe();
 
-    let date = this.startedAtModel.year + '-' + this.startedAtModel.month + '-' + this.startedAtModel.day;
-
+    let date =
+      this.startedAtModel.year +
+      "-" +
+      this.startedAtModel.month +
+      "-" +
+      this.startedAtModel.day;
 
     if (this.isFromUrl) {
-      this.sub.onGetAllWorkout = this.usersService.getAllWorkout(date)
+      this.sub.onGetAllWorkout = this.usersService
+        .getAllWorkout(date)
         .subscribe((workouts: any) => {
           if (workouts) {
             this.workouts = _.cloneDeep(workouts);
           }
           this.isLoading = false;
           this._init(!reset);
-      });
+        });
     } else {
       let clientId = this.authService.getCurrentAthletId();
-      this.sub.onGetAllWorkout = this.usersService.getAllClientWorkout(clientId, date)
+      this.sub.onGetAllWorkout = this.usersService
+        .getAllClientWorkout(clientId, date)
         .subscribe((workouts: any) => {
           if (workouts) {
             this.workouts = _.cloneDeep(workouts);
           }
           this.isLoading = false;
           this._init(!reset);
-      });
+        });
+    }
+  }
+  drop(event: CdkDragDrop<string[]>) {
+    this.containerUpdated = event.container.data;
+    this.containerUpdated[event.currentIndex].updated = true;
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+      this.containerPreviousUpdated = event.previousContainer.data;
+      this.containerPreviousUpdated[event.currentIndex].updated = true;
     }
 
+    this.autoSave();
   }
 }
