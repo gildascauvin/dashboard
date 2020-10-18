@@ -90,7 +90,7 @@
 				  				<i class="fa fa-plus i-btn" (click)="addExerciceToWorkout(day, workout.exercices, day.workouts)" placement="top" ngbTooltip="{{ '#Add exercice' | dgTranslate }}"></i>
 				  			</div>
 							
-				  			<ul class="list-group" cdkDropList [cdkDropListData]="workout.exercices" (cdkDropListDropped)="drop($event)" >
+				  			<ul class="list-group list-cdk" cdkDropList [cdkDropListData]="workout.exercices" (cdkDropListDropped)="drop($event)" >
 				  				<li class="list-group-item box-exercice"
 				  					*ngFor="let exercice of workout.exercices; let indexExercice=index;" cdkDrag>
 									  

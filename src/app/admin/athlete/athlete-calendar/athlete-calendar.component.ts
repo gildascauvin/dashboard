@@ -102,7 +102,7 @@ export class AthleteCalendarComponent implements OnInit {
     private modalService: BsModalService,
     private templatesService: TemplatesService,
     private doorgetsTranslateService: DoorgetsTranslateService
-  ) {}
+  ) { }
 
   @HostListener("document:keydown.escape", ["$event"]) onKeydownHandler(
     event: KeyboardEvent
@@ -368,6 +368,7 @@ export class AthleteCalendarComponent implements OnInit {
       this.cloneWeeks
     );
 
+
     const workoutToSave = [];
 
     _.forEach(diff, (week, idWeek) => {
@@ -378,12 +379,15 @@ export class AthleteCalendarComponent implements OnInit {
           _.forEach(days.workouts, (workout, indexWorkout) => {
             const workoutFromCLone = dayWorkout.workouts[indexWorkout];
             if (workoutFromCLone) {
+              console.log(workoutFromCLone);
+              console.log(diff);
               workoutToSave.push(workoutFromCLone);
             }
           });
         }
       });
     });
+
 
     _.forEach(workoutToSave, (workout) => {
       const body = {
@@ -399,13 +403,13 @@ export class AthleteCalendarComponent implements OnInit {
         this.usersService
           .updateClientWorkout(body)
           .subscribe((savedWorkout) => {
-            console.log("success");
+            console.log('success');
             this.cloneWeeks = _.cloneDeep(this.weeks);
           });
       } else {
-        console.log("Created");
+        console.log('Created');
         this.usersService.createWorkout(body).subscribe((savedWorkout) => {
-          console.log("savedWorkout", savedWorkout);
+          console.log('savedWorkout', savedWorkout);
           this.cloneWeeks = _.cloneDeep(this.weeks);
         });
       }
