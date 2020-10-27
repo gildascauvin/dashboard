@@ -1,0 +1,99 @@
+.body-title {
+  font-family: "Arial";
+  font-size: 20.6px;
+  font-weight: normal;
+  text-align: center;
+}
+.modal-body {
+  .default-option {
+    display: none;
+  }
+  .start-session-container {
+    justify-content: center;
+    .default-step {
+      label {
+        font-family: "Arial";
+        font-size: 20.6px;
+        font-weight: bold;
+        color: #000000;
+      }
+    }
+  }
+  .inputs-exercice-type {
+    width: 100%;
+  }
+  .container-done-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .done-button {
+      background-color: #f1f1f1;
+      font-family: "Arial";
+      font-size: 14px;
+      font-weight: normal;
+      text-align: center;
+      color: #d44000;
+      float: right;
+    }
+  }
+  .container-last-step {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .rate-label {
+      font-family: "Arial";
+      font-weight: bold;
+    }
+  }
+  .comment-label {
+    font-family: "Arial";
+    font-size: 13.8px;
+    color: #4c4e54;
+  }
+}
+
+.multiple-buttons {
+  justify-content: space-between;
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background-color: #303030;
+
+  .next-previous-btn {
+    font-family: "Arial";
+    font-size: 20.6px;
+    font-weight: normal;
+    text-align: right;
+    color: #a0a0a0;
+    border: none;
+    outline: none;
+  }
+  .next-btn-single {
+    margin-left: auto;
+  }
+  #progress-bar {
+    color: white;
+    display: flex;
+    list-style-type: none;
+    padding-left: 0;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    li {
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      border-radius: 9999px;
+      cursor: pointer;
+      height: 8px;
+      margin: 0px 4px;
+      width: 8px;
+      background-color: #a0a0a0;
+    }
+    .active {
+      background-color: white;
+    }
+  }
+}

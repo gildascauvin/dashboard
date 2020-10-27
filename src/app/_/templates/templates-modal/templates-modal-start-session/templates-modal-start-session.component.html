@@ -1,0 +1,209 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">
+    {{ workout.name }}
+  </h4>
+  <button
+    type="button"
+    class="close pull-right"
+    aria-label="Close"
+    (click)="cancel()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="body-title" *ngIf="step === 1">
+    {{ "#Readiness survey" | dgTranslate }}
+  </div>
+  <div class="row start-session-container" *ngIf="step === 1">
+    <div class="col-md-6">
+      <div class="row default-step">
+        <div class="col-md-12 mt-4">
+          <label>{{ "#Diet" | dgTranslate }}</label>
+          <select class="form-control dropdown" [(ngModel)]="workout.diet">
+            <option class="default-option"></option>
+            <option *ngFor="let score of scores" [value]="score.value">
+              {{ score.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-12 mt-4">
+          <label>{{ "#Sleep" | dgTranslate }}</label>
+          <select class="form-control" [(ngModel)]="workout.sleep">
+            <option class="default-option"></option>
+            <option *ngFor="let score of scores" [value]="score.value">
+              {{ score.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-12 mt-4">
+          <label>{{ "#Mood" | dgTranslate }}</label>
+          <select class="form-control" [(ngModel)]="workout.mood">
+            <option class="default-option"></option>
+            <option *ngFor="let score of scores" [value]="score.value">
+              {{ score.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-12 mt-4">
+          <label>{{ "#Energy" | dgTranslate }}</label>
+          <select class="form-control" [(ngModel)]="workout.energy">
+            <option class="default-option"></option>
+            <option *ngFor="let score of scores" [value]="score.value">
+              {{ score.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-12 mt-4">
+          <label>{{ "#Stress" | dgTranslate }}</label>
+          <select class="form-control" [(ngModel)]="workout.stress">
+            <option class="default-option"></option>
+            <option *ngFor="let score of scores" [value]="score.value">
+              {{ score.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="step === 2">
+    <div class="inputs-exercice-type" [ngSwitch]="model.type.id">
+      <tpc-inputs-exercice-type-simple
+        [model]="model"
+        [isPlanning]="isPlanning"
+        [isStartSession]="true"
+        *ngSwitchCase="1"
+      ></tpc-inputs-exercice-type-simple>
+      <tpc-inputs-exercice-type-complex
+        [model]="model"
+        [isPlanning]="isPlanning"
+        [isStartSession]="true"
+        *ngSwitchCase="2"
+      ></tpc-inputs-exercice-type-complex>
+      <tpc-inputs-exercice-type-amrap
+        [model]="model"
+        [isPlanning]="isPlanning"
+        [isStartSession]="true"
+        *ngSwitchCase="3"
+      ></tpc-inputs-exercice-type-amrap>
+      <tpc-inputs-exercice-type-time
+        [model]="model"
+        [isPlanning]="isPlanning"
+        [isStartSession]="true"
+        *ngSwitchCase="4"
+      ></tpc-inputs-exercice-type-time>
+      <tpc-inputs-exercice-type-emom
+        [model]="model"
+        [isPlanning]="isPlanning"
+        [isStartSession]="true"
+        *ngSwitchCase="5"
+      ></tpc-inputs-exercice-type-emom>
+      <tpc-inputs-exercice-type-cardio
+        [model]="model"
+        [isPlanning]="isPlanning"
+        *ngSwitchCase="7"
+      ></tpc-inputs-exercice-type-cardio>
+      <tpc-inputs-exercice-type-custom
+        [model]="model"
+        [isPlanning]="isPlanning"
+        *ngSwitchCase="8"
+      ></tpc-inputs-exercice-type-custom>
+    </div>
+    <div class="col-md-12 mt-2">
+      <div class="form-group">
+        <label>{{ "#Notes" | dgTranslate }}</label>
+        <textarea
+          placeholder="My comments"
+          [(ngModel)]="model.description"
+          class="form-control"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="row container-last-step" *ngIf="step === 3">
+    <app-customer-stats-range
+      [showRange]="false"
+      [isFromUrl]="false"
+      [isOneDay]="true"
+    ></app-customer-stats-range>
+    <app-customer-stats
+      [isFromUrl]="false"
+      [showCardio]="false"
+      [showCanvas]="false"
+    ></app-customer-stats>
+
+    <div class="col-md-6 mt-4">
+      <label class="rate-label">{{ "#Rate" | dgTranslate }}</label>
+      <select class="form-control" [(ngModel)]="workout.rate">
+        <option class="default-option"></option>
+        <option *ngFor="let rate of rates" [value]="rate">
+          {{ rate }}
+        </option>
+      </select>
+    </div>
+
+    <div class="col-md-6 mt-4">
+      <div class="form-group">
+        <label class="comment-label">{{ "#Comment" | dgTranslate }}</label>
+        <textarea
+          placeholder="My comments"
+          [(ngModel)]="workout.comment"
+          class="form-control"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-4">
+      <button
+        (click)="save(true)"
+        type="submit"
+        class="btn btn-block col-md-12 mt-2 done-button btn-primary"
+      >
+        End Session
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="step !== 3" class="row container-done-button">
+    <button
+      (click)="save()"
+      type="submit"
+      class="btn btn-block col-md-3 mt-6 done-button"
+    >
+      {{ "#Done" | dgTranslate }}
+    </button>
+  </div>
+</div>
+
+<div [ngClass]="{ 'multiple-buttons': step !== 1 }" class="modal-footer">
+  <button
+    (click)="showPreviousStep()"
+    *ngIf="step !== 1"
+    class="btn next-previous-btn"
+  >
+    <i class="fa fa-arrow-left"></i>
+    {{ "#Previous" | dgTranslate }}
+  </button>
+
+  <ul id="progress-bar">
+    <li
+      *ngFor="let option of options; index as i"
+      [ngClass]="{ active: i === currentStep }"
+    ></li>
+  </ul>
+
+  <button
+    [ngClass]="{ 'next-btn-single': step === 1 }"
+    *ngIf="step !== 3"
+    (click)="showNextStep()"
+    class="btn next-previous-btn"
+  >
+    {{ "#Next" | dgTranslate }}
+    <i class="fa fa-arrow-right"></i>
+  </button>
+</div>

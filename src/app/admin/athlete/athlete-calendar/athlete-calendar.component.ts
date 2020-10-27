@@ -1,7 +1,7 @@
 import {
   CdkDragDrop,
   moveItemInArray,
-  transferArrayItem,
+  transferArrayItem
 } from "@angular/cdk/drag-drop";
 import { DOCUMENT } from "@angular/common";
 import {
@@ -10,7 +10,7 @@ import {
   Inject,
   Input,
   OnInit,
-  SimpleChanges,
+  SimpleChanges
 } from "@angular/core";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import { addHours, endOfWeek, format, startOfWeek } from "date-fns";
@@ -18,6 +18,7 @@ import { DoorgetsTranslateService } from "doorgets-ng-translate";
 import * as _ from "lodash";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { ToastrService } from "ngx-toastr";
+import { TemplatesModalStartSessionComponent } from "src/app/_/templates/templates-modal/templates-modal-start-session/templates-modal-start-session.component";
 import { webConfig } from "../../../web-config";
 import { DeepDiffMapperService } from "../../../_/services/deep-diff-mapper.service";
 import { AuthService } from "../../../_/services/http/auth.service";
@@ -102,7 +103,7 @@ export class AthleteCalendarComponent implements OnInit {
     private modalService: BsModalService,
     private templatesService: TemplatesService,
     private doorgetsTranslateService: DoorgetsTranslateService
-  ) { }
+  ) {}
 
   @HostListener("document:keydown.escape", ["$event"]) onKeydownHandler(
     event: KeyboardEvent
@@ -368,7 +369,6 @@ export class AthleteCalendarComponent implements OnInit {
       this.cloneWeeks
     );
 
-
     const workoutToSave = [];
 
     _.forEach(diff, (week, idWeek) => {
@@ -388,7 +388,6 @@ export class AthleteCalendarComponent implements OnInit {
       });
     });
 
-
     _.forEach(workoutToSave, (workout) => {
       const body = {
         user_id: workout.user_id,
@@ -403,13 +402,13 @@ export class AthleteCalendarComponent implements OnInit {
         this.usersService
           .updateClientWorkout(body)
           .subscribe((savedWorkout) => {
-            console.log('success');
+            console.log("success");
             this.cloneWeeks = _.cloneDeep(this.weeks);
           });
       } else {
-        console.log('Created');
+        console.log("Created");
         this.usersService.createWorkout(body).subscribe((savedWorkout) => {
-          console.log('savedWorkout', savedWorkout);
+          console.log("savedWorkout", savedWorkout);
           this.cloneWeeks = _.cloneDeep(this.weeks);
         });
       }
@@ -771,5 +770,28 @@ export class AthleteCalendarComponent implements OnInit {
       );
     }
     this.autoSave();
+  }
+  openStartSessionModal(workout, day) {
+    const initialState = {
+      day: day,
+      step: 1,
+      workout: workout,
+      isPlanning: true,
+      userId: this.user.id,
+      profil: this.user.profil || [],
+      isFromUrl: this.isFromUrl,
+      // model: _.cloneDeep(model),
+    };
+
+    console.log(initialState);
+
+    this.bsModalRef = this.modalService.show(
+      TemplatesModalStartSessionComponent,
+      {
+        keyboard: false,
+        initialState: initialState,
+        class: "modal-lg",
+      }
+    );
   }
 }

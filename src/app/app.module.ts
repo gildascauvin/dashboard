@@ -95,6 +95,7 @@ import { InputsExerciceTypeOpenComponent } from "./_/templates/templates-modal/t
 import { InputsExerciceTypeSimpleComponent } from "./_/templates/templates-modal/templates-modal-exercice-manager/inputs-exercice-type-simple/inputs-exercice-type-simple.component";
 import { InputsExerciceTypeTimeComponent } from "./_/templates/templates-modal/templates-modal-exercice-manager/inputs-exercice-type-time/inputs-exercice-type-time.component";
 import { TemplatesModalExerciceManagerComponent } from "./_/templates/templates-modal/templates-modal-exercice-manager/templates-modal-exercice-manager.component";
+import { TemplatesModalStartSessionComponent } from "./_/templates/templates-modal/templates-modal-start-session/templates-modal-start-session.component";
 import { TemplatesModalWorkoutDeleteComponent } from "./_/templates/templates-modal/templates-modal-workout-delete/templates-modal-workout-delete.component";
 
 export function newNgTranslate(http: HttpClient) {
@@ -176,6 +177,7 @@ export function newNgTranslate(http: HttpClient) {
     AthleteProfilePerformanceComponent,
     AthleteProfileReadinessComponent,
     UsersModalChooseAthletComponent,
+    TemplatesModalStartSessionComponent,
   ],
   imports: [
     FormsModule,

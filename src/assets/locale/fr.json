@@ -268,7 +268,7 @@
   "#Athlets": "Athlets",
   "#Settings": "Settings",
   "#Documentation": "Documentation",
-  "#Create a workout": "Create a workout",
+  "#Start Session": "Start Session",
   "#Planning": "Planning",
   "#Statistics": "Statistics",
   "#Logout": "Logout",
@@ -350,5 +350,12 @@
   "#athlets": "athlets",
   "#Choose an Athlet": "Choose an Athlet",
   "#REF": "REF",
-  "#Max Ref": "#Max Ref"
+  "#Max Ref": "#Max Ref",
+  "#Readiness survey": "Readiness survey",
+  "#Mood": "Mood",
+  "#Energy": "Energy",
+  "#Done": "Done",
+  "#Next": "Next",
+  "#Previous": "Previous",
+  "#Rate": "Rate of perceived exhaustion"
 }
