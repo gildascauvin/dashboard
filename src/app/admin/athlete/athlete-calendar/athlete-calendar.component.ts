@@ -54,7 +54,6 @@ export class AthleteCalendarComponent implements OnInit {
 
   hover: any = {};
   timer: any = {};
-  exerciceUpdated: any;
 
   startedAtModel: NgbDateStruct = {
     day: 1,
@@ -93,9 +92,6 @@ export class AthleteCalendarComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  containerUpdated: any;
-  containerPreviousUpdated: any;
-
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private toastrService: ToastrService,
@@ -106,7 +102,7 @@ export class AthleteCalendarComponent implements OnInit {
     private modalService: BsModalService,
     private templatesService: TemplatesService,
     private doorgetsTranslateService: DoorgetsTranslateService
-  ) {}
+  ) { }
 
   @HostListener("document:keydown.escape", ["$event"]) onKeydownHandler(
     event: KeyboardEvent
@@ -367,30 +363,34 @@ export class AthleteCalendarComponent implements OnInit {
   }
 
   save() {
-    let diff = this.deepDiffMapperService.difference(
+    const diff = this.deepDiffMapperService.difference(
       this.weeks,
       this.cloneWeeks
     );
 
-    let workoutToSave = [];
 
-    _.forEach(this.weeks, (week) => {
-      _.forEach(week, (day) => {
-        if (day.workouts.length) {
-          _.forEach(day.workouts, (workout) => {
-            _.forEach(workout.program.exercices, (exercice) => {
-              if (exercice.updated) {
-                workoutToSave.push(workout);
-                exercice.updated = false;
-              }
-            });
+    const workoutToSave = [];
+
+    _.forEach(diff, (week, idWeek) => {
+      const weekWorkout = this.weeks[idWeek];
+      _.forEach(week, (days, idDay) => {
+        const dayWorkout = weekWorkout[idDay];
+        if (days) {
+          _.forEach(days.workouts, (workout, indexWorkout) => {
+            const workoutFromCLone = dayWorkout.workouts[indexWorkout];
+            if (workoutFromCLone) {
+              console.log(workoutFromCLone);
+              console.log(diff);
+              workoutToSave.push(workoutFromCLone);
+            }
           });
         }
       });
     });
 
+
     _.forEach(workoutToSave, (workout) => {
-      let body = {
+      const body = {
         user_id: workout.user_id,
         type_id: workout.type_id,
         day: workout.day,
@@ -400,11 +400,17 @@ export class AthleteCalendarComponent implements OnInit {
         workout_id: workout.workout_id,
       };
       if (workout.workout_id) {
-        this.usersService.updateClientWorkout(body).subscribe();
+        this.usersService
+          .updateClientWorkout(body)
+          .subscribe((savedWorkout) => {
+            console.log('success');
+            this.cloneWeeks = _.cloneDeep(this.weeks);
+          });
       } else {
-        console.log("Created");
+        console.log('Created');
         this.usersService.createWorkout(body).subscribe((savedWorkout) => {
-          console.log("savedWorkout", savedWorkout);
+          console.log('savedWorkout', savedWorkout);
+          this.cloneWeeks = _.cloneDeep(this.weeks);
         });
       }
     });
@@ -750,8 +756,6 @@ export class AthleteCalendarComponent implements OnInit {
     }
   }
   drop(event: CdkDragDrop<string[]>) {
-    this.containerUpdated = event.container.data;
-    this.containerUpdated[event.currentIndex].updated = true;
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -765,10 +769,7 @@ export class AthleteCalendarComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-      this.containerPreviousUpdated = event.previousContainer.data;
-      this.containerPreviousUpdated[event.currentIndex].updated = true;
     }
-
     this.autoSave();
   }
 }

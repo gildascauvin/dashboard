@@ -1,14 +1,17 @@
-import { Injectable } from '@angular/core';
-import { transform, isEqual, isObject } from 'lodash';
+import { Injectable } from "@angular/core";
+import { isEqual, isObject, transform } from "lodash";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class DeepDiffMapperService {
-  difference(object, base) {
+  difference(object, base): any[] {
     return transform(object, (result, value, key) => {
       if (base && !isEqual(value, base[key])) {
-        result[key] = isObject(value) && isObject(base[key]) ? this.difference(value, base[key]) : value;
+        result[key] =
+          isObject(value) && isObject(base[key])
+            ? this.difference(value, base[key])
+            : value;
       }
     });
   }
