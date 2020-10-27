@@ -17,6 +17,7 @@ export class TemplatesModalStartSessionComponent implements OnInit {
   workout: any = {};
   day: any;
   index = 0;
+  isFromUrl: boolean;
 
   scores: any;
   isPlanning: boolean;
@@ -101,20 +102,19 @@ export class TemplatesModalStartSessionComponent implements OnInit {
 
     body.workout_id = this.workout.workout_id;
     body.started_at = this.workout.started_at;
-
-    this.usersService["updateClientWorkout"](body).subscribe(
-      (response: any) => {
-        if (response.errors) {
-          this.toastrService.error(response.message);
+    this.usersService[this.isFromUrl ? "updateWorkout" : "updateClientWorkout"](
+      body
+    ).subscribe((response: any) => {
+      if (response.errors) {
+        this.toastrService.error(response.message);
+      } else {
+        this.usersService.onWorkoutSaved.emit(this.workout);
+        if (isEndSession) {
+          this.bsModalRef.hide();
         } else {
-          this.usersService.onWorkoutSaved.emit(this.workout);
-          if (isEndSession) {
-            this.bsModalRef.hide();
-          } else {
-            this.showNextStep();
-          }
+          this.showNextStep();
         }
       }
-    );
+    });
   }
 }
