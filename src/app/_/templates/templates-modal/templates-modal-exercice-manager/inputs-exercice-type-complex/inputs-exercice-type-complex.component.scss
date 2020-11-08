@@ -1,14 +1,60 @@
 .number-movement-list {
-	text-align: center;
-	display: inline-block;
-	width: 100px;
+  text-align: center;
+  display: inline-block;
+  width: 100px;
 }
 
 .number-movement-list-label {
-	display: inline-block;
+  display: inline-block;
 }
 
-.input-group-text  {
-	border: 0;
-	background-color: #FFFFFF;
+.input-group-text {
+  border: 0;
+  background-color: #ffffff;
+}
+@media (max-width: 480px) {
+  .container-mouvements {
+    padding: 0;
+    .container-repmax {
+      flex-wrap: wrap !important;
+    }
+  }
+  .container-set {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .list-group-item-step {
+    box-shadow: 0 0 black;
+    padding: 0;
+  }
+  .list-group-item {
+    padding-left: 10px;
+  }
+  .list-group {
+    padding-left: 3px;
+  }
+  .number-movement-list {
+    width: inherit;
+  }
+  .input-group-text {
+    font-size: 0.75rem;
+  }
+  .custom-form {
+    padding-left: 0 !important;
+  }
+  .number-movement-list.set {
+    margin-left: 5px !important;
+  }
+  .number-movement-list.unit-list {
+    width: 48px;
+  }
+  .unit-list.one {
+    width: 100%;
+  }
+  .container-repmax-planning {
+    width: 50%;
+  }
+  .remove-button {
+    margin-left: -63px;
+  }
 }

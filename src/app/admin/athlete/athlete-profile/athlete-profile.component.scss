@@ -1,3 +1,4 @@
+
 .profile-container {
 	background-color: #F1F1F1;
 
@@ -80,6 +81,32 @@
 .form-center-radio {
 	width: 300px;
 	margin: auto;
-	margin-top: 25px;
+	// margin-top: 25px;
 }
-
+@media (max-width: 480px) {
+	.profile-left-bar {
+		.profile-form {			
+			margin: 30px 0px!important;
+		}
+	}
+	.profile-review-form {
+		padding: 30px 0px!important;
+	}
+	.profile-container{
+		.profile-right-bar{
+			 .profile-mrv{
+			   padding: 0px !important;
+			   margin-top: 0px !important;
+			 }
+		   }
+	   }
+	   .mrv-score{
+		.mrv-score-icon{
+		   margin-top: 12px !important;
+		   margin-bottom: 0px !important;
+		}
+		.mrv-score-number {
+			margin-bottom: 0px !important;
+		}
+   	  }
+}

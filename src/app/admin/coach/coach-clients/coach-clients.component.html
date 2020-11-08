@@ -1,46 +1,59 @@
 <div class="container">
-	<div class="row container-program">
-		<div class="col-md-6">
-			<h4>{{ '#My athlets' | dgTranslate }}</h4>
-		</div>
-		<div class="col-md-6 text-right">
-			<button class="btn btn-primary" (click)="openInvitationCreateModal()"><i class="fa fa-plus"></i> {{ '#Create an athlet' | dgTranslate }}</button>
-		</div>
-		<div class="col-md-12">
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th scope="col"></th>
-						<th scope="col">{{ '#Name' | dgTranslate }}</th>
-						<th scope="col">{{ '#Email' | dgTranslate }}</th>
-						<th scope="col">{{ '#Date' | dgTranslate }}</th>
-						<th scope="col"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr *ngFor="let client of user.clients; let i=index">
-						<td>
-							<i *ngIf="client.status == 3" class="fa fa-ban text-danger"></i>
-							<i *ngIf="client.status == 2" class="fa fa-check text-success"></i>
-							<i *ngIf="client.status == 1" class="fa fa-hourglass-start text-warning"></i>
-						</td>
-						<td>
-							{{ client.client_name }}
-						</td>
-						<td>
-							{{ client.client_email }}
-						</td>
-						<td>
-							{{ client.created_at }}
-						</td>
-						<td>
-							<button class="btn btn-light" (click)="openInvitationDeleteModal(client)">
-								<i class="fa fa-trash text-danger"></i>
-							</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
+  <div class="row container-program">
+    <div class="col-md-6">
+      <h4>{{ "#My athlets" | dgTranslate }}</h4>
+    </div>
+    <div class="col-md-6 text-right">
+      <button class="btn btn-primary" (click)="openInvitationCreateModal()">
+        <i class="fa fa-plus"></i> {{ "#Create an athlet" | dgTranslate }}
+      </button>
+    </div>
+    <div class="col-md-12 container-table">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">{{ "#Name" | dgTranslate }}</th>
+            <th scope="col">{{ "#Email" | dgTranslate }}</th>
+            <th class="hidden-mobile" scope="col">
+              {{ "#Date" | dgTranslate }}
+            </th>
+            <th class="hidden-mobile" scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let client of user.clients; let i = index">
+            <td>
+              <i *ngIf="client.status == 3" class="fa fa-ban text-danger"></i>
+              <i
+                *ngIf="client.status == 2"
+                class="fa fa-check text-success"
+              ></i>
+              <i
+                *ngIf="client.status == 1"
+                class="fa fa-hourglass-start text-warning"
+              ></i>
+            </td>
+            <td>
+              {{ client.client_name }}
+            </td>
+            <td>
+              {{ client.client_email }}
+            </td>
+            <td class="hidden-mobile">
+              {{ client.created_at }}
+            </td>
+            <td class="hidden-mobile">
+              <button
+                class="btn btn-light"
+                (click)="openInvitationDeleteModal(client)"
+              >
+                <i class="fa fa-trash text-danger"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

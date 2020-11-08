@@ -1,7 +1,7 @@
 import {
   CdkDragDrop,
   moveItemInArray,
-  transferArrayItem
+  transferArrayItem,
 } from "@angular/cdk/drag-drop";
 import { DOCUMENT } from "@angular/common";
 import {
@@ -10,7 +10,7 @@ import {
   Inject,
   Input,
   OnInit,
-  SimpleChanges
+  SimpleChanges,
 } from "@angular/core";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import { addHours, endOfWeek, format, startOfWeek } from "date-fns";

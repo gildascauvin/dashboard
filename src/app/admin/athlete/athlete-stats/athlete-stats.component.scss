@@ -1,6 +1,6 @@
 .box-stats-left {
   border-radius: 5px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   min-height: 500px;
   padding: 10px;
   margin: 20px;
@@ -9,7 +9,7 @@
 
 .box-stats-right {
   border-radius: 5px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   min-height: 500px;
   padding: 10px;
   margin: 20px;
@@ -17,4 +17,14 @@
 }
 .calendar-top {
   padding: 10px 35px 0;
+}
+@media (max-width: 480px) {
+  .box-stats-left {
+    padding: 0px;
+    margin: 0px;
+    background-color: transparent !important;
+  }
+  .box-stats-right {
+    margin: 20px 0 20px 0;
+  }
 }

@@ -43,6 +43,7 @@
     border: solid 1px #fff;
     border-bottom: solid 1px #f1f1f1;
     border-radius: 8px 8px 0 0;
+    min-width: 9rem;
   }
 }
 
@@ -58,7 +59,7 @@
 
 .zone-drop-legal {
   min-height: 70%;
-  width: 95%;
+  width: 94.5%;
   background-color: #fff;
   padding: 6px;
   margin: 0 8px;
@@ -620,4 +621,14 @@
 
 .list-cdk {
   min-height: 60px;
+}
+@media (max-width: 480px) {
+  .zone-drop-legal {
+    min-width: 96%;
+  }
+  .box-body-week-active {
+    .box-body-workout {
+      width: 100%;
+    }
+  }
 }

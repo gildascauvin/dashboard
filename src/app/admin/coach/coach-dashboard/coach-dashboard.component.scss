@@ -327,3 +327,31 @@ a {
 a {
   text-decoration: none;
 }
+
+@media (max-width: 480px) {
+  .lead-container {
+    margin-top: 0px !important;
+  }
+  .lead-body {
+    padding-bottom: 67px !important;
+    // padding: 20px!important;
+    .lead-body-content {
+      .workout-session {
+        padding: 1px !important;
+        .workout-session-title {
+          padding-left: 16px;
+          font-size: 16px !important;
+        }
+      }
+    }
+  }
+  .movement-container {
+    .movement-title {
+      font-size: 15px !important;
+    }
+
+    .movement-content {
+      font-size: 11px !important;
+    }
+  }
+}

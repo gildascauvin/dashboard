@@ -1,150 +1,295 @@
-<nav *ngIf="size > responsiveSize" class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav
+  *ngIf="size > responsiveSize"
+  class="navbar navbar-expand-md navbar-dark bg-dark"
+>
   <div class="container">
-      <h1 class="pb-2 ml-md-0 ml-sm-3 ml-0 mr-3 pt-2">
-        <a [routerLink]="['/coach', 'dashboard']" class="img-logo-brand"><img src="/assets/img/logo.png" width="82" height="82" alt=""></a>
-      </h1>
-      <div class="collapse navbar-collapse ml-lg-2 ml-0" id="navbarCollapse">
-        <div class="nav-top-header">
-            <div class="content-header">
-              <div class="row">
-                <div class="col-md-12">
-                  <span>
-                    <button *ngIf="currentUser.data" class="btn btn-dark rounded-pill" (click)="openClientManagerModal()"><i class="fa fa-user-circle"></i> {{ currentUser.data?.firstname }} {{ currentUser.data?.lastname }}</button>
-                    <button *ngIf="!currentUser.data" class="btn btn-dark rounded-pill" (click)="openClientManagerModal()"><i class="fa fa-plus"></i> {{ '#Choose an athlet' | dgTranslate }}</button>
-                    <!-- <select class="select-menu-athlet" [(ngModel)]="currentUser.id" (ngModelChange)="onChangeUser($event)" >
+    <h1 class="pb-2 ml-md-0 ml-sm-3 ml-0 mr-3 pt-2">
+      <a [routerLink]="['/coach', 'dashboard']" class="img-logo-brand"
+        ><img src="/assets/img/logo.png" width="82" height="82" alt=""
+      /></a>
+    </h1>
+    <div class="collapse navbar-collapse ml-lg-2 ml-0" id="navbarCollapse">
+      <div class="nav-top-header">
+        <div class="content-header">
+          <!-- <div class="row"> -->
+          <div class="col-md-12">
+            <span>
+              <button
+                *ngIf="currentUser.data"
+                class="btn btn-dark rounded-pill"
+                (click)="openClientManagerModal()"
+              >
+                <i class="fa fa-user-circle"></i>
+                {{ currentUser.data?.firstname }}
+                {{ currentUser.data?.lastname }}
+              </button>
+              <button
+                *ngIf="!currentUser.data"
+                class="btn btn-dark rounded-pill"
+                (click)="openClientManagerModal()"
+              >
+                <i class="fa fa-plus"></i>
+                {{ "#Choose an athlet" | dgTranslate }}
+              </button>
+              <!-- <select class="select-menu-athlet" [(ngModel)]="currentUser.id" (ngModelChange)="onChangeUser($event)" >
                       <option [value]="0">{{ '#Choose an athlet' | dgTranslate }}</option>
                       <option *ngFor="let client of user.clients" [value]="client.client_id" >{{ client.profile?.firstname }} {{ client.profile?.lastname }}</option>
                     </select>
                     {{currentUserId}} -->
-                  </span>
-                  <div class="btn-group float-right">
-                    <a class="links-menu mr-2" routerLinkActive="active" [routerLink]="['/coach', 'programs']">
-                      <i class="fa fa-folder"></i> {{ '#Programs' | dgTranslate }}
-                    </a>
+            </span>
+            <div class="btn-group float-right">
+              <a
+                class="links-menu mr-2"
+                routerLinkActive="active"
+                [routerLink]="['/coach', 'programs']"
+              >
+                <i class="fa fa-folder"></i> {{ "#Programs" | dgTranslate }}
+              </a>
 
-                    <div class="dropdown profile-menu">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ user.data.firstname }} {{ user.data.lastname }}
-                      </a>
-                      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" [routerLink]="['/coach', 'dashboard']">{{ '#Dashboard' | dgTranslate }}</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" [routerLink]="['/coach', 'clients']">
-                          {{ '#Athlets' | dgTranslate }}
-                        </a>
-                          <div class="dropdown-divider"></div>
-                        <a class="dropdown-item"[routerLink]="['/coach', 'programs']">{{ '#Programs' | dgTranslate }}</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" [routerLink]="['/coach', 'settings', 'profile']">{{ '#Settings' | dgTranslate }}</a>
-                        <div class="dropdown-divider"></div>
-                        <button class="dropdown-item" (click)="logout()" href="#">{{ '#Logout' | dgTranslate }}</button>
-                      </div>
-                    </div>
-                  </div>
+              <div class="dropdown profile-menu">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdownMenuLink"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  {{ user.data.firstname }} {{ user.data.lastname }}
+                </a>
+                <div
+                  class="dropdown-menu"
+                  aria-labelledby="navbarDropdownMenuLink"
+                >
+                  <a
+                    class="dropdown-item"
+                    [routerLink]="['/coach', 'dashboard']"
+                    >{{ "#Dashboard" | dgTranslate }}</a
+                  >
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" [routerLink]="['/coach', 'clients']">
+                    {{ "#Athlets" | dgTranslate }}
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a
+                    class="dropdown-item"
+                    [routerLink]="['/coach', 'programs']"
+                    >{{ "#Programs" | dgTranslate }}</a
+                  >
+                  <div class="dropdown-divider"></div>
+                  <a
+                    class="dropdown-item"
+                    [routerLink]="['/coach', 'settings', 'profile']"
+                    >{{ "#Settings" | dgTranslate }}</a
+                  >
+                  <div class="dropdown-divider"></div>
+                  <button class="dropdown-item" (click)="logout()" href="#">
+                    {{ "#Logout" | dgTranslate }}
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-
-          <div class="nav-bottom-header" *ngIf="isSelected">
-            <div class="content-header">
-              <button class="btn btn-primary float-right mr-4" (click)="openExerciceManagerModal()"><i class="fa fa-plus"></i> {{ '#Create a workout' | dgTranslate }}</button>
-              <ul class="navbar-nav flex-row mb-md-1 mt-md-0 mb-3 mt-2">
-                <li class="nav-item">
-                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/coach', 'athlet', 'dashboard']">
-                      <i class="fa fa-user-circle-o mr-2"></i>
-                      {{ '#Overview' | dgTranslate }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/coach', 'athlet', 'profile']">
-                      <i class="fa fa-heartbeat mr-1"></i>
-                      {{ '#Profile' | dgTranslate }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/coach', 'athlet', 'calendar']">
-                      <i class="fa fa-calendar-o mr-1"></i>
-                      {{ '#Planning' | dgTranslate }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link py-0 pr-3" routerLinkActive="active" [routerLink]="['/coach', 'athlet', 'stats']">
-                      <i class="fa fa-bar-chart mr-1"></i>
-                      {{ '#Statistics' | dgTranslate }}
-                    </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <!-- </div> -->
+        </div>
       </div>
+
+      <div class="nav-bottom-header" *ngIf="isSelected">
+        <div class="content-header">
+          <button
+            class="btn btn-primary float-right mr-4"
+            (click)="openExerciceManagerModal()"
+          >
+            <i class="fa fa-plus"></i> {{ "#Create a workout" | dgTranslate }}
+          </button>
+          <ul class="navbar-nav flex-row mb-md-1 mt-md-0 mb-3 mt-2">
+            <li class="nav-item">
+              <a
+                class="nav-link py-0 pr-3"
+                routerLinkActive="active"
+                [routerLink]="['/coach', 'athlet', 'dashboard']"
+              >
+                <i class="fa fa-user-circle-o mr-2"></i>
+                {{ "#Overview" | dgTranslate }}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link py-0 pr-3"
+                routerLinkActive="active"
+                [routerLink]="['/coach', 'athlet', 'profile']"
+              >
+                <i class="fa fa-heartbeat mr-1"></i>
+                {{ "#Profile" | dgTranslate }}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link py-0 pr-3"
+                routerLinkActive="active"
+                [routerLink]="['/coach', 'athlet', 'calendar']"
+              >
+                <i class="fa fa-calendar-o mr-1"></i>
+                {{ "#Planning" | dgTranslate }}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link py-0 pr-3"
+                routerLinkActive="active"
+                [routerLink]="['/coach', 'athlet', 'stats']"
+              >
+                <i class="fa fa-bar-chart mr-1"></i>
+                {{ "#Statistics" | dgTranslate }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </nav>
 
 <nav *ngIf="size <= responsiveSize">
   <div class="container-fluid top-custom-nav">
     <div class="row">
-      <div class="col-10 text-left">
-        <span class="left-menu-title"><img src="/assets/img/logo.png" width="30" height="30" alt=""> ThePerfClub</span>
-        <button class="btn" (click)="toogleLeftMenu()"><i class="fa fa-bars"></i></button>
+      <div class="col-9 text-left pt-1">
+        <span class="left-menu-title"
+          ><img src="/assets/img/logo.png" width="30" height="30" alt=""
+        /></span>
+        <button
+          *ngIf="currentUser.data"
+          class="btn btn-dark rounded-pill ml-2 font-user"
+          (click)="openClientManagerModal()"
+        >
+          <i class="fa fa-user-circle"></i> {{ currentUser.data?.firstname }}
+          {{ currentUser.data?.lastname }}
+          <i class="fa fa-lg fa-angle-down pl-1" aria-hidden="true"></i>
+        </button>
+        <button
+          *ngIf="!currentUser.data"
+          class="btn btn-dark rounded-pill ml-2"
+          (click)="openClientManagerModal()"
+        >
+          <i class="fa fa-plus"></i> {{ "#Choose an athlet" | dgTranslate }}
+        </button>
+
+        <!-- <button class="btn" (click)="toogleLeftMenu()"><i class="fa fa-bars"></i></button> -->
       </div>
-      <div class="col-2 text-right"><button class="btn" (click)="toogleRightMenu()"><i class="fa fa-cog"></i></button></div>
+      <div class="col-3 text-right">
+        <button class="btn" (click)="toogleRightMenu()">
+          <i class="fa fa-cog"></i>
+        </button>
+      </div>
     </div>
   </div>
 </nav>
 
-<div [class.cover-menu]="showLeftMenu || showRightMenu"></div>
+<div [class.cover-menu]="showLeftMenu || showRightMenu"></div>
 
-<div class="responsive-left-menu text-white" [class.responsive-left-menu-toogled]="!showLeftMenu">
-  <div class="text-right pb-2" (click)="showLeftMenu=false"><i class="fa fa-close"></i></div>
-  <div>
-    <div class="left-menu-title"><img src="/assets/img/logo.png" width="30" height="30" alt=""> ThePerfClub</div>
-    <div class="list-group list-group-flush">
-      <a class="list-group-item list-group-item-action list-group-item-dark" (click)="hiddenMenu()" routerLinkActive="active" [routerLink]="['/coach', 'dashboard']">
+<div
+  *ngIf="currentUser.data && size <= responsiveSize"
+  class="responsive-left-menu fixed-bottom text-white"
+>
+  <ul class="nav nav-tabs nav-pills nav-fill">
+    <li class="nav-item">
+      <a
+        class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
+        routerLinkActive="active"
+        [routerLink]="['/coach', 'athlet', 'dashboard']"
+      >
         <i class="fa fa-user-circle-o mr-2"></i>
-        {{ '#Overview' | dgTranslate }}
+        {{ "#Overview" | dgTranslate }}
       </a>
-      <a class="list-group-item list-group-item-action list-group-item-dark" (click)="hiddenMenu()" routerLinkActive="active" [routerLink]="['/coach', 'profile']">
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
+        routerLinkActive="active"
+        [routerLink]="['/coach', 'athlet', 'profile']"
+      >
         <i class="fa fa-heartbeat mr-1"></i>
-        {{ '#Profile' | dgTranslate }}
+        {{ "#Profile" | dgTranslate }}
       </a>
-      <a class="list-group-item list-group-item-action list-group-item-dark" (click)="hiddenMenu()" routerLinkActive="active" [routerLink]="['/coach', 'calendar']">
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
+        routerLinkActive="active"
+        [routerLink]="['/coach', 'athlet', 'calendar']"
+      >
         <i class="fa fa-calendar-o mr-1"></i>
-        {{ '#Planning' | dgTranslate }}
+        {{ "#Planning" | dgTranslate }}
       </a>
-      <a class="list-group-item list-group-item-action list-group-item-dark" (click)="hiddenMenu()" routerLinkActive="active" [routerLink]="['/coach', 'stats']">
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
+        routerLinkActive="active"
+        [routerLink]="['/coach', 'athlet', 'stats']"
+      >
         <i class="fa fa-bar-chart mr-1"></i>
-        {{ '#Statistics' | dgTranslate }}
+        {{ "#Statistics" | dgTranslate }}
       </a>
-    </div>
-  </div>
-
+    </li>
+  </ul>
 </div>
-
-<div class="responsive-right-menu" [class.responsive-right-menu-toogled]="!showRightMenu">
-  <div class="text-left pb-2" (click)="showRightMenu=false"><i class="fa fa-close"></i></div>
-   <div>
+<div
+  class="responsive-right-menu"
+  [class.responsive-right-menu-toogled]="!showRightMenu"
+>
+  <div class="text-left pb-2" (click)="showRightMenu = false">
+    <i class="fa fa-close"></i>
+  </div>
+  <div>
     <div class="list-group list-group-flush">
-      <a class="list-group-item list-group-item-action" (click)="hiddenMenu()" routerLinkActive="active" [routerLink]="['/coach', 'programs']">
+      <a
+        class="list-group-item list-group-item-action"
+        (click)="hiddenMenu()"
+        routerLinkActive="active"
+        [routerLink]="['/coach', 'programs']"
+      >
         <i class="fa fa-folder mr-2"></i>
-        {{ '#Programs' | dgTranslate }}
+        {{ "#Programs" | dgTranslate }}
       </a>
-      <a class="list-group-item list-group-item-action" (click)="hiddenMenu()" routerLinkActive="active" [routerLink]="['/coach', 'other']">
+      <a
+        class="list-group-item list-group-item-action"
+        [routerLink]="['/coach', 'clients']"
+        (click)="hiddenMenu()"
+        routerLinkActive="active"
+      >
+        <i class="fa fa-users mr-2"></i>
+        {{ "#Athlets" | dgTranslate }}
+      </a>
+      <a
+        class="list-group-item list-group-item-action"
+        (click)="hiddenMenu()"
+        routerLinkActive="active"
+        [routerLink]="['/coach', 'other']"
+      >
         <i class="fa fa-cog mr-1"></i>
-        {{ '#Settings' | dgTranslate }}
+        {{ "#Settings" | dgTranslate }}
       </a>
-      <a class="list-group-item list-group-item-action" (click)="hiddenMenu()" routerLinkActive="active" [routerLink]="['/coach', 'other']">
+      <a
+        class="list-group-item list-group-item-action"
+        (click)="hiddenMenu()"
+        routerLinkActive="active"
+        [routerLink]="['/coach', 'other']"
+      >
         <i class="fa fa-question mr-1"></i>
-        {{ '#Documentation' | dgTranslate }}
+        {{ "#Documentation" | dgTranslate }}
       </a>
-      <a class="list-group-item list-group-item-action" (click)="logout()" href="#">
+      <a
+        class="list-group-item list-group-item-action"
+        (click)="logout()"
+        href="#"
+      >
         <i class="fa fa-sign-out mr-1"></i>
-        {{ '#Logout' | dgTranslate }}
+        {{ "#Logout" | dgTranslate }}
       </a>
     </div>
   </div>
 </div>
-
 
 <div class="container-fluid body-content-sections">
   <router-outlet></router-outlet>

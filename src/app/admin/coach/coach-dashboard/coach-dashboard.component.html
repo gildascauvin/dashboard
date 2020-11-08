@@ -1,4 +1,4 @@
-<div class="row lead-container">
+<div class="row lead-container d-flex">
   <div class="col-md-3 lead-left-bar" *ngIf="size >= responsiveSize">
     <div class="lead-bar-content">
       <div class="readiness-level">
@@ -45,13 +45,15 @@
         </ng-container>
         <button
           class="btn btn-primary btn-edit-secondary"
-          (click)="openProgramCreateModal()">
+          (click)="openProgramCreateModal()"
+        >
           <i class="fa fa-plus"></i> {{ "#Create an program" | dgTranslate }}
         </button>
         <button
           class="btn btn-secondary btn-edit-secondary mt-3"
           routerLinkActive="active"
-          [routerLink]="['/coach', 'programs']">
+          [routerLink]="['/coach', 'programs']"
+        >
           {{ "#See all programs" | dgTranslate }}
         </button>
       </div>
@@ -64,7 +66,8 @@
         <ng-container *ngIf="userWorkouts && userWorkouts">
           <div
             class="workout-session"
-            *ngFor="let workout of userWorkouts[_workout.date]">
+            *ngFor="let workout of userWorkouts[_workout.date]"
+          >
             <div class="workout-session-title">
               {{ workout.username }}
               <span class="workout-program-name" *ngIf="workout.program.name">{{
