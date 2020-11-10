@@ -1,50 +1,89 @@
-<div class="row">
-	<div class="col-md-12 text-center p4">
-		<div class="form-inline form-center-radio">
-			<div class="btn-group btn-group-toggle" ngbRadioGroup>
-			  <a ngbButtonLabel class="btn-light active" [routerLink]="links.profile">
-			    <input ngbButton type="radio"> {{ '#Readiness' | dgTranslate }}
-			  </a>
-			  <a ngbButtonLabel class="btn-light" [routerLink]="links.performance">
-			    <input ngbButton type="radio"> {{ '#Perfomance' | dgTranslate }}
-			  </a>
-			</div>
-		</div>
-	</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 text-center p4">
+      <div
+        class="form-inline form-center-radio pt-4 d-flex justify-content-center"
+      >
+        <div class="btn-group btn-group-toggle" ngbRadioGroup>
+          <a
+            ngbButtonLabel
+            class="btn-light active"
+            [routerLink]="links.profile"
+          >
+            <input ngbButton type="radio" /> {{ "#Readiness" | dgTranslate }}
+          </a>
+          <a ngbButtonLabel class="btn-light" [routerLink]="links.performance">
+            <input ngbButton type="radio" /> {{ "#Perfomance" | dgTranslate }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row profile-container">
+    <div class="col-md-6">
+      <div class="profile-review-form">
+        <div class="list-group list-group-flush">
+          <div class="list-group-item">
+            <button
+              class="btn btn-primary float-right"
+              (click)="openCreateModal()"
+            >
+              <i class="fa fa-plus"></i>
+              {{ "#Review" | dgTranslate }}
+            </button>
+            <h4 class="movement-review-header">
+              {{ user.profil?.length }} {{ "#Movements" | dgTranslate }}
+            </h4>
+          </div>
+
+          <div *ngFor="let profile of user.profil" class="list-group-item">
+            <button
+              *ngIf="user.data.max_ref_id !== profile.movement_id"
+              (click)="openDeleteModal(profile)"
+              class="btn float-right btn-light mr-2"
+            >
+              <i class="fa fa-trash text-danger"></i>
+            </button>
+            <button
+              (click)="openEditModal(profile)"
+              class="btn float-right btn-light ml-4 mr-2"
+            >
+              <i class="fa fa-pencil text-success"></i>
+            </button>
+
+            <b>{{ profile.movement.name }} </b>
+            <span
+              *ngIf="user.data.max_ref_id === profile.movement_id"
+              class="badge badge-primary"
+              >{{ "#REF" | dgTranslate }}</span
+            >
+            <span
+              *ngIf="
+                profile.ratio_value && profile.ratio_value !== profile.record
+              "
+            >
+              <b class="ml-2 badge badge-light"
+                >{{ profile | ratioMovement }}%</b
+              >
+            </span>
+            <br />
+            Value: {{ profile.record }}
+            {{ profile.record_unit == 1 ? "kg" : "lbs" }}
+            <span
+              *ngIf="
+                profile.ratio_value && profile.ratio_value !== profile.record
+              "
+            >
+              - Ref: {{ profile.ratio_value }}
+              {{ profile.record_unit == 1 ? "kg" : "lbs" }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mt-4">
+      <app-customer-profile-level [user]="user"></app-customer-profile-level>
+    </div>
+  </div>
 </div>
-
-<div class="row profile-container">
-	<div class="col-md-6">
-		<div class="profile-review-form">
-			<div class="list-group list-group-flush">
-				<div class="list-group-item">
-					<button class="btn btn-primary float-right" (click)="openCreateModal()">
-						<i class="fa fa-plus"></i>
-						{{ '#Review' | dgTranslate }}
-					</button>
-					<h4 class="movement-review-header">{{ user.profil?.length }} {{ '#Movements' | dgTranslate }}</h4>
-				</div>
-
-				<div *ngFor="let profile of user.profil" class="list-group-item">
-					<button *ngIf="user.data.max_ref_id !== profile.movement_id"  (click)="openDeleteModal(profile)" class="btn float-right btn-light mr-2" ><i class="fa fa-trash text-danger"></i></button>
-					<button (click)="openEditModal(profile)" class="btn float-right btn-light ml-4 mr-2" ><i class="fa fa-pencil text-success"></i></button>
-
-					<b>{{ profile.movement.name }} </b> <span *ngIf="user.data.max_ref_id === profile.movement_id" class="badge badge-primary">{{ '#REF' | dgTranslate }}</span>
-					<span *ngIf="profile.ratio_value && profile.ratio_value !== profile.record">
-						<b class="ml-2 badge badge-light">{{ profile | ratioMovement }}%</b>
-					</span>
-					<br />
-					Value: {{ profile.record }} {{ profile.record_unit == 1 ? 'kg' : 'lbs' }}
-					<span *ngIf="profile.ratio_value && profile.ratio_value !== profile.record">
-						- Ref: {{ profile.ratio_value }} {{ profile.record_unit == 1 ? 'kg' : 'lbs' }}
-					</span>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-6 mt-4">
-		<app-customer-profile-level [user]="user"></app-customer-profile-level>
-	</div>
-</div>
-
-

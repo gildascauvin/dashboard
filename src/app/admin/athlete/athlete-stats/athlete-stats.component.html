@@ -1,15 +1,21 @@
-<div class="row">
-	<div class="col-md-12 calendar-top">
-		<app-customer-stats-range [isFromUrl]="isFromUrl"></app-customer-stats-range>
-	</div>
-	<div class="col-md-7">
-		<div class="box-stats-left">
-			<app-customer-stats [isFromUrl]="isFromUrl"></app-customer-stats>
-		</div>
-	</div>
-	<div class="col-md-5">
-		<div class="box-stats-right">
-			<app-customer-stats-exercice [isFromUrl]="isFromUrl"></app-customer-stats-exercice>
-		</div>
-	</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 calendar-top">
+      <app-customer-stats-range
+        [isFromUrl]="isFromUrl"
+      ></app-customer-stats-range>
+    </div>
+    <div class="col-md-7">
+      <div class="box-stats-left">
+        <app-customer-stats [isFromUrl]="isFromUrl"></app-customer-stats>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="box-stats-right">
+        <app-customer-stats-exercice
+          [isFromUrl]="isFromUrl"
+        ></app-customer-stats-exercice>
+      </div>
+    </div>
+  </div>
 </div>

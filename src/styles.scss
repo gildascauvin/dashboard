@@ -1,44 +1,47 @@
 /* You can add global styles to this file, and also import other style files */
 
 body {
-	font-family: 'Arial',Helvetica,Arial,serif;
+  font-family: "Arial", Helvetica, Arial, serif;
 }
 
 .form-control {
   border-radius: 5px;
-  border: solid 1px #E1E1E1;
-  background-color: #FFFFFF;
+  border: solid 1px #e1e1e1;
+  background-color: #ffffff;
   color: #999 !important;
 }
 
-.form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #C1C1C1;
+.form-control::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #c1c1c1;
   opacity: 1; /* Firefox */
 }
 
-.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: #C1C1C1;
+.form-control:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #c1c1c1;
 }
 
-.form-control::-ms-input-placeholder { /* Microsoft Edge */
-  color: #C1C1C1;
+.form-control::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #c1c1c1;
 }
 
 .btn {
-	border-radius: 10px;
+  border-radius: 10px;
 }
 
 .btn-primary {
-	background-color: #d44000 !important;
-	border: 0;
+  background-color: #d44000 !important;
+  border: 0;
 }
 
 .btn-primary:hover {
-	background-color: #e2622a !important;
+  background-color: #e2622a !important;
 }
 
 .btn-secondary {
-  background-color: #F1F1F1 !important;
+  background-color: #f1f1f1 !important;
   color: #d44000 !important;
   border: 0;
 }
@@ -48,134 +51,135 @@ body {
 }
 
 a {
-	color: rgba(112,83,211,1.0);
-	font-size: 18px;
-	text-decoration: underline;
+  color: rgba(112, 83, 211, 1);
+  font-size: 18px;
+  text-decoration: underline;
 }
 
 .logo-img-brand {
-	position: absolute;
-	width: 94px !important;
-	left: 30px;
-	top: 20px;
+  position: absolute;
+  width: 94px !important;
+  left: 30px;
+  top: 20px;
 }
 
 .card-title {
-	border-bottom: solid 1px #555;
-	margin-bottom: 15px !important;
-	text-align: center;
-	font-weight: 700;
+  border-bottom: solid 1px #555;
+  margin-bottom: 15px !important;
+  text-align: center;
+  font-weight: 700;
 
-	p {
-		font-weight: 100;
-		font-size: 18px;
-		margin-top: 20px;
-	}
+  p {
+    font-weight: 100;
+    font-size: 18px;
+    margin-top: 20px;
+  }
 }
 
 .card-body {
-	padding: 10px 40px;
+  padding: 10px 40px;
 }
 
 .card {
-	border-radius: 0px;
+  border-radius: 0px;
 }
 
 .btn-block {
-	margin-top: 20px;
-	padding-top: 15px;
-	padding-bottom: 15px;
+  margin-top: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .container-auth {
-	width: 100%;
-    height: 100%;
-    background-color: #000000;
-    position: absolute;
-    padding: 0;
-    margin: 0;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .alert {
-	border-radius: 0px;
+  border-radius: 0px;
 }
 
-html,body {
-	height: 100%;
+html,
+body {
+  height: 100%;
 }
 
 h4 {
-	margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .my-login-page {
-	font-size: 14px;
+  font-size: 14px;
 }
 
 .my-login-page .brand {
-	width: 90px;
-	height: 90px;
-	overflow: hidden;
-	border-radius: 50%;
-	margin: 0 auto;
-	margin: 40px auto;
-	box-shadow: 0 0 40px rgba(0,0,0,.05);
+  width: 90px;
+  height: 90px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin: 0 auto;
+  margin: 40px auto;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.05);
 }
 
 .my-login-page .brand img {
-	width: 100%;
+  width: 100%;
 }
 
 .my-login-page .card-wrapper {
-	width: 600px;
+  width: 600px;
 }
 
 .my-login-page .card {
-	border-color: transparent;
-	box-shadow: 0 0 40px rgba(0,0,0,.05);
+  border-color: transparent;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.05);
 }
 
 .my-login-page .card.fat {
-	padding: 10px;
+  padding: 10px;
 }
 
 .my-login-page .card .card-title {
-	margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .my-login-page .form-control {
-	border-width: 2.3px;
+  border-width: 2.3px;
 }
 
 .my-login-page .form-group label {
-	width: 100%;
+  width: 100%;
 }
 
 .my-login-page .btn.btn-block {
-	padding: 12px 10px;
+  padding: 12px 10px;
 }
 
 .my-login-page .margin-top20 {
-	margin-top: 20px;
+  margin-top: 20px;
 }
 
 .my-login-page .no-margin {
-	margin: 0;
+  margin: 0;
 }
 
 .my-login-page .footer {
-	margin: 40px 0;
-	color: #888;
-	text-align: center;
+  margin: 40px 0;
+  color: #888;
+  text-align: center;
 }
 
 .text-bottom-link {
-	color: #FFFFFF;
-	font-size: 18px;
+  color: #ffffff;
+  font-size: 18px;
 }
 
 select {
@@ -193,27 +197,25 @@ select {
   outline: none;
 }
 
-
 select:focus,
 select.form-control:focus,
 textarea:focus,
 textarea.form-control:focus,
 input.form-control:focus,
-input[type=text]:focus,
-input[type=password]:focus,
-input[type=email]:focus,
-input[type=number]:focus,
-[type=text].form-control:focus,
-[type=text].box-body-workout-inputs:focus,
-[type=text].box-body-exercice-inputs:focus,
-[type=password].form-control:focus,
-[type=email].form-control:focus,
-[type=tel].form-control:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+[type="text"].form-control:focus,
+[type="text"].box-body-workout-inputs:focus,
+[type="text"].box-body-exercice-inputs:focus,
+[type="password"].form-control:focus,
+[type="email"].form-control:focus,
+[type="tel"].form-control:focus,
 [contenteditable].form-control:focus {
   outline: none;
   box-shadow: inset 0 -1px 0 #ddd;
 }
-
 
 // Dragula Start
 /* in-flight clone */
@@ -247,77 +249,76 @@ input[type=number]:focus,
 
 .checkbox label:after,
 .radio label:after {
-    content: '';
-    display: table;
-    clear: both;
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .checkbox .cr,
 .radio .cr {
-    position: relative;
-    display: inline-block;
-    border: 1px solid #a9a9a9;
-    border-radius: .25em;
-    width: 1.3em;
-    height: 1.3em;
-    float: left;
-    margin-right: .5em;
-    background-color: #FFFFFF;
+  position: relative;
+  display: inline-block;
+  border: 1px solid #a9a9a9;
+  border-radius: 0.25em;
+  width: 1.3em;
+  height: 1.3em;
+  float: left;
+  margin-right: 0.5em;
+  background-color: #ffffff;
 }
 
 .radio .cr {
-    border-radius: 50%;
+  border-radius: 50%;
 }
-
 
 .checkbox .cr .cr-icon,
 .radio .cr .cr-icon {
-    position: absolute;
-    font-size: .8em;
-    line-height: 0;
-    top: 50%;
-    left: 20%;
+  position: absolute;
+  font-size: 0.8em;
+  line-height: 0;
+  top: 50%;
+  left: 20%;
 }
 
 .radio .cr .cr-icon {
-    margin-left: 0.04em;
+  margin-left: 0.04em;
 }
 
 .checkbox label input[type="checkbox"],
 .radio label input[type="radio"] {
-    display: none;
+  display: none;
 }
 
 .checkbox label input[type="checkbox"] + .cr > .cr-icon,
 .radio label input[type="radio"] + .cr > .cr-icon {
-    transform: scale(3) rotateZ(-20deg);
-    opacity: 0;
-    transition: all .3s ease-in;
+  transform: scale(3) rotateZ(-20deg);
+  opacity: 0;
+  transition: all 0.3s ease-in;
 }
 
 .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
 .radio label input[type="radio"]:checked + .cr > .cr-icon {
-    transform: scale(1) rotateZ(0deg);
-    opacity: 1;
+  transform: scale(1) rotateZ(0deg);
+  opacity: 1;
 }
 
 .checkbox label input[type="checkbox"]:disabled + .cr,
 .radio label input[type="radio"]:disabled + .cr {
-    opacity: .5;
+  opacity: 0.5;
 }
 
 .checkbox.float-left {
   float: left !important;
-    position: absolute;
+  position: absolute;
 }
 
-datatable-body-cell, ngx-datatable {
+datatable-body-cell,
+ngx-datatable {
   overflow: visible !important;
 }
-.dropdown-toggle::after{
-  content:initial
+.dropdown-toggle::after {
+  content: initial;
 }
-
 
 /* Spinner */
 
@@ -343,7 +344,7 @@ datatable-body-cell, ngx-datatable {
   }
   .spinner.colorwheel::before,
   .spinner.colorwheel::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -351,9 +352,8 @@ datatable-body-cell, ngx-datatable {
     height: 100%;
   }
 
-
   .spinner.colorwheel::after {
-    background: #F1F1F1;
+    background: #f1f1f1;
     -webkit-animation: rotate 1.5s linear reverse infinite;
     animation: rotate 1.5s linear reverse infinite;
     // -webkit-animation: fade 1s infinite alternate, rotate 2.5s linear reverse infinite;
@@ -376,10 +376,10 @@ datatable-body-cell, ngx-datatable {
     animation: rotate 0.8s linear infinite;
   }
   .logo-fixed {
-    background-image: url('/assets/img/logo.png');
+    background-image: url("/assets/img/logo.png");
     background-repeat: no-repeat;
     background-size: contain;
-	width: 94px;
+    width: 94px;
     height: 109px;
     display: inline-block;
     z-index: 100;
@@ -391,7 +391,6 @@ datatable-body-cell, ngx-datatable {
     position: absolute;
   }
 }
-
 
 @media (max-width: 768px) {
   .spinner-ctnr {
@@ -412,19 +411,26 @@ datatable-body-cell, ngx-datatable {
 // }
 
 @-webkit-keyframes rotate {
-  from { -webkit-transform: rotate(0deg); }
-  to { -webkit-transform: rotate(360deg); }
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }
 @keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Spinner end */
 
-
 .list-group-item-step {
-  border-left: solid 3px #FF0000;
+  border-left: solid 3px #ff0000;
   margin-bottom: 20px;
   -webkit-backdrop-filter: blur(24px);
   backdrop-filter: blur(24px);
@@ -448,7 +454,9 @@ datatable-body-cell, ngx-datatable {
 }
 
 /* Hide default HTML checkbox */
-.switch input {display:none;}
+.switch input {
+  display: none;
+}
 
 /* The slider */
 .slider {
@@ -459,8 +467,8 @@ datatable-body-cell, ngx-datatable {
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
@@ -471,16 +479,16 @@ datatable-body-cell, ngx-datatable {
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #2196f3;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #2196f3;
 }
 
 input:checked + .slider:before {
@@ -498,5 +506,11 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

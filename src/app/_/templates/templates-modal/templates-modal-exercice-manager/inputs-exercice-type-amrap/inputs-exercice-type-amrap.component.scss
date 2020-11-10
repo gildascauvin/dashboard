@@ -1,22 +1,39 @@
 .form-select-subtype {
-	width: 100%;
+  width: 100%;
 
-	.btn-light {
-		width: 33%;
-	}
+  .btn-light {
+    width: 33%;
+  }
 }
 
 .number-movement-list {
-	text-align: center;
-	display: inline-block;
-	width: 90px;
+  text-align: center;
+  display: inline-block;
+  width: 90px;
 }
 
 .number-movement-list-label {
-	display: inline-block;
+  display: inline-block;
 }
 
-.input-group-text  {
-	border: 0;
-	background-color: #FFFFFF;
+.input-group-text {
+  border: 0;
+  background-color: #ffffff;
+}
+@media (max-width: 480px) {
+  .container-movements {
+    padding-left: 1px;
+    padding-right: 5px;
+    .title-mouvement {
+      font-size: 14px;
+      margin-left: -90px;
+    }
+  }
+  .container-set {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .custom-form {
+    padding-left: 7px !important;
+  }
 }

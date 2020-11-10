@@ -31,7 +31,8 @@
                 class="fa fa-plus add-workout-btn ml-1 float-right"
                 placement="top"
                 ngbTooltip="{{ '#Add workout' | dgTranslate }}"
-                (click)="addWorkoutToWeek(day, i, y)"
+                (click)="addWorkoutToWeek(day, i, y); t.close()"
+                #t="ngbTooltip"
               ></i>
               <div
                 *ngIf="copyWorkouts.length"
@@ -138,14 +139,17 @@
                         class="fa fa-copy i-btn ml-4 mr-4"
                         placement="top"
                         ngbTooltip="{{ '#Duplicate' | dgTranslate }}"
-                        (click)="duplicateWorkout(workout)"
+                        #t="ngbTooltip"
+                        (click)="duplicateWorkout(workout); t.close()"
                       ></i>
                       <i
                         class="fa fa-trash i-btn mr-4"
                         placement="top"
                         ngbTooltip="{{ '#Delete' | dgTranslate }}"
+                        #t="ngbTooltip"
                         (click)="
-                          openWorkoutDeleteModal(workout, in, day.workouts)
+                          openWorkoutDeleteModal(workout, in, day.workouts);
+                          t.close()
                         "
                       ></i>
                       <i
@@ -155,8 +159,10 @@
                             day,
                             workout.program.exercices,
                             workout
-                          )
+                          );
+                          a.close()
                         "
+                        #a="ngbTooltip"
                         placement="top"
                         ngbTooltip="{{ '#Add exercice' | dgTranslate }}"
                       ></i>
@@ -193,10 +199,13 @@
                             placement="top"
                             ngbTooltip="{{ '#Edit' | dgTranslate }}"
                             (click)="
-                              openExerciceManagerModal(exercice, workout, day)
+                              openExerciceManagerModal(exercice, workout, day);
+                              t.close()
                             "
+                            #t="ngbTooltip"
                           ></i>
                           <i
+                            #d="ngbTooltip"
                             class="fa fa-trash i-btn pze-ez"
                             placement="top"
                             ngbTooltip="{{ '#Delete' | dgTranslate }}"
@@ -206,7 +215,8 @@
                                 indexExercice,
                                 workout.program.exercices,
                                 workout
-                              )
+                              );
+                              d.close()
                             "
                           ></i>
                         </div>
@@ -417,7 +427,8 @@
             class="btn mr-4"
             placement="top"
             ngbTooltip="{{ '#Delete' | dgTranslate }}"
-            (click)="openCopiedWorkoutDeleteModal()"
+            #t="ngbTooltip"
+            (click)="openCopiedWorkoutDeleteModal(); t.close()"
           >
             <i class="fa fa-trash"></i>
           </button>

@@ -1,138 +1,224 @@
 <div class="modal-header">
-  <h4 *ngIf="model.step===1" class="modal-title pull-left">{{ '#Select type' | dgTranslate }}</h4>
-  <h4 *ngIf="model.step===2" class="modal-title pull-left">{{ '#Exercice' | dgTranslate }}: {{ model.type.name }}</h4>
-  <button type="button" class="close pull-right" aria-label="Close" [disabled]="isLoading" (click)="cancel()">
+  <h4 *ngIf="model.step === 1" class="modal-title pull-left">
+    {{ "#Select type" | dgTranslate }}
+  </h4>
+  <h4 *ngIf="model.step === 2" class="modal-title pull-left">
+    {{ "#Exercice" | dgTranslate }}: {{ model.type.name }}
+  </h4>
+  <button
+    type="button"
+    class="close pull-right"
+    aria-label="Close"
+    [disabled]="isLoading"
+    (click)="cancel()"
+  >
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
-	<div class="row" *ngIf="model.step===1">
-		<div class="col-md-6">
-			<button
-				(click)="selectType(1, 'Simple exercices')"
-				class="btn exercice-type-select">
-				<div class="row">
-					<div class="col-md-2 col-xs-12 text-center">
-						<img class="img-exercice-icon" src="assets/img/icon3.png">
-					</div>
-					<div class="col-md-10 col-xs-12">
-						<h4>{{ 'Simple exercices' | dgTranslate }}</h4>
-						<small>{{ 'An exercice for reps, meters...' | dgTranslate }}</small>
-					</div>
-				</div>
-			</button>
-		</div>
-		<div class="col-md-6">
-			<button
-				(click)="selectType(2, 'Complex exercices')"
-				class="btn exercice-type-select">
-				<div class="row">
-					<div class="col-md-2 col-xs-12 text-center">
-						<img class="img-exercice-icon" src="assets/img/icon2.png">
-					</div>
-					<div class="col-md-10 col-xs-12">
-						<h4>{{ 'Complex exercices' | dgTranslate }}</h4>
-						<small>{{ 'Set of multiple movments (complex, supersets, plyo + Sprints...)' | dgTranslate }}</small>
-					</div>
-				</div>
-			</button>
-		</div>
-		<div class="col-md-6">
-			<button
-				(click)="selectType(3, 'Timed exercices')"
-				class="btn exercice-type-select">
-				<div class="row">
-					<div class="col-md-2 col-xs-12 text-center">
-						<img class="img-exercice-icon" src="assets/img/icon1.png">
-					</div>
-					<div class="col-md-10 col-xs-12">
-						<h4>{{ 'Timed exercices' | dgTranslate }}</h4>
-						<small>{{ 'Circuit and cross training: Hiit, Amrap, For time, Emoms...' | dgTranslate }}</small>
-					</div>
-				</div>
+  <div class="row" *ngIf="model.step === 1">
+    <div class="col-md-6">
+      <button
+        (click)="selectType(1, 'Simple exercices')"
+        class="btn exercice-type-select"
+      >
+        <div class="d-flex align-items-start">
+          <div>
+            <img class="img-exercice-icon" src="assets/img/icon3.png" />
+          </div>
+          <div class="pl-1">
+            <h4>{{ "Simple exercices" | dgTranslate }}</h4>
+            <small>{{ "An exercice for reps, meters..." | dgTranslate }}</small>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div class="col-md-6">
+      <button
+        (click)="selectType(2, 'Complex exercices')"
+        class="btn exercice-type-select"
+      >
+        <div class="d-flex align-items-start">
+          <div>
+            <img class="img-exercice-icon" src="assets/img/icon2.png" />
+          </div>
+          <div class="pl-1">
+            <h4>{{ "Complex exercices" | dgTranslate }}</h4>
+            <small>{{
+              "Set of multiple movments (complex, supersets, plyo + Sprints...)"
+                | dgTranslate
+            }}</small>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div class="col-md-6">
+      <button
+        (click)="selectType(3, 'Timed exercices')"
+        class="btn exercice-type-select"
+      >
+        <div class="d-flex align-items-start">
+          <div>
+            <img class="img-exercice-icon" src="assets/img/icon1.png" />
+          </div>
+          <div class="pl-1">
+            <h4>{{ "Timed exercices" | dgTranslate }}</h4>
+            <small>{{
+              "Circuit and cross training: Hiit, Amrap, For time, Emoms..."
+                | dgTranslate
+            }}</small>
+          </div>
+        </div>
+      </button>
+    </div>
+    <div class="col-md-6">
+      <button
+        (click)="selectType(7, 'Cardio & intervals')"
+        class="btn exercice-type-select"
+      >
+        <div class="d-flex align-items-start">
+          <div>
+            <img class="img-exercice-icon" src="assets/img/icon4.png" />
+          </div>
+          <div class="pl-1">
+            <h4>{{ "Cardio & intervals" | dgTranslate }}</h4>
+            <small>{{
+              "Long distance/time and intervals" | dgTranslate
+            }}</small>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+  <div class="row justify-content-center" *ngIf="model.step === 1">
+    <div class="col-md-6">
+      <button
+        (click)="selectType(8, 'Custom')"
+        class="btn exercice-type-select"
+      >
+        <div class="d-flex align-items-start">
+          <div>
+            <img class="img-exercice-icon" src="assets/img/icon5.png" />
+          </div>
+          <div class="pl-1">
+            <h4>{{ "Custom" | dgTranslate }}</h4>
+            <small>{{ "Do you own thing !" | dgTranslate }}</small>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+  <div class="row" *ngIf="model.step === 2">
+    <div class="col-md-12" *ngIf="isPlanning">
+      <div class="form-group">
+        <label>{{ "#Name" | dgTranslate }}</label>
+        <input
+          placeholder="{{ '#Name' | dgTranslate }}"
+          [(ngModel)]="workout.name"
+          type="text"
+          class="form-control"
+        />
+      </div>
+    </div>
 
-			</button>
-		</div>
-		<div class="col-md-6">
-			<button
-				(click)="selectType(7, 'Cardio & intervals')"
-				class="btn exercice-type-select">
-				<div class="row">
-					<div class="col-md-2 col-xs-12 text-center">
-						<img class="img-exercice-icon" src="assets/img/icon4.png">
-					</div>
-					<div class="col-md-10 col-xs-12">
-						<h4>{{ 'Cardio & intervals' | dgTranslate }}</h4>
-						<small>{{ 'Long distance/time and intervals' | dgTranslate }}</small>
-					</div>
-				</div>
-			</button>
-		</div>
-	</div>
-	<div class="row justify-content-center" *ngIf="model.step===1">
-		<div class="col-md-6">
-			<button
-				(click)="selectType(8, 'Custom')"
-				class="btn exercice-type-select">
-				<div class="row">
-					<div class="col-md-2 col-xs-12 text-center">
-						<img class="img-exercice-icon" src="assets/img/icon5.png">
-					</div>
-					<div class="col-md-10 col-xs-12">
-						<h4>{{ 'Custom' | dgTranslate }}</h4>
-						<small>{{ 'Do you own thing !' | dgTranslate }}</small>
-					</div>
-				</div>
-			</button>
-		</div>
-	</div>
-	<div class="row" *ngIf="model.step===2">
-		<div class="col-md-12" *ngIf="isPlanning">
-			<div class="form-group">
-				<label>{{ '#Name' | dgTranslate }}</label>
-				<input placeholder="{{ '#Name' | dgTranslate }}" [(ngModel)]="workout.name" type="text" class="form-control">
-			</div>
-		</div>
+    <div class="inputs-exercice-type" [ngSwitch]="model.type.id">
+      <tpc-inputs-exercice-type-simple
+        [model]="model"
+        [profil]="profil"
+        [isPlanning]="isPlanning"
+        *ngSwitchCase="1"
+      ></tpc-inputs-exercice-type-simple>
+      <tpc-inputs-exercice-type-complex
+        [model]="model"
+        [profil]="profil"
+        [isPlanning]="isPlanning"
+        *ngSwitchCase="2"
+      ></tpc-inputs-exercice-type-complex>
+      <tpc-inputs-exercice-type-amrap
+        [model]="model"
+        [profil]="profil"
+        [isPlanning]="isPlanning"
+        *ngSwitchCase="3"
+      ></tpc-inputs-exercice-type-amrap>
+      <tpc-inputs-exercice-type-time
+        [model]="model"
+        [profil]="profil"
+        [isPlanning]="isPlanning"
+        *ngSwitchCase="4"
+      ></tpc-inputs-exercice-type-time>
+      <tpc-inputs-exercice-type-emom
+        [model]="model"
+        [profil]="profil"
+        [isPlanning]="isPlanning"
+        *ngSwitchCase="5"
+      ></tpc-inputs-exercice-type-emom>
+      <tpc-inputs-exercice-type-open
+        [model]="model"
+        [profil]="profil"
+        [isPlanning]="isPlanning"
+        *ngSwitchCase="6"
+      ></tpc-inputs-exercice-type-open>
+      <tpc-inputs-exercice-type-cardio
+        [model]="model"
+        [profil]="profil"
+        [isPlanning]="isPlanning"
+        *ngSwitchCase="7"
+      ></tpc-inputs-exercice-type-cardio>
+      <tpc-inputs-exercice-type-custom
+        [model]="model"
+        [profil]="profil"
+        [isPlanning]="isPlanning"
+        *ngSwitchCase="8"
+      ></tpc-inputs-exercice-type-custom>
+    </div>
 
-		<div class="inputs-exercice-type" [ngSwitch]="model.type.id">
-		   <tpc-inputs-exercice-type-simple [model]="model" [profil]="profil" [isPlanning]="isPlanning" *ngSwitchCase="1"></tpc-inputs-exercice-type-simple>
-		   <tpc-inputs-exercice-type-complex [model]="model" [profil]="profil" [isPlanning]="isPlanning" *ngSwitchCase="2"></tpc-inputs-exercice-type-complex>
-		   <tpc-inputs-exercice-type-amrap [model]="model" [profil]="profil" [isPlanning]="isPlanning" *ngSwitchCase="3"></tpc-inputs-exercice-type-amrap>
-		   <tpc-inputs-exercice-type-time [model]="model" [profil]="profil" [isPlanning]="isPlanning" *ngSwitchCase="4"></tpc-inputs-exercice-type-time>
-		   <tpc-inputs-exercice-type-emom [model]="model" [profil]="profil" [isPlanning]="isPlanning" *ngSwitchCase="5"></tpc-inputs-exercice-type-emom>
-		   <tpc-inputs-exercice-type-open [model]="model" [profil]="profil" [isPlanning]="isPlanning" *ngSwitchCase="6"></tpc-inputs-exercice-type-open>
-		   <tpc-inputs-exercice-type-cardio [model]="model" [profil]="profil" [isPlanning]="isPlanning" *ngSwitchCase="7"></tpc-inputs-exercice-type-cardio>
-		   <tpc-inputs-exercice-type-custom [model]="model" [profil]="profil" [isPlanning]="isPlanning" *ngSwitchCase="8"></tpc-inputs-exercice-type-custom>
-		</div>
+    <div class="col-md-6" *ngIf="showDate">
+      <label>{{ "#Date" | dgTranslate }}</label>
+      <div class="input-group">
+        <input
+          class="form-control"
+          [class.is-invalid]="errors.started_at"
+          (input)="errors.started_at = false"
+          placeholder="yyyy-mm-dd"
+          name="dp"
+          [(ngModel)]="startedAtModel"
+          ngbDatepicker
+          #d="ngbDatepicker"
+        />
+        <div class="input-group-append">
+          <button
+            class="btn btn-outline-secondary"
+            (click)="d.toggle()"
+            type="button"
+          >
+            <i class="fa fa-calendar"></i>
+          </button>
+        </div>
+      </div>
+    </div>
 
-		<div class="col-md-6" *ngIf="showDate">
-			<label>{{ '#Date' | dgTranslate }}</label>
-			<div class="input-group">
-				<input class="form-control" [class.is-invalid]="errors.started_at" (input)="errors.started_at=false" placeholder="yyyy-mm-dd"
-						name="dp" [(ngModel)]="startedAtModel" ngbDatepicker #d="ngbDatepicker">
-				<div class="input-group-append">
-					<button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="fa fa-calendar"></i></button>
-				</div>
-	    	</div>
-		</div>
-
-
-		<div class="col-md-12 mt-2">
-			<div class="form-group">
-				<label>{{ '#Notes' | dgTranslate }}</label>
-				<textarea  placeholder="My comments" [(ngModel)]="model.description" class="form-control"></textarea>
-			</div>
-		</div>
-	</div>
+    <div class="col-md-12 mt-2">
+      <div class="form-group">
+        <label>{{ "#Notes" | dgTranslate }}</label>
+        <textarea
+          placeholder="My comments"
+          [(ngModel)]="model.description"
+          class="form-control"
+        ></textarea>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="modal-footer" *ngIf="model.step===2">
-	<button class="btn btn-dark btn-back-type" (click)="model.step=1"><i class="fa fa-arrow-left"></i> {{ '#Change type' | dgTranslate }}</button>
+<div class="modal-footer" *ngIf="model.step === 2">
+  <button class="btn btn-dark btn-back-type" (click)="model.step = 1">
+    <i class="fa fa-arrow-left"></i> {{ "#Change type" | dgTranslate }}
+  </button>
 
-  <button class="btn btn-light mr-4" [disabled]="isLoading" (click)="cancel()">
-		<i class="fa fa-close"></i> {{ '#Cancel' | dgTranslate }}
-	</button>
-	<button class="btn btn-primary" [disabled]="isLoading" (click)="save()">
-		<i class="fa fa-trash"></i>
-		{{ '#Save' | dgTranslate }}
-	</button>
+  <button class="btn btn-light" [disabled]="isLoading" (click)="cancel()">
+    <i class="fa fa-close"></i> {{ "#Cancel" | dgTranslate }}
+  </button>
+  <button class="btn btn-primary" [disabled]="isLoading" (click)="save()">
+    <i class="fa fa-trash"></i>
+    {{ "#Save" | dgTranslate }}
+  </button>
 </div>

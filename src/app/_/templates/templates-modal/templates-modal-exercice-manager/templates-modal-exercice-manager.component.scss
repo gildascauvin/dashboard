@@ -1,55 +1,55 @@
 .number-movement-list {
-	text-align: center;
-	display: inline-block;
-	width: 100px;
+  text-align: center;
+  display: inline-block;
+  width: 100px;
 }
 
 .number-movement-list-label {
-	display: inline-block;
+  display: inline-block;
 }
 
 .exercice-type-select {
-    text-align: left;
-	border: solid 1px #F1F1F1;
-    border-radius: 0;
-    margin: 21px;
-    min-height: 114px;
-    font-weight: 600;
-    color: #666;
-    width: 90%;
-    box-shadow: 0 0 10px 0 rgba(138, 138, 138, 0.2);
-    background-color: #ffffff;
+  text-align: left;
+  border: solid 1px #f1f1f1;
+  border-radius: 0;
+  margin: 21px;
+  min-height: 114px;
+  font-weight: 600;
+  color: #666;
+  width: 90%;
+  box-shadow: 0 0 10px 0 rgba(138, 138, 138, 0.2);
+  background-color: #ffffff;
 
-    h4 {
-        margin-bottom: 5px;
-        color: #000000;
-    }
+  h4 {
+    margin-bottom: 5px;
+    color: #000000;
+  }
 }
 
 .exercice-type-select:hover {
-    background: #F1F1F1;
+  background: #f1f1f1;
 }
 
 .inputs-exercice-type {
-    width: 100%;
+  width: 100%;
 }
 
 select {
-	padding-right: 26px;
+  padding-right: 26px;
 }
 
 .btn-back-type {
-    position: absolute;
-    left: 10px;
-    bottom: 12px;
+  position: absolute;
+  left: 10px;
+  bottom: 12px;
 }
 
 .img-exercice-icon {
-    width: 51px;
-    vertical-align: middle;
-    background-color: #F1F1F1;
+  width: 51px;
+  vertical-align: middle;
+  background-color: #f1f1f1;
 }
 
 .form-select-subtype {
-    width: 100;
+  width: 100;
 }

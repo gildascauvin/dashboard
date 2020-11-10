@@ -1,12 +1,12 @@
 .img-logo-brand {
-	z-index: 100000;
+  z-index: 100000;
   position: absolute;
   left: 36px;
   top: 25px;
 }
 .nav-top-header {
-	color: #FFFFFF;
-	position: absolute;
+  color: #ffffff;
+  position: absolute;
   left: 0;
   top: 0;
   height: 65px;
@@ -15,24 +15,24 @@
   background-color: #000000;
 }
 .links-menu {
-	text-decoration: none;
-	color: #F1F1F1;
-	margin-top: 7px;
+  text-decoration: none;
+  color: #f1f1f1;
+  margin-top: 7px;
 }
 .profile-menu {
-  color: #FFF;
+  color: #fff;
 
   #navbarDropdownMenuLink {
-  	color: #FFFFFF;
+    color: #ffffff;
   }
 
   a {
-  	text-decoration: none;
+    text-decoration: none;
   }
 }
 .nav-bottom-header {
-	color: #FFFFFF;
-	position: absolute;
+  color: #ffffff;
+  position: absolute;
   left: 0;
   top: 65px;
   height: 65px;
@@ -40,41 +40,39 @@
   width: 100%;
   background-color: #161616;
 
+  .content-header {
+    margin-top: 10px;
 
+    .nav-link {
+      padding-bottom: 10px !important;
+      font-size: 14px;
+      margin-right: 50px;
+      text-decoration: none !important;
+      color: #e1e1e1;
 
-	.content-header {
-	  margin-top: 10px;
-
-		.nav-link {
-			padding-bottom: 10px !important;
-			font-size: 14px;
-			margin-right: 50px;
-			text-decoration: none !important;
-			color: #E1E1E1;
-
-			&.active {
-	  		border-bottom: solid 3px #d44000;
-			}
-		}
+      &.active {
+        border-bottom: solid 3px #d44000;
+      }
+    }
   }
 }
 
 .body-content-sections {
-	padding-top: 90px;
-	padding-left: 0;
-	padding-right: 0;
-	height: 100%;
-	background-color: #F1F1F1;
+  padding-top: 90px;
+  padding-left: 0;
+  padding-right: 0;
+  height: 100%;
+  background-color: #f1f1f1;
 }
 
 .selection-program {
-	font-size: 13px;
-	color: #CCCCCC;
-	.selection-program-name {
-		font-size: 18px;
-		color: #FFFFFF;
-		margin-top: 0;
-	}
+  font-size: 13px;
+  color: #cccccc;
+  .selection-program-name {
+    font-size: 18px;
+    color: #ffffff;
+    margin-top: 0;
+  }
 }
 
 .responsive-left-menu {
@@ -95,12 +93,12 @@
 
   .list-group-item-dark {
     background-color: #000000;
-    color: #C1C1C1;
+    color: #c1c1c1;
   }
 
   .list-group-item-dark.active {
     background-color: #1b1e21;
-    color: #FFFFFF;
+    color: #ffffff;
   }
 }
 
@@ -116,7 +114,7 @@
   height: 100%;
   width: 327px;
   position: fixed;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   overflow-x: hidden;
   padding: 10px;
   z-index: 1001;
@@ -156,24 +154,28 @@
 .top-custom-nav {
   height: 50px;
   background-color: #000000;
-  color: #F1F1F1;
+  color: #f1f1f1;
 
   i {
-    color: #C1C1C1 !important;
+    color: #c1c1c1 !important;
     font-size: 25pt;
   }
 }
 
-.nav > li{
+.nav > li {
   position: static !important;
 }
 .dropdown-menu {
   left: 0 !important;
   right: 0 !important;
 }
-.dropdown-menu > li{
+.dropdown-menu > li {
   float: left !important;
 }
-.dropdown-menu > li > a{
+.dropdown-menu > li > a {
   width: auto !important;
+}
+
+#navbarCollapse {
+  margin-top: 67px;
 }
