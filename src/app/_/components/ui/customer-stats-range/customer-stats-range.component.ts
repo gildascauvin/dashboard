@@ -949,14 +949,9 @@ export class CustomerStatsRangeComponent implements OnInit {
             let sets = parseInt(
               "" + (exercice.emom_duration * 60) / exercice.emom_seconds
             );
-
             exercice.movements &&
               exercice.movements.map((movement) => {
                 parentId = this.categories[movement.category_id];
-
-                if (!movement.sets[0].quantity || movement.sets[0].value) {
-                  return;
-                }
 
                 let _volume = movement.sets[0].quantity * sets;
                 let _tonnage =
@@ -997,7 +992,6 @@ export class CustomerStatsRangeComponent implements OnInit {
           }
         });
       });
-
       this.stats.categories[1].intensity = parseInt(
         "" +
           this.stats.categories[1].intensite /
