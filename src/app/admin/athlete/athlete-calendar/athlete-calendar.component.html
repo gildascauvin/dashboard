@@ -272,8 +272,12 @@
                                 class="movement-title"
                                 *ngFor="let movement of exercice.movements"
                               >
-                                {{ movement.quantity }} {{ movement.name }} @
-                                {{ movement.value }}{{ movement.unit_label }}
+                                <div *ngFor="let set of movement.sets">
+                                  <span *ngIf="set.set">
+                                    {{ movement.name }} @ {{ set.value
+                                    }}{{ set.unit_label }}</span
+                                  >
+                                </div>
                               </div>
                               <div class="movement-content">
                                 AMRAP: {{ exercice.amrap_timecap }}
@@ -285,8 +289,12 @@
                                 class="movement-title"
                                 *ngFor="let movement of exercice.movements"
                               >
-                                {{ movement.quantity }} {{ movement.name }} @
-                                {{ movement.value }}{{ movement.unit_label }}
+                                <div *ngFor="let set of movement.sets">
+                                  <span *ngIf="set.set">
+                                    {{ movement.name }} @ {{ set.value
+                                    }}{{ set.unit_label }}</span
+                                  >
+                                </div>
                               </div>
                               <div class="movement-content">
                                 <span *ngIf="exercice.time_style == 1"
@@ -304,8 +312,12 @@
                                 class="movement-title"
                                 *ngFor="let movement of exercice.movements"
                               >
-                                {{ movement.quantity }} {{ movement.name }} @
-                                {{ movement.value }}{{ movement.unit_label }}
+                                <div *ngFor="let set of movement.sets">
+                                  <span *ngIf="set.set">
+                                    {{ movement.name }} @ {{ set.value
+                                    }}{{ set.unit_label }}</span
+                                  >
+                                </div>
                               </div>
                               <div class="movement-content">
                                 EMOM ({{ exercice.emom_duration }} min every
