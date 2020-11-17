@@ -124,7 +124,7 @@
               </select>
               <span
                 *ngIf="movement.max_value && set.unit == 3 && isPlanning"
-                class="ml-4 badge badge-success"
+                class="ml-2 badge badge-success"
               >
                 {{
                   set.value
@@ -137,7 +137,7 @@
                   (set.unit == 1 || set.unit == 2) &&
                   isPlanning
                 "
-                class="ml-4 badge badge-success"
+                class="ml-2 badge badge-success"
               >
                 {{
                   set.value
@@ -146,7 +146,7 @@
                       : movement.max_unit
                       : set.unit
                 }}
-              </span>
+              </span>             
             </div>
           </div>
         </div>
