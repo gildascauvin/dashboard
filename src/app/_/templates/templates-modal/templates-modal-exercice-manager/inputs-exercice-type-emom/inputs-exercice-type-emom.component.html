@@ -16,7 +16,10 @@
     *ngFor="let movement of model.movements; let movementIndex = index"
     class="list-group-item-step"
   >
-    <div class="row" *ngIf="isPlanning">
+    <div
+      class="row"
+      *ngIf="isPlanning && movementService.isShowRepMax(movement)"
+    >
       <div class="col-md-12">
         <div class="form-row align-items-center">
           <div class="col-auto">
@@ -69,7 +72,10 @@
         />
       </div>
 
-      <div class="col-auto">
+      <div
+        class="col-auto"
+        *ngIf="movement.has_value && movement.category_id !== 9"
+      >
         <select
           [(ngModel)]="movement.sets[0].unit"
           type="number"
@@ -78,6 +84,7 @@
           <option [value]="1">kg</option>
           <option [value]="2">lbs</option>
           <option [value]="3">%</option>
+          <option [value]="4">RPE</option>
         </select>
         <span
           *ngIf="movement.max_value && movement.sets[0].unit == 3 && isPlanning"

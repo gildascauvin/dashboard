@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import * as _ from "lodash";
+import { MovementService } from "src/app/_/services/model/movement.service";
 import { webConfig } from "../../../../../web-config";
 import { UsersService } from "../../../users.service";
 
@@ -18,7 +19,10 @@ export class InputsExerciceTypeSimpleComponent implements OnInit {
   movements: any[] = [];
   sub: any;
 
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    public movementService: MovementService
+  ) {}
 
   ngOnInit(): void {
     this.model.amrap_timecap = this.model.amrap_timecap || 10;
@@ -47,7 +51,6 @@ export class InputsExerciceTypeSimpleComponent implements OnInit {
       clone.max_unit = profil.record_unit;
       clone.max_value = profil.record;
     }
-
     this.model.movements.push(clone);
   }
 

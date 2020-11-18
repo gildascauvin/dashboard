@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import * as _ from "lodash";
+import { MovementService } from "src/app/_/services/model/movement.service";
 import { webConfig } from "../../../../../web-config";
 import { UsersService } from "../../../users.service";
 
@@ -19,7 +20,10 @@ export class InputsExerciceTypeEmomComponent implements OnInit {
   sub: any;
   typeChoice: number = 5;
 
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    public movementService: MovementService
+  ) {}
 
   ngOnInit(): void {
     this.model.emom_scoring = this.model.emom_scoring || 1;

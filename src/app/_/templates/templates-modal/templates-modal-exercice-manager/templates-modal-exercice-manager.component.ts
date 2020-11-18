@@ -141,6 +141,7 @@ export class TemplatesModalExerciceManagerComponent
           value: set.value || 0,
           quantity: set.quantity || 1,
           unit_label: set.unit_label,
+          rep_unit: set.rep_unit || 1
         };
       });
 

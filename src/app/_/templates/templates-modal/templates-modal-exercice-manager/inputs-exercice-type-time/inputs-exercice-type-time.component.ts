@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import * as _ from "lodash";
+import { MovementService } from "src/app/_/services/model/movement.service";
 import { webConfig } from "../../../../../web-config";
 import { UsersService } from "../../../users.service";
 
@@ -21,7 +22,10 @@ export class InputsExerciceTypeTimeComponent implements OnInit {
 
   typeChoice: number = 4;
 
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    public movementService: MovementService
+  ) {}
 
   ngOnInit(): void {
     this.model.time_style = this.model.time_style || 1;

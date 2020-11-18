@@ -22,7 +22,10 @@
     <div class="number-movement-list-label ml-2">{{ movement.name }}</div>
 
     <ul class="list-group">
-      <li class="list-group-item" *ngIf="isPlanning">
+      <li
+        class="list-group-item"
+        *ngIf="isPlanning && movementService.isShowRepMax(movement)"
+      >
         <div class="form-row flex-nowrap flex-md-wrap align-items-center">
           <div class="col-md-auto col-9">
             <div class="input-group">
@@ -83,19 +86,34 @@
               </div>
             </div>
           </div>
-          <div
-            class="col-md-auto col-5 custom-form"
-            *ngIf="movement.has_repetitions"
-          >
+
+          <div class="col-md-auto col-5 custom-form">
             <div class="input-group">
               <input
+                *ngIf="movement.has_repetitions || movement.has_unit"
                 placeholder="1"
                 [(ngModel)]="set.rep"
                 type="number"
                 class="form-control number-movement-list"
               />
-
-              <div class="input-group-apppend">
+              <div class="col-auto" *ngIf="movement.has_unit">
+                <select
+                  [(ngModel)]="set.rep_unit"
+                  type="number"
+                  class="form-control number-movement-list"
+                >
+                  <option
+                    *ngFor="let unit of configExercices.unit"
+                    [value]="unit.id"
+                  >
+                    {{ unit.name }}
+                  </option>
+                </select>
+              </div>
+              <div
+                class="input-group-apppend"
+                *ngIf="movement.has_repetitions && !movement.has_unit"
+              >
                 <span class="input-group-text">{{
                   "#Reps" | dgTranslate
                 }}</span>
@@ -112,7 +130,10 @@
               />
             </div>
 
-            <div class="col-md-auto">
+            <div
+              class="col-md-auto"
+              *ngIf="movement.has_value && movement.category_id !== 9"
+            >
               <select
                 [(ngModel)]="set.unit"
                 type="number"
@@ -121,6 +142,7 @@
                 <option [value]="1">kg</option>
                 <option [value]="2">lbs</option>
                 <option [value]="3">%</option>
+                <option [value]="4">RPE</option>
               </select>
               <span
                 *ngIf="movement.max_value && set.unit == 3 && isPlanning"
@@ -146,7 +168,7 @@
                       : movement.max_unit
                       : set.unit
                 }}
-              </span>             
+              </span>
             </div>
           </div>
         </div>
