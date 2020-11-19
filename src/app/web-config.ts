@@ -165,7 +165,13 @@ export const webConfig = {
 	 		3: 'Time',
 	 		4: 'Load',
 	 		5: 'None',
-	 	},
+		 },
+		 unit: [
+			{ id: 1, name: 'Meters'},
+			{ id: 2, name: 'Miles'},
+			{ id: 3, name: 'Minutes'},
+			{ id: 4, name: 'Yards'},
+		],
 	 	emom: [
 	 		{ id: 1, name: 'Rounds'},
 	 		{ id: 2, name: 'Reps'},

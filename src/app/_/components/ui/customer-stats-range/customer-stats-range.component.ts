@@ -1,29 +1,29 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from '@angular/core';
 import {
   NgbCalendar,
   NgbDate,
   NgbDateParserFormatter,
-} from "@ng-bootstrap/ng-bootstrap";
-import { ChartDataSets, ChartOptions, ChartType } from "chart.js";
-import * as pluginDataLabels from "chartjs-plugin-datalabels";
+} from '@ng-bootstrap/ng-bootstrap';
+import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import {
   addHours,
   differenceInDays,
   endOfWeek,
   format,
   startOfWeek,
-} from "date-fns";
-import * as _ from "lodash";
-import { Label } from "ng2-charts";
-import { webConfig } from "../../../../web-config";
-import { AuthService } from "../../../../_/services/http/auth.service";
-import { UsersService } from "../../../../_/templates/users.service";
-import { CustomerStatsService } from "./customer-stats-range.service";
+} from 'date-fns';
+import * as _ from 'lodash';
+import { Label } from 'ng2-charts';
+import { webConfig } from '../../../../web-config';
+import { AuthService } from '../../../../_/services/http/auth.service';
+import { UsersService } from '../../../../_/templates/users.service';
+import { CustomerStatsService } from './customer-stats-range.service';
 
 @Component({
-  selector: "app-customer-stats-range",
-  templateUrl: "./customer-stats-range.component.html",
-  styleUrls: ["./customer-stats-range.component.scss"],
+  selector: 'app-customer-stats-range',
+  templateUrl: './customer-stats-range.component.html',
+  styleUrls: ['./customer-stats-range.component.scss'],
 })
 export class CustomerStatsRangeComponent implements OnInit {
   @Input() showRange: boolean = true;
@@ -83,12 +83,12 @@ export class CustomerStatsRangeComponent implements OnInit {
     scales: {
       yAxes: [
         {
-          id: "y-axis-0",
-          position: "left",
+          id: 'y-axis-0',
+          position: 'left',
         },
         {
-          id: "y-axis-1",
-          position: "right",
+          id: 'y-axis-1',
+          position: 'right',
         },
       ],
     },
@@ -107,12 +107,12 @@ export class CustomerStatsRangeComponent implements OnInit {
     scales: {
       yAxes: [
         {
-          id: "y-axis-0",
-          position: "left",
+          id: 'y-axis-0',
+          position: 'left',
         },
         {
-          id: "y-axis-1",
-          position: "right",
+          id: 'y-axis-1',
+          position: 'right',
         },
       ],
     },
@@ -121,56 +121,56 @@ export class CustomerStatsRangeComponent implements OnInit {
         labels: {
           title: null,
         },
-        anchor: "end",
-        align: "end",
+        anchor: 'end',
+        align: 'end',
       },
     },
   };
 
   barChartLabels: Label[] = [];
-  barChartType: ChartType = "bar";
+  barChartType: ChartType = 'bar';
   barChartLegend = true;
   barChartPlugins = [pluginDataLabels];
 
   barChartData: ChartDataSets[] = [
     {
       data: this.stats.weekly.intensite,
-      label: "Intensité",
-      backgroundColor: "#cc0202",
-      hoverBackgroundColor: "#cc0202",
+      label: 'Intensité',
+      backgroundColor: '#cc0202',
+      hoverBackgroundColor: '#cc0202',
       barThickness: 4,
     },
     {
       data: this.stats.weekly.volume,
-      label: "Volume",
-      backgroundColor: "#000000",
-      hoverBackgroundColor: "#000000",
+      label: 'Volume',
+      backgroundColor: '#000000',
+      hoverBackgroundColor: '#000000',
       barThickness: 4,
     },
     {
       data: this.stats.weekly.tonnage,
-      label: "Tonnage",
-      backgroundColor: "#C1C1C1",
-      hoverBackgroundColor: "#C1C1C1",
+      label: 'Tonnage',
+      backgroundColor: '#C1C1C1',
+      hoverBackgroundColor: '#C1C1C1',
       barThickness: 4,
-      yAxisID: "y-axis-1",
+      yAxisID: 'y-axis-1',
     },
   ];
 
   barChartCardioData: ChartDataSets[] = [
     {
       data: this.stats.cardio.intensity,
-      label: "Intensity",
-      backgroundColor: "#cc0202",
-      hoverBackgroundColor: "#cc0202",
+      label: 'Intensity',
+      backgroundColor: '#cc0202',
+      hoverBackgroundColor: '#cc0202',
       barThickness: 4,
-      yAxisID: "y-axis-1",
+      yAxisID: 'y-axis-1',
     },
     {
       data: this.stats.cardio.volume,
-      label: "Volume",
-      backgroundColor: "#000000",
-      hoverBackgroundColor: "#000000",
+      label: 'Volume',
+      backgroundColor: '#000000',
+      hoverBackgroundColor: '#000000',
       barThickness: 4,
     },
   ];
@@ -185,7 +185,7 @@ export class CustomerStatsRangeComponent implements OnInit {
     public customerStatsService: CustomerStatsService
   ) {
     this.fromDate = calendar.getToday();
-    this.toDate = calendar.getNext(calendar.getToday(), "d", 7);
+    this.toDate = calendar.getNext(calendar.getToday(), 'd', 7);
   }
 
   ngOnInit() {
@@ -281,13 +281,13 @@ export class CustomerStatsRangeComponent implements OnInit {
       this.endDay = this.startDay = toDate;
     }
 
-    this.fromDate.year = parseInt("" + format(this.startDay, "yyyy"));
-    this.fromDate.month = parseInt("" + format(this.startDay, "MM"));
-    this.fromDate.day = parseInt("" + format(this.startDay, "dd"));
+    this.fromDate.year = parseInt('' + format(this.startDay, 'yyyy'));
+    this.fromDate.month = parseInt('' + format(this.startDay, 'MM'));
+    this.fromDate.day = parseInt('' + format(this.startDay, 'dd'));
 
-    this.toDate.year = parseInt("" + format(this.endDay, "yyyy"));
-    this.toDate.month = parseInt("" + format(this.endDay, "MM"));
-    this.toDate.day = parseInt("" + format(this.endDay, "dd"));
+    this.toDate.year = parseInt('' + format(this.endDay, 'yyyy'));
+    this.toDate.month = parseInt('' + format(this.endDay, 'MM'));
+    this.toDate.day = parseInt('' + format(this.endDay, 'dd'));
   }
 
   private _syncWorkouts(strict?) {
@@ -297,27 +297,27 @@ export class CustomerStatsRangeComponent implements OnInit {
 
     let toDate =
       this.toDate.year +
-      "-" +
+      '-' +
       this.toDate.month +
-      "-" +
+      '-' +
       this.toDate.day +
-      " 00:00:00";
+      ' 00:00:00';
     let fromDate =
       this.fromDate.year +
-      "-" +
+      '-' +
       this.fromDate.month +
-      "-" +
+      '-' +
       this.fromDate.day +
-      " 00:00:00";
+      ' 00:00:00';
 
     this._clean();
     //fromDate = "2020-10-25 00:00:00";
 
     let to = new Date(
-      this.toDate.year + "-" + this.toDate.month + "-" + this.toDate.day
+      this.toDate.year + '-' + this.toDate.month + '-' + this.toDate.day
     );
     let from = new Date(
-      this.fromDate.year + "-" + this.fromDate.month + "-" + this.fromDate.day
+      this.fromDate.year + '-' + this.fromDate.month + '-' + this.fromDate.day
     );
 
     this._init(from, to);
@@ -373,8 +373,8 @@ export class CustomerStatsRangeComponent implements OnInit {
 
           for (let i = 0; i < diff; i++) {
             if (i % modulo == 0) {
-              let property = format(currentDate, "yyyy-MM-dd");
-              let propertyKey = format(currentDate, "MM/dd");
+              let property = format(currentDate, 'yyyy-MM-dd');
+              let propertyKey = format(currentDate, 'MM/dd');
               this.barChartLabels.push(propertyKey);
 
               this.tabs.push({
@@ -456,8 +456,8 @@ export class CustomerStatsRangeComponent implements OnInit {
               let modulo = isDaily ? 1 : 7;
               for (let i = 0; i < diff; i++) {
                 if (i % modulo == 0) {
-                  let property = format(currentDate, "yyyy-MM-dd");
-                  let propertyKey = format(currentDate, "MM/dd");
+                  let property = format(currentDate, 'yyyy-MM-dd');
+                  let propertyKey = format(currentDate, 'MM/dd');
                   this.barChartLabels.push(propertyKey);
 
                   this.tabs.push({
@@ -485,8 +485,8 @@ export class CustomerStatsRangeComponent implements OnInit {
                 });
               }
             } else {
-              let property = format(new Date(dates[0]), "yyyy-MM-dd");
-              let propertyKey = format(new Date(dates[0]), "MM/dd");
+              let property = format(new Date(dates[0]), 'yyyy-MM-dd');
+              let propertyKey = format(new Date(dates[0]), 'MM/dd');
               this.barChartLabels.push(propertyKey);
 
               const part = {
@@ -512,7 +512,7 @@ export class CustomerStatsRangeComponent implements OnInit {
     for (let workoutKey in this.workouts) {
       selectedDay = startOfWeek(new Date(workoutKey), { weekStartsOn: 1 });
       if (
-        format(startDay, "yyyy-MM-dd") === format(selectedDay, "yyyy-MM-dd")
+        format(startDay, 'yyyy-MM-dd') === format(selectedDay, 'yyyy-MM-dd')
       ) {
         // console.log(workout);
         part.workouts = _.concat(part.workouts, this.workouts[workoutKey]);
@@ -539,6 +539,9 @@ export class CustomerStatsRangeComponent implements OnInit {
                 parentId = this.categories[movement.category_id];
 
                 movement.sets.map((set) => {
+                  console.log(set.rep)
+                  console.log(set.set)
+                  console.log(set.value)
                   volume += set.rep * set.set;
                   tonnage += set.rep * set.set * set.value;
                   intensite += set.rep * set.set * set.value;
@@ -651,7 +654,7 @@ export class CustomerStatsRangeComponent implements OnInit {
             // Exercice complex - EMOM
           } else if (exercice.type.id === 5) {
             let sets = parseInt(
-              "" + (exercice.emom_duration * 60) / exercice.emom_seconds
+              '' + (exercice.emom_duration * 60) / exercice.emom_seconds
             );
 
             exercice.movements &&
@@ -703,53 +706,53 @@ export class CustomerStatsRangeComponent implements OnInit {
     });
 
     this.stats.categories[1].intensity = parseInt(
-      "" +
+      '' +
         this.stats.categories[1].intensite /
           this.stats.categories[1].intensiteSize
     );
     this.stats.categories[2].intensity = parseInt(
-      "" +
+      '' +
         this.stats.categories[2].intensite /
           this.stats.categories[2].intensiteSize
     );
     this.stats.categories[3].intensity = parseInt(
-      "" +
+      '' +
         this.stats.categories[3].intensite /
           this.stats.categories[3].intensiteSize
     );
     this.stats.categories[4].intensity = parseInt(
-      "" +
+      '' +
         this.stats.categories[4].intensite /
           this.stats.categories[4].intensiteSize
     );
     this.stats.categories[5].intensity = parseInt(
-      "" +
+      '' +
         this.stats.categories[5].intensite /
           this.stats.categories[5].intensiteSize
     );
     this.stats.categories[6].intensity = parseInt(
-      "" +
+      '' +
         this.stats.categories[6].intensite /
           this.stats.categories[6].intensiteSize
     );
     this.stats.categories[7].intensity = parseInt(
-      "" +
+      '' +
         this.stats.categories[7].intensite /
           this.stats.categories[7].intensiteSize
     );
 
     this.stats.weekly.intensite.push(
-      parseInt("" + intensite / intensiteSize) | 0
+      parseInt('' + intensite / intensiteSize, 2) | 0
     );
     this.stats.weekly.volume.push(volume | 0);
     this.stats.weekly.tonnage.push(tonnage | 0);
-
+    //console.log(intensite);
     this.stats.weekly.realIntensite.push(intensite);
     this.stats.weekly.realIntensiteSize.push(intensiteSize);
 
     this.stats.cardio.volume.push(cardioVolume | 0);
     this.stats.cardio.intensity.push(
-      parseInt("" + cardioIntensite / cardioIntensiteSize) | 0
+      parseInt('' + cardioIntensite / cardioIntensiteSize) | 0
     );
 
     this.barChartData[0].data = this.stats.weekly.intensite;
@@ -770,7 +773,7 @@ export class CustomerStatsRangeComponent implements OnInit {
     );
 
     this.stats.weekly.intensiteRound = parseInt(
-      "" + totalIntensite / totalIntensiteSize
+      '' + totalIntensite / totalIntensiteSize
     );
 
     this.stats.weekly.volumeRound = _.reduce(
@@ -809,6 +812,7 @@ export class CustomerStatsRangeComponent implements OnInit {
       part.workouts.map((workout) => {
         workout.program.exercices.map((exercice) => {
           // Exercice simplee
+          
           if (exercice.type.id === 1) {
             exercice.movements &&
               exercice.movements.map((movement) => {
@@ -819,11 +823,12 @@ export class CustomerStatsRangeComponent implements OnInit {
                 let _intensite = 0;
                 let _intensiteSize = 0;
 
-                movement.sets.map((set) => {
+                movement.sets.map((set) => {                  
                   _volume += set.rep * set.set;
-                  _tonnage += set.rep * set.set * set.value;
-                  _intensite += set.rep * set.set * set.value;
-                  _intensiteSize += set.rep * set.set;
+                  let calcul = this._calcIntensiteTonnage(movement.max_value, set.unit_label, set.value,set.rep,set.set);
+                  _tonnage += calcul['tonnage'];
+                  _intensite += calcul['intensite'];              
+                  _intensiteSize += set.rep * set.set;                 
                 });
 
                 volume += _volume;
@@ -855,8 +860,9 @@ export class CustomerStatsRangeComponent implements OnInit {
 
                 movement.sets.map((set) => {
                   _volume += set.rep * exercice.sets;
-                  _tonnage += set.rep * exercice.sets * set.value;
-                  _intensite += set.rep * exercice.sets * set.value;
+                  let calcul = this._calcIntensiteTonnage(movement.max_value, set.unit_label, set.value,set.rep,exercice.sets);                
+                  _tonnage += calcul['tonnage'];
+                  _intensite += calcul['intensite'];
                   _intensiteSize += set.rep * exercice.sets;
                 });
 
@@ -883,14 +889,28 @@ export class CustomerStatsRangeComponent implements OnInit {
                 parentId = this.categories[movement.category_id];
 
                 let _volume = movement.sets[0].quantity * exercice.sets;
-                let _tonnage =
-                  movement.sets[0].quantity *
-                  exercice.sets *
-                  movement.sets[0].value;
-                let _intensite =
-                  movement.sets[0].quantity *
-                  exercice.sets *
-                  movement.sets[0].value;
+                let _tonnage = 0 ;
+                  // movement.sets[0].quantity *
+                  // exercice.sets *
+                  // movement.sets[0].value;
+                let _intensite = 0;
+                  // movement.sets[0].quantity *
+                  // exercice.sets *
+                  // movement.sets[0].value;
+                  console.log( movement);
+                  console.log( movement.sets[0]);
+                   console.log(movement.sets[0].unit_label)
+                   console.log(movement.sets[0].value)
+                   console.log(movement.sets[0].quantity)
+                    console.log(exercice.sets)
+                let calcul = this._calcIntensiteTonnage(
+                  movement.max_value,
+                  movement.sets[0].unit_label,
+                  movement.sets[0].value,
+                  movement.sets[0].quantity,
+                  exercice.sets);                
+                  _tonnage += calcul['tonnage'];
+                  _intensite += calcul['intensite'];
                 let _intensiteSize = movement.sets[0].quantity * exercice.sets;
 
                 volume += _volume;
@@ -917,14 +937,28 @@ export class CustomerStatsRangeComponent implements OnInit {
 
                 let _volume =
                   movement.sets[0].quantity * exercice.time_style_fixed;
-                let _tonnage =
-                  movement.sets[0].quantity *
-                  exercice.time_style_fixed *
-                  movement.sets[0].value;
-                let _intensite =
-                  movement.sets[0].quantity *
-                  exercice.time_style_fixed *
-                  movement.sets[0].value;
+                let _tonnage = 0;
+                  // movement.sets[0].quantity *
+                  // exercice.time_style_fixed *
+                  // movement.sets[0].value;
+                let _intensite = 0;
+                  // movement.sets[0].quantity *
+                  // exercice.time_style_fixed *
+                  // movement.sets[0].value;
+                  console.log( movement.max_value);
+                  console.log(movement.sets[0].unit_label)
+                  console.log(movement.sets[0].value)
+                  console.log(movement.sets[0].quantity)
+                   console.log(exercice.time_style_fixed)
+                  let calcul = this._calcIntensiteTonnage(
+                    movement.max_value,
+                    movement.sets[0].unit_label,
+                    movement.sets[0].value,
+                    movement.sets[0].quantity,
+                    exercice.time_style_fixed); 
+                      console.log(calcul)             
+                    _tonnage += calcul['tonnage'];
+                    _intensite += calcul['intensite']; 
                 let _intensiteSize =
                   movement.sets[0].quantity * exercice.time_style_fixed;
 
@@ -947,17 +981,37 @@ export class CustomerStatsRangeComponent implements OnInit {
             // Exercice complex - EMOM
           } else if (exercice.type.id === 5) {
             let sets = parseInt(
-              "" + (exercice.emom_duration * 60) / exercice.emom_seconds
+              '' + (exercice.emom_duration * 60) / exercice.emom_seconds
             );
+
             exercice.movements &&
               exercice.movements.map((movement) => {
                 parentId = this.categories[movement.category_id];
 
+              /*if (!movement.sets[0].quantity || movement.sets[0].value) {
+                  return;
+                }*/
+
                 let _volume = movement.sets[0].quantity * sets;
-                let _tonnage =
-                  movement.sets[0].quantity * sets * movement.sets[0].value;
-                let _intensite =
-                  movement.sets[0].quantity * sets * movement.sets[0].value;
+                let _tonnage = 0;
+                 // movement.sets[0].quantity * sets * movement.sets[0].value;
+                let _intensite = 0;
+                 // movement.sets[0].quantity * sets * movement.sets[0].value;
+                 console.log( movement.max_value);
+                 console.log(movement.sets[0].unit_label)
+                 console.log(movement.sets[0].value)
+                 console.log(movement.sets[0].quantity)
+                  console.log(sets)
+                  let calcul = this._calcIntensiteTonnage(
+                    movement.max_value,
+                    movement.sets[0].unit_label,
+                    movement.sets[0].value,
+                    movement.sets[0].quantity,
+                    sets);                     
+                                   
+                    _tonnage += calcul['tonnage'];
+                    _intensite += calcul['intensite']; 
+
                 let _intensiteSize = movement.sets[0].quantity * sets;
 
                 volume += _volume;
@@ -992,44 +1046,45 @@ export class CustomerStatsRangeComponent implements OnInit {
           }
         });
       });
+
       this.stats.categories[1].intensity = parseInt(
-        "" +
+        '' +
           this.stats.categories[1].intensite /
             this.stats.categories[1].intensiteSize
       );
       this.stats.categories[2].intensity = parseInt(
-        "" +
+        '' +
           this.stats.categories[2].intensite /
             this.stats.categories[2].intensiteSize
       );
       this.stats.categories[3].intensity = parseInt(
-        "" +
+        '' +
           this.stats.categories[3].intensite /
             this.stats.categories[3].intensiteSize
       );
       this.stats.categories[4].intensity = parseInt(
-        "" +
+        '' +
           this.stats.categories[4].intensite /
             this.stats.categories[4].intensiteSize
       );
       this.stats.categories[5].intensity = parseInt(
-        "" +
+        '' +
           this.stats.categories[5].intensite /
             this.stats.categories[5].intensiteSize
       );
       this.stats.categories[6].intensity = parseInt(
-        "" +
+        '' +
           this.stats.categories[6].intensite /
             this.stats.categories[6].intensiteSize
       );
       this.stats.categories[7].intensity = parseInt(
-        "" +
+        '' +
           this.stats.categories[7].intensite /
             this.stats.categories[7].intensiteSize
       );
 
       this.stats.weekly.intensite.push(
-        parseInt("" + intensite / intensiteSize)
+        parseInt('' + intensite / intensiteSize)
       );
       this.stats.weekly.volume.push(volume);
       this.stats.weekly.tonnage.push(tonnage);
@@ -1039,7 +1094,7 @@ export class CustomerStatsRangeComponent implements OnInit {
 
       this.stats.cardio.volume.push(cardioVolume);
       this.stats.cardio.intensity.push(
-        parseInt("" + cardioIntensite / cardioIntensiteSize)
+        parseInt('' + cardioIntensite / cardioIntensiteSize)
       );
     } else {
       part.workouts = [];
@@ -1067,7 +1122,7 @@ export class CustomerStatsRangeComponent implements OnInit {
     );
 
     this.stats.weekly.intensiteRound = parseInt(
-      "" + totalIntensite / totalIntensiteSize
+      '' + totalIntensite / totalIntensiteSize
     );
 
     this.stats.weekly.volumeRound = _.reduce(
@@ -1082,7 +1137,7 @@ export class CustomerStatsRangeComponent implements OnInit {
     );
 
     this.barChartData[0].data = this.stats.weekly.intensite;
-    console.log("this.barChartData", this.barChartData);
+    console.log('this.barChartData', this.barChartData);
 
     this.barChartCardioData[0].data = this.stats.cardio.intensity;
     this.barChartCardioData[1].data = this.stats.cardio.volume;
@@ -1128,15 +1183,20 @@ export class CustomerStatsRangeComponent implements OnInit {
 
     this.movements = [];
     for (let mvt in this.stats.movements) {
-      this.stats.movements[mvt].intensity = parseInt(
-        "" +
+      console.log(parseFloat(
+        '' +
           this.stats.movements[mvt].intensite /
             this.stats.movements[mvt].intensiteSize
-      );
+      ).toFixed(2))
+      this.stats.movements[mvt].intensity = parseFloat(
+        '' +
+          this.stats.movements[mvt].intensite /
+            this.stats.movements[mvt].intensiteSize
+      ).toFixed(2);
       this.movements.push(this.stats.movements[mvt]);
     }
 
-    this.movements = _.sortBy(this.movements, "volume").reverse();
+    this.movements = _.sortBy(this.movements, 'volume').reverse();
 
     if (this.stats.categories[parentId]) {
       if (
@@ -1157,7 +1217,7 @@ export class CustomerStatsRangeComponent implements OnInit {
     for (let category in this.stats.categories) {
       this.categoriesData.push(this.stats.categories[category]);
     }
-    this.categoriesData = _.sortBy(this.categoriesData, "volume").reverse();
+    this.categoriesData = _.sortBy(this.categoriesData, 'volume').reverse();
   }
 
   private _clean() {
@@ -1180,14 +1240,14 @@ export class CustomerStatsRangeComponent implements OnInit {
       },
     };
 
-    this.stats.categories[0] = this._setCategory("Others");
-    this.stats.categories[1] = this._setCategory("Cardio");
-    this.stats.categories[2] = this._setCategory("Olympic Weightlifting");
-    this.stats.categories[3] = this._setCategory("Powerlifting");
-    this.stats.categories[4] = this._setCategory("Strongman");
-    this.stats.categories[5] = this._setCategory("Stretching");
-    this.stats.categories[6] = this._setCategory("Plyometrics");
-    this.stats.categories[7] = this._setCategory("General Strenght");
+    this.stats.categories[0] = this._setCategory('Others');
+    this.stats.categories[1] = this._setCategory('Cardio');
+    this.stats.categories[2] = this._setCategory('Olympic Weightlifting');
+    this.stats.categories[3] = this._setCategory('Powerlifting');
+    this.stats.categories[4] = this._setCategory('Strongman');
+    this.stats.categories[5] = this._setCategory('Stretching');
+    this.stats.categories[6] = this._setCategory('Plyometrics');
+    this.stats.categories[7] = this._setCategory('General Strenght');
 
     this.movements = [];
     this.categoriesData = [];
@@ -1209,5 +1269,28 @@ export class CustomerStatsRangeComponent implements OnInit {
       intensiteSize: 0,
       movements: [],
     };
+  }
+  private _calcIntensiteTonnage(maxValue, unitLabel, value, repet, sets) {
+    let _intensite = 0;
+    let _tonnage = 0;
+    if (maxValue) {
+      if(unitLabel === '%') {
+        const resultRepKg = (value / 100 * maxValue) || 0;
+        _tonnage = parseFloat((repet * sets  * resultRepKg).toFixed(2));
+        _intensite = repet * sets * value;
+      } else {
+      _tonnage += repet * sets * value;
+      const resultIntensiteKg = (value / maxValue ) || 0;
+      _intensite = parseFloat((repet * sets  * resultIntensiteKg).toFixed(2)) * 100;
+      }
+    } else {
+      if (unitLabel === '%') {
+      _intensite = repet * sets * value;
+      }
+      if (unitLabel === 'kg') {
+      _tonnage = repet * sets * value;
+      }
+    }
+    return {tonnage: _tonnage, intensite: _intensite};
   }
 }
