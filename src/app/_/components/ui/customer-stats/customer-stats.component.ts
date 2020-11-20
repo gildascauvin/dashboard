@@ -27,6 +27,7 @@ export class CustomerStatsComponent implements OnInit {
     weekly: {
       volume: [],
       tonnage: [],
+      distance: [],
       intensite: [],
 
       realIntensite: [],
@@ -34,6 +35,7 @@ export class CustomerStatsComponent implements OnInit {
 
       volumeRound: 0,
       tonnageRound: 0,
+      distanceRound: 0,
       intensiteRound: 0,
     },
     categories: {},
@@ -41,6 +43,7 @@ export class CustomerStatsComponent implements OnInit {
     cardio: {
       volume: [],
       intensity: [],
+      distance: [],
     },
   };
 
@@ -120,6 +123,13 @@ export class CustomerStatsComponent implements OnInit {
       barThickness: 4,
       yAxisID: "y-axis-1",
     },
+    {
+      data: this.stats.weekly.distance,
+      label: "Distance",
+      backgroundColor: "#8f5ac3",
+      hoverBackgroundColor: "#8f5ac3",
+      barThickness: 4,
+    },
   ];
 
   barChartCardioData: ChartDataSets[] = [
@@ -136,6 +146,13 @@ export class CustomerStatsComponent implements OnInit {
       label: "Volume",
       backgroundColor: "#000000",
       hoverBackgroundColor: "#000000",
+      barThickness: 4,
+    },
+    {
+      data: this.stats.cardio.distance,
+      label: "Distance",
+      backgroundColor: "#8f5ac3",
+      hoverBackgroundColor: "#8f5ac3",
       barThickness: 4,
     },
   ];
@@ -161,6 +178,7 @@ export class CustomerStatsComponent implements OnInit {
   liveStats: any = {
     volume: 0,
     tonnage: 0,
+    distance: 0,
     intensite: 0,
     intensiteSize: 0,
   };
@@ -226,11 +244,13 @@ export class CustomerStatsComponent implements OnInit {
       weekly: {
         volume: [],
         tonnage: [],
+        distance: [],
         intensite: [],
         realIntensite: [],
         realIntensiteSize: [],
         volumeRound: 0,
         tonnageRound: 0,
+        distanceRound: 0,
         intensiteRound: 0,
       },
       categories: {},
@@ -238,6 +258,7 @@ export class CustomerStatsComponent implements OnInit {
       cardio: {
         volume: [],
         intensity: [],
+        distance: [],
       },
     };
 
@@ -256,9 +277,11 @@ export class CustomerStatsComponent implements OnInit {
     this.barChartData[0].data = [];
     this.barChartData[1].data = [];
     this.barChartData[2].data = [];
+    this.barChartData[3].data = [];
 
     this.barChartCardioData[0].data = [];
     this.barChartCardioData[1].data = [];
+    this.barChartCardioData[2].data = [];
   }
 
   private _setCategory(label) {
@@ -266,6 +289,7 @@ export class CustomerStatsComponent implements OnInit {
       label: label,
       volume: 0,
       tonnage: 0,
+      distance: 0,
       intensite: 0,
       intensiteSize: 0,
       movements: [],
