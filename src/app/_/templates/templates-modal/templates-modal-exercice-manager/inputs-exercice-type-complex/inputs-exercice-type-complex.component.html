@@ -22,10 +22,7 @@
     <div class="number-movement-list-label ml-2">{{ movement.name }}</div>
 
     <ul class="list-group">
-      <li
-        class="list-group-item"
-        *ngIf="isPlanning && movementService.isShowRepMax(movement)"
-      >
+      <li class="list-group-item" *ngIf="isPlanning && movement.has_repmax">
         <div class="form-row align-items-center">
           <div class="col-auto container-repmax-planning">
             <div class="input-group">
@@ -40,7 +37,7 @@
               />
             </div>
           </div>
-          <div class="col-auto" *ngIf="movement.has_unit">
+          <div class="col-auto" *ngIf="movement.has_rep_unit">
             <select
               [(ngModel)]="movement.max_unit"
               type="number"
@@ -147,13 +144,13 @@
           <div class="col-md-auto col-5 custom-form">
             <div class="input-group">
               <input
-                *ngIf="movement.has_repetitions || movement.has_unit"
+                *ngIf="movement.has_repetitions || movement.has_rep_unit"
                 placeholder="1"
                 [(ngModel)]="set.rep"
                 type="number"
                 class="form-control number-movement-list"
               />
-              <div class="col-auto" *ngIf="movement.has_unit">
+              <div class="col-auto" *ngIf="movement.has_rep_unit">
                 <select
                   [(ngModel)]="set.rep_unit"
                   type="number"
@@ -169,7 +166,7 @@
               </div>
               <div
                 class="input-group-apppend"
-                *ngIf="movement.has_repetitions && !movement.has_unit"
+                *ngIf="movement.has_repetitions && !movement.has_rep_unit"
               >
                 <span class="input-group-text">{{
                   "#Reps" | dgTranslate

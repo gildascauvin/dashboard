@@ -36,14 +36,14 @@ export class CustomerStatsComponent implements OnInit {
       volumeRound: 0,
       tonnageRound: 0,
       distanceRound: 0,
-      intensiteRound: 0,
+      intensiteRound: 0
     },
     categories: {},
     movements: {},
     cardio: {
       volume: [],
       intensity: [],
-      distance: [],
+      distance: []
     },
   };
 
@@ -126,36 +126,36 @@ export class CustomerStatsComponent implements OnInit {
     {
       data: this.stats.weekly.distance,
       label: "Distance",
-      backgroundColor: "#8f5ac3",
-      hoverBackgroundColor: "#8f5ac3",
-      barThickness: 4,
+      backgroundColor: "#9953c9",
+      hoverBackgroundColor: "#9953c9",
+      barThickness: 4
     },
   ];
 
-  barChartCardioData: ChartDataSets[] = [
-    {
-      data: this.stats.cardio.intensity,
-      label: "Intensity",
-      backgroundColor: "#cc0202",
-      hoverBackgroundColor: "#cc0202",
-      barThickness: 4,
-      yAxisID: "y-axis-1",
-    },
-    {
-      data: this.stats.cardio.volume,
-      label: "Volume",
-      backgroundColor: "#000000",
-      hoverBackgroundColor: "#000000",
-      barThickness: 4,
-    },
-    {
-      data: this.stats.cardio.distance,
-      label: "Distance",
-      backgroundColor: "#8f5ac3",
-      hoverBackgroundColor: "#8f5ac3",
-      barThickness: 4,
-    },
-  ];
+  // barChartCardioData: ChartDataSets[] = [
+  //   {
+  //     data: this.stats.cardio.intensity,
+  //     label: "Intensity",
+  //     backgroundColor: "#cc0202",
+  //     hoverBackgroundColor: "#cc0202",
+  //     barThickness: 4,
+  //     yAxisID: "y-axis-1",
+  //   },
+  //   {
+  //     data: this.stats.cardio.volume,
+  //     label: "Volume",
+  //     backgroundColor: "#000000",
+  //     hoverBackgroundColor: "#000000",
+  //     barThickness: 4,
+  //   },
+  //   {
+  //     data: this.stats.cardio.distance,
+  //     label: "Distance",
+  //     backgroundColor: "#9953c9",
+  //     hoverBackgroundColor: "#9953c9",
+  //     barThickness: 4,
+  //   },
+  // ];
 
   isLoading: boolean = false;
 
@@ -220,7 +220,7 @@ export class CustomerStatsComponent implements OnInit {
         this.barChartLegend = component.barChartLegend;
         this.barChartPlugins = component.barChartPlugins;
         this.barChartData = component.barChartData;
-        this.barChartCardioData = component.barChartCardioData;
+        // this.barChartCardioData = component.barChartCardioData;
         this.categories = component.categories;
         this.fromDate = component.fromDate;
         this.toDate = component.toDate;
@@ -258,7 +258,7 @@ export class CustomerStatsComponent implements OnInit {
       cardio: {
         volume: [],
         intensity: [],
-        distance: [],
+        distance: []
       },
     };
 
@@ -279,9 +279,9 @@ export class CustomerStatsComponent implements OnInit {
     this.barChartData[2].data = [];
     this.barChartData[3].data = [];
 
-    this.barChartCardioData[0].data = [];
-    this.barChartCardioData[1].data = [];
-    this.barChartCardioData[2].data = [];
+    // this.barChartCardioData[0].data = [];
+    // this.barChartCardioData[1].data = [];
+    // this.barChartCardioData[2].data = [];
   }
 
   private _setCategory(label) {

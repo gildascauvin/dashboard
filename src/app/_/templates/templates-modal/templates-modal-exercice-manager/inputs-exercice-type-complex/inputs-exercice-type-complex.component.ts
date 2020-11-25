@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
 import * as _ from "lodash";
-import { MovementService } from "src/app/_/services/model/movement.service";
 import { webConfig } from "../../../../../web-config";
 import { UsersService } from "../../../users.service";
 
@@ -19,10 +18,7 @@ export class InputsExerciceTypeComplexComponent implements OnInit {
   movements: any[] = [];
   sub: any;
 
-  constructor(
-    private usersService: UsersService,
-    public movementService: MovementService
-  ) {}
+  constructor(private usersService: UsersService) {}
 
   ngOnInit(): void {
     this.model.amrap_timecap = this.model.amrap_timecap || 10;

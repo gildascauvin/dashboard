@@ -1,36 +1,52 @@
 <ul ngbNav #nav="ngbNav" class="nav-tabs">
   <li ngbNavItem>
-    <a ngbNavLink>{{ '#Categories' | dgTranslate }}</a>
+    <a ngbNavLink>{{ "#Categories" | dgTranslate }}</a>
     <ng-template ngbNavContent>
       <ul class="list-group">
-      	<ng-container *ngFor="let category of categoriesData">
-					<li class="list-group-item" *ngIf="category && category.volume">
-						<h5>{{ category.label }}</h5>
-						<span class="float-right">
-							<span class="badge mr-2 badge-dark">v: {{category.volume}}</span>
-							<span class="badge mr-2 badge-secondary">t: {{category.tonnage}}</span>
-							<span class="badge mr-2 badge-danger">i: {{category.intensity}} %</span>
-						</span>
-						<p>{{ category.movements.length}} {{ '#exercices' | dgTranslate }}</p>
-					</li>
-				</ng-container>
-			</ul>
+        <ng-container *ngFor="let category of categoriesData">
+          <li class="list-group-item">
+            <h5>{{ category.label }}</h5>
+            <span class="float-right">
+              <span class="badge mr-2 badge-dark" *ngIf="category.id !== 1"
+                >v: {{ category.volume }}</span
+              >
+              <span class="badge mr-2 badge-secondary" *ngIf="category.id !== 1"
+                >t: {{ category.tonnage }}</span
+              >
+              <span class="badge mr-2 badge-purple" *ngIf="category.id === 1"
+                >d: {{ category.distance }}</span
+              >
+              <span class="badge mr-2 badge-danger"
+                >i: {{ category.intensity }} %</span
+              >
+            </span>
+            <p>
+              {{ category.movements.length }} {{ "#exercices" | dgTranslate }}
+            </p>
+          </li>
+        </ng-container>
+      </ul>
     </ng-template>
   </li>
   <li ngbNavItem>
-    <a ngbNavLink>{{ '#Exercices' | dgTranslate }}</a>
+    <a ngbNavLink>{{ "#Exercices" | dgTranslate }}</a>
     <ng-template ngbNavContent>
-    	<ul class="list-group">
-				<li class="list-group-item" *ngFor="let mvt of movements">
-					<h5>{{ mvt.name }}</h5>
-					<span class="float-right">
-						<span class="badge mr-2 badge-dark">v: {{mvt.volume}}</span>
-						<span class="badge mr-2 badge-secondary">t: {{mvt.tonnage}}</span>
-						<span class="badge mr-2 badge-danger">i: {{mvt.intensity}} %</span>
-					</span>
-					<p>{{ mvt.movements && mvt.movements.length}} {{ '#exercices' | dgTranslate }}</p>
-				</li>
-			</ul>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let mvt of movements">
+          <h5>{{ mvt.name }}</h5>
+          <span class="float-right">
+            <span class="badge mr-2 badge-dark">v: {{ mvt.volume }}</span>
+            <span class="badge mr-2 badge-secondary">t: {{ mvt.tonnage }}</span>
+            <span class="badge mr-2 badge-danger"
+              >i: {{ mvt.intensity }} %</span
+            >
+          </span>
+          <p>
+            {{ mvt.movements && mvt.movements.length }}
+            {{ "#exercices" | dgTranslate }}
+          </p>
+        </li>
+      </ul>
     </ng-template>
   </li>
 </ul>
