@@ -128,7 +128,8 @@ export class CustomerStatsComponent implements OnInit {
       label: "Distance",
       backgroundColor: "#9953c9",
       hoverBackgroundColor: "#9953c9",
-      barThickness: 4
+      barThickness: 4,      
+      yAxisID: "y-axis-1",      
     },
   ];
 

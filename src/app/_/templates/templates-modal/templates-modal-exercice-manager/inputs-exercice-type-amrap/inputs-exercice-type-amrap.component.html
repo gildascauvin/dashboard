@@ -60,6 +60,20 @@
         />
       </div>
       <div class="col title-mouvement">{{ movement.name }}</div>
+      <div class="col-auto" *ngIf="movement.has_rep_unit">
+        <select
+          [(ngModel)]="movement.sets[0].rep_unit"
+          type="number"
+          class="form-control number-movement-list"
+        >
+          <option
+            *ngFor="let unit of configExercices.unit"
+            [value]="unit.id"
+          >
+            {{ unit.name }}
+          </option>
+        </select>
+      </div>
       <div class="d-flex container-set">
         <div class="col-auto custom-form" *ngIf="movement.has_value">
           <input

@@ -165,6 +165,7 @@ export class CustomerStatsRangeComponent implements OnInit {
       backgroundColor: "#9953c9",
       hoverBackgroundColor: "#9953c9",
       barThickness: 4,
+      yAxisID: "y-axis-1",
     },
   ];
 
@@ -592,7 +593,6 @@ export class CustomerStatsRangeComponent implements OnInit {
                   intensite += set.rep * exercice.sets * set.value;
                   intensiteSize += set.rep * exercice.sets;
                 });
-
                 if (parentId) {
                   this._calcMovements(
                     movement,
@@ -627,7 +627,6 @@ export class CustomerStatsRangeComponent implements OnInit {
                 distance += _distance;
                 intensite += _intensite;
                 intensiteSize += _intensiteSize;
-
                 if (parentId) {
                   this._calcMovements(
                     movement,
@@ -957,7 +956,7 @@ export class CustomerStatsRangeComponent implements OnInit {
               exercice.movements.map((movement) => {
                 parentId = this.categories[movement.category_id];
 
-                let _volume = movement.sets[0].quantity * exercice.sets;
+                let _volume = 0;
                 let _tonnage = 0;
                 // movement.sets[0].quantity *
                 // exercice.sets *
@@ -967,6 +966,11 @@ export class CustomerStatsRangeComponent implements OnInit {
                 // movement.sets[0].quantity *
                 // exercice.sets *
                 // movement.sets[0].value;
+                if (movement.has_rep_unit) {
+                  _distance = movement.sets[0].quantity * exercice.sets;
+                } else {
+                  _volume += movement.sets[0].quantity * exercice.sets;
+                }
                 let calcul = this._calcIntensiteTonnage(
                   movement.max_value,
                   movement.sets[0].unit_label,
@@ -1002,8 +1006,7 @@ export class CustomerStatsRangeComponent implements OnInit {
               exercice.movements.map((movement) => {
                 parentId = this.categories[movement.category_id];
 
-                let _volume =
-                  movement.sets[0].quantity * exercice.time_style_fixed;
+                let _volume = 0;
                 let _tonnage = 0;
                 // movement.sets[0].quantity *
                 // exercice.time_style_fixed *
@@ -1013,7 +1016,13 @@ export class CustomerStatsRangeComponent implements OnInit {
                 // movement.sets[0].quantity *
                 // exercice.time_style_fixed *
                 // movement.sets[0].value;
-
+                if (movement.has_rep_unit) {
+                  _distance =
+                    movement.sets[0].quantity * exercice.time_style_fixed;
+                } else {
+                  _volume +=
+                    movement.sets[0].quantity * exercice.time_style_fixed;
+                }
                 let calcul = this._calcIntensiteTonnage(
                   movement.max_value,
                   movement.sets[0].unit_label,
@@ -1058,14 +1067,18 @@ export class CustomerStatsRangeComponent implements OnInit {
                   return;
                 }*/
 
-                let _volume = movement.sets[0].quantity * sets;
+                let _volume = 0;
                 let _tonnage = 0;
                 // movement.sets[0].quantity * sets * movement.sets[0].value;
                 let _distance = 0;
                 let _intensite = 0;
 
                 // movement.sets[0].quantity * sets * movement.sets[0].value;
-
+                if (movement.has_rep_unit) {
+                  _distance = movement.sets[0].quantity * sets;
+                } else {
+                  _volume += movement.sets[0].quantity * sets;
+                }
                 let calcul = this._calcIntensiteTonnage(
                   movement.max_value,
                   movement.sets[0].unit_label,
@@ -1110,25 +1123,28 @@ export class CustomerStatsRangeComponent implements OnInit {
             } else if (exercice.cardio_scoring == 2) {
               exercice.cardio_intervals_movement.sets.map((set) => {
                 // cardioVolume += set.interval * set.set;
-                cardioDistance = set.interval * set.set;
-                cardioIntensite = set.value * set.interval;
-                cardioIntensiteSize = set.interval;
+                cardioDistance += set.interval * set.set;
+                cardioIntensite += set.value * set.interval;
+                cardioIntensiteSize += set.interval;
               });
             }
+
             volume += cardioVolume;
             tonnage += cardioTonnage;
             distance += cardioDistance;
             intensite += cardioIntensite;
             intensiteSize += cardioIntensiteSize;
-            this.stats.categories[1].volume += volume;
-            this.stats.categories[1].tonnage += tonnage;
-            this.stats.categories[1].distance += distance;
-            this.stats.categories[1].intensite += intensite;
-            this.stats.categories[1].intensiteSize += intensiteSize;
 
+            this.stats.categories[1].volume += cardioVolume;
+            this.stats.categories[1].tonnage += cardioTonnage;
+            this.stats.categories[1].distance += cardioDistance;
+            this.stats.categories[1].intensite += cardioIntensite;
+            this.stats.categories[1].intensiteSize += cardioIntensiteSize;
             this.stats.categories[1].movements.push({});
-            for (let category in this.stats.categories) {
-              this.categoriesData.push(this.stats.categories[category]);
+            if (this.categoriesData.length === 0) {
+              for (let category in this.stats.categories) {
+                this.categoriesData.push(this.stats.categories[category]);
+              }
             }
             this.categoriesData = _.sortBy(
               this.categoriesData,
@@ -1288,7 +1304,6 @@ export class CustomerStatsRangeComponent implements OnInit {
     //   console.log(parentId,volume,tonnage,distance,intensite,intensiteSize)
     //   return;
     // }
-
     if (!this.stats.movements[movement.movement_id]) {
       this.stats.movements[movement.movement_id] = {
         movements: [movement],
