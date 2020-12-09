@@ -17,6 +17,7 @@ export class UsersModalProgramAthleteManagerComponent extends FormModalCore impl
   athletes: any = [];
 
 	modelId: number = 0;
+	programId: number = 0;
 
   errors: any = {}
   errorsMessage: string = '';
@@ -63,7 +64,7 @@ export class UsersModalProgramAthleteManagerComponent extends FormModalCore impl
     this.sub.activeClientToProgram = this.usersService
       .activeClientToProgram(
         this.modelId,
-        this.program.program_id,
+        this.programId,
         athlete.client_id,
         newValue,
         dateStart,

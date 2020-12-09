@@ -459,9 +459,7 @@ export class CustomerStatsRangeComponent implements OnInit {
               dates.push(property);
             }
             if (!this.isOneDay) {
-              let endWeekDay = startOfWeek(new Date(dates[0]), {
-                weekStartsOn: 1,
-              });
+              let endWeekDay = this._getMonday(new Date(dates[0]));
               let startWeekDay = endOfWeek(new Date(dates[dates.length - 1]), {
                 weekStartsOn: 1,
               });
@@ -561,22 +559,45 @@ export class CustomerStatsRangeComponent implements OnInit {
               exercice.movements.map((movement) => {
                 parentId = this.categories[movement.category_id];
 
+                let _volume = 0;
+                let _tonnage = 0;
+                let _distance = 0;
+                let _intensite = 0;
+                let _intensiteSize = 0;
+
                 movement.sets.map((set) => {
-                  volume += set.rep * set.set;
-                  tonnage += set.rep * set.set * set.value;
-                  intensite += set.rep * set.set * set.value;
-                  intensiteSize += set.rep * set.set;
+                  if (movement.has_rep_unit) {
+                    _distance = set.rep * set.set;
+                  } else {
+                    _volume += set.rep * set.set;
+                  }
+                  let calcul = this._calcIntensiteTonnage(
+                    movement.max_value,
+                    set.unit_label,
+                    set.value,
+                    set.rep,
+                    set.set
+                  );
+                  _tonnage += calcul["tonnage"];
+                  _intensite += calcul["intensite"];
+                  _intensiteSize += set.rep * set.set;
                 });
+
+                volume += _volume;
+                tonnage += _tonnage;
+                distance += _distance;
+                intensite += _intensite;
+                intensiteSize += _intensiteSize;
 
                 if (parentId) {
                   this._calcMovements(
                     movement,
                     parentId,
-                    volume,
-                    tonnage,
-                    distance,
-                    intensite,
-                    intensiteSize
+                    _volume,
+                    _tonnage,
+                    _distance,
+                    _intensite,
+                    _intensiteSize
                   );
                 }
               });
@@ -586,40 +607,77 @@ export class CustomerStatsRangeComponent implements OnInit {
               exercice.movements.map((movement) => {
                 parentId = this.categories[movement.category_id];
 
-                movement.sets.map((set) => {
-                  volume += set.rep * exercice.sets;
-                  tonnage += set.rep * exercice.sets * set.value;
+                let _volume = 0;
+                let _tonnage = 0;
+                let _distance = 0;
+                let _intensite = 0;
+                let _intensiteSize = 0;
 
-                  intensite += set.rep * exercice.sets * set.value;
-                  intensiteSize += set.rep * exercice.sets;
+                movement.sets.map((set) => {
+                  if (movement.has_rep_unit)
+                    _distance = set.rep * exercice.sets;
+                  else _volume += set.rep * exercice.sets;
+                  let calcul = this._calcIntensiteTonnage(
+                    movement.max_value,
+                    set.unit_label,
+                    set.value,
+                    set.rep,
+                    exercice.sets
+                  );
+                  _tonnage += calcul["tonnage"];
+                  _intensite += calcul["intensite"];
+                  _intensiteSize += set.rep * exercice.sets;
                 });
+
+                volume += _volume;
+                tonnage += _tonnage;
+                distance += _distance;
+                intensite += _intensite;
+                intensiteSize += _intensiteSize;
+
                 if (parentId) {
                   this._calcMovements(
                     movement,
                     parentId,
-                    volume,
-                    tonnage,
-                    distance,
-                    intensite,
-                    intensiteSize
+                    _volume,
+                    _tonnage,
+                    _distance,
+                    _intensite,
+                    _intensiteSize
                   );
                 }
+
               });
             // Exercice AMRAP
           } else if (exercice.type.id === 3) {
             exercice.movements &&
               exercice.movements.map((movement) => {
                 parentId = this.categories[movement.category_id];
+
+                let _volume = 0;
+                let _tonnage = 0;
+                // movement.sets[0].quantity *
+                // exercice.sets *
+                // movement.sets[0].value;
                 let _distance = 0;
-                let _volume = movement.sets[0].quantity * exercice.sets;
-                let _tonnage =
-                  movement.sets[0].quantity *
-                  exercice.sets *
-                  movement.sets[0].value;
-                let _intensite =
-                  movement.sets[0].quantity *
-                  exercice.sets *
-                  movement.sets[0].value;
+                let _intensite = 0;
+                // movement.sets[0].quantity *
+                // exercice.sets *
+                // movement.sets[0].value;
+                if (movement.has_rep_unit) {
+                  _distance = movement.sets[0].quantity * exercice.sets;
+                } else {
+                  _volume += movement.sets[0].quantity * exercice.sets;
+                }
+                let calcul = this._calcIntensiteTonnage(
+                  movement.max_value,
+                  movement.sets[0].unit_label,
+                  movement.sets[0].value,
+                  movement.sets[0].quantity,
+                  exercice.sets
+                );
+                _tonnage += calcul["tonnage"];
+                _intensite += calcul["intensite"];
                 let _intensiteSize = movement.sets[0].quantity * exercice.sets;
 
                 volume += _volume;
@@ -627,6 +685,7 @@ export class CustomerStatsRangeComponent implements OnInit {
                 distance += _distance;
                 intensite += _intensite;
                 intensiteSize += _intensiteSize;
+
                 if (parentId) {
                   this._calcMovements(
                     movement,
@@ -644,17 +703,32 @@ export class CustomerStatsRangeComponent implements OnInit {
             exercice.movements &&
               exercice.movements.map((movement) => {
                 parentId = this.categories[movement.category_id];
+                let _volume = 0;
+                let _tonnage = 0;
+                // movement.sets[0].quantity *
+                // exercice.time_style_fixed *
+                // movement.sets[0].value;
                 let _distance = 0;
-                let _volume =
-                  movement.sets[0].quantity * exercice.time_style_fixed;
-                let _tonnage =
-                  movement.sets[0].quantity *
-                  exercice.time_style_fixed *
-                  movement.sets[0].value;
-                let _intensite =
-                  movement.sets[0].quantity *
-                  exercice.time_style_fixed *
-                  movement.sets[0].value;
+                let _intensite = 0;
+                // movement.sets[0].quantity *
+                // exercice.time_style_fixed *
+                // movement.sets[0].value;
+                if (movement.has_rep_unit) {
+                  _distance =
+                    movement.sets[0].quantity * exercice.time_style_fixed;
+                } else {
+                  _volume +=
+                    movement.sets[0].quantity * exercice.time_style_fixed;
+                }
+                let calcul = this._calcIntensiteTonnage(
+                  movement.max_value,
+                  movement.sets[0].unit_label,
+                  movement.sets[0].value,
+                  movement.sets[0].quantity,
+                  exercice.time_style_fixed
+                );
+                _tonnage += calcul["tonnage"];
+                _intensite += calcul["intensite"];
                 let _intensiteSize =
                   movement.sets[0].quantity * exercice.time_style_fixed;
 
@@ -689,12 +763,30 @@ export class CustomerStatsRangeComponent implements OnInit {
                 /*if (!movement.sets[0].quantity || movement.sets[0].value) {
                   return;
                 }*/
+
+                let _volume = 0;
+                let _tonnage = 0;
+                // movement.sets[0].quantity * sets * movement.sets[0].value;
                 let _distance = 0;
-                let _volume = movement.sets[0].quantity * sets;
-                let _tonnage =
-                  movement.sets[0].quantity * sets * movement.sets[0].value;
-                let _intensite =
-                  movement.sets[0].quantity * sets * movement.sets[0].value;
+                let _intensite = 0;
+
+                // movement.sets[0].quantity * sets * movement.sets[0].value;
+                if (movement.has_rep_unit) {
+                  _distance = movement.sets[0].quantity * sets;
+                } else {
+                  _volume += movement.sets[0].quantity * sets;
+                }
+                let calcul = this._calcIntensiteTonnage(
+                  movement.max_value,
+                  movement.sets[0].unit_label,
+                  movement.sets[0].value,
+                  movement.sets[0].quantity,
+                  sets
+                );
+
+                _tonnage += calcul["tonnage"];
+                _intensite += calcul["intensite"];
+
                 let _intensiteSize = movement.sets[0].quantity * sets;
 
                 volume += _volume;
@@ -731,6 +823,7 @@ export class CustomerStatsRangeComponent implements OnInit {
                 cardioIntensiteSize++;
               });
             }
+            console.log('cardioTonnage: ' + cardioTonnage);
             volume += cardioVolume;
             tonnage += cardioTonnage;
             distance += cardioDistance;
@@ -777,7 +870,7 @@ export class CustomerStatsRangeComponent implements OnInit {
     );
 
     this.stats.weekly.intensite.push(
-      parseInt("" + intensite / intensiteSize, 2) | 0
+      parseInt("" + intensite / intensiteSize) | 0
     );
 
     this.stats.weekly.volume.push(volume | 0);
@@ -1238,6 +1331,7 @@ export class CustomerStatsRangeComponent implements OnInit {
       this.stats.weekly.realIntensiteSize.push(0);
     }
 
+    console.log(this.stats.weekly.intensite);
     this.barChartData[0].data = this.stats.weekly.intensite;
     this.barChartData[1].data = this.stats.weekly.volume;
     this.barChartData[2].data = this.stats.weekly.tonnage;
@@ -1441,5 +1535,12 @@ export class CustomerStatsRangeComponent implements OnInit {
       }
     }
     return { tonnage: _tonnage, intensite: _intensite };
+  }
+
+  private _getMonday(d) {
+    d = new Date(d);
+    var day = d.getDay(),
+      diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+    return new Date(d.setDate(diff));
   }
 }
