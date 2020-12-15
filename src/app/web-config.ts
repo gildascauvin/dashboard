@@ -214,6 +214,26 @@ export const webConfig = {
  	},
  	categories: (environment.production
  		? { 8: 1, 9: 5, 12: 1, 13: 2, 14: 2, 15: 2, 16: 2, 17: 2, 18: 2, 19: 2, 20: 2, 21: 2, 22: 4, 23: 4, 24: 4, 25: 4, 26: 3, 27: 3, 28: 3, 29: 3, 30: 3, 31: 3, 32: 3, 33: 3, 34: 6, 35: 6, 36: 6, 37: 6, 38: 6, 39: 7, 40: 7, 41: 7, 42: 7, 43: 7, 44: 7, 45: 7, 46: 7, 47: 7, 48: 7, 49: 7, 50: 7, 51: 7, 52: 7, 53: 7, 54: 7, 55: 7, 56: 7, 57: 7, 58: 7, 59: 7, 60: 7, 61: 7, 62: 7, 63: 7, 64: 7, 65: 7, 66: 7 }
- 		: { 8: 1, 9: 5, 10: 1, 11: 2, 12: 2, 13: 2, 14: 2, 15: 2, 16: 2, 17: 2, 18: 2, 19: 2, 20: 4, 21: 4, 22: 4, 23: 4, 24: 3, 25: 3, 26: 3, 27: 3, 28: 3, 29: 3, 30: 3, 31: 3, 32: 6, 33: 6, 34: 6, 35: 6, 36: 6, 37: 7, 38: 7, 39: 7, 40: 7, 41: 7, 42: 7, 43: 7, 44: 7, 45: 7, 46: 7, 47: 7, 48: 7, 49: 7, 50: 7, 51: 7, 52: 7, 53: 7, 54: 7, 55: 7, 56: 7, 57: 7, 58: 7, 59: 7, 60: 7, 61: 7, 62: 7, 63: 7, 64: 7 }),
+		 : { 8: 1, 9: 5, 10: 1, 11: 2, 12: 2, 13: 2, 14: 2, 15: 2, 16: 2, 17: 2, 18: 2, 19: 2, 20: 4, 21: 4, 22: 4, 23: 4, 24: 3, 25: 3, 26: 3, 27: 3, 28: 3, 29: 3, 30: 3, 31: 3, 32: 6, 33: 6, 34: 6, 35: 6, 36: 6, 37: 7, 38: 7, 39: 7, 40: 7, 41: 7, 42: 7, 43: 7, 44: 7, 45: 7, 46: 7, 47: 7, 48: 7, 49: 7, 50: 7, 51: 7, 52: 7, 53: 7, 54: 7, 55: 7, 56: 7, 57: 7, 58: 7, 59: 7, 60: 7, 61: 7, 62: 7, 63: 7, 64: 7 }),
+	categoriesIconClassCss:[
+		// id category others
+		{id:0,icon:'logo-other',classCss:"others-bar"},
+		// id category cardio
+		{id:1,icon:'logo-cardio',classCss:"cardio-bar"},
+		// id category weightlifting
+		{id:2,icon:'logo-intensit',classCss:"weightlifting-bar"},
+		// id category power
+		{id:3,icon:'logo-power',classCss:"power-bar"},
+		// id category strongman
+		{id:4,icon:'logo-muscle',classCss:"strongman-bar"},
+		// id category stretching
+		{id:5,icon:'logo-stretch',classCss:"stretching-bar"},
+		// id category plyometrics
+		{id:6,icon:'logo-plyo',classCss:"plyometrics-bar"},	
+		// id category strenght
+		{id:7,icon:'logo-alt-re',classCss:"strenght-bar"},		
+
+
+	]		 
 
 };

@@ -310,7 +310,7 @@
   "#Weekly overload": "Weekly overload",
   "#Volume": "Volume",
   "#Tonnage": "Tonnage",
-  "#Av. weight": "Av. weight",
+  "#Av. weight": "Av. %",
   "#Distance": "Distance",
   "#My programs": "My programs",
   "#workouts": "workouts",
@@ -358,5 +358,6 @@
   "#Done": "Done",
   "#Next": "Next",
   "#Previous": "Previous",
-  "#Rate": "Rate of perceived exhaustion"
+  "#Rate": "Rate of perceived exhaustion",
+  "#Training breakdown": "Training breakdown"
 }

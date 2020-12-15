@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from "@angular/core";
 import {
   NgbCalendar,
   NgbDate,
-  NgbDateParserFormatter,
+  NgbDateParserFormatter
 } from "@ng-bootstrap/ng-bootstrap";
 import { ChartDataSets, ChartOptions, ChartType } from "chart.js";
 import * as pluginDataLabels from "chartjs-plugin-datalabels";
@@ -22,6 +22,7 @@ export class CustomerStatsComponent implements OnInit {
   @Input() showCanvas: boolean = true;
 
   @Input() isFromUrl = true;
+  @Input() resize: boolean = false;
 
   stats: any = {
     weekly: {
@@ -36,19 +37,20 @@ export class CustomerStatsComponent implements OnInit {
       volumeRound: 0,
       tonnageRound: 0,
       distanceRound: 0,
-      intensiteRound: 0
+      intensiteRound: 0,
     },
     categories: {},
     movements: {},
     cardio: {
       volume: [],
       intensity: [],
-      distance: []
+      distance: [],
     },
   };
 
   barChartOptions: ChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       yAxes: [
         {
@@ -72,6 +74,7 @@ export class CustomerStatsComponent implements OnInit {
 
   barChartCardioOptions: ChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       yAxes: [
         {
@@ -128,8 +131,8 @@ export class CustomerStatsComponent implements OnInit {
       label: "Distance",
       backgroundColor: "#9953c9",
       hoverBackgroundColor: "#9953c9",
-      barThickness: 4,      
-      yAxisID: "y-axis-1",      
+      barThickness: 4,
+      yAxisID: "y-axis-1",
     },
   ];
 
@@ -259,7 +262,7 @@ export class CustomerStatsComponent implements OnInit {
       cardio: {
         volume: [],
         intensity: [],
-        distance: []
+        distance: [],
       },
     };
 
