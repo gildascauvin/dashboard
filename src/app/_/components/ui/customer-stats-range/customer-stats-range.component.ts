@@ -314,30 +314,13 @@ export class CustomerStatsRangeComponent implements OnInit {
 
     this.sub.onGetAllWorkout && this.sub.onGetAllWorkout.unsubscribe();
 
-    let toDate =
-      this.toDate.year +
-      "-" +
-      this.toDate.month +
-      "-" +
-      this.toDate.day +
-      " 00:00:00";
-    let fromDate =
-      this.fromDate.year +
-      "-" +
-      this.fromDate.month +
-      "-" +
-      this.fromDate.day +
-      " 00:00:00";
+    let toDate = this._computeDateFromDatePicker(this.toDate, true);
+    let fromDate = this._computeDateFromDatePicker(this.fromDate, true);
 
     this._clean();
-    //fromDate = "2020-10-25 00:00:00";
 
-    let to = new Date(
-      this.toDate.year + "-" + this.toDate.month + "-" + this.toDate.day
-    );
-    let from = new Date(
-      this.fromDate.year + "-" + this.fromDate.month + "-" + this.fromDate.day
-    );
+    let to = new Date(this._computeDateFromDatePicker(this.toDate));
+    let from = new Date(this._computeDateFromDatePicker(this.fromDate));
 
     this._init(from, to);
 
@@ -385,6 +368,8 @@ export class CustomerStatsRangeComponent implements OnInit {
 
           if (diff < nbDays) {
             diff = nbDays;
+          } else {
+            diff += 7;
           }
 
           let currentDate = endWeekDay;
@@ -567,7 +552,7 @@ export class CustomerStatsRangeComponent implements OnInit {
 
                 movement.sets.map((set) => {
                   if (movement.has_rep_unit) {
-                    _distance = set.rep * set.set;
+                    _distance += set.rep * set.set;
                   } else {
                     _volume += set.rep * set.set;
                   }
@@ -809,26 +794,46 @@ export class CustomerStatsRangeComponent implements OnInit {
               });
             // Exercice complex - Cardio
           } else if (exercice.type.id === 7) {
-            let cardioTonnage = 0;
+
+            var cardioVolume = 0;
+            var cardioTonnage = 0;
             if (exercice.cardio_scoring == 1) {
-              cardioVolume += exercice.cardio_cardio_movement.interval;
-              cardioDistance += exercice.cardio_cardio_movement.interval;
-              cardioIntensite += exercice.cardio_cardio_movement.value;
-              cardioIntensiteSize++;
+              //cardioVolume += exercice.cardio_cardio_movement.interval;
+              cardioDistance = exercice.cardio_cardio_movement.interval;
+              cardioIntensite =
+                exercice.cardio_cardio_movement.value * cardioDistance;
+              cardioIntensiteSize = exercice.cardio_cardio_movement.interval;
             } else if (exercice.cardio_scoring == 2) {
               exercice.cardio_intervals_movement.sets.map((set) => {
-                cardioVolume += set.interval * set.set;
-                cardioDistance += set.interval;
-                cardioIntensite += set.value;
-                cardioIntensiteSize++;
+                // cardioVolume += set.interval * set.set;
+                cardioDistance += set.interval * set.set;
+                cardioIntensite += set.value * set.interval;
+                cardioIntensiteSize += set.interval;
               });
             }
-            console.log('cardioTonnage: ' + cardioTonnage);
+
             volume += cardioVolume;
             tonnage += cardioTonnage;
             distance += cardioDistance;
             intensite += cardioIntensite;
             intensiteSize += cardioIntensiteSize;
+
+            this.stats.categories[1].volume += cardioVolume;
+            this.stats.categories[1].tonnage += cardioTonnage;
+            this.stats.categories[1].distance += cardioDistance;
+            this.stats.categories[1].intensite += cardioIntensite;
+            this.stats.categories[1].intensiteSize += cardioIntensiteSize;
+            this.stats.categories[1].movements.push({});
+            if (this.categoriesData.length === 0) {
+              for (let category in this.stats.categories) {
+                this.categoriesData.push(this.stats.categories[category]);
+              }
+            }
+            this.categoriesData = _.sortBy(
+              this.categoriesData,
+              "movements.length"
+            ).reverse();
+
           }
         });
     });
@@ -948,8 +953,10 @@ export class CustomerStatsRangeComponent implements OnInit {
       let cardioIntensite = 0;
       let cardioIntensiteSize = 0;
 
+
       part.workouts.map((workout) => {
         workout.program.exercices.map((exercice) => {
+
           if (exercice.type.id === 1) {
             exercice.movements &&
               exercice.movements.map((movement) => {
@@ -963,7 +970,7 @@ export class CustomerStatsRangeComponent implements OnInit {
 
                 movement.sets.map((set) => {
                   if (movement.has_rep_unit) {
-                    _distance = set.rep * set.set;
+                    _distance += set.rep * set.set;
                   } else {
                     _volume += set.rep * set.set;
                   }
@@ -1217,8 +1224,8 @@ export class CustomerStatsRangeComponent implements OnInit {
               exercice.cardio_intervals_movement.sets.map((set) => {
                 // cardioVolume += set.interval * set.set;
                 cardioDistance += set.interval * set.set;
-                cardioIntensite += set.value * set.interval;
-                cardioIntensiteSize += set.interval;
+                cardioIntensite += set.value * set.interval * set.set;
+                cardioIntensiteSize += set.interval * set.set;
               });
             }
 
@@ -1331,7 +1338,6 @@ export class CustomerStatsRangeComponent implements OnInit {
       this.stats.weekly.realIntensiteSize.push(0);
     }
 
-    console.log(this.stats.weekly.intensite);
     this.barChartData[0].data = this.stats.weekly.intensite;
     this.barChartData[1].data = this.stats.weekly.volume;
     this.barChartData[2].data = this.stats.weekly.tonnage;
@@ -1542,5 +1548,18 @@ export class CustomerStatsRangeComponent implements OnInit {
     var day = d.getDay(),
       diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
     return new Date(d.setDate(diff));
+  }
+
+  private _computeDateFromDatePicker(date, withtime?) {
+    let day = (date.day < 10) ? "0" + date.day : date.day;
+    let month = (date.month < 10) ? "0" + date.month : date.month;
+
+    let dateFormatted = date.year + "-" + month + "-" + day;
+
+    if (withtime === true) {
+      dateFormatted += " 00:00:00";
+    }
+
+    return dateFormatted;
   }
 }
