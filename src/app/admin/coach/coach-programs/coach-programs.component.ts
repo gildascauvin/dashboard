@@ -120,7 +120,7 @@ export class CoachProgramsComponent implements OnInit {
 
   openProgramAthleteManagerModal(program) {
     const initialState = {
-      modelId: program.program_id,
+      programId: program.program_id,
       athletes: this.user.clients,
       program: _.cloneDeep(program)
     };

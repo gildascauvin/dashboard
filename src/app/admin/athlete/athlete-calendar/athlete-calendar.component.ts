@@ -224,6 +224,17 @@ export class AthleteCalendarComponent implements OnInit {
     this._addWeeks();
   }
 
+  private _refreshWeeksWithWorkouts() {
+    _.forEach(this.weeks, (week, idWeek) => {
+      const weekWorkout = this.weeks[idWeek];
+      _.forEach(week, (days, idDay) => {
+          if (this.workouts[days.date]) {
+            days.workouts = this.workouts[days.date];
+          }
+      });
+    });
+  }
+
   private _addWeeks() {
     for (let y = 0; y < 5; ++y) {
       let days = [];
@@ -648,7 +659,7 @@ export class AthleteCalendarComponent implements OnInit {
   pasteCopiedWorkouts(workouts, day) {
     let k = Object.keys(this.selectedWorkoutsData);
     for (let i = 0; i < k.length; i++) {
-      let workout = this.selectedWorkoutsData[k[i]];
+      let workout = _.cloneDeep(this.selectedWorkoutsData[k[i]]);
       workout.workout_id = 0;
       workout.started_at = day.date + " 00:00:00";
       workout.program_json = JSON.stringify(workout.program);
@@ -660,7 +671,7 @@ export class AthleteCalendarComponent implements OnInit {
         ](workout).subscribe((response: any) => {
           // this.usersService.createWorkout(workout).subscribe((response: any) => {
           if (response.workout) {
-            workouts.push(_.cloneDeep(response.workout));
+            workouts.push(response.workout);
           }
         });
       }
@@ -751,6 +762,7 @@ export class AthleteCalendarComponent implements OnInit {
           }
           this.isLoading = false;
           this._init(!reset);
+          this._refreshWeeksWithWorkouts();
         });
     }
   }
