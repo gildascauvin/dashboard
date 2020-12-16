@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { UsersService } from '../../users.service';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { FormModalCore } from '../../../../_/core/form-modal.core';
+import { UsersService } from '../../users.service';
 
 @Component({
   selector: 'tpc-users-modal-program-athlete-manager',
   templateUrl: './users-modal-program-athlete-manager.component.html',
-  styleUrls: ['./users-modal-program-athlete-manager.component.scss']
+  styleUrls: ['./users-modal-program-athlete-manager.component.scss'],
 })
-export class UsersModalProgramAthleteManagerComponent extends FormModalCore implements OnInit {
-
+export class UsersModalProgramAthleteManagerComponent
+  extends FormModalCore
+  implements OnInit {
   model: any = {};
   currentActive: any = [];
   program: any = {};
@@ -19,7 +20,7 @@ export class UsersModalProgramAthleteManagerComponent extends FormModalCore impl
 	modelId: number = 0;
 	programId: number = 0;
 
-  errors: any = {}
+  errors: any = {};
   errorsMessage: string = '';
 
   Arr = Array;
@@ -27,9 +28,10 @@ export class UsersModalProgramAthleteManagerComponent extends FormModalCore impl
   sub: any = {};
 
   constructor(
-  	public bsModalRef: BsModalRef,
-  	private usersService: UsersService,
-  	private toastrService: ToastrService,) {
+    public bsModalRef: BsModalRef,
+    private usersService: UsersService,
+    private toastrService: ToastrService
+  ) {
     super();
   }
 
@@ -43,7 +45,8 @@ export class UsersModalProgramAthleteManagerComponent extends FormModalCore impl
   }
 
   ngOnDestroy(): void {
-    this.sub.activeClientToProgram && this.sub.activeClientToProgram.unsubscribe();
+    this.sub.activeClientToProgram &&
+      this.sub.activeClientToProgram.unsubscribe();
   }
 
   onDateSelect(date, userId) {
@@ -51,14 +54,18 @@ export class UsersModalProgramAthleteManagerComponent extends FormModalCore impl
   }
 
   onChangeActive(newValue, athlete) {
-    console.log('athlete', athlete);
-
     let dayStart = 1;
     let dateStart = null;
 
     if (athlete.dateStart) {
       dayStart = athlete.dayStart;
-      dateStart = athlete.dateStart.year + '-' + athlete.dateStart.month + '-' + athlete.dateStart.day + ' 00:00:00' ;
+      dateStart =
+        athlete.dateStart.year +
+        '-' +
+        athlete.dateStart.month +
+        '-' +
+        athlete.dateStart.day +
+        ' 00:00:00';
     }
 
     this.sub.activeClientToProgram = this.usersService
@@ -68,22 +75,28 @@ export class UsersModalProgramAthleteManagerComponent extends FormModalCore impl
         athlete.client_id,
         newValue,
         dateStart,
-        dayStart)
-      .subscribe((data: any) => {
-        console.log('data', data, newValue);
-        if (!data.errors) {
-          this.usersService.onUserUpdated.emit(true);
-          this.toastrService.success(newValue ? 'Athlete added!' : 'Athlete removed!');
-        } else {
-          this.errors = data.errors;
-          this.toastrService.error(data.message || 'An error has occurred');
-        }
-      }, (e) => this.toastrService.error('An error has occurred'));
+        dayStart
+      )
+      .subscribe(
+        (data: any) => {
+          console.log('data', data, newValue);
+          if (!data.errors) {
+            this.usersService.onUserUpdated.emit(true);
+            this.toastrService.success(
+              newValue ? 'Athlete added!' : 'Athlete removed!'
+            );
+          } else {
+            this.errors = data.errors;
+            this.toastrService.error(data.message || 'An error has occurred');
+          }
+        },
+        (e) => this.toastrService.error('An error has occurred')
+      );
   }
 
   cancel() {
-  	this.modelId = 0;
-		this.model = {};
+    this.modelId = 0;
+    this.model = {};
 
     this.bsModalRef.hide();
   }

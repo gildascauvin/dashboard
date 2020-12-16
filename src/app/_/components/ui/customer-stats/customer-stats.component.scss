@@ -1,39 +1,78 @@
+@media (max-width: 480px) {
+  .container-score {
+    .container-mrv {
+      max-width: 25%;
+      padding: 0;
+    }
+    .mrv-score {
+      width: 72px;
+      height: 72px;
+      .mrv-score-number {
+        line-height: 0.2;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
 .mrv-score {
-	width: 85px;
+  width: 78px;
+  border: solid 6px #d44000;
+  border-radius: 49%;
+  height: 78px;
+  margin: 20px auto 5px;
+  text-align: center;
+  background-color: #fbfbfb;
+  &.red {
     border: solid 6px #d44000;
-    border-radius: 49%;
-    height: 85px;
-    margin: 20px auto 5px;
+  }
+  &.purple {
+    border: solid 6px #9953c9;
+  }
+  &.black {
+    border: solid 6px #000000;
+  }
+  &.grey {
+    border: solid 6px #c1c1c1;
+  }
+  .mrv-score-icon {
+    font-family: Lato;
+  }
+
+  .mrv-score-number {
+    // width: 35px;
+    height: 33px;
+    // margin: 40px 13.5px 0 0;
+    font-family: Lato;
+    font-size: 15px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
     text-align: center;
-    background-color: #fbfbfb;
-	&.red {
-    	border: solid 6px #d44000;
-	}
-	&.purple {
-    	border: solid 6px #9953c9;
-	}
-	&.black {
-    	border: solid 6px #000000;
+    color: #0b0b0b;
+  }
 
-	}
-	&.grey {
-    	border: solid 6px #C1C1C1;
-
-	}
-    .mrv-score-icon {
-    	font-family: Lato;
-    }
-
-    .mrv-score-number {
-		margin-top: 25px;
-		font-size: 18px;
-		font-family: Lato;
-		font-weight: bold;
-		margin-bottom: -5px;
-    }
-
-    .mrv-score-label {
-    	font-family: Lato;
-		font-size: 12px;
-    }
+  .mrv-score-label {
+    font-family: Lato;
+    font-size: 12px;
+  }
+}
+.logo {
+  width: 43px;
+  height: 43px;
+  // margin: 0 0 30px 5.5px;
+  object-fit: contain;
+}
+.label-round {
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #6b6b6b;
 }

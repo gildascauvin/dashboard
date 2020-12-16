@@ -1,53 +1,58 @@
-import { Component, OnInit, Input } from '@angular/core';
-
-import { Label } from 'ng2-charts';
+import { Component, Input, OnInit } from '@angular/core';
 import { ChartDataSets, ChartType, RadialChartOptions } from 'chart.js';
-
 import * as _ from 'lodash';
+import { Label } from 'ng2-charts';
 
 @Component({
   selector: 'app-customer-profile-level',
   templateUrl: './customer-profile-level.component.html',
-  styleUrls: ['./customer-profile-level.component.scss']
+  styleUrls: ['./customer-profile-level.component.scss'],
 })
 export class CustomerProfileLevelComponent implements OnInit {
-	@Input() user: any  = {
-  	data: {},
+  @Input() user: any = {
+    data: {},
     profil: [],
   };
 
-	// Radar
+  // Radar
   public radarChartOptions: RadialChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     scale: {
       ticks: { min: 0 },
     },
     plugins: {
       datalabels: {
         labels: {
-          title: null
+          title: null,
         },
         anchor: 'end',
         align: 'end',
-      }
-    }
+      },
+    },
   };
 
   //
-  public radarChartLabels: Label[] = ['Back Squat', 'Rope Jumping', 'Front-To-Back Squat With Belt', 'Backward Drag', 'Defensive Slide'];
+  public radarChartLabels: Label[] = [
+    'Back Squat',
+    'Rope Jumping',
+    'Front-To-Back Squat With Belt',
+    'Backward Drag',
+    'Defensive Slide',
+  ];
 
   public radarChartData: ChartDataSets[] = [
     {
       data: [150, 120, 89, 120, 90],
       label: 'Volume',
       backgroundColor: null,
-      borderColor: "#000000",
+      borderColor: '#000000',
     },
     {
       data: [150, 120, 89, 120, 90],
       label: 'Max Ref',
       backgroundColor: null,
-      borderColor: "#FF0000",
+      borderColor: '#FF0000',
     },
     // { data: [12, 32, 43, 57, 90], label: 'Intensity' },
   ];
@@ -56,11 +61,10 @@ export class CustomerProfileLevelComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   ngOnChanges(changes) {
-  	this._initChart();
+    this._initChart();
   }
 
   private _initChart() {
@@ -89,5 +93,4 @@ export class CustomerProfileLevelComponent implements OnInit {
     this.radarChartData[1].data = radarChartDataTwo;
     this.radarChartLabels = radarChartLabels;
   }
-
 }

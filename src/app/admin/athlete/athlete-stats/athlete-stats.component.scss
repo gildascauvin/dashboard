@@ -1,3 +1,6 @@
+.container-stats {
+  background-color: #f1f1f1;
+}
 .box-stats-left {
   border-radius: 5px;
   background-color: #ffffff;
@@ -26,5 +29,8 @@
   }
   .box-stats-right {
     margin: 20px 0 20px 0;
+  }
+  .calendar-top {
+    padding: 0 15px 0 15px;
   }
 }

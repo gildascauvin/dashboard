@@ -5,24 +5,47 @@
       <ul class="list-group">
         <ng-container *ngFor="let category of categoriesData">
           <li class="list-group-item">
-            <h5>{{ category.label }}</h5>
-            <span class="float-right">
-              <span class="badge mr-2 badge-dark" *ngIf="category.id !== 1"
-                >v: {{ category.volume }}</span
-              >
-              <span class="badge mr-2 badge-secondary" *ngIf="category.id !== 1"
-                >t: {{ category.tonnage }}</span
-              >
-              <span class="badge mr-2 badge-purple" *ngIf="category.id === 1"
-                >d: {{ category.distance }}</span
-              >
-              <span class="badge mr-2 badge-danger"
-                >i: {{ category.intensity }} %</span
-              >
+            <span class="image-txt-container">
+              <img
+                src="{{ 'assets/img/logo/' + category.style.icon + '.png' }}"
+                srcset="{{'assets/img/logo/' + category.style.icon +'@2x.png 2x,assets/img/logo/' + category.style.icon +'@3x.png 3x'}}"
+                class="logo_category oval"
+              />
+              <div class="ml-2 container-label">
+                <p class="event">{{ category.label }}</p>
+                <p class="event-number">
+                  {{ category.movements.length }}
+                  {{ "#exercices" | dgTranslate }}
+                </p>
+              </div>
+              <span class="float-right category">
+                <span class="badge mr-2 badge-dark" *ngIf="category.id !== 1"
+                  >v: {{ category.volume }}</span
+                >
+                <span
+                  class="badge mr-2 badge-secondary"
+                  *ngIf="category.id !== 1"
+                  >t: {{ category.tonnage }}</span
+                >
+                <span class="badge mr-2 badge-purple" *ngIf="category.id === 1"
+                  >d: {{ category.distance }}</span
+                >
+                <span class="badge mr-2 badge-danger"
+                  >i: {{ category.intensity }} %</span
+                >
+              </span>
             </span>
-            <p>
-              {{ category.movements.length }} {{ "#exercices" | dgTranslate }}
-            </p>
+
+            <div class="mt-2 progress height-progress">
+              <div
+                class="{{ 'progress-bar ' + category.style.classCss }}"
+                role="progressbar"
+                [ngStyle]="{ 'width.%': category.percentage }"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
           </li>
         </ng-container>
       </ul>
@@ -34,17 +57,27 @@
       <ul class="list-group">
         <li class="list-group-item" *ngFor="let mvt of movements">
           <h5>{{ mvt.name }}</h5>
-          <span class="float-right">
-            <span class="badge mr-2 badge-dark">v: {{ mvt.volume }}</span>
-            <span class="badge mr-2 badge-secondary">t: {{ mvt.tonnage }}</span>
+          <span class="float-right category">
+            <span class="badge mr-2 badge-dark">v: {{ mvt.volume  | number}}</span>
+            <span class="badge mr-2 badge-secondary">t: {{ mvt.tonnage | number }}</span>
             <span class="badge mr-2 badge-danger"
-              >i: {{ mvt.intensity }} %</span
+              >i: {{ mvt.intensity | number }} %</span
             >
           </span>
           <p>
             {{ mvt.movements && mvt.movements.length }}
             {{ "#exercices" | dgTranslate }}
           </p>
+          <div class="mt-2 progress height-progress">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              [ngStyle]="{ 'width.%': mvt.percentage, 'background-color':getRandomColor() }"
+              aria-valuenow="25"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
+          </div>
         </li>
       </ul>
     </ng-template>

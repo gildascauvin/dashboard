@@ -1,4 +1,9 @@
-
+.input-group {
+  .calendar {
+    color: #000000 !important;
+    background-color: #e4e4e4;
+  }
+}
 .form-group.hidden {
   width: 0;
   margin: 0;
@@ -15,11 +20,16 @@
 .custom-day.focused {
   background-color: #e6e6e6;
 }
-.custom-day.range, .custom-day:hover {
+.custom-day.range,
+.custom-day:hover {
   background-color: rgb(2, 117, 216);
   color: white;
 }
 .custom-day.faded {
   background-color: rgba(2, 117, 216, 0.5);
 }
-
+@media (max-width: 480px) {
+  .container-form {
+    flex-flow: row;
+  }
+}

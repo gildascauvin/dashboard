@@ -1,7 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import "_font.scss";
+// primary font
+$primary_font: "Lato";
+// font-weight
+$thin: 100;
+$light: 300;
+$regular: 400;
+$bold: 700;
+$black: 900;
+// Font size
+$font-xs: 12px;
+$font-sm: 14px;
+$primary-fs: 16px;
+$font-md: 18px;
+$font-lg: 20px;
 body {
-  font-family: "Arial", Helvetica, Arial, serif;
+  font-family: $primary_font, "Arial", Helvetica, Arial, serif;
+  font-size: $primary-fs;
+  font-weight: $regular;
 }
 
 .form-control {
@@ -513,4 +529,23 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.chart-container {
+  position: relative;
+  margin: auto;
+  height: 46vh;
+  width: 52vw;
+  @media (max-width: 720px) {
+    height: 86vh;
+    width: 86vw;
+  }
+}
+.chart-size {
+  height: 40vh!important;
+  width: 22vw!important;
+}
+.ngb-dp-months {
+  @media (max-width: 480px) {
+    display: block !important;
+  }
 }

@@ -83,6 +83,7 @@ export class CustomerStatsRangeComponent implements OnInit {
 
   public barChartOptions: ChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     // We use these empty structures as placeholders for dynamic theming.
     scales: {
       yAxes: [
@@ -107,6 +108,7 @@ export class CustomerStatsRangeComponent implements OnInit {
 
   barChartCardioOptions: ChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     // We use these empty structures as placeholders for dynamic theming.
     scales: {
       yAxes: [
@@ -142,30 +144,34 @@ export class CustomerStatsRangeComponent implements OnInit {
       label: "Intensité",
       backgroundColor: "#cc0202",
       hoverBackgroundColor: "#cc0202",
-      barThickness: 4,
+      barPercentage: 0.5,
+      maxBarThickness: 12,
     },
     {
       data: this.stats.weekly.volume,
       label: "Volume",
       backgroundColor: "#000000",
       hoverBackgroundColor: "#000000",
-      barThickness: 4,
+      barPercentage: 0.5,
+      maxBarThickness: 12,
     },
     {
       data: this.stats.weekly.tonnage,
       label: "Tonnage",
       backgroundColor: "#C1C1C1",
       hoverBackgroundColor: "#C1C1C1",
-      barThickness: 4,
       yAxisID: "y-axis-1",
+      barPercentage: 0.5,
+      maxBarThickness: 12,
     },
     {
       data: this.stats.weekly.distance,
       label: "Distance",
       backgroundColor: "#9953c9",
       hoverBackgroundColor: "#9953c9",
-      barThickness: 4,
       yAxisID: "y-axis-1",
+      barPercentage: 0.5,
+      maxBarThickness: 12,
     },
   ];
 
