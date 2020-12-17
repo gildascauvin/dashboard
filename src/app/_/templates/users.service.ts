@@ -65,7 +65,7 @@ export class UsersService {
       page.date = date;
     }
 
-    return this.httpService.get(`workout/?page=${page.pageNumber}&size=${page.size}&date=${page.date}`);
+    return this.httpService.get(`workout?page=${page.pageNumber}&size=${page.size}&date=${page.date}`);
   }
 
   getAllUserWorkouts(userId) {
@@ -93,7 +93,7 @@ export class UsersService {
       size: 500,
     };
 
-    let query = `workout/?page=${page.pageNumber}&size=${page.size}&date=${fromDate}&date_end=${toDate}`;
+    let query = `workout?page=${page.pageNumber}&size=${page.size}&date=${fromDate}&date_end=${toDate}`;
     query += strictDate
       ? '&strict_date=1'
       : '';

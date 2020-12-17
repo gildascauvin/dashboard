@@ -64,7 +64,7 @@ export class TemplatesModalExerciceDeleteComponent extends FormModalCore impleme
         program_json: JSON.stringify(this.workout.program),
       };
 
-      this.usersService.updateWorkout(body).subscribe((response: any) => {
+      this.usersService[(this.isFromUrl ? 'updateWorkout' : 'updateClientWorkout' )](body).subscribe((response: any) => {
         if (response.errors) {
           this.toastrService.error(response.message);
         } else {

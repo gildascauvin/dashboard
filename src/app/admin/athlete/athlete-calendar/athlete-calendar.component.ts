@@ -550,6 +550,7 @@ export class AthleteCalendarComponent implements OnInit {
       workout: workout,
       position: position,
       exercices: exercices,
+      isPlanning: true,
       isFromUrl: this.isFromUrl,
     };
 
@@ -751,6 +752,7 @@ export class AthleteCalendarComponent implements OnInit {
           }
           this.isLoading = false;
           this._init(!reset);
+          this._refreshWeeksWithWorkouts();
         });
     } else {
       let clientId = this.authService.getCurrentAthletId();
