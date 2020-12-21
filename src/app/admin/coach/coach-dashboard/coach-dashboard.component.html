@@ -5,11 +5,11 @@
         <h3 class="readiness-level-title">{{ "#My athlets" | dgTranslate }}</h3>
         <ng-container *ngFor="let client of user.clients">
           <div class="athlets-item" *ngIf="client.profile">
-            <a
+            <a class="text-dark"
               [routerLink]="['/coach', 'athlet', 'dashboard']"
               (click)="setCurrentAthletId(client.client_id)"
             >
-              <i class="fa fa-user-circle"></i> {{ client.profile?.firstname }}
+              <i class="fa fa-user-circle text-dark"></i> {{ client.profile?.firstname }}
               {{ client.profile?.lastname }}
             </a>
           </div>
@@ -32,8 +32,8 @@
         <h3 class="strenght-level-title">{{ "#My programs" | dgTranslate }}</h3>
         <ng-container *ngFor="let program of user.programs">
           <div class="athlets-item">
-            <a [routerLink]="['/coach', 'programs', program.program_id]">
-              <span class="fa-stack fa-2x">
+            <a class="text-dark" [routerLink]="['/coach', 'programs', program.program_id]">
+              <span class="fa-stack fa-2x text-dark">
                 <i class="fa fa-calendar-o fa-stack-1x"></i>
                 <strong class="fa-stack-1x calendar-text">{{
                   program.days_count
@@ -226,6 +226,19 @@
     </div>
   </div>
   <div class="col-md-3 lead-right-bar" *ngIf="size >= responsiveSize">
-    <div class="lead-bar-content lead-bar-content-right"></div>
+    <div class="lead-bar-content lead-bar-content-right">
+      <div>
+        <h3>{{ "#FAQ" | dgTranslate }}</h3>
+          <div class="mt-2"><a class="text-dark link-text" target="_blank"  href="http://www.theperfclub.com/support/naviguer-dans-theperfclub/">{{"#Navigation ThePerfClub"| dgTranslate }}</a></div>
+          <div class="mt-2"> <a class="text-dark link-text" target="_blank"  href="http://www.theperfclub.com/support/creation-dun-modele-de-programme-et-assignation-a-un-des-athletess/">{{  "#How to create a template"| dgTranslate }}</a></div>
+          <div class="mt-2"> <a class="text-dark link-text" target="_blank" href="http://www.theperfclub.com/support/creation-dune-seance-et-de-ses-exercices/">{{ "#How to create a session"| dgTranslate }}</a></div>
+          <div class="mt-2"> <a class="text-dark link-text" target="_blank" href="http://www.theperfclub.com/support/demarrer-et-faire-une-seance/">{{ "#How to start a session"| dgTranslate }}</a></div>
+          <div class="mt-2"> <a class="text-dark link-text" target="_blank" href="http://www.theperfclub.com/support/evolution-de-la-surcharge/">{{ "#Statistics Overload analysis"| dgTranslate }}</a></div>
+          <div class="mt-2"> <a class="text-dark link-text" target="_blank" href="http://www.theperfclub.com/support/repartition-des-exercices-categories/">{{"#Statistics Exercices breakdown"| dgTranslate }}</a></div>
+          <div class="mt-2"><a class="text-dark link-text" target="_blank" href="http://www.theperfclub.com/support/gestion-de-la-fatigue/">{{"#Fatigue management"| dgTranslate }}</a></div>
+          <div class="mt-2"> <a class="text-dark link-text" target="_blank" href="http://www.theperfclub.com/support/mrv-score/">{{"#Profil MRV score"| dgTranslate }}</a></div>
+          <div class="mt-2"><a class="text-dark link-text" target="_blank" href="http://www.theperfclub.com/support/exercices-evaluation/">{{ "#Profil Exercices evaluation"| dgTranslate }}</a></div>
+      </div>
+    </div>
   </div>
 </div>

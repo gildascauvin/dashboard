@@ -536,16 +536,42 @@ body {
   height: 46vh;
   width: 52vw;
   @media (max-width: 720px) {
-    height: 86vh;
+    height: 40vh;
     width: 86vw;
   }
 }
 .chart-size {
-  height: 40vh!important;
-  width: 22vw!important;
+  height: 40vh !important;
+  width: 22vw !important;
 }
 .ngb-dp-months {
   @media (max-width: 480px) {
     display: block !important;
+  }
+}
+.btn-outline-secondary {
+  border-color: #e4e4e4 !important;
+  background-color: #e4e4e4 !important;
+}
+.btn-outline-secondary:hover {
+  border-color: #e4e4e4 !important;
+  background-color: #e4e4e4 !important;
+}
+.ngb-dp-arrow {
+  .btn-link {
+    color: #d44000;
+  }
+}
+.ngb-dp-week {
+  .ngb-dp-day {
+    .custom-day.range {
+      background-color: #d44000;
+    }
+    .custom-day.faded {
+      background-color: rgb(212, 64, 0, 0.5);
+    }
+    .custom-day:hover {
+      background-color: #d44000;
+    }
   }
 }

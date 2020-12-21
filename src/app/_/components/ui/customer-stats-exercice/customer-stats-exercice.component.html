@@ -18,7 +18,7 @@
                   {{ "#exercices" | dgTranslate }}
                 </p>
               </div>
-              <span class="float-right category">
+              <span *ngIf="isFromOverView!==true" class="float-right category">
                 <span class="badge mr-2 badge-dark" *ngIf="category.id !== 1"
                   >v: {{ category.volume }}</span
                 >
@@ -35,7 +35,23 @@
                 >
               </span>
             </span>
-
+          
+            <span *ngIf="isFromOverView===true">
+              <span class="badge mr-2 badge-dark" *ngIf="category.id !== 1"
+                >v: {{ category.volume }}</span
+              >
+              <span
+                class="badge mr-2 badge-secondary"
+                *ngIf="category.id !== 1"
+                >t: {{ category.tonnage }}</span
+              >
+              <span class="badge mr-2 badge-purple" *ngIf="category.id === 1"
+                >d: {{ category.distance }}</span
+              >
+              <span class="badge mr-2 badge-danger"
+                >i: {{ category.intensity }} %</span
+              >
+            </span>
             <div class="mt-2 progress height-progress">
               <div
                 class="{{ 'progress-bar ' + category.style.classCss }}"
@@ -55,16 +71,23 @@
     <a ngbNavLink>{{ "#Exercices" | dgTranslate }}</a>
     <ng-template ngbNavContent>
       <ul class="list-group">
-        <li class="list-group-item" *ngFor="let mvt of movements">
-          <h5>{{ mvt.name }}</h5>
+        <li
+          class="list-group-item"
+          *ngFor="let mvt of movements; let i = index"
+        >
+          <p class="event">{{ mvt.name }}</p>
           <span class="float-right category">
-            <span class="badge mr-2 badge-dark">v: {{ mvt.volume  | number}}</span>
-            <span class="badge mr-2 badge-secondary">t: {{ mvt.tonnage | number }}</span>
+            <span class="badge mr-2 badge-dark"
+              >v: {{ mvt.volume | number }}</span
+            >
+            <span class="badge mr-2 badge-secondary"
+              >t: {{ mvt.tonnage | number }}</span
+            >
             <span class="badge mr-2 badge-danger"
               >i: {{ mvt.intensity | number }} %</span
             >
           </span>
-          <p>
+          <p class="event-exercices">
             {{ mvt.movements && mvt.movements.length }}
             {{ "#exercices" | dgTranslate }}
           </p>
@@ -72,7 +95,10 @@
             <div
               class="progress-bar"
               role="progressbar"
-              [ngStyle]="{ 'width.%': mvt.percentage, 'background-color':getRandomColor() }"
+              [ngStyle]="{
+                'width.%': mvt.percentage,
+                'background-color': getRandomColor(i)
+              }"
               aria-valuenow="25"
               aria-valuemin="0"
               aria-valuemax="100"
