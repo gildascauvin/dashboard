@@ -34,6 +34,20 @@
       </button>
     </div>
     <div class="lead-body-content" *ngIf="!isEmpty">
+      <div class="rectangle">
+        <div class="oval">
+          <img src="assets/img/logo/logo-power.png" srcset="
+            assets/img/logo/logo-power@2x.png 2x,
+            assets/img/logo/logo-power@3x.png 3x
+          " class="logo">
+         <span class="content-oval">{{flatWorkouts.length}}</span>
+        <div class="text-white sessions">Sessions</div>
+        </div>
+          <div class="athlets">
+            <a class="text-white"  target="_blank" href="https://app.theperfclub.com/coach/clients">All athlets</a>
+          </div>
+        
+      </div>
       <div class="workout-date mb-4" *ngFor="let _wo of flatWorkouts">
         <h4>{{ _wo.label }}</h4>
         <ng-container *ngIf="user.workouts && user.workouts[_wo.date]">
@@ -41,7 +55,7 @@
             <div *ngIf="workout.program.name" class="workout-session-title">
               {{ workout.program.name }}
             </div>
-            <ul class="list-group">
+            <ul class="list-group more-padding">
               <li class="list-group-item box-exercice" *ngFor="
                   let exercice of workout.program.exercices;
                   let indexExercice = index

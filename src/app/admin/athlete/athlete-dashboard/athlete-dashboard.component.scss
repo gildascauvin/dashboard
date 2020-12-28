@@ -9,16 +9,22 @@
 .lead-bar-content-right {
   padding: 20px;
 }
+.rectangle {
+  display: none;
+}
 @media (max-width: 480px) {
   .lead-container {
     margin-top: 0px !important;
   }
   .lead-body {
     padding-bottom: 67px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
     // padding: 20px!important;
     .lead-body-content {
-      .workout-session {
-        padding: 1px !important;
+      .workout-session {       
+        padding: 1px 10px 13px!important;       
+        border-radius: 10px!important;
         .workout-session-title {
           padding-left: 16px;
           font-size: 16px !important;
@@ -34,6 +40,65 @@
     .movement-content {
       font-size: 11px !important;
     }
+  }
+  .rectangle {
+    display: block;   
+    margin: 0px 0px 18px 0px;;
+    padding: 21px 0 8px;
+    box-shadow: 0 1px 6px 0 rgba(155, 155, 155, 0.5);
+    background-color: #161616;
+    border-radius: 3px;
+  }
+  .oval {
+    width: 112px;
+    height: 112px;
+    padding: 1px 42px 65px 32px;
+    border: solid 6px #d44000;
+    border-radius: 49%;
+    margin: auto;
+  }
+  .logo{
+    width: 32px;
+    height: 32px;
+    -o-object-fit: contain;
+    object-fit: contain;
+  }
+  
+  .content-oval{
+    margin: 0px 0 0 6px;
+    font-family: Lato;
+    font-size: 32px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;   
+    font-weight: bold;
+  }
+  .athlets{ 
+    a{
+      text-decoration: none;
+    }  
+    width: 116px;
+    border: solid 2px #d44000;
+    border-radius: 4px;
+    color: #ffffff;
+    text-align: center;
+    margin: auto;
+    margin-top: 19px;
+    margin-bottom: 19px;
+    padding: 4px;
+    
+  }
+  .sessions{
+    font-size: 12px;
+    margin-left: -5px;
+    margin-top: -7px;
+  }
+  .more-padding{
+    padding: 0px 10px 10px 10px !important;
   }
 }
 .lead-body {
