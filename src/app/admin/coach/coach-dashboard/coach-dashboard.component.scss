@@ -369,12 +369,15 @@ a {
     border-radius: 3px;
   }
   .oval {
+    position: relative;
     width: 112px;
     height: 112px;
-    padding: 1px 42px 65px 32px;
     border: solid 6px #d44000;
     border-radius: 49%;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   .logo{
     width: 32px;
@@ -384,7 +387,6 @@ a {
   }
   
   .content-oval{
-    margin: 0px 0 0 6px;
     font-family: Lato;
     font-size: 32px;
     font-weight: bold;
@@ -413,7 +415,6 @@ a {
   }
   .sessions{
     font-size: 12px;
-    margin-left: -5px;
     margin-top: -7px;
   }
   .more-padding{

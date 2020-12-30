@@ -12,6 +12,11 @@ import {
   OnInit,
   SimpleChanges,
 } from "@angular/core";
+import {
+  NgbCalendar,
+  NgbDate,
+  NgbDateParserFormatter,
+} from "@ng-bootstrap/ng-bootstrap";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import { addHours, endOfWeek, format, startOfWeek } from "date-fns";
 import { DoorgetsTranslateService } from "doorgets-ng-translate";
@@ -102,7 +107,9 @@ export class AthleteCalendarComponent implements OnInit {
     private deepDiffMapperService: DeepDiffMapperService,
     private modalService: BsModalService,
     private templatesService: TemplatesService,
-    private doorgetsTranslateService: DoorgetsTranslateService
+    private doorgetsTranslateService: DoorgetsTranslateService,
+    private calendar: NgbCalendar,
+    public formatter: NgbDateParserFormatter,
   ) {}
 
   @HostListener("document:keydown.escape", ["$event"]) onKeydownHandler(
@@ -112,6 +119,7 @@ export class AthleteCalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     let todayCalendar = new Date();
 
     this.startedAtModel.year = todayCalendar.getFullYear();
@@ -147,16 +155,12 @@ export class AthleteCalendarComponent implements OnInit {
     this._init();
     this._initDate();
 
-    let navbar = this.document.getElementById("navbar-planning");
-    let sticky = navbar.offsetTop;
 
-    let footerScroll = this.document.getElementById("footer-scroll");
+
     let bodyScroll = this.document.getElementById("fixed-calendar-planning");
-    let bodyTop = bodyScroll.getBoundingClientRect().top;
 
     bodyScroll.onscroll = () => {
       let weeksScroll = this.document.querySelectorAll(".week-scroll");
-      let stickyFooter = footerScroll.offsetTop - 700;
 
       weeksScroll.forEach((weekNode: any) => {
         // let weekNodeEl = this.document.querySelector(weekNode);
@@ -173,14 +177,14 @@ export class AthleteCalendarComponent implements OnInit {
       //   navbar.classList.remove("sticky");
       // }
 
-      if (
+      /*if (
         window.pageYOffset >= stickyFooter &&
         !this.isLoadingScroll &&
         this.weeks.length < 30
       ) {
         this.isLoadingScroll = true;
         this._init();
-      }
+      }*/
     };
   }
 
@@ -401,6 +405,7 @@ export class AthleteCalendarComponent implements OnInit {
 
     _.forEach(workoutToSave, (workout) => {
       const body = {
+        name: workout.name,
         user_id: workout.user_id,
         type_id: workout.type_id,
         day: workout.day,
@@ -410,10 +415,11 @@ export class AthleteCalendarComponent implements OnInit {
         workout_id: workout.workout_id,
       };
       if (workout.workout_id) {
+        console.log("success");
         this.usersService
           .updateClientWorkout(body)
           .subscribe((savedWorkout) => {
-            console.log("success");
+            
             this.cloneWeeks = _.cloneDeep(this.weeks);
           });
       } else {
@@ -806,4 +812,18 @@ export class AthleteCalendarComponent implements OnInit {
       }
     );
   }
+  checkIsToday (someDate){
+    let date = new Date(someDate);
+    const today = new Date()
+    return date.getDate() == today.getDate() &&
+      date.getMonth() == today.getMonth() &&
+      date.getFullYear() == today.getFullYear()
+  }
+    validateInput(currentValue: NgbDateStruct | null, input: string): NgbDateStruct | null {
+    const parsed = this.formatter.parse(input);
+    return parsed && this.calendar.isValid(NgbDate.from(parsed))
+      ? NgbDate.from(parsed)
+      : currentValue;
+  }
+
 }

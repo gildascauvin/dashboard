@@ -61,23 +61,22 @@
   </div>
   <div class="col-md-6 lead-body">
     <div class="lead-body-content" *ngIf="!isEmpty">
-      <div class="rectangle">
-      <div class="oval">
-        <img src="assets/img/logo/logo-power.png" srcset="
-          assets/img/logo/logo-power@2x.png 2x,
-          assets/img/logo/logo-power@3x.png 3x
-        " class="logo">
-        <span class="content-oval">{{flatWorkouts.length}}</span>
-        <div class="text-white sessions">Sessions</div>
-      </div>
-      <div class="athlets">
-        <a class="text-white" target="_blank" href="https://app.theperfclub.com/coach/clients">All athlets</a>
-      </div>
-
-    </div>
-    
       <div class="workout-date mb-4" *ngFor="let _workout of flatWorkouts">
         <h4>{{ _workout.label }}</h4>
+        <div *ngIf="checkIsToday(_workout.date)" class="rectangle">
+          <div class="oval">
+            <img src="assets/img/logo/logo-power.png" srcset="
+              assets/img/logo/logo-power@2x.png 2x,
+              assets/img/logo/logo-power@3x.png 3x
+            " class="logo">
+            <span class="content-oval">{{userWorkouts[_workout.date].length}}</span>
+            <div class="text-white sessions">Sessions</div>
+          </div>
+          <div class="athlets">
+            <a class="text-white" href="https://app.theperfclub.com/coach/clients">All athlets</a>
+          </div>
+    
+        </div>
         <ng-container *ngIf="userWorkouts && userWorkouts">
           <div
             class="workout-session"

@@ -257,5 +257,4 @@ export class AthleteDashboardComponent implements OnInit {
     this.size = currentSize;
     this.resizeSvc.onResize(currentSize);
   }
-
 }
