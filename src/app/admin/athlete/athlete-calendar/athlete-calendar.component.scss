@@ -324,6 +324,9 @@
     font-weight: bold;
     margin-left: 10px;
     margin-top: 7px;
+    @media (max-width: 480px) {
+      display: none;
+    }
   }
 }
 
@@ -352,16 +355,12 @@
 }
 
 /* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
-.sticky + .content {
+.sticky+.content {
   padding-top: 295px;
 }
 
 .see-stats {
   margin-right: 60px;
-}
-
-#footer-scroll {
-  height: 100px;
 }
 
 .box-body-workout {
@@ -522,8 +521,7 @@
     margin-bottom: 8px;
   }
 
-  .movement-content {
-  }
+
 }
 
 .container-calendar-template {
@@ -589,7 +587,7 @@
 }
 
 .calendar-top {
-  width: 109px;
+  width: 11rem;
 }
 
 .spinner-ctnr {
@@ -622,13 +620,55 @@
 .list-cdk {
   min-height: 60px;
 }
+
+.add-exercice {
+  background-color: #f1f1f1;
+  font-family: Arial;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.29;
+  letter-spacing: 0.54px;
+  text-align: center;
+  color: #d44000;
+  border-radius: 5px;
+  border-radius: 5px;
+  border: 1px transparent !important;
+  padding: 0.4rem 1.5rem;
+  margin-bottom: 20px;
+}
+
+.calendar {
+  color: #000000 !important;
+  background-color: #e4e4e4;
+}
+
 @media (max-width: 480px) {
   .zone-drop-legal {
     min-width: 96%;
   }
+
   .box-body-week-active {
     .box-body-workout {
       width: 100%;
     }
+  }
+
+  .footer-action {
+    bottom: 42px !important;
+    height: 62px !important;
+
+    .footer-item-actions {
+
+      font-size: 15px !important;
+    }
+  }
+
+  .calendar-top {
+    width: 9.2rem;
+    margin-bottom: 15px;
+    width: 100%;
+    
   }
 }

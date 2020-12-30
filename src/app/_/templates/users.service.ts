@@ -198,6 +198,7 @@ export class UsersService {
   }
 
   updateProgram(model) {
+    console.log("model",model)
     return this.httpService.put(`program/${model.program_id}`, model);
   }
 

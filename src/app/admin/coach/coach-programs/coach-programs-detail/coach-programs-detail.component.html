@@ -222,15 +222,15 @@
 <div *ngIf="showFooterAction" class="footer-action">
   <div class="footer-item-actions">
   	{{ '#Workouts Selected' | dgTranslate }}: {{ selectedWorkoutsCount }}
-  	<button class="btn mr-4 ml-4"
+  	<button class="btn mr-xs-3 ml-xs-3 mr-md-4 ml-md-4"
   		placement="top"
 		ngbTooltip="{{ '#Duplicate' | dgTranslate }}"
 		(click)="showCopyBoxes()"><i class="fa fa-copy"></i></button>
-  	<button class="btn mr-4"
+  	<button class="btn mr-xs-3 mr-md-4"
   		placement="top"
 		ngbTooltip="{{ '#Delete' | dgTranslate }}"
 		(click)="openCopiedWorkoutDeleteModal()"><i class="fa fa-trash"></i></button>
-  	<button class="btn mr-4"
+  	<button class="btn mr-xs-3 mr-md-4"
   		placement="top"
 		ngbTooltip="{{ '#Close' | dgTranslate }}"
 		(click)="closeFooterActions()"><i class="fa fa-close"></i></button>

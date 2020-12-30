@@ -2,53 +2,34 @@
   <div cdkDropListGroup class="row">
     <div class="col-md-12">
       <div id="navbar-planning">
+        
         <div class="input-group calendar-top float-left mr-2">
-          <input
-            class="form-control"
-            name="dp"
-            (ngModelChange)="onDateSelected($event)"
-            (click)="d.toggle()"
-            [ngModel]="startedAtModel"
-            ngbDatepicker
-            #d="ngbDatepicker"
-          />
-        </div>
+          <input class="form-control calendar" name="dp" (ngModelChange)="onDateSelected($event)" (click)="d.toggle()"
+            [ngModel]="startedAtModel" ngbDatepicker #d="ngbDatepicker" />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary"
+                (click)="d.toggle()"
+                type="button"
+              >
+                <i class="fa fa-calendar"></i>
+              </button>
+            </div>
+          </div>
         <div class="date-title">{{ currentMonth | uppercase }}</div>
       </div>
 
       <div id="fixed-calendar-planning">
-        <div
-          *ngFor="let week of weeks; let y = index"
-          class="row calendar-planning"
-        >
-          <div
-            *ngFor="let day of week; let i = index"
-            class="col box-header-template"
-          >
+        <div *ngFor="let week of weeks; let y = index" class="row calendar-planning">
+          <div *ngFor="let day of week; let i = index" class="col box-header-template">
             <div class="box-header-template-day text-color-box text-left">
-              <i
-                *ngIf="!copyWorkouts.length"
-                class="fa fa-plus add-workout-btn ml-1 float-right"
-                placement="top"
-                ngbTooltip="{{ '#Add workout' | dgTranslate }}"
-                (click)="addWorkoutToWeek(day, i, y); t.close()"
-                #t="ngbTooltip"
-              ></i>
-              <div
-                *ngIf="copyWorkouts.length"
-                ngbDropdown
-                class="dropdown-menu"
-              >
-                <i
-                  class="fa fa-plus add-workout-btn ml-1"
-                  ngbDropdownToggle
-                  placement="top"
-                  ngbTooltip="{{ '#Add workout' | dgTranslate }}"
-                ></i>
-                <button
-                  ngbDropdownItem
-                  (click)="pasteWorkout(day.workouts, i, y)"
-                >
+              <i *ngIf="!copyWorkouts.length" class="fa fa-plus add-workout-btn ml-1 float-right" placement="top"
+                ngbTooltip="{{ '#Add workout' | dgTranslate }}" (click)="addWorkoutToWeek(day, i, y); t.close()"
+                #t="ngbTooltip"></i>
+              <div *ngIf="copyWorkouts.length" ngbDropdown class="dropdown-menu">
+                <i class="fa fa-plus add-workout-btn ml-1" ngbDropdownToggle placement="top"
+                  ngbTooltip="{{ '#Add workout' | dgTranslate }}"></i>
+                <button ngbDropdownItem (click)="pasteWorkout(day.workouts, i, y)">
                   <i class="fa fa-paste"></i>
                   {{ "#Paste workout" | dgTranslate }}
                 </button>
@@ -58,158 +39,81 @@
               </div>
 
               {{ day.day }}
-              <div
-                class="week-scroll"
-                [attr.data-date]="day.monthText + ' ' + day.year"
-              ></div>
+              <div class="week-scroll" [attr.data-date]="day.monthText + ' ' + day.year"></div>
             </div>
 
-            <div
-              class="box-body-template-day"
-              [class.box-body-week-active]="hover['w-' + i]"
-            >
+            <div class="box-body-template-day" [class.box-body-week-active]="hover['w-' + i]">
               <div dnd-sortable-container [sortableData]="day.workouts">
-                <div
-                  class="box-body-workout"
-                  [class.box-body-workout-active]="
+                <div class="box-body-workout" [class.box-body-workout-active]="
                     hover[i + '-' + y + '-' + in]
-                  "
-                  *ngFor="let workout of day.workouts; let in = index"
-                >
+                  " *ngFor="let workout of day.workouts; let in = index">
                   <div class="checkbox float-left">
                     <label>
-                      <input
-                        type="checkbox"
-                        (change)="
+                      <input type="checkbox" (change)="
                           onChangeSelection(
                             $event,
                             i + '-' + y + '-' + in,
                             workout
                           )
-                        "
-                        [(ngModel)]="selectedWorkouts[i + '-' + y + '-' + in]"
-                      />
-                      <span class="cr"
-                        ><i class="cr-icon fa fa-check"></i
-                      ></span>
+                        " [(ngModel)]="selectedWorkouts[i + '-' + y + '-' + in]" />
+                      <span class="cr"><i class="cr-icon fa fa-check"></i></span>
                     </label>
                   </div>
 
                   <div (click)="markAsOver(i + '-' + y + '-' + in, 'w-' + i)">
                     <h6>
-                      <i
-                        class="fa fa-arrows i-btn float-right"
-                        *ngIf="!showFooterAction && false"
-                        placement="top"
-                        dnd-sortable
-                        dnd-draggable
-                        [dragEnabled]="true"
-                        [dropEnabled]="true"
-                        [sortableIndex]="in"
-                        (onDragStart)="onDragStart($event)"
-                        [dragData]="workout"
-                        ngbTooltip="{{ '#Move workout' | dgTranslate }}: {{
+                      <i class="fa fa-arrows i-btn float-right" *ngIf="!showFooterAction && false" placement="top"
+                        dnd-sortable dnd-draggable [dragEnabled]="true" [dropEnabled]="true" [sortableIndex]="in"
+                        (onDragStart)="onDragStart($event)" [dragData]="workout" ngbTooltip="{{ '#Move workout' | dgTranslate }}: {{
                           workout.name | dgTranslate
-                        }}"
-                      ></i>
+                        }}"></i>
 
-                      <input
-                        [disabled]="true"
-                        type="text"
-                        placeholder="{{ '#Workout name' | dgTranslate }}"
-                        class="box-body-workout-inputs ml-4"
-                        [autofocus]="true"
-                        [(ngModel)]="workout.name"
-                      />
-                      <span
-                        class="box-body-workout-views ml-4"
-                        placement="top"
-                        ngbTooltip="{{ workout.name }}"
-                      >
-                        {{ workout.name }}</span
-                      >
+                      <input  type="text" placeholder="{{ '#Workout name' | dgTranslate }}"
+                        class="box-body-workout-inputs ml-4" [autofocus]="true" [(ngModel)]="workout.name" />
+                      <span class="box-body-workout-views ml-4" placement="top" ngbTooltip="{{ workout.name }}">
+                        {{ workout.name }}</span>
                     </h6>
 
-                    <div
-                      *ngIf="hover[i + '-' + y + '-' + in] && !showFooterAction"
-                      class="action-workout-box text-center"
-                    >
-                      <i
-                        *ngIf="false"
-                        class="fa fa-copy i-btn ml-4 mr-4"
-                        placement="top"
-                        ngbTooltip="{{ '#Duplicate' | dgTranslate }}"
-                        #t="ngbTooltip"
-                        (click)="duplicateWorkout(workout); t.close()"
-                      ></i>
-                      <i
-                        class="fa fa-trash i-btn mr-4"
-                        placement="top"
-                        ngbTooltip="{{ '#Delete' | dgTranslate }}"
-                        #t="ngbTooltip"
-                        (click)="
+                    <div *ngIf="hover[i + '-' + y + '-' + in] && !showFooterAction"
+                      class="action-workout-box text-center">
+                      <i *ngIf="false" class="fa fa-copy i-btn ml-4 mr-4" placement="top"
+                        ngbTooltip="{{ '#Duplicate' | dgTranslate }}" #t="ngbTooltip"
+                        (click)="duplicateWorkout(workout); t.close()"></i>
+
+                      <i [ngClass]="{'d-none': checkIsToday(day.date) === true}" class="fa fa-trash i-btn mr-4"
+                        placement="top" ngbTooltip="{{ '#Delete' | dgTranslate }}" #t="ngbTooltip" (click)="
                           openWorkoutDeleteModal(workout, in, day.workouts);
                           t.close()
-                        "
-                      ></i>
-                      <i
-                        class="fa fa-plus i-btn"
-                        (click)="
+                        "></i>
+                      <i class="fa fa-plus i-btn" (click)="
                           addExerciceToWorkout(
                             day,
                             workout.program.exercices,
                             workout
                           );
                           a.close()
-                        "
-                        #a="ngbTooltip"
-                        placement="top"
-                        ngbTooltip="{{ '#Add exercice' | dgTranslate }}"
-                      ></i>
+                        " #a="ngbTooltip" placement="top" ngbTooltip="{{ '#Add exercice' | dgTranslate }}"></i>
                     </div>
-                    <button
-                      *ngIf="day.day == startedAtModel.day"
-                      class="btn btn-primary start-session"
-                      (click)="openStartSessionModal(workout, day)"
-                    >
+                    <button *ngIf="day.day == startedAtModel.day" class="btn btn-primary start-session"
+                      (click)="openStartSessionModal(workout, day)">
                       {{ "#Start Session" | dgTranslate }}
                     </button>
-                    <ul
-                      class="list-group list-cdk"
-                      cdkDropList
-                      [cdkDropListData]="workout.program.exercices"
-                      (cdkDropListDropped)="drop($event)"
-                    >
-                      <li
-                        class="list-group-item box-exercice"
-                        *ngFor="
+                    <ul class="list-group list-cdk" cdkDropList [cdkDropListData]="workout.program.exercices"
+                      (cdkDropListDropped)="drop($event)">
+                      <li class="list-group-item box-exercice" *ngFor="
                           let exercice of workout.program.exercices;
                           let indexExercice = index
-                        "
-                        cdkDrag
-                      >
-                        <div
-                          class="action-workout-box-execrice float-right"
-                          *ngIf="
+                        " cdkDrag>
+                        <div class="action-workout-box-execrice float-right" *ngIf="
                             hover[i + '-' + y + '-' + in] && !showFooterAction
-                          "
-                        >
-                          <i
-                            class="fa fa-pencil i-btn mr-4"
-                            placement="top"
-                            ngbTooltip="{{ '#Edit' | dgTranslate }}"
+                          ">
+                          <i class="fa fa-pencil i-btn mr-4" placement="top" ngbTooltip="{{ '#Edit' | dgTranslate }}"
                             (click)="
                               openExerciceManagerModal(exercice, workout, day);
                               t.close()
-                            "
-                            #t="ngbTooltip"
-                          ></i>
-                          <i
-                            #d="ngbTooltip"
-                            class="fa fa-trash i-btn pze-ez"
-                            placement="top"
-                            ngbTooltip="{{ '#Delete' | dgTranslate }}"
-                            (click)="
+                            " #t="ngbTooltip"></i>
+                          <i #d="ngbTooltip" class="fa fa-trash i-btn pze-ez" placement="top"
+                            ngbTooltip="{{ '#Delete' | dgTranslate }}" (click)="
                               openExerciceDeleteModal(
                                 exercice,
                                 indexExercice,
@@ -217,66 +121,41 @@
                                 workout
                               );
                               d.close()
-                            "
-                          ></i>
+                            "></i>
                         </div>
-                        <div
-                          *ngIf="!hideLocalBox"
-                          class="movement-container
-                          movement-type-{{ exercice.type && exercice.type.id }}"
-                        >
-                          <div
-                            class="inputs-exercice-type"
-                            *ngIf="exercice.type"
-                            [ngSwitch]="exercice.type.id"
-                          >
+                        <div *ngIf="!hideLocalBox" class="movement-container
+                          movement-type-{{ exercice.type && exercice.type.id }}">
+                          <div class="inputs-exercice-type" *ngIf="exercice.type" [ngSwitch]="exercice.type.id">
                             <div *ngSwitchCase="1">
-                              <div
-                                class="movement-title"
-                                *ngFor="let movement of exercice.movements"
-                              >
+                              <div class="movement-title" *ngFor="let movement of exercice.movements">
                                 {{ movement.name }}
-                                <div
-                                  class="movement-content"
-                                  *ngFor="let set of movement.sets"
-                                >
-                                  <span *ngIf="set.set"
-                                    >{{ set.set }} x {{ set.rep }} @
-                                    {{ set.value }}{{ set.unit_label }}</span
-                                  >
+                                <div class="movement-content" *ngFor="let set of movement.sets">
+                                  <span *ngIf="set.set">{{ set.set }} x {{ set.rep }} @
+                                    {{ set.value }}{{ set.unit_label }}</span>
                                 </div>
                               </div>
                             </div>
                             <div *ngSwitchCase="2">
                               <div class="movement-title">
-                                <span
-                                  *ngFor="
+                                <span *ngFor="
                                     let movement of exercice.movements;
                                     let indMov = index
-                                  "
-                                  ><span *ngIf="indMov > 0"> +</span>
+                                  "><span *ngIf="indMov > 0"> +</span>
                                   {{ movement.quantity }}
-                                  {{ movement.name }}</span
-                                >
+                                  {{ movement.name }}</span>
 
                                 <div class="movement-content">
-                                  <span
-                                    >{{ exercice.sets }}
-                                    {{ "#Sets" | dgTranslate }}</span
-                                  >
+                                  <span>{{ exercice.sets }}
+                                    {{ "#Sets" | dgTranslate }}</span>
                                 </div>
                               </div>
                             </div>
                             <div *ngSwitchCase="3">
-                              <div
-                                class="movement-title"
-                                *ngFor="let movement of exercice.movements"
-                              >
+                              <div class="movement-title" *ngFor="let movement of exercice.movements">
                                 <div *ngFor="let set of movement.sets">
                                   <span *ngIf="set.set">
                                     {{ movement.name }} @ {{ set.value
-                                    }}{{ set.unit_label }}</span
-                                  >
+                                    }}{{ set.unit_label }}</span>
                                 </div>
                               </div>
                               <div class="movement-content">
@@ -285,38 +164,26 @@
                               </div>
                             </div>
                             <div *ngSwitchCase="4">
-                              <div
-                                class="movement-title"
-                                *ngFor="let movement of exercice.movements"
-                              >
+                              <div class="movement-title" *ngFor="let movement of exercice.movements">
                                 <div *ngFor="let set of movement.sets">
                                   <span *ngIf="set.set">
                                     {{ movement.name }} @ {{ set.value
-                                    }}{{ set.unit_label }}</span
-                                  >
+                                    }}{{ set.unit_label }}</span>
                                 </div>
                               </div>
                               <div class="movement-content">
-                                <span *ngIf="exercice.time_style == 1"
-                                  >{{ exercice.time_style_fixed }}
-                                  {{ "#rounds for time" | dgTranslate }}</span
-                                >
-                                <span *ngIf="exercice.time_style == 2"
-                                  >{{ exercice.time_style_varying }}
-                                  {{ "#rounds for time" | dgTranslate }}</span
-                                >
+                                <span *ngIf="exercice.time_style == 1">{{ exercice.time_style_fixed }}
+                                  {{ "#rounds for time" | dgTranslate }}</span>
+                                <span *ngIf="exercice.time_style == 2">{{ exercice.time_style_varying }}
+                                  {{ "#rounds for time" | dgTranslate }}</span>
                               </div>
                             </div>
                             <div *ngSwitchCase="5">
-                              <div
-                                class="movement-title"
-                                *ngFor="let movement of exercice.movements"
-                              >
+                              <div class="movement-title" *ngFor="let movement of exercice.movements">
                                 <div *ngFor="let set of movement.sets">
                                   <span *ngIf="set.set">
                                     {{ movement.name }} @ {{ set.value
-                                    }}{{ set.unit_label }}</span
-                                  >
+                                    }}{{ set.unit_label }}</span>
                                 </div>
                               </div>
                               <div class="movement-content">
@@ -325,58 +192,44 @@
                               </div>
                             </div>
                             <div *ngSwitchCase="7">
-                              <div
-                                class="movement-title"
-                                *ngIf="exercice.cardio_type"
-                              >
+                              <div class="movement-title" *ngIf="exercice.cardio_type">
                                 {{
-                                  configExercices.cardio.flatType[
-                                    exercice.cardio_type
-                                  ]
+                                configExercices.cardio.flatType[
+                                exercice.cardio_type
+                                ]
                                 }}
                               </div>
 
-                              <div
-                                class="movement-content"
-                                *ngIf="exercice.cardio_scoring == 1"
-                              >
-                                <span
-                                  >{{
-                                    exercice.cardio_cardio_movement.interval
+                              <div class="movement-content" *ngIf="exercice.cardio_scoring == 1">
+                                <span>{{
+                                  exercice.cardio_cardio_movement.interval
                                   }}
                                   {{
-                                    exercice.cardio_cardio_movement.unit_label
+                                  exercice.cardio_cardio_movement.unit_label
                                   }}
                                   @
                                   {{ exercice.cardio_cardio_movement.value }} %
                                 </span>
                               </div>
                               <div *ngIf="exercice.cardio_scoring == 2">
-                                <div
-                                  class="movement-content"
-                                  *ngFor="
+                                <div class="movement-content" *ngFor="
                                     let set of exercice
                                       .cardio_intervals_movement.sets
-                                  "
-                                >
-                                  <span *ngIf="set.set"
-                                    >{{ set.set }} x {{ set.interval }}
+                                  ">
+                                  <span *ngIf="set.set">{{ set.set }} x {{ set.interval }}
                                     {{ set.unit_label }} @
-                                    {{ set.value }} %</span
-                                  >
+                                    {{ set.value }} %</span>
                                 </div>
                               </div>
                             </div>
                             <div *ngSwitchCase="8">
                               <div class="movement-title">
                                 {{ exercice.name }}
-                                <small
-                                  >({{
-                                    configExercices.flatCustom[
-                                      exercice.custom_scoring
-                                    ]
-                                  }})</small
-                                >
+                                <small>({{
+                                  configExercices.flatCustom[
+                                  exercice.custom_scoring
+                                  ]
+                                  }})</small>
                               </div>
                               <div class="movement-content">
                                 {{ exercice.custom }}
@@ -384,72 +237,53 @@
                             </div>
                           </div>
                         </div>
-                      </li>
+                      </li>                     
                     </ul>
                   </div>
+                 
                 </div>
-                <div class="box-body-workout" *ngIf="day.workouts.length">
-                  <div
-                    class="paste-zone-workouts"
-                    *ngIf="showPasteCopiedWorkouts"
-                    (click)="pasteCopiedWorkouts(day.workouts, day)"
-                  >
+                
+                <div class="box-body-workout" *ngIf="day.workouts.length && showPasteCopiedWorkouts">
+                  <div class="paste-zone-workouts"
+                    (click)="pasteCopiedWorkouts(day.workouts, day)">
                     {{ "#Paste Workouts" | dgTranslate }}
                   </div>
                 </div>
 
-                <div
-                  *ngIf="day.workouts.length === 0"
-                  class="zone-drop-legal"
-                  dnd-droppable
-                  dnd-sortable
-                  (onDropEnd)="onDropSuccess('onDropEnd')"
-                  (onDropSuccess)="onDropSuccess('onDropSuccess')"
-                  [dragEnabled]="true"
-                  [dropEnabled]="true"
-                >
-                  <div
-                    class="paste-zone-workouts"
-                    *ngIf="showPasteCopiedWorkouts"
-                    (click)="pasteCopiedWorkouts(day.workouts, day)"
-                  >
+                <div *ngIf="day.workouts.length === 0" class="zone-drop-legal" dnd-droppable dnd-sortable
+                  (onDropEnd)="onDropSuccess('onDropEnd')" (onDropSuccess)="onDropSuccess('onDropSuccess')"
+                  [dragEnabled]="true" [dropEnabled]="true">
+                  <div class="paste-zone-workouts" *ngIf="showPasteCopiedWorkouts"
+                    (click)="pasteCopiedWorkouts(day.workouts, day)">
                     {{ "#Paste Workouts" | dgTranslate }}
                   </div>
                 </div>
+              
+                <div class="box-body-workout bg-white text-center pt-0" *ngIf="day.workouts.length">
+                  <button class="btn btn-block add-exercice mt-0" (click)="addWorkoutToWeek(day, i, y);">
+                    {{"#Add an exercice" | dgTranslate }}
+                  </button>
+                </div>
               </div>
+             
             </div>
           </div>
         </div>
       </div>
 
-      <div id="footer-scroll"></div>
-
       <div *ngIf="showFooterAction" class="footer-action">
         <div class="footer-item-actions">
           {{ "#Workouts Selected" | dgTranslate }}: {{ selectedWorkoutsCount }}
-          <button
-            class="btn mr-4 ml-4"
-            placement="top"
-            ngbTooltip="{{ '#Duplicate' | dgTranslate }}"
-            (click)="showCopyBoxes()"
-          >
+          <button class="btn mr-xs-4 ml-xs-4 mr-md-4 ml-md-4" placement="top"
+            ngbTooltip="{{ '#Duplicate' | dgTranslate }}" (click)="showCopyBoxes()">
             <i class="fa fa-copy"></i>
           </button>
-          <button
-            class="btn mr-4"
-            placement="top"
-            ngbTooltip="{{ '#Delete' | dgTranslate }}"
-            #t="ngbTooltip"
-            (click)="openCopiedWorkoutDeleteModal(); t.close()"
-          >
+          <button class="btn mr-xs-4 mr-md-4" placement="top" ngbTooltip="{{ '#Delete' | dgTranslate }}" #t="ngbTooltip"
+            (click)="openCopiedWorkoutDeleteModal(); t.close()">
             <i class="fa fa-trash"></i>
           </button>
-          <button
-            class="btn mr-4"
-            placement="top"
-            ngbTooltip="{{ '#Close' | dgTranslate }}"
-            (click)="closeFooterActions()"
-          >
+          <button class="btn mr-xs-4 mr-md-4" placement="top" ngbTooltip="{{ '#Close' | dgTranslate }}"
+            (click)="closeFooterActions()">
             <i class="fa fa-close"></i>
           </button>
         </div>

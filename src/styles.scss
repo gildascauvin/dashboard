@@ -575,3 +575,15 @@ body {
     }
   }
 }
+
+.ngb-dp-today, .ngb-dp-day {
+  .bg-primary {
+    background-color: #d44000 !important;
+  }
+}
+
+.dropdown-menu.show {
+  @media (max-width: 480px) {
+    width:100%;
+  }
+}
