@@ -1,8 +1,7 @@
 <div class="container-fluid">
   <div cdkDropListGroup class="row">
     <div class="col-md-12">
-      <div id="navbar-planning">
-        
+      <div id="navbar-planning">   
         <div class="input-group calendar-top float-left mr-2">
           <input class="form-control calendar" name="dp" (ngModelChange)="onDateSelected($event)" (click)="d.toggle()"
             [ngModel]="startedAtModel" ngbDatepicker #d="ngbDatepicker" />
@@ -80,11 +79,6 @@
                         ngbTooltip="{{ '#Duplicate' | dgTranslate }}" #t="ngbTooltip"
                         (click)="duplicateWorkout(workout); t.close()"></i>
 
-                      <i [ngClass]="{'d-none': checkIsToday(day.date) === true}" class="fa fa-trash i-btn mr-4"
-                        placement="top" ngbTooltip="{{ '#Delete' | dgTranslate }}" #t="ngbTooltip" (click)="
-                          openWorkoutDeleteModal(workout, in, day.workouts);
-                          t.close()
-                        "></i>
                       <i class="fa fa-plus i-btn" (click)="
                           addExerciceToWorkout(
                             day,
@@ -240,7 +234,15 @@
                       </li>                     
                     </ul>
                   </div>
-                 
+                  <div class="box-body-workout bg-white text-center pt-0" *ngIf="day.workouts.length">
+                    <button class="btn btn-block add-exercice mt-0" (click)="addExerciceToWorkout(
+                      day,
+                      workout.program.exercices,
+                      workout
+                    );">
+                      {{"#Add an exercice" | dgTranslate }}
+                    </button>
+                  </div>
                 </div>
                 
                 <div class="box-body-workout" *ngIf="day.workouts.length && showPasteCopiedWorkouts">
@@ -259,11 +261,7 @@
                   </div>
                 </div>
               
-                <div class="box-body-workout bg-white text-center pt-0" *ngIf="day.workouts.length">
-                  <button class="btn btn-block add-exercice mt-0" (click)="addWorkoutToWeek(day, i, y);">
-                    {{"#Add an exercice" | dgTranslate }}
-                  </button>
-                </div>
+             
               </div>
              
             </div>
