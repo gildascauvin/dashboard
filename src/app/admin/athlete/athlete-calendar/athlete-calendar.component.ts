@@ -812,13 +812,6 @@ export class AthleteCalendarComponent implements OnInit {
       }
     );
   }
-  checkIsToday (someDate){
-    let date = new Date(someDate);
-    const today = new Date()
-    return date.getDate() == today.getDate() &&
-      date.getMonth() == today.getMonth() &&
-      date.getFullYear() == today.getFullYear()
-  }
     validateInput(currentValue: NgbDateStruct | null, input: string): NgbDateStruct | null {
     const parsed = this.formatter.parse(input);
     return parsed && this.calendar.isValid(NgbDate.from(parsed))

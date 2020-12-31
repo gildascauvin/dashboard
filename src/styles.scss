@@ -582,8 +582,10 @@ body {
   }
 }
 
-.dropdown-menu.show {
-  @media (max-width: 480px) {
-    width:100%;
-  }
+#navbar-planning {
+  .dropdown-menu.show {
+    @media (max-width: 480px) {
+      width:100%!important;
+    }
+  }  
 }
