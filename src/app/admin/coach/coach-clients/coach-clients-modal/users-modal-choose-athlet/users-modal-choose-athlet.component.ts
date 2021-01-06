@@ -48,7 +48,9 @@ export class UsersModalChooseAthletComponent implements OnInit {
   setCurrentAthletId(clientId) {
     this.authService.setCurrentAthletId(clientId);
 
-    this.router.navigateByUrl("/coach/athlet/dashboard", { skipLocationChange: false });
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+      this.router.navigate(['/coach/athlet/dashboard'])
+    );
     this.userService.getUserInfos(true);
     this.cancel();
   }

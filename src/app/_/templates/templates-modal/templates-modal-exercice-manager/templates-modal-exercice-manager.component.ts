@@ -285,7 +285,7 @@ export class TemplatesModalExerciceManagerComponent
         break;
       case 4:
       case "4":
-        model[labelKey] = "watts";
+        model[labelKey] = "RPE";
         break;
       case 5:
       case "5":

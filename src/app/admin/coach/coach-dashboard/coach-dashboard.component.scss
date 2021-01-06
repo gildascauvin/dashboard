@@ -328,7 +328,7 @@ a {
   text-decoration: none;
 }
 .rectangle {
-  display: none;   
+  display: none;
 }
 @media (max-width: 480px) {
   .lead-container {
@@ -359,9 +359,9 @@ a {
     .movement-content {
       font-size: 11px !important;
     }
-  } 
+  }
   .rectangle {
-    display: block;   
+    display: block;
     margin: 0px 0px 18px 0px;;
     padding: 21px 0 8px;
     box-shadow: 0 1px 6px 0 rgba(155, 155, 155, 0.5);
@@ -385,7 +385,7 @@ a {
     -o-object-fit: contain;
     object-fit: contain;
   }
-  
+
   .content-oval{
     font-family: Lato;
     font-size: 32px;
@@ -395,13 +395,13 @@ a {
     line-height: 1.5;
     letter-spacing: normal;
     text-align: center;
-    color: #ffffff;   
+    color: #ffffff;
     font-weight: bold;
   }
-  .athlets{ 
+  .athlets{
     a{
       text-decoration: none;
-    }  
+    }
     width: 116px;
     border: solid 2px #d44000;
     border-radius: 4px;
@@ -411,7 +411,7 @@ a {
     margin-top: 19px;
     margin-bottom: 19px;
     padding: 4px;
-    
+
   }
   .sessions{
     font-size: 12px;
@@ -420,9 +420,9 @@ a {
   .more-padding{
     padding: 0px 10px 10px 10px !important;
   }
- 
+
 }
 .link-text{
   font-size: 0.7rem;
-  font-weight: bold; 
+  font-weight: bold;
 }

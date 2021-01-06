@@ -35,7 +35,7 @@
                 >
               </span>
             </span>
-          
+
             <span *ngIf="isFromOverView===true">
               <span class="badge mr-2 badge-dark" *ngIf="category.id !== 1"
                 >v: {{ category.volume }}</span
@@ -97,7 +97,7 @@
               role="progressbar"
               [ngStyle]="{
                 'width.%': mvt.percentage,
-                'background-color': getRandomColor(i)
+                'background-color': getRandomColor(i+1)
               }"
               aria-valuenow="25"
               aria-valuemin="0"

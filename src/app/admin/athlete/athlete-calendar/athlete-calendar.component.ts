@@ -177,14 +177,14 @@ export class AthleteCalendarComponent implements OnInit {
       //   navbar.classList.remove("sticky");
       // }
 
-      /*if (
-        window.pageYOffset >= stickyFooter &&
+      if (
+        bodyScroll.scrollTop > (bodyScroll.scrollHeight - bodyScroll.clientHeight - 100) &&
         !this.isLoadingScroll &&
         this.weeks.length < 30
       ) {
         this.isLoadingScroll = true;
         this._init();
-      }*/
+      }
     };
   }
 
@@ -419,7 +419,7 @@ export class AthleteCalendarComponent implements OnInit {
         this.usersService
           .updateClientWorkout(body)
           .subscribe((savedWorkout) => {
-            
+
             this.cloneWeeks = _.cloneDeep(this.weeks);
           });
       } else {

@@ -128,7 +128,7 @@ export const webConfig = {
  			{ id: 1, name: 'kg'},
 	 		{ id: 2, name: 'lbs'},
 	 		// { id: 3, name: '%'},
-	 		{ id: 4, name: 'watts'},
+	 		{ id: 4, name: 'RPE'},
 	 		{ id: 5, name: 'km/h'},
  		],
  		section: [
@@ -229,11 +229,11 @@ export const webConfig = {
 		// id category stretching
 		{id:5,icon:'logo-stretch',classCss:"stretching-bar"},
 		// id category plyometrics
-		{id:6,icon:'logo-plyo',classCss:"plyometrics-bar"},	
+		{id:6,icon:'logo-plyo',classCss:"plyometrics-bar"},
 		// id category strenght
-		{id:7,icon:'logo-alt-re',classCss:"strenght-bar"},		
+		{id:7,icon:'logo-alt-re',classCss:"strenght-bar"},
 
 
-	]		 
+	]
 
 };
