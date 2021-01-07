@@ -27,6 +27,10 @@
   overflow: scroll;
   padding: 20px 30px;
   width: 100%;
+
+  @media (max-width: 480px) {
+    padding: 20px 15px;
+  }
 }
 
 .box-header-template {
@@ -308,16 +312,18 @@
   }
 }
 
+
 /* Style the navbar */
 #navbar-planning {
   // overflow: hidden;
   background-color: #f1f1f1;
   z-index: 1;
-  width: 106%;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  margin-left: -10px;
-  padding: 20px 30px 10px;
+  width: 100%;
+  padding: 20px 15px 10px;
+
+  @media (max-width: 480px) {
+    padding: 20px 0 10px;
+  }
 
   .date-title {
     font-size: 13pt;
@@ -669,6 +675,6 @@
     width: 9.2rem;
     margin-bottom: 15px;
     width: 100%;
-    
+
   }
 }

@@ -75,7 +75,7 @@
           <div class="athlets">
             <a class="text-white" href="https://app.theperfclub.com/coach/clients">All athlets</a>
           </div>
-    
+
         </div>
         <ng-container *ngIf="userWorkouts && userWorkouts">
           <div
@@ -83,7 +83,12 @@
             *ngFor="let workout of userWorkouts[_workout.date]"
           >
             <div class="workout-session-title">
+              <a class="text-dark"
+                 [routerLink]="['/coach', 'athlet', 'dashboard']"
+                 (click)="setCurrentAthletId(workout.user_id)"
+              >
               {{ workout.username }}
+              </a>
               <span class="workout-program-name" *ngIf="workout.program.name">{{
                 workout.program.name
               }}</span>

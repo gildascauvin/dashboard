@@ -46,6 +46,11 @@ export class CoachClientsComponent implements OnInit {
     });
   }
 
+  setCurrentAthletId(clientId) {
+    this.authService.setCurrentAthletId(clientId);
+    this.authService.setCurrentAthlet({});
+  }
+
   openInvitationDeleteModal(client) {
     const initialState = {
       modelId: this.user.id,

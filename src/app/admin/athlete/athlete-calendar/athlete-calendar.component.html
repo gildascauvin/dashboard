@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div cdkDropListGroup class="row">
     <div class="col-md-12">
-      <div id="navbar-planning">   
+      <div id="navbar-planning">
         <div class="input-group calendar-top float-left mr-2">
           <input class="form-control calendar" name="dp" (ngModelChange)="onDateSelected($event)" (click)="d.toggle()"
             [ngModel]="startedAtModel" ngbDatepicker #d="ngbDatepicker" />
@@ -18,7 +18,7 @@
         <div class="date-title">{{ currentMonth | uppercase }}</div>
       </div>
 
-      <div id="fixed-calendar-planning">
+      <div id="fixed-calendar-planning" cdkScrollable>
         <div *ngFor="let week of weeks; let y = index" class="row calendar-planning">
           <div *ngFor="let day of week; let i = index" class="col box-header-template">
             <div class="box-header-template-day text-color-box text-left">
@@ -78,15 +78,6 @@
                       <i *ngIf="false" class="fa fa-copy i-btn ml-4 mr-4" placement="top"
                         ngbTooltip="{{ '#Duplicate' | dgTranslate }}" #t="ngbTooltip"
                         (click)="duplicateWorkout(workout); t.close()"></i>
-
-                      <i class="fa fa-plus i-btn" (click)="
-                          addExerciceToWorkout(
-                            day,
-                            workout.program.exercices,
-                            workout
-                          );
-                          a.close()
-                        " #a="ngbTooltip" placement="top" ngbTooltip="{{ '#Add exercice' | dgTranslate }}"></i>
                     </div>
                     <button *ngIf="day.day == startedAtModel.day" class="btn btn-primary start-session"
                       (click)="openStartSessionModal(workout, day)">
@@ -97,7 +88,7 @@
                       <li class="list-group-item box-exercice" *ngFor="
                           let exercice of workout.program.exercices;
                           let indexExercice = index
-                        " cdkDrag>
+                        " cdkDrag [cdkDragStartDelay]="250">
                         <div class="action-workout-box-execrice float-right" *ngIf="
                             hover[i + '-' + y + '-' + in] && !showFooterAction
                           ">
@@ -231,7 +222,7 @@
                             </div>
                           </div>
                         </div>
-                      </li>                     
+                      </li>
                     </ul>
                   </div>
                   <div class="box-body-workout bg-white text-center pt-0" *ngIf="day.workouts.length">
@@ -244,7 +235,7 @@
                     </button>
                   </div>
                 </div>
-                
+
                 <div class="box-body-workout" *ngIf="day.workouts.length && showPasteCopiedWorkouts">
                   <div class="paste-zone-workouts"
                     (click)="pasteCopiedWorkouts(day.workouts, day)">
@@ -260,10 +251,10 @@
                     {{ "#Paste Workouts" | dgTranslate }}
                   </div>
                 </div>
-              
-             
+
+
               </div>
-             
+
             </div>
           </div>
         </div>

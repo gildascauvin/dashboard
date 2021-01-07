@@ -23,7 +23,7 @@ export class UnitSizeLabelPipe implements PipeTransform {
         return '%';
       case 4:
       case "4":
-        return 'watts';
+        return 'RPE';
       case 5:
       case "5":
         return 'km/h';
