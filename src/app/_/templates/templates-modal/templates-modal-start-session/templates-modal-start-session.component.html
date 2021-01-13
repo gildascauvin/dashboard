@@ -141,8 +141,8 @@
       <label class="rate-label">{{ "#Rate" | dgTranslate }}</label>
       <select class="form-control" [(ngModel)]="workout.rate">
         <option class="default-option"></option>
-        <option *ngFor="let rate of rates" [value]="rate">
-          {{ rate }}
+        <option *ngFor="let rate of rates" [value]="rate.value">
+          {{ rate.name }}
         </option>
       </select>
     </div>
@@ -180,30 +180,32 @@
   </div>
 </div>
 
-<div [ngClass]="{ 'multiple-buttons': step !== 1 }" class="modal-footer">
-  <button
-    (click)="showPreviousStep()"
-    *ngIf="step !== 1"
-    class="btn next-previous-btn"
-  >
-    <i class="fa fa-arrow-left"></i>
-    {{ "#Previous" | dgTranslate }}
-  </button>
+<ng-container *ngIf="onlyReadynessSurvey == false">
+  <div [ngClass]="{ 'multiple-buttons': step !== 1 }" class="modal-footer">
+    <button
+      (click)="showPreviousStep()"
+      *ngIf="step !== 1"
+      class="btn next-previous-btn"
+    >
+      <i class="fa fa-arrow-left"></i>
+      {{ "#Previous" | dgTranslate }}
+    </button>
 
-  <ul id="progress-bar">
-    <li
-      *ngFor="let option of options; index as i"
-      [ngClass]="{ active: i === currentStep }"
-    ></li>
-  </ul>
+    <ul id="progress-bar">
+      <li
+        *ngFor="let option of options; index as i"
+        [ngClass]="{ active: i === currentStep }"
+      ></li>
+    </ul>
 
-  <button
-    [ngClass]="{ 'next-btn-single': step === 1 }"
-    *ngIf="step !== 3"
-    (click)="showNextStep()"
-    class="btn next-previous-btn"
-  >
-    {{ "#Next" | dgTranslate }}
-    <i class="fa fa-arrow-right"></i>
-  </button>
-</div>
+    <button
+      [ngClass]="{ 'next-btn-single': step === 1 }"
+      *ngIf="step !== 3"
+      (click)="showNextStep()"
+      class="btn next-previous-btn"
+    >
+      {{ "#Next" | dgTranslate }}
+      <i class="fa fa-arrow-right"></i>
+    </button>
+  </div>
+</ng-container>

@@ -320,3 +320,542 @@
 .movement-type-8 {
   border-left: solid 5px #e37242;
 }
+
+  .fatigue-management-banner {
+    .rectangle {
+      display: block;
+      margin: 0px 0px 18px 0px;;
+      padding: 21px 0;
+      box-shadow: 0 1px 6px 0 rgba(155, 155, 155, 0.5);
+      background-color: #161616;
+      border-radius: 3px;
+
+      &.rectangle--todo, &.rectangle--in-progress, &.rectangle--done {
+        text-align: center;
+      }
+
+      @media (max-width: 480px) {
+        padding: 21px 0 8px;
+      }
+
+      &.rectangle--done {
+        padding: 21px 0 8px;
+      }
+    }
+
+    .oval {
+      position: relative;
+      width: 112px;
+      height: 112px;
+      border: solid 6px #d44000;
+      border-radius: 49%;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .circle-content {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 100px;
+      height: 100px;
+      vertical-align: top;
+      z-index: 2;
+      text-align: center;
+
+      .logo {
+        position: absolute;
+        top: 0;
+        left: 30px;
+        font-size: 10px;
+        width: 32px;
+        height: 32px;
+      }
+
+      .percentage {
+        display: block;
+        margin-top: 25px;
+        font-size: 40px;
+        color: #fff;
+      }
+
+      .sessions{
+        font-size: 12px;
+        margin-top: -7px;
+      }
+    }
+
+    .title {
+      color: #fff;
+      text-align: center;
+      padding-top: 20px;
+
+      +.title {
+        padding-top: 0;
+      }
+    }
+
+    .subtitle {
+      color: #777;
+      text-align: center;
+      padding: 10px 40px 20px;
+      line-height: 19px;
+
+      @media (max-width: 480px) {
+        padding: 10px 10px 20px;
+        line-height: 17px;
+      }
+    }
+
+    .content-oval {
+      font-family: Lato;
+      font-size: 32px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.5;
+      letter-spacing: normal;
+      text-align: center;
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    .cta{
+      display: block;
+      background: transparent;
+      text-decoration: none;
+      width: 116px;
+      border: solid 2px #d44000;
+      border-radius: 4px;
+      color: #ffffff;
+      text-align: center;
+      margin: auto;
+      margin-top: 19px;
+      margin-bottom: 19px;
+      padding: 4px;
+
+    }
+
+    .descriptions {
+      display: inline-block;
+      padding-left: 30px;
+      vertical-align: top;
+      padding-top: 20px;
+
+      &.descriptions--no-padding {
+        padding-top: 0 !important;
+      }
+    }
+
+    .title-separator {
+      display: inline-block;
+      padding-right: 5px;
+      color: #fff;
+    }
+
+    .rectangle--todo{
+      .descriptions {
+        .title {
+          display: inline-block;
+        }
+      }
+    }
+
+    .rectangle--in-progress {
+      .descriptions {
+        width: 50%;
+
+        .title {
+          padding-top: 30px;
+        }
+
+        .subtitle {
+          padding-left: 10px;
+          color: #fff;
+        }
+      }
+    }
+
+    .rectangle--done {
+      .descriptions {
+        display: block;
+        padding-left: 0;
+        padding-top: 0;
+        width: 50%;
+        text-align: center;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 480px) {
+      width: 100%;
+      display: block;
+
+      .title-separator {
+        display: none !important;
+      }
+
+      .descriptions {
+        display: block;
+        width: 100%;
+        padding-top: 0;
+      }
+
+      .rectangle--todo{
+        .descriptions {
+          padding-left: 0;
+          padding-top: 0;
+          .title {
+            display: block;
+          }
+        }
+      }
+
+      .rectangle--in-progress {
+        .descriptions {
+          padding-left: 0;
+          width: 100%;
+        }
+
+        .title {
+          padding-top: 20px !important;
+        }
+
+        .subtitle {
+          color: #777 !important;
+          padding-left:0 !important;
+        }
+      }
+
+      .rectangle--done {
+        .descriptions {
+          padding-left:0 !important;
+          width: auto;
+        }
+      }
+    }
+  }
+
+  .start-session {
+    width: 100%;
+  }
+
+
+.tpc-optimal-zone {
+  display: inline-block;
+  width: 50%;
+  position: relative;
+  height: 160px;
+
+  @media (max-width: 480px) {
+    display: block;
+    width: 100%;
+    height: 180px;
+  }
+
+  .title {
+    margin-top: 40px;
+  }
+
+  .optimal-zone--left {
+    position: absolute;
+    width: 180px;
+    height: 62px;
+    display: inline-block;
+    border-top: 1px dashed green;
+    border-left: 1px dashed green;
+    top: 15px;
+    left: 30px;
+
+    &.green {border-color: #00d49d;}
+    &.yellow {border-color: #cfe223;}
+    &.red {border-color: #ff0502;}
+
+    @media (max-width: 480px) {
+      width: 80px;
+      height: 72px;
+    }
+  }
+
+  .optimal-zone {
+    position: absolute;
+    display: inline-block;
+    vertical-align: top;
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    right: 0;
+
+    .title {
+      font-size: 35px;
+      padding: 0 15px;
+      margin-top: -12px;
+      display: inline-block;
+      background: #161616;
+      z-index: 3;
+      position: relative;
+
+      @media (max-width: 480px) {
+        padding: 0 8px;
+      }
+    }
+
+    .subtitle {
+      padding-top: 0;
+      color: #fff;
+    }
+  }
+
+  .optimal-zone--right {
+    position: absolute;
+    display: inline-block;
+    width: 180px;
+    height: 62px;
+    border-top: 1px dashed red;
+    border-right: 1px dashed red;
+    right: 30px;
+    top: 15px;
+
+    &.green {border-color: #00d49d;}
+    &.yellow {border-color: #cfe223;}
+    &.red {border-color: #ff0502;}
+
+    @media (max-width: 480px) {
+      width: 80px;
+      height: 72px;
+    }
+  }
+
+
+
+  .score {
+    position: relative;
+    top: 80px;
+    width: 180px;
+
+    @media (max-width: 480px) {
+      top: 90px;
+      width: 120px;
+    }
+
+    .value {
+      color: white;
+      text-align: center;
+      font-size: 30px;
+      width: 180px;
+      padding: 5px 0;
+      border-radius: 40px;
+
+      @media (max-width: 480px) {
+        width: 120px;
+      }
+    }
+
+    .subtitle {
+      padding: 5px 0;
+      font-size: 13px;
+    }
+
+    &.green {
+      .value {
+        border: 3px solid #00d49d;
+        background: rgba(0, 212, 157, 0.1);
+      }
+    }
+
+    &.yellow {
+      .value {
+        border: 3px solid #cfe223;
+        background: rgba(207, 226, 35, 0.1);
+      }
+    }
+
+    &.red {
+      .value {
+        border: 3px solid #ff0502;
+        background: rgba(255, 5, 2, 0.1);
+      }
+    }
+  }
+
+  .energy-score {
+    margin-left: -10px;
+    float: left;
+
+    @media (max-width: 480px) {
+      margin-left: 10px;
+    }
+  }
+
+  .rpe-score {
+    margin-right: -10px;
+    float: right;
+
+    @media (max-width: 480px) {
+      margin-right: 10px;
+    }
+  }
+}
+
+/****************************************************************
+ *
+ * CSS Percentage Circle
+ * Author: Andre Firchow
+ *
+*****************************************************************/
+@import "~compass-mixins/lib/compass";
+
+// VARS
+$circle-width: 0.06em;
+$circle-width-hover: 0.04em;
+
+// colors default
+$primary-color: #307bbb;
+$secondary-color: #F1F1F1;
+$bg-color: #161616;
+
+$primary-color-green: #00d49d;
+$primary-color-yellow: #cfe223;
+$primary-color-red: #ff0502;
+
+.tpc-circle {
+  display: inline-block;
+
+  @media (max-width: 480px) {
+    display: block;
+    width: 100%;
+  }
+
+  .rect-auto{
+    clip: rect(auto, auto, auto, auto);
+  }
+
+  .pie {
+    position: absolute;
+    border: $circle-width solid $primary-color;
+    width: 1 - (2 * $circle-width);
+    height: 1 - (2 * $circle-width);
+    clip: rect(0em, 0.5em, 1em, 0em);
+    border-radius: 50%;
+    @include rotate(0deg);
+  }
+
+  .pie-fill {
+    @include rotate(180deg);
+  }
+
+  .c100 {
+    *, *:before, *:after {
+      @include box-sizing(content-box);
+    }
+
+    position: relative;
+    font-size: 141px;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    margin: 0 auto;
+    background-color: $secondary-color;
+
+    // centered value inside circle
+    > span {
+      position: absolute;
+      width: 100%;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 5em;
+      line-height: 5em;
+      font-size: 0.2em;
+      color: $secondary-color;
+      display: block;
+      text-align: center;
+      white-space: nowrap;
+      @include transition-property(all);
+      @include transition-duration(0.2s);
+      @include transition-timing-function(ease-out);
+    }
+
+    &:after{
+      position: absolute;
+      top: $circle-width;
+      left: $circle-width;
+      display: block;
+      content: " ";
+      border-radius: 50%;
+      background-color: $bg-color;
+      width: 1 - (2 * $circle-width);
+      height: 1 - (2 * $circle-width);
+      @include transition-property(all);
+      @include transition-duration(0.2s);
+      @include transition-timing-function(ease-in);
+
+    }
+
+    .slice {
+      position: absolute;
+      width: 1em;
+      height: 1em;
+      clip: rect(0em, 1em, 1em, 0.5em);
+    }
+
+    .bar {
+      @extend .pie;
+    }
+
+
+    // loop to create all needed elements automatically
+    @for $j from 51 through 100 {
+
+      &.p#{$j} .slice {
+        @extend .rect-auto;
+      }
+
+      &.p#{$j} .bar:after{
+        @extend .pie-fill;
+      }
+
+      &.p#{$j} .fill{
+        @extend .pie;
+        @extend .pie-fill;
+      }
+    }
+
+    // loop to rotate all 100 circles
+    @for $j from 1 through 100 {
+      &.p#{$j} .bar {
+        @include rotate((360/100*$j) + deg);
+      }
+    }
+
+    &.green{
+      .bar, .fill { border-color: $primary-color-green !important;}
+      &:hover{
+        > span { color: $primary-color-green;}
+      }
+    }
+
+    &.yellow{
+      .bar, .fill { border-color: $primary-color-yellow !important;}
+      &:hover{
+        > span { color: $primary-color-yellow;}
+      }
+    }
+
+    &.red{
+      .bar, .fill { border-color: $primary-color-red !important;}
+      &:hover{
+        > span { color: $primary-color-red;}
+      }
+    }
+
+    &.bg-transparent {
+      background: transparent !important;
+    }
+  }
+}
+
