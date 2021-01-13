@@ -1,3 +1,4 @@
+
 .form-select-subtype {
   width: 100%;
 
@@ -5,11 +6,25 @@
     width: 33%;
   }
 }
-
+.list-group-item-step {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+hr {
+  margin-top: 10px;
+  margin-bottom:0;
+}
 .number-movement-list {
   text-align: center;
   display: inline-block;
   width: 90px;
+  height: 33px;
+}
+.unit-list {
+  border:none;
+}
+.badge-success {
+  margin-bottom: 7px;
 }
 
 .number-movement-list-label {
@@ -20,20 +35,21 @@
   border: 0;
   background-color: #ffffff;
 }
+.amrap-input {
+  width: 112px;
+}
 @media (max-width: 480px) {
   .container-movements {
-    padding-left: 1px;
-    padding-right: 5px;
+    padding: 0 15px 0 15px;
     .title-mouvement {
       font-size: 14px;
-      margin-left: -90px;
+      //margin-left: -90px;
     }
   }
   .container-set {
-    width: 100%;
-    margin-top: 1rem;
+    z-index: 1000;
   }
-  .custom-form {
-    padding-left: 7px !important;
+  .number-movement-list {
+    width: 60px;
   }
 }

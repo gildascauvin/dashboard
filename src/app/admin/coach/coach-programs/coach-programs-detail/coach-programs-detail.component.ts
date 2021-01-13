@@ -512,4 +512,8 @@ export class CoachProgramsDetailComponent implements OnInit {
     }
     this.autoSave()
   }
+  getCardioUnitLabel(key) {
+    const labelObj = this.configExercices.unit.find(obj => obj.id == key);
+    return labelObj.name;
+  }
 }

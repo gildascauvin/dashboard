@@ -273,4 +273,8 @@ export class CoachDashboardComponent implements OnInit {
       date.getMonth() == today.getMonth() &&
       date.getFullYear() == today.getFullYear()
   }
+  getCardioUnitLabel(key) {
+    const labelObj = this.configExercices.unit.find(obj => obj.id == key);
+    return labelObj.name;
+  }
 }

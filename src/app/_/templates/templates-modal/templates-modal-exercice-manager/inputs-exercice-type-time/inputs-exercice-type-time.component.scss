@@ -5,11 +5,19 @@
     width: 33%;
   }
 }
-
+.list-group-item-step {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+hr {
+  margin-top: 10px;
+  margin-bottom:0;
+}
 .number-movement-list {
   text-align: center;
   display: inline-block;
   width: 90px;
+  height: 33px;
 }
 
 .number-movement-list-label {
@@ -19,4 +27,21 @@
 .input-group-text {
   border: 0;
   background-color: #ffffff;
+}
+.badge-success {
+  margin-bottom: 7px;
+}
+.style-time-rounds {
+  width:112px;
+}
+@media (max-width: 480px) {
+  .number-movement-list {
+    width:60px
+  }
+  .title-mouvement{
+    font-size: 14px;
+  }
+  .flex-column-reverse {
+    flex-direction: column-reverse;
+  }
 }

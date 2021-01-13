@@ -271,13 +271,14 @@ export class AthleteCalendarComponent implements OnInit {
         date = addHours(date, nbHours);
         this.startDay = date;
       }
-
+      
       this.weeks.push(days);
     }
 
     this.cloneWeeks = _.cloneDeep(this.weeks);
 
     this.isLoadingScroll = false;
+    console.log('workouts', this.workouts)
   }
 
   private _initDate(startedAtModel?) {
@@ -773,6 +774,7 @@ export class AthleteCalendarComponent implements OnInit {
           this._refreshWeeksWithWorkouts();
         });
     }
+    console.log("this.workouts", this.workouts)
   }
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -821,4 +823,8 @@ export class AthleteCalendarComponent implements OnInit {
       : currentValue;
   }
 
+  getCardioUnitLabel(key) {
+    const labelObj = this.configExercices.unit.find(obj => obj.id == key);
+    return labelObj.name;
+  }
 }

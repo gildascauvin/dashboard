@@ -26,14 +26,14 @@
         <div class="form-row align-items-center">
           <div class="col-auto container-repmax-planning">
             <div class="input-group">
-              <div class="input-group-prepppend">
-                <span class="input-group-text">REPMAX</span>
+              <div class="input-group-prepppend d-flex">
+                <span class="input-group-text mb-0 p-0">REPMAX</span>
               </div>
               <input
                 placeholder="1"
                 [(ngModel)]="movement.max_value"
                 type="number"
-                class="form-control number-movement-list"
+                class="form-control number-movement-list ml-2"
               />
             </div>
           </div>
@@ -55,7 +55,7 @@
       </li>
       <li
         *ngFor="let set of movement.sets; let setIndex = index"
-        class="list-group-item"
+        class="list-group-item pt-0"
       >
         <button
           class="btn float-right remove-button"
@@ -125,24 +125,9 @@
             </span>
           </div>
         </div> -->
-        <div class="form-row flex-nowrap align-items-center container-repmax">
-          <div class="col-md-auto col-4" *ngIf="movement.has_series">
-            <div class="input-group">
-              <input
-                placeholder="1"
-                [(ngModel)]="set.set"
-                type="number"
-                class="form-control number-movement-list"
-              />
-              <div class="input-group-apppend">
-                <span class="input-group-text">{{
-                  "#Sets" | dgTranslate
-                }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-auto col-5 custom-form">
-            <div class="input-group">
+        <div class="form-row flex-nowrap flex-md-wrap container-repmax align-items-end">
+          <div class="custom-form justify-content-end">
+            <div class="input-group flex-column-reverse">
               <input
                 *ngIf="movement.has_repetitions || movement.has_rep_unit"
                 placeholder="1"
@@ -150,11 +135,11 @@
                 type="number"
                 class="form-control number-movement-list"
               />
-              <div class="col-auto" *ngIf="movement.has_rep_unit">
+              <div *ngIf="movement.has_rep_unit">
                 <select
                   [(ngModel)]="set.rep_unit"
                   type="number"
-                  class="form-control number-movement-list"
+                  class="form-control number-movement-list list-meters"
                 >
                   <option
                     *ngFor="let unit of configExercices.unit"
@@ -168,63 +153,67 @@
                 class="input-group-apppend"
                 *ngIf="movement.has_repetitions && !movement.has_rep_unit"
               >
-                <span class="input-group-text">{{
+                <span class="input-group-text p-0">{{
                   "#Reps" | dgTranslate
                 }}</span>
               </div>
             </div>
           </div>
-          <div class="d-flex container-set">
-            <div class="col-md-auto custom-form" *ngIf="movement.has_value">
+          <div class="d-flex container-set flex-column-reverse ml-3">
+            <div class="custom-form" *ngIf="movement.has_value">
               <input
                 placeholder="90"
                 [(ngModel)]="set.value"
                 type="number"
-                class="form-control number-movement-list ml-2 set"
+                class="form-control number-movement-list set"
               />
             </div>
 
             <div
-              class="col-md-auto"
+              class="input-group-apppend"
               *ngIf="movement.has_value && movement.category_id !== 9"
             >
               <select
                 [(ngModel)]="set.unit"
                 type="number"
-                class="form-control number-movement-list unit-list"
+                class="form-control number-movement-list unit-list pl-0"
               >
                 <option [value]="1">kg</option>
                 <option [value]="2">lbs</option>
                 <option [value]="3">%</option>
                 <option [value]="4">RPE</option>
               </select>
-              <span
-                *ngIf="movement.max_value && set.unit == 3 && isPlanning"
-                class="ml-2 badge badge-success"
-              >
-                {{
-                  set.value
-                    | unitSizeLabel: movement.max_value:movement.max_unit
-                }}
-              </span>
-              <span
-                *ngIf="
-                  movement.max_value &&
-                  (set.unit == 1 || set.unit == 2) &&
-                  isPlanning
-                "
-                class="ml-2 badge badge-success"
-              >
-                {{
-                  set.value
-                    | unitSizeCompar
-                      : movement.max_value
-                      : movement.max_unit
-                      : set.unit
-                }}
-              </span>
+             
             </div>
           </div>
+          <div class="d-flex flex-column justify-content-end container-badge"
+          *ngIf="movement.has_value && movement.category_id !== 9">
+            <span
+            *ngIf="movement.max_value && set.unit == 3 && isPlanning"
+            class="ml-3 badge badge-success"
+            >
+            {{
+              set.value
+                | unitSizeLabel: movement.max_value:movement.max_unit
+            }}
+            </span>
+            <span
+            *ngIf="
+              movement.max_value &&
+              (set.unit == 1 || set.unit == 2) &&
+              isPlanning
+            "
+            class="ml-3 badge badge-success"
+            >
+            {{
+              set.value
+                | unitSizeCompar
+                  : movement.max_value
+                  : movement.max_unit
+                  : set.unit
+            }}
+            </span>
+        </div>
         </div>
       </li>
     </ul>
@@ -236,7 +225,7 @@
 
 <div class="col-md-3 mb-4" *ngIf="model.movements.length">
   <div class="col-auto">
-    <div class="input-group">
+    <div class="input-group flex-column-reverse">
       <input
         placeholder="5"
         [(ngModel)]="model.sets"
@@ -244,7 +233,7 @@
         class="form-control"
       />
       <div class="input-group-apppend">
-        <span class="input-group-text">Sets</span>
+        <span class="input-group-text p-0">Sets</span>
       </div>
     </div>
   </div>

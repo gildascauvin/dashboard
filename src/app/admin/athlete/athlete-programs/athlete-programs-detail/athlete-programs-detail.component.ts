@@ -490,5 +490,9 @@ export class AthleteProgramsDetailComponent implements OnInit {
       this.getWorkouts(),
     ];
   }
+  getCardioUnitLabel(key) {
+    const labelObj = this.configExercices.unit.find(obj => obj.id == key);
+    return labelObj.name;
+  }
 
 }
