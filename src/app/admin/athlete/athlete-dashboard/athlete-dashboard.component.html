@@ -114,6 +114,10 @@
               <div *ngIf="workout.program.name" class="workout-session-title">
                 {{ workout.program.name }}
               </div>
+              <button *ngIf="checkIsToday(_wo.date)" class="btn btn-primary start-session"
+                      (click)="openStartSessionModal(workout, workout.day)">
+                {{ "#Start Session" | dgTranslate }}
+              </button>
               <ul class="list-group more-padding">
                 <li class="list-group-item box-exercice" *ngFor="
                     let exercice of workout.program.exercices;
