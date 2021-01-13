@@ -121,13 +121,24 @@
                               </div>
                             </div>
                             <div *ngSwitchCase="2">
-                              <div class="movement-title">
-                                <span *ngFor="
+                              <div class="movement-title d-flex flex-column">
+                                <span class="mb-2" *ngFor="
                                     let movement of exercice.movements;
                                     let indMov = index
-                                  "><span *ngIf="indMov > 0"> +</span>
-                                  {{ movement.quantity }}
-                                  {{ movement.name }}</span>
+                                  ">
+                                  <div *ngFor="let set of movement.sets">
+                                    <span *ngIf="movement.has_rep_unit">
+                                      {{ movement.name }} <br>
+                                      {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} @ {{ set.value
+                                      }}{{ set.unit_label }}
+                                    </span>
+                                    <span *ngIf="!movement.has_rep_unit">
+                                      {{ set.rep }} {{ movement.name }} @ {{ set.value
+                                      }}{{ set.unit_label }}
+                                    </span>
+                                  </div>
+                                  
+                                </span>
 
                                 <div class="movement-content">
                                   <span>{{ exercice.sets }}
@@ -138,8 +149,13 @@
                             <div *ngSwitchCase="3">
                               <div class="movement-title" *ngFor="let movement of exercice.movements">
                                 <div *ngFor="let set of movement.sets">
-                                  <span *ngIf="set.set">
-                                    {{ movement.name }} @ {{ set.value
+                                  <span *ngIf="movement.has_rep_unit">
+                                    {{ movement.name }} <br>
+                                    {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} @ {{ set.value
+                                    }}{{ set.unit_label }}
+                                    </span>
+                                  <span *ngIf="set.set && !movement.has_rep_unit">
+                                    {{ movement.sets[0].quantity }} {{ movement.name }} @ {{ set.value
                                     }}{{ set.unit_label }}</span>
                                 </div>
                               </div>
@@ -151,8 +167,13 @@
                             <div *ngSwitchCase="4">
                               <div class="movement-title" *ngFor="let movement of exercice.movements">
                                 <div *ngFor="let set of movement.sets">
-                                  <span *ngIf="set.set">
-                                    {{ movement.name }} @ {{ set.value
+                                  <span *ngIf="movement.has_rep_unit">
+                                    {{ movement.name }} <br>
+                                    {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} @ {{ set.value
+                                    }}{{ set.unit_label }}
+                                  </span>
+                                  <span *ngIf="set.set && !movement.has_rep_unit">
+                                    {{ movement.sets[0].quantity }} {{ movement.name }} @ {{ set.value
                                     }}{{ set.unit_label }}</span>
                                 </div>
                               </div>
@@ -166,8 +187,13 @@
                             <div *ngSwitchCase="5">
                               <div class="movement-title" *ngFor="let movement of exercice.movements">
                                 <div *ngFor="let set of movement.sets">
-                                  <span *ngIf="set.set">
-                                    {{ movement.name }} @ {{ set.value
+                                  <span *ngIf="movement.has_rep_unit">
+                                    {{ movement.name }} <br>
+                                    {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} @ {{ set.value
+                                    }}{{ set.unit_label }}
+                                  </span>
+                                  <span *ngIf="set.set && !movement.has_rep_unit">
+                                    {{ movement.sets[0].quantity }} {{ movement.name }} @ {{ set.value
                                     }}{{ set.unit_label }}</span>
                                 </div>
                               </div>
@@ -216,7 +242,7 @@
                                   ]
                                   }})</small>
                               </div>
-                              <div class="movement-content">
+                              <div class="movement-content custom-content">
                                 {{ exercice.custom }}
                               </div>
                             </div>

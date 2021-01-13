@@ -16,13 +16,16 @@
     *ngFor="let movement of model.movements; let movementIndex = index"
     class="list-group-item-step"
   >
+    <button class="btn float-right" (click)="removeMovement(movementIndex)">
+      <i class="fa fa-close"></i>
+    </button>
     <div class="row" *ngIf="isPlanning && movement.has_repmax">
-      <div class="col-md-12">
+      <div class="col-md-12 pl-0">
         <div class="form-row align-items-center">
           <div class="col-auto">
             <div class="input-group">
               <div class="input-group-prepppend">
-                <span class="input-group-text">REPMAX</span>
+                <span class="input-group-text pb-0">REPMAX</span>
               </div>
               <input
                 placeholder="1"
@@ -36,7 +39,7 @@
             <select
               [(ngModel)]="movement.max_unit"
               type="number"
-              class="form-control number-movement-list"
+              class="form-control number-movement-list unit-list"
             >
               <option
                 *ngFor="let unit of configExercices.size"
@@ -49,46 +52,66 @@
         </div>
       </div>
     </div>
-    <hr />
+    <hr *ngIf="isPlanning && movement.has_repmax"/>
     <div class="row">
-      <div class="col" *ngIf="movement.has_repetitions">
+      <div class="d-flex flex-column-reverse" *ngIf="movement.has_repetitions">
         <input
           placeholder="1"
           type="number"
           [(ngModel)]="movement.sets[0].quantity"
           class="form-control number-movement-list"
         />
+        <div *ngIf="!movement.has_rep_unit" class="input-group-apppend">
+          <span class="input-group-text p-0">{{
+            "#Reps" | dgTranslate
+          }}</span>
+        </div>
+        <div *ngIf="movement.has_rep_unit">
+          <select
+            [(ngModel)]="movement.sets[0].rep_unit"
+            type="number"
+            class="form-control number-movement-list unit-list pl-0 list-meters"
+          >
+            <option
+              *ngFor="let unit of configExercices.unit"
+              [value]="unit.id"
+            >
+              {{ unit.name }}
+            </option>
+          </select>
+        </div>
       </div>
-      <div class="col">
+      <div class="title-mouvement align-self-end mr-2 ml-2">
         {{ movement.name }}
       </div>
 
-      <div class="col-auto" *ngIf="movement.has_value">
+      <div class="d-flex flex-column-reverse" *ngIf="movement.has_value">
         <input
           placeholder="90"
           [(ngModel)]="movement.sets[0].value"
           type="number"
-          class="form-control number-movement-list ml-2 mr-2"
-        />
-      </div>
-
-      <div
-        class="col-auto"
-        *ngIf="movement.has_value && movement.category_id !== 9"
-      >
-        <select
-          [(ngModel)]="movement.sets[0].unit"
-          type="number"
           class="form-control number-movement-list"
-        >
+        />
+        <select
+        [(ngModel)]="movement.sets[0].unit"
+        type="number"
+        class="form-control number-movement-list unit-list pl-0"
+        *ngIf="movement.has_value && movement.category_id !== 9"
+         >
           <option [value]="1">kg</option>
           <option [value]="2">lbs</option>
           <option [value]="3">%</option>
           <option [value]="4">RPE</option>
-        </select>
+         </select>
+      </div>
+
+      <div
+        class="d-flex flex-column justify-content-end container-badge"
+        *ngIf="movement.has_value && movement.category_id !== 9"
+      >
         <span
           *ngIf="movement.max_value && movement.sets[0].unit == 3 && isPlanning"
-          class="ml-2 badge badge-success"
+          class="badge badge-success ml-2"
         >
           {{
             movement.sets[0].value
@@ -101,7 +124,7 @@
             (movement.sets[0].unit == 1 || movement.sets[0].unit == 2) &&
             isPlanning
           "
-          class="ml-2 badge badge-success"
+          class="badge badge-success ml-2"
         >
           {{
             movement.sets[0].value
@@ -112,18 +135,12 @@
           }}
         </span>
       </div>
-
-      <div class="col text-right">
-        <button class="btn" (click)="removeMovement(movementIndex)">
-          <i class="fa fa-close"></i>
-        </button>
-      </div>
     </div>
   </div>
 </div>
 
-<div class="col-md-12 mb-2">
-  <div class="form-inline form-select-subtype">
+<div class="col-md-4 mb-2">
+  <div class="form-group form-select-subtype">
     <div
       [(ngModel)]="typeChoice"
       (ngModelChange)="onTypeChoiceChanged($event)"
@@ -143,15 +160,15 @@
   </div>
 </div>
 
-<div class="col-md-12">
-  <div class="form-inline mb-3">
-    <div class="form-group">
+<div class="col-md-4 col-8">
+  <div class="form-group mb-3">
+    <div class="form-group d-flex container-rounds">
       <input
         class="form-control mr-3 style-time-rounds"
         type="number"
         [(ngModel)]="model.time_style_fixed"
       />
-      <label class="form-check-label">
+      <label class="form-check-label d-flex align-items-center">
         {{ "#Rounds" | dgTranslate }}
       </label>
     </div>

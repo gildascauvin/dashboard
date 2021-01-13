@@ -60,6 +60,7 @@ export class InputsExerciceTypeAmrapComponent implements OnInit {
     clone.sets = [
       {
         unit: 3,
+        rep_unit: 1
       },
     ];
 

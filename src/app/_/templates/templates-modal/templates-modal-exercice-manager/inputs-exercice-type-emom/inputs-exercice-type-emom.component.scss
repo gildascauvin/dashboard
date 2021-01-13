@@ -2,7 +2,17 @@
 	text-align: center;
 	display: inline-block;
 	width: 90px;
+	height: 33px;
 }
+
+.list-group-item-step {
+	padding-top: 10px;
+	padding-bottom: 10px;
+  }
+  hr {
+	margin-top: 10px;
+	margin-bottom:0;
+  }
 
 .number-movement-list-label {
 	display: inline-block;
@@ -15,8 +25,8 @@
 
 
 .emom-interval-inputs {
-	width: 90px;
 	margin-right: 10px;
+	width: 112px;
 }
 
 .form-select-subtype {
@@ -26,3 +36,15 @@
 		width: 33%;
 	}
 }
+.badge-success {
+	margin-bottom: 7px;
+}
+
+@media (max-width: 480px) {
+	.number-movement-list {
+	  width:60px
+	}
+	.title-mouvement{
+		font-size: 14px;
+	}
+  }

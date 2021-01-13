@@ -1,7 +1,8 @@
 .number-movement-list {
   text-align: center;
   display: inline-block;
-  width: 75px;
+  width: 80px;
+  height: 33px;
 }
 
 .number-movement-list-label {
@@ -11,38 +12,61 @@
 .input-group-text {
   border: 0;
   background-color: #ffffff;
+  color: #8a8a8a;
+  margin-bottom: 6px;
+}
+
+.list-group-item {
+  padding: 10px 0 10px 20px;
+}
+.custom-form {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+}
+.badge-success {
+  margin-bottom: 7px;
+}
+.unit-list {
+  border:none;
+  width: 100%;
+  padding: 0;
+}
+.container-repmax {
+  justify-content: space-between;
+  width:61%;
 }
 @media (max-width: 480px) {
+  .container-repmax {
+    width: 100%;
+  }
   .container-mouvements {
-    padding: 0;
-    .container-repmax {
-      flex-wrap: wrap !important;
-    }
+    padding: 0 15px 0 15px;
+  
   }
   .container-set {
     width: 100%;
-    margin-top: 1rem;
+    z-index: 1000;
+  }
+  .number-movement-list {
+    width: 60px;
   }
   .list-group-item-step {
     box-shadow: 0 0 black;
     padding: 0;
   }
-  .list-group-item {
-    padding-left: 10px;
-  }
+
   .list-group {
+    width: 100%;
     display: inline-block;
     padding-left: 3px;
   }
-  .number-movement-list.set {
-    margin-left: 5px !important;
-  }
+  
   .number-movement-list.unit-list {
-    width: 48px;
+    border:none;
+    padding:0;
   }
-  .input-group-text {
-    font-size: 0.75rem;
-  }
+
   .custom-form {
     padding-left: 0 !important;
   }
@@ -55,4 +79,12 @@
   .remove-button {
     margin-left: -63px;
   }
+  .container-badge {
+    padding-right: 8px;
+  }
+  .list-meters, .list-meters-unit {
+    width:80px;
+  }
+
 }
+

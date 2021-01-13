@@ -5,6 +5,8 @@
   text-align: center;
   display: inline-block;
   width: 100px;
+  padding-left: 0;
+  height: auto;
 }
 
 .number-movement-list-label {
@@ -15,21 +17,32 @@
   border: 0;
   background-color: #ffffff;
 }
+.container-sets {
+  width: 60%;
+}
+
 @media (max-width: 480px) {
+  .input-group-text {
+    padding-left: 0;
+  }
   .number-movement-list {
     width: 67px;
     margin-left: 0px !important;
   }
+  .unit-list {
+    width: 94px;
+    margin-right: 11px;
+  }
   .list-group-item {
     margin-left: -16px;
     margin-right: -16px;
-    padding-left: 10px !important;
+    padding-left: 20px !important;
   }
   .container-item-step {
     padding-left: 1px;
     padding-right: 5px;
   }
-  .custom-form {
-    margin-top: 16px;
+  .container-sets {
+    width: 100%;
   }
 }

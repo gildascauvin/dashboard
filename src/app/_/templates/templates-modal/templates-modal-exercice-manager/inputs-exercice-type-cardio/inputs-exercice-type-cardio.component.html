@@ -45,8 +45,8 @@
   <div class="list-group-item-step">
     <ul class="list-group">
       <li class="list-group-item">
-        <div class="form-row align-items-center">
-          <div class="col-auto">
+        <div class="form-row align-items-end justify-content-between container-sets">
+          <div>
             <div class="input-group">
               <input
                 placeholder="100"
@@ -56,11 +56,11 @@
               />
             </div>
           </div>
-          <div class="col-auto">
+          <div>
             <select
               [(ngModel)]="model.cardio_cardio_movement.unit"
               type="number"
-              class="form-control number-movement-list"
+              class="form-control number-movement-list unit-list"
             >
               <option
                 *ngFor="let unit of configExercices.cardio.unit"
@@ -70,7 +70,7 @@
               </option>
             </select>
           </div>
-          <div class="col-auto">
+          <div>
             <div class="input-group">
               <input
                 placeholder="80"
@@ -97,7 +97,7 @@
           let set of model.cardio_intervals_movement.sets;
           let setIndex = index
         "
-        class="list-group-item"
+        class="list-group-item pt-0"
       >
         <button
           class="btn float-right"
@@ -107,9 +107,9 @@
           <i class="fa fa-close"></i>
         </button>
 
-        <div class="form-row align-items-center">
-          <div class="col-auto">
-            <div class="input-group">
+        <div class="form-row align-items-end justify-content-between container-sets">
+          <div>
+            <div class="input-group flex-column-reverse">
               <input
                 placeholder="1"
                 [(ngModel)]="set.set"
@@ -117,11 +117,24 @@
                 class="form-control number-movement-list"
               />
               <div class="input-group-apppend">
-                <span class="input-group-text">Sets</span>
+                <span class="input-group-text pl-0">Sets</span>
               </div>
             </div>
           </div>
-          <div class="col-auto">
+        
+          <div>
+            <select
+              [(ngModel)]="set.unit"
+              type="number"
+              class="form-control number-movement-list unit-list"
+            >
+              <option
+                *ngFor="let unit of configExercices.cardio.unit"
+                [value]="unit.id"
+              >
+                {{ unit.name }}
+              </option>
+            </select>
             <div class="input-group">
               <input
                 placeholder="100"
@@ -131,22 +144,8 @@
               />
             </div>
           </div>
-          <div class="col-auto">
-            <select
-              [(ngModel)]="set.unit"
-              type="number"
-              class="form-control number-movement-list"
-            >
-              <option
-                *ngFor="let unit of configExercices.cardio.unit"
-                [value]="unit.id"
-              >
-                {{ unit.name }}
-              </option>
-            </select>
-          </div>
-          <div class="col-auto custom-form">
-            <div class="input-group">
+          <div class="custom-form">
+            <div class="input-group flex-column-reverse">
               <input
                 placeholder="90"
                 [(ngModel)]="set.value"

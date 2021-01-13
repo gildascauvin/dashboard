@@ -16,13 +16,16 @@
     *ngFor="let movement of model.movements; let movementIndex = index"
     class="list-group-item-step"
   >
+  <button class="btn float-right" (click)="removeMovement(movementIndex)">
+    <i class="fa fa-close"></i>
+  </button>
     <div *ngIf="isPlanning && movement.has_repmax" class="row">
-      <div class="col-md-12">
+      <div class="col-md-12 pl-0">
         <div class="form-row align-items-center">
           <div class="col-auto">
             <div class="input-group">
               <div class="input-group-prepppend">
-                <span class="input-group-text">REPMAX</span>
+                <span class="input-group-text pb-0">REPMAX</span>
               </div>
               <input
                 placeholder="1"
@@ -32,11 +35,11 @@
               />
             </div>
           </div>
-          <div class="col-auto" *ngIf="movement.has_rep_unit">
+          <div *ngIf="movement.has_rep_unit">
             <select
               [(ngModel)]="movement.max_unit"
               type="number"
-              class="form-control number-movement-list"
+              class="form-control number-movement-list unit-list pl-0 list-meters"
             >
               <option
                 *ngFor="let unit of configExercices.size"
@@ -49,89 +52,95 @@
         </div>
       </div>
     </div>
-    <hr />
+    <hr *ngIf="isPlanning && movement.has_repmax"/>
     <div class="row">
-      <div class="col" *ngIf="movement.has_repetitions">
+      <div class="d-flex flex-column-reverse" *ngIf="movement.has_repetitions">
         <input
           placeholder="1"
           type="number"
           [(ngModel)]="movement.sets[0].quantity"
           class="form-control number-movement-list"
         />
-      </div>
-      <div class="col title-mouvement">{{ movement.name }}</div>
-      <div class="col-auto" *ngIf="movement.has_rep_unit">
-        <select
-          [(ngModel)]="movement.sets[0].rep_unit"
-          type="number"
-          class="form-control number-movement-list"
-        >
-          <option
-            *ngFor="let unit of configExercices.unit"
-            [value]="unit.id"
-          >
-            {{ unit.name }}
-          </option>
-        </select>
-      </div>
-      <div class="d-flex container-set">
-        <div class="col-auto custom-form" *ngIf="movement.has_value">
-          <input
-            placeholder="90"
-            [(ngModel)]="movement.sets[0].value"
-            type="number"
-            class="form-control number-movement-list ml-2"
-          />
+        <div *ngIf="!movement.has_rep_unit" class="input-group-apppend">
+          <span class="input-group-text p-0">{{
+            "#Reps" | dgTranslate
+          }}</span>
         </div>
 
-        <div
-          class="col-auto"
-          *ngIf="movement.has_value && movement.category_id !== 9"
-        >
+        <div *ngIf="movement.has_rep_unit">
           <select
-            [(ngModel)]="movement.sets[0].unit"
+            [(ngModel)]="movement.sets[0].rep_unit"
             type="number"
-            class="form-control number-movement-list"
+            class="form-control number-movement-list unit-list pl-0 list-meters"
           >
-            <option [value]="1">kg</option>
-            <option [value]="2">lbs</option>
-            <option [value]="3">%</option>
-            <option [value]="4">RPE</option>
+            <option
+              *ngFor="let unit of configExercices.unit"
+              [value]="unit.id"
+            >
+              {{ unit.name }}
+            </option>
           </select>
-          <span
-            *ngIf="
-              movement.max_value && movement.sets[0].unit == 3 && isPlanning
-            "
-            class="ml-2 badge badge-success"
-          >
-            {{
-              movement.sets[0].value
-                | unitSizeLabel: movement.max_value:movement.max_unit
-            }}
-          </span>
-          <span
-            *ngIf="
-              movement.max_value &&
-              (movement.sets[0].unit == 1 || movement.sets[0].unit == 2) &&
-              isPlanning
-            "
-            class="ml-2 badge badge-success"
-          >
-            {{
-              movement.sets[0].value
-                | unitSizeCompar
-                  : movement.max_value
-                  : movement.max_unit
-                  : movement.sets[0].unit
-            }}
-          </span>
         </div>
-
-        <div class="col text-right">
-          <button class="btn" (click)="removeMovement(movementIndex)">
-            <i class="fa fa-close"></i>
-          </button>
+      </div>
+      <div class="title-mouvement align-self-end ml-2 mr-2">{{ movement.name }}</div>
+      <div class="d-flex container-set">
+        <div class="d-flex flex-column-reverse align-items-center">
+          <div class="custom-form" *ngIf="movement.has_value">
+            <input
+              placeholder="90"
+              [(ngModel)]="movement.sets[0].value"
+              type="number"
+              class="form-control number-movement-list"
+            />
+          </div>
+  
+          <div
+            *ngIf="movement.has_value && movement.category_id !== 9"
+          >
+            <select
+              [(ngModel)]="movement.sets[0].unit"
+              type="number"
+              class="form-control number-movement-list unit-list pl-0"
+            >
+              <option [value]="1">kg</option>
+              <option [value]="2">lbs</option>
+              <option [value]="3">%</option>
+              <option [value]="4">RPE</option>
+            </select>
+          </div>
         </div>
+      
+      
+      </div>
+      <div class="d-flex flex-column justify-content-end container-badge"
+      *ngIf="movement.has_value && movement.category_id !== 9">
+          <span
+          *ngIf="
+            movement.max_value && movement.sets[0].unit == 3 && isPlanning
+          "
+          class="badge badge-success ml-2"
+        >
+          {{
+            movement.sets[0].value
+              | unitSizeLabel: movement.max_value:movement.max_unit
+          }}
+        </span>
+        <span
+          *ngIf="
+            movement.max_value &&
+            (movement.sets[0].unit == 1 || movement.sets[0].unit == 2) &&
+            isPlanning
+          "
+          class="ml-2 badge badge-success"
+        >
+          {{
+            movement.sets[0].value
+              | unitSizeCompar
+                : movement.max_value
+                : movement.max_unit
+                : movement.sets[0].unit
+          }}
+        </span>
       </div>
     </div>
   </div>
@@ -160,25 +169,26 @@
 
 <div class="col-md-12">
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3 col-6">
       <div class="form-group">
         <label>{{ "#Timecap" | dgTranslate }}</label>
         <input
           type="number"
           [(ngModel)]="model.amrap_timecap"
           placeholder="10"
-          class="form-control"
+          class="form-control amrap-input"
+          
         />
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-6">
       <div class="form-group">
         <label>{{ "#Sets" | dgTranslate }}</label>
         <input
           placeholder="5"
           [(ngModel)]="model.sets"
           type="number"
-          class="form-control"
+          class="form-control amrap-input"
         />
       </div>
     </div>

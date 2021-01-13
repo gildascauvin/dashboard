@@ -117,7 +117,19 @@
 	   										</div>
 	   										<div *ngSwitchCase="2">
 	   											<div class="movement-title">
-	   												<span *ngFor="let movement of exercice.movements; let indMov=index;"><span *ngIf="indMov>0"> +</span> {{ movement.quantity }} {{ movement.name }}</span>
+	   												<span class="mb-2" *ngFor="let movement of exercice.movements; let indMov=index;">
+														<div *ngFor="let set of movement.sets">
+															<span *ngIf="movement.has_rep_unit">
+															  {{ movement.name }} <br>
+															  {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} @ {{ set.value
+															  }}{{ set.unit_label }}
+															</span>
+															<span *ngIf="!movement.has_rep_unit">
+															  {{ set.rep }} {{ movement.name }} @ {{ set.value
+															  }}{{ set.unit_label }}
+															</span>
+														</div>	
+													</span>
 
 	   												<div class="movement-content">
 															<span>{{ exercice.sets }} {{ '#Sets' | dgTranslate }}</span>
@@ -125,8 +137,17 @@
 	   											</div>
 	   										</div>
 	   										<div *ngSwitchCase="3">
-	   											<div class="movement-title" *ngFor="let movement of exercice.movements">
-	   												{{ movement.quantity }} {{ movement.name }} @ {{ movement.value }}{{ movement.unit_label }}
+	   											<div class="movement-title mb-2" *ngFor="let movement of exercice.movements">
+													<div *ngFor="let set of movement.sets">
+														<span *ngIf="movement.has_rep_unit">
+															{{ movement.name }} <br>
+															{{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} @ {{ set.value
+															}}{{ set.unit_label }}
+														  </span>
+														<span *ngIf="set.set && !movement.has_rep_unit">
+														  {{ movement.sets[0].quantity }} {{ movement.name }} @ {{ set.value
+														  }}{{ set.unit_label }}</span>
+													</div>
 	   											</div>
 	   											<div class="movement-content">
 	   												AMRAP: {{ exercice.amrap_timecap }} {{ '#minutes' | dgTranslate }}
@@ -134,7 +155,16 @@
 	   										</div>
 	   										<div *ngSwitchCase="4">
 	   											<div class="movement-title" *ngFor="let movement of exercice.movements">
-	   												{{ movement.quantity }} {{ movement.name }} @ {{ movement.value }}{{ movement.unit_label }}
+													<div *ngFor="let set of movement.sets">
+														<span *ngIf="movement.has_rep_unit">
+															{{ movement.name }} <br>
+															{{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} @ {{ set.value
+															}}{{ set.unit_label }}
+															</span>
+														<span *ngIf="set.set && !movement.has_rep_unit">
+														  {{ movement.sets[0].quantity }} {{ movement.name }} @ {{ set.value
+														  }}{{ set.unit_label }}</span>
+													  </div>
 	   											</div>
 	   											<div class="movement-content">
 	   												<span *ngIf="exercice.time_style == 1">{{ exercice.time_style_fixed }} {{ '#rounds for time' | dgTranslate }}</span>
@@ -143,8 +173,16 @@
 	   										</div>
 	   										<div *ngSwitchCase="5">
 	   											<div class="movement-title" *ngFor="let movement of exercice.movements">
-	   												{{ movement.quantity }} {{ movement.name }} @ {{ movement.value }}{{ movement.unit_label }}
-	   											</div>
+													<div *ngFor="let set of movement.sets">
+														<span *ngIf="movement.has_rep_unit">
+															{{ movement.name }} <br>
+															{{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} @ {{ set.value
+															}}{{ set.unit_label }}
+														</span>
+														<span *ngIf="set.set && !movement.has_rep_unit">
+														  {{ movement.sets[0].quantity }} {{ movement.name }} @ {{ set.value
+														  }}{{ set.unit_label }}</span>
+													</div>	   											</div>
 												<div class="movement-content">
 													EMOM ({{ exercice.emom_duration }} min every {{ exercice.emom_seconds }} sec)
 												</div>
@@ -169,7 +207,7 @@
 	   												{{ exercice.name }}
 	   												<small>({{configExercices.flatCustom[exercice.custom_scoring]}})</small>
 	   											</div>
-	   											<div class="movement-content">{{ exercice.custom }}</div>
+	   											<div class="movement-content custom-content">{{ exercice.custom }}</div>
 	   										</div>
 			  							</div>
 				  					</div>

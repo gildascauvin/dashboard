@@ -128,7 +128,7 @@ export class TemplatesModalExerciceManagerComponent
       if (!movement.value) {
         movement.value = 0;
       }
-
+      console.log('movement',)
       this.setUnitLabel(movement, "unit", "unit_label");
 
       let sets = movement.sets.map((set) => {
@@ -159,7 +159,6 @@ export class TemplatesModalExerciceManagerComponent
           "unit_label"
         );
       } else if (this.model.cardio_scoring === 2) {
-        console.log("Grouped");
         let sets = this.model.cardio_intervals_movement.sets.map((set) => {
           this.setCardioUnitLabel(set, "unit", "unit_label");
 
@@ -182,7 +181,7 @@ export class TemplatesModalExerciceManagerComponent
     // this.model.sets = sets;
     this.templatesService.onTemplateUpdated.emit(true);
 
-    this.model.name = this.workout.name;
+    //this.model.name = this.workout.name;
 
     if (this.isPlanning) {
       if (this.showDate) {
