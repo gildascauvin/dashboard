@@ -40,6 +40,7 @@
       <li *ngFor="let set of movement.sets; let setIndex = index" class="list-group-item pt-0">
         <button class="btn float-right remove-button" *ngIf="movement.sets.length > 1"
           (click)="removeSet(movement.sets, setIndex)">
+          <i class="fa fa-close"></i>
         </button>
 
         <div class="form-row flex-nowrap flex-md-wrap container-repmax d-flex">
