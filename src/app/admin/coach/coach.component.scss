@@ -49,6 +49,11 @@
       margin-right: 50px;
       text-decoration: none !important;
       color: #e1e1e1;
+      @media (max-width: 480px) {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+      }
 
       &.active {
         border-bottom: solid 3px #d44000;
@@ -62,6 +67,7 @@
   padding-left: 0;
   padding-right: 0;
   background-color: #f1f1f1;
+  height: 100%;
 }
 
 .selection-program {
@@ -72,6 +78,10 @@
     color: #ffffff;
     margin-top: 0;
   }
+}
+
+.isActive {
+  color: #d44000;
 }
 
 .responsive-left-menu {
@@ -92,14 +102,6 @@
     border: 0;
     border-bottom: 3px solid #d44000;
   }
-}
-
-.responsive-left-menu-toogled {
-  -webkit-transform: translateX(-352px);
-  -moz-transform: translateX(-352px);
-  -ms-transform: translateX(-352px);
-  -o-transform: translateX(-352px);
-  transform: translateX(-352px);
 }
 
 .responsive-right-menu {
@@ -140,11 +142,10 @@
   font-size: 19pt;
   font-weight: bold;
   margin-bottom: 15px;
-  vertical-align: middle;
 }
 
 .top-custom-nav {
-  height: 50px;
+  height: 59px;
   background-color: #000000;
   color: #f1f1f1;
 
@@ -168,9 +169,17 @@
   width: auto !important;
 }
 
-.select-menu-athlet {
-  width: 200px;
-  margin-top: 6px;
+#navbarCollapse {
+  margin-top: 67px;
+}
+
+
+.responsive-left-menu-toogled {
+  -webkit-transform: translateX(-352px);
+  -moz-transform: translateX(-352px);
+  -ms-transform: translateX(-352px);
+  -o-transform: translateX(-352px);
+  transform: translateX(-352px);
 }
 
 @media (max-width: 480px) {
@@ -179,5 +188,13 @@
   }
   .body-content-sections {
     padding-top: 0 !important;
+  }
+  .nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .list-group-item {
+    padding:7px 0 !important;
   }
 }

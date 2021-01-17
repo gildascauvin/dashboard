@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="39px" height="39px" viewBox="0 0 39 39" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>Group 2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Tab-profile-inactive" transform="translate(-64.000000, -6.000000)">
+            <g id="Group-2" transform="translate(64.785714, 6.620690)">
+                <path d="M18.7142857,32.7241379 C25.1839071,32.7241379 30.4285714,30.013728 30.4285714,28.0971787 C30.4285714,26.1806294 25.1839071,20 18.7142857,20 C12.2446644,20 7,26.1806294 7,28.0971787 C7,30.013728 12.2446644,32.7241379 18.7142857,32.7241379 Z" id="Oval" fill="#929DA5"></path>
+                <circle id="Oval" fill="#929DA5" cx="18.7142857" cy="11.8793103" r="5.5"></circle>
+                <circle id="Oval-Copy" stroke="#929DA5" stroke-width="2" cx="18.7142857" cy="18.8793103" r="18.5"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

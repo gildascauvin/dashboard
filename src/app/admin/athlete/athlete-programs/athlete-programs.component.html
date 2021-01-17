@@ -1,9 +1,9 @@
 <div class="container">
 	<div class="row container-program">
-		<div class="col-md-6">
-			<h4>{{ '#My programs' | dgTranslate }}</h4>
+		<div class="col-md-6 col-6">
+			<h4 class="title-program">{{ '#My programs' | dgTranslate }}</h4>
 		</div>
-		<div class="col-md-6 text-right">
+		<div class="col-6 col-md-6 text-right container-button-program">
 			<button class="btn btn-primary" (click)="openProgramCreateModal()"><i class="fa fa-plus"></i> {{ '#Create a program' | dgTranslate }}</button>
 		</div>
 		<div class="col-md-12">
@@ -25,10 +25,6 @@
 						</td>
 						<td><a href="#" [routerLink]="['/athlete', 'programs', program.program_id ]" >{{ program.name }}</a></td>
 						<td class="text-right">
-							<button class="btn btn-outline-secondary btn-sm mr-2" (click)="openProgramAthleteManagerMeModal(program)">
-								<i class="fa fa-link"></i> {{ '#Assign to me' | dgTranslate }}
-							</button>
-
 							<div ngbDropdown class="d-inline-block">
 							  <button class="btn btn-outline-secondary btn-sm btn-toogle-select" ngbDropdownToggle>
 							    <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
@@ -44,7 +40,11 @@
 
 							    <button ngbDropdownItem (click)="openProgramDeleteModal(program)">
 							      <i class="fa fa-trash mr-2 text-danger"></i> {{ '#Delete' | dgTranslate }}
-							    </button>
+								</button>
+								
+								<button ngbDropdownItem (click)="openProgramAthleteManagerMeModal(program)">
+									<i class="fa fa-link"></i> {{ '#Assign to me' | dgTranslate }}
+								</button>
 							  </div>
 							</div>
 

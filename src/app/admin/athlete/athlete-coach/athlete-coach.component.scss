@@ -21,3 +21,11 @@ a {
     line-height: 1em;
     vertical-align: middle;
 }
+@media (max-width: 480px) {
+    .list-group-item {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+        align-items: center;
+    }
+}

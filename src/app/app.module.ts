@@ -177,7 +177,7 @@ export function newNgTranslate(http: HttpClient) {
     AthleteProfilePerformanceComponent,
     AthleteProfileReadinessComponent,
     UsersModalChooseAthletComponent,
-    TemplatesModalStartSessionComponent,
+    TemplatesModalStartSessionComponent
   ],
   imports: [
     FormsModule,

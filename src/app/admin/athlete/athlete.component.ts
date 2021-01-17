@@ -19,6 +19,7 @@ import { TemplatesModalExerciceManagerComponent } from '../../_/templates/templa
 })
 export class AthleteComponent implements OnInit {
   bsModalRef: BsModalRef;
+  currentUser: any = {};
 
   user: any = {
     data: {},
@@ -43,6 +44,7 @@ export class AthleteComponent implements OnInit {
   	@Inject(DOCUMENT) private _document) { }
 
   ngOnInit(): void {
+    this.currentUser = this.authService.getCurrentAthlet() || {};
     this._document.body.style.background = '#FFF';
     this.user = this.authService.getUserData();
 
