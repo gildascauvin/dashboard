@@ -49,6 +49,11 @@
       margin-right: 50px;
       text-decoration: none !important;
       color: #e1e1e1;
+      @media (max-width: 480px) {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+      }
 
       &.active {
         border-bottom: solid 3px #d44000;
@@ -61,8 +66,8 @@
   padding-top: 90px;
   padding-left: 0;
   padding-right: 0;
-  height: 100%;
   background-color: #f1f1f1;
+  height: 100%;
 }
 
 .selection-program {
@@ -75,39 +80,28 @@
   }
 }
 
-.responsive-left-menu {
-  height: 100%;
-  width: 327px;
-  position: fixed;
-  background-color: #000000;
-  overflow-x: hidden;
-  padding: 10px;
-  z-index: 1001;
-  left: 0;
-  top: 0;
+.isActive {
+  color: #d44000;
+}
 
+.responsive-left-menu {
   a {
     text-decoration: none;
-    text-transform: uppercase;
+    // text-transform: uppercase;
+    font-size: 10px;
+    color: #e1e1e1;
   }
 
   .list-group-item-dark {
-    background-color: #000000;
+    background-color: #1b1e21;
     color: #c1c1c1;
   }
 
   .list-group-item-dark.active {
-    background-color: #1b1e21;
     color: #ffffff;
+    border: 0;
+    border-bottom: 3px solid #d44000;
   }
-}
-
-.responsive-left-menu-toogled {
-  -webkit-transform: translateX(-352px);
-  -moz-transform: translateX(-352px);
-  -ms-transform: translateX(-352px);
-  -o-transform: translateX(-352px);
-  transform: translateX(-352px);
 }
 
 .responsive-right-menu {
@@ -145,20 +139,21 @@
 }
 
 .left-menu-title {
-  font-size: 19pt;
+  font-size: 17pt;
   font-weight: bold;
   margin-bottom: 15px;
-  vertical-align: middle;
+  color:#f1f1f1;
+  text-decoration: none;
 }
 
 .top-custom-nav {
-  height: 50px;
+  height: 59px;
   background-color: #000000;
   color: #f1f1f1;
 
   i {
     color: #c1c1c1 !important;
-    font-size: 25pt;
+    // font-size: 25pt;
   }
 }
 
@@ -178,4 +173,30 @@
 
 #navbarCollapse {
   margin-top: 67px;
+}
+
+
+.responsive-left-menu-toogled {
+  -webkit-transform: translateX(-352px);
+  -moz-transform: translateX(-352px);
+  -ms-transform: translateX(-352px);
+  -o-transform: translateX(-352px);
+  transform: translateX(-352px);
+}
+
+@media (max-width: 480px) {
+  .font-user {
+    font-size: 0.9em;
+  }
+  .body-content-sections {
+    padding-top: 0 !important;
+  }
+  .nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .list-group-item {
+    padding:7px 0 !important;
+  }
 }

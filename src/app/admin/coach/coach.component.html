@@ -5,7 +5,7 @@
   <div class="container">
     <h1 class="pb-2 ml-md-0 ml-sm-3 ml-0 mr-3 pt-2">
       <a [routerLink]="['/coach', 'dashboard']" class="img-logo-brand"
-        ><img src="/assets/img/logo.png" width="82" height="82" alt=""
+        ><img src="/assets/img/logo-final.png" width="82" height="82" alt=""
       /></a>
     </h1>
     <div class="collapse navbar-collapse ml-lg-2 ml-0" id="navbarCollapse">
@@ -83,6 +83,8 @@
                     >{{ "#Settings" | dgTranslate }}</a
                   >
                   <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" target="_blank" href="http://www.theperfclub.com/ressources">{{ '#Documentation' | dgTranslate }}</a>
+                  <div class="dropdown-divider"></div>
                   <button class="dropdown-item" (click)="logout()" href="#">
                     {{ "#Logout" | dgTranslate }}
                   </button>
@@ -105,42 +107,46 @@
           <ul class="navbar-nav flex-row mb-md-1 mt-md-0 mb-3 mt-2">
             <li class="nav-item">
               <a
-                class="nav-link py-0 pr-3"
+               #dashboard="routerLinkActive"
+                class="nav-link py-0 pr-3 d-flex"
                 routerLinkActive="active"
                 [routerLink]="['/coach', 'athlet', 'dashboard']"
               >
-                <i class="fa fa-user-circle-o mr-2"></i>
-                {{ "#Overview" | dgTranslate }}
+              <img class="icon mr-2" src="{{dashboard.isActive ? 'assets/img/dashboard_active.svg' : 'assets/img/dashboard_inactive.svg'}}"/>
+              <span [ngClass]="{ 'isActive': dashboard.isActive }">{{ "#Dashboard" | dgTranslate }}</span>
               </a>
             </li>
             <li class="nav-item">
               <a
-                class="nav-link py-0 pr-3"
+                #profile="routerLinkActive"
+                class="nav-link py-0 pr-3 d-flex"
                 routerLinkActive="active"
                 [routerLink]="['/coach', 'athlet', 'profile']"
               >
-                <i class="fa fa-heartbeat mr-1"></i>
-                {{ "#Profile" | dgTranslate }}
+              <img class="icon mr-2" src="{{profile.isActive ? 'assets/img/profile_active.svg' : 'assets/img/profile_inactive.svg'}}"/>
+              <span [ngClass]="{ 'isActive': profile.isActive }"> {{ "#Profile" | dgTranslate }}</span>
               </a>
             </li>
             <li class="nav-item">
               <a
-                class="nav-link py-0 pr-3"
+               #planning="routerLinkActive"
+                class="nav-link py-0 pr-3 d-flex"
                 routerLinkActive="active"
                 [routerLink]="['/coach', 'athlet', 'calendar']"
               >
-                <i class="fa fa-calendar-o mr-1"></i>
-                {{ "#Planning" | dgTranslate }}
+                <img class="icon mr-2" src="{{planning.isActive ? 'assets/img/planning_active.svg' : 'assets/img/planning_inactive.svg'}}"/>
+                <span [ngClass]="{ 'isActive': planning.isActive }"> {{ "#Planning" | dgTranslate }}</span>
               </a>
             </li>
             <li class="nav-item">
               <a
-                class="nav-link py-0 pr-3"
+                #stats="routerLinkActive"
+                class="nav-link py-0 pr-3 d-flex"
                 routerLinkActive="active"
                 [routerLink]="['/coach', 'athlet', 'stats']"
               >
-                <i class="fa fa-bar-chart mr-1"></i>
-                {{ "#Statistics" | dgTranslate }}
+              <img class="icon mr-2" src="{{stats.isActive ? 'assets/img/stats_active.svg' : 'assets/img/stats_inactive.svg'}}"/>
+              <span [ngClass]="{ 'isActive': stats.isActive }"> {{ "#Statistics" | dgTranslate }}</span>
               </a>
             </li>
           </ul>
@@ -152,11 +158,15 @@
 
 <nav *ngIf="size <= responsiveSize">
   <div class="container-fluid top-custom-nav">
-    <div class="row">
-      <div class="col-9 text-left pt-1">
+    <div class="row align-items-center">
+      <div class="col-9 text-left">
         <span class="left-menu-title"
-          ><img src="/assets/img/logo.png" width="30" height="30" alt=""
-        /></span>
+          >
+          <a [routerLink]="['/coach', 'dashboard']"
+          >
+          <img src="/assets/img/logo-final.png" width="30" height="30" alt=""/>
+          </a>
+        </span>
         <button
           *ngIf="currentUser.data"
           class="btn btn-dark rounded-pill ml-2 font-user"
@@ -178,7 +188,7 @@
       </div>
       <div class="col-3 text-right">
         <button class="btn" (click)="toogleRightMenu()">
-          <i class="fa fa-cog"></i>
+          <img src="assets/img/hamburger.svg"/>
         </button>
       </div>
     </div>
@@ -194,42 +204,46 @@
   <ul class="nav nav-tabs nav-pills nav-fill">
     <li class="nav-item">
       <a
+        #dashboard="routerLinkActive"
         class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
         routerLinkActive="active"
         [routerLink]="['/coach', 'athlet', 'dashboard']"
       >
-        <i class="fa fa-user-circle-o mr-2"></i>
-        {{ "#Overview" | dgTranslate }}
+          <img class="icon" src="{{dashboard.isActive ? 'assets/img/dashboard_active.svg' : 'assets/img/dashboard_inactive.svg'}}"/>
+          <span [ngClass]="{ 'isActive': dashboard.isActive }">{{ "#Dashboard" | dgTranslate }}</span>
       </a>
     </li>
     <li class="nav-item">
       <a
+        #profile="routerLinkActive"
         class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
         routerLinkActive="active"
         [routerLink]="['/coach', 'athlet', 'profile']"
       >
-        <i class="fa fa-heartbeat mr-1"></i>
-        {{ "#Profile" | dgTranslate }}
+        <img class="icon" src="{{profile.isActive ? 'assets/img/profile_active.svg' : 'assets/img/profile_inactive.svg'}}"/>
+        <span [ngClass]="{ 'isActive': profile.isActive }"> {{ "#Profile" | dgTranslate }}</span>
       </a>
     </li>
     <li class="nav-item">
       <a
+       #planning="routerLinkActive"
         class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
         routerLinkActive="active"
         [routerLink]="['/coach', 'athlet', 'calendar']"
       >
-        <i class="fa fa-calendar-o mr-1"></i>
-        {{ "#Planning" | dgTranslate }}
+      <img class="icon" src="{{planning.isActive ? 'assets/img/planning_active.svg' : 'assets/img/planning_inactive.svg'}}"/>
+      <span [ngClass]="{ 'isActive': planning.isActive }"> {{ "#Planning" | dgTranslate }}</span>
       </a>
     </li>
     <li class="nav-item">
       <a
+        #stats="routerLinkActive"
         class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
         routerLinkActive="active"
         [routerLink]="['/coach', 'athlet', 'stats']"
       >
-        <i class="fa fa-bar-chart mr-1"></i>
-        {{ "#Statistics" | dgTranslate }}
+      <img class="icon" src="{{stats.isActive ? 'assets/img/stats_active.svg' : 'assets/img/stats_inactive.svg'}}"/>
+      <span [ngClass]="{ 'isActive': stats.isActive }"> {{ "#Statistics" | dgTranslate }}</span>
       </a>
     </li>
   </ul>
@@ -243,6 +257,16 @@
   </div>
   <div>
     <div class="list-group list-group-flush">
+
+      <a
+      class="list-group-item list-group-item-action"
+      (click)="hiddenMenu()"
+      routerLinkActive="active"
+      [routerLink]="['/coach', 'dashboard']"
+      >
+      <i class="fa fa-home mr-2"></i>
+      {{ "#Dashboard" | dgTranslate }}
+      </a>
       <a
         class="list-group-item list-group-item-action"
         (click)="hiddenMenu()"
@@ -252,6 +276,7 @@
         <i class="fa fa-folder mr-2"></i>
         {{ "#Programs" | dgTranslate }}
       </a>
+    
       <a
         class="list-group-item list-group-item-action"
         [routerLink]="['/coach', 'clients']"
@@ -265,7 +290,7 @@
         class="list-group-item list-group-item-action"
         (click)="hiddenMenu()"
         routerLinkActive="active"
-        [routerLink]="['/coach', 'other']"
+        [routerLink]="['/coach', 'settings', 'profile']"
       >
         <i class="fa fa-cog mr-1"></i>
         {{ "#Settings" | dgTranslate }}
@@ -274,7 +299,7 @@
         class="list-group-item list-group-item-action"
         (click)="hiddenMenu()"
         routerLinkActive="active"
-        [routerLink]="['/coach', 'other']"
+        target="_blank" href="http://www.theperfclub.com/ressources"
       >
         <i class="fa fa-question mr-1"></i>
         {{ "#Documentation" | dgTranslate }}
@@ -291,6 +316,6 @@
   </div>
 </div>
 
-<div class="container-fluid body-content-sections">
+<div class="container-fluid body-content-sections pt-md-5">
   <router-outlet></router-outlet>
 </div>

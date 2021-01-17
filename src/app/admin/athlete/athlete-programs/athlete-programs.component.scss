@@ -21,3 +21,19 @@ a {
     line-height: 1em;
     vertical-align: middle;
 }
+
+@media (max-width: 480px) {
+    .assign-athlet {
+      display: none;
+    }
+    .dropdown-menu.show {
+      left: -120px !important;
+    }
+    .title-program {
+      font-size: 22px !important;
+    }
+    .container-button-program {
+      padding: 0;
+    }
+  }
+  

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="39px" height="39px" viewBox="0 0 39 39" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Tab-planning-active" transform="translate(-64.000000, -7.000000)" stroke="#E52E00" stroke-width="3">
+            <g id="Group" transform="translate(66.000000, 8.343750)">
+                <path d="M10,17.8582138 L12.5,17.8582138" id="Stroke-86"></path>
+                <path d="M22.5,17.8582138 L25,17.8582138" id="Stroke-87"></path>
+                <path d="M10,25.3533246 L12.5,25.3533246" id="Stroke-88"></path>
+                <path d="M22.5,25.3533246 L25,25.3533246" id="Stroke-89"></path>
+                <path d="M7.5,10.363103 L7.5,0.369621904" id="Stroke-90"></path>
+                <path d="M27.5,10.363103 L27.5,0.369621904" id="Stroke-91"></path>
+                <path d="M32.5,35.3468057 L2.5,35.3468057 C1.1175,35.3468057 0,34.2275359 0,32.8484355 L0,7.86473272 C0,6.48563233 1.1175,5.36636245 2.5,5.36636245 L32.5,5.36636245 C33.8825,5.36636245 35,6.48563233 35,7.86473272 L35,32.8484355 C35,34.2275359 33.8825,35.3468057 32.5,35.3468057 Z" id="Stroke-92"></path>
+            </g>
+        </g>
+    </g>
+</svg>
