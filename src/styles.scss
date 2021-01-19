@@ -604,3 +604,12 @@ body {
   width:18px;
   height: 18px;
 }
+
+@media (max-width: 480px) {
+  .popover {
+      transform: none!important;
+      margin:auto;
+      right: 0;
+      top:38px!important;
+  }
+}
