@@ -1,0 +1,13 @@
+<ng-template #popContent>
+  <div class="text-center">
+    <img
+      *ngIf="movement.icon"
+      [src]="movement.icon"
+      class="mt-2 mb-2 img-fluid"
+    />
+  </div>
+  <span> {{ movement.description }}</span>
+</ng-template>
+<button  class="btn btn-default pr-0" container="body" placement="right" [ngbPopover]="popContent" [popoverTitle]="movement.name">
+  <i class="fa fa-ellipsis-v"></i>
+</button>

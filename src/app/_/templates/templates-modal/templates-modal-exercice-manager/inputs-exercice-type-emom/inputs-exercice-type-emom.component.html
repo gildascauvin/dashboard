@@ -12,13 +12,15 @@
 
 <div class="col-md-12 mb-2" *ngIf="model.movements.length">
   <label>{{ "#Movements" | dgTranslate }}</label>
-  <div
-    *ngFor="let movement of model.movements; let movementIndex = index"
-    class="list-group-item-step"
-  >
+  <div  *ngFor="let movement of model.movements; let movementIndex = index">
     <button class="btn float-right" (click)="removeMovement(movementIndex)">
       <i class="fa fa-close"></i>
     </button>
+    <div class="number-movement-list-label ml-2">{{ movement.name }}</div>
+    <popover [movement]="movement"></popover>
+  <div
+    class="list-group-item-step"
+  >
     <div class="row" *ngIf="isPlanning && movement.has_repmax">
       <div class="col-md-12 pl-0">
         <div class="form-row align-items-center">
@@ -54,7 +56,7 @@
     </div>
     <hr *ngIf="isPlanning && movement.has_repmax"/>
     <div class="row">
-      <div class="d-flex flex-column-reverse" *ngIf="movement.has_repetitions">
+      <div class="d-flex flex-column-reverse ml-2" *ngIf="movement.has_repetitions">
         <input
           placeholder="1"
           type="number"
@@ -81,8 +83,7 @@
           </select>
         </div>
       </div>
-      <div class="title-mouvement align-self-end mr-2 ml-2">{{ movement.name }}</div>
-      <div class="d-flex flex-column-reverse" *ngIf="movement.has_value">
+      <div class="d-flex flex-column-reverse ml-2" *ngIf="movement.has_value">
         <input
           placeholder="90"
           [(ngModel)]="movement.sets[0].value"
@@ -135,7 +136,7 @@
     </div>
   </div>
 </div>
-
+</div>
 <div class="col-md-12 mb-2">
   <div class="form-group form-select-subtype">
     <div

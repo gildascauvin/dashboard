@@ -20,6 +20,8 @@
       <i class="fa fa-close"></i>
     </button>
     <div class="number-movement-list-label ml-2">{{ movement.name }}</div>
+    <popover [movement]="movement"></popover>
+
 
     <ul class="list-group">
       <li class="list-group-item" *ngIf="isPlanning && movement.has_repmax">

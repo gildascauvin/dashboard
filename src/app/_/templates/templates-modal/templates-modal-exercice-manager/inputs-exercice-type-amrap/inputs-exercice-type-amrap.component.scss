@@ -29,6 +29,8 @@ hr {
 
 .number-movement-list-label {
   display: inline-block;
+  font-size: 14pt;
+  font-weight: 500;
 }
 
 .input-group-text {
@@ -38,12 +40,12 @@ hr {
 .amrap-input {
   width: 112px;
 }
+
 @media (max-width: 480px) {
   .container-movements {
     padding: 0 15px 0 15px;
     .title-mouvement {
       font-size: 14px;
-      //margin-left: -90px;
     }
   }
   .container-set {

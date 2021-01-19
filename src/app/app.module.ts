@@ -97,6 +97,8 @@ import { InputsExerciceTypeTimeComponent } from "./_/templates/templates-modal/t
 import { TemplatesModalExerciceManagerComponent } from "./_/templates/templates-modal/templates-modal-exercice-manager/templates-modal-exercice-manager.component";
 import { TemplatesModalStartSessionComponent } from "./_/templates/templates-modal/templates-modal-start-session/templates-modal-start-session.component";
 import { TemplatesModalWorkoutDeleteComponent } from "./_/templates/templates-modal/templates-modal-workout-delete/templates-modal-workout-delete.component";
+import { PopoverComponent } from './_/templates/templates-modal/popover/popover.component';
+
 
 export function newNgTranslate(http: HttpClient) {
   return new NgTranslate(http, "../../assets/locale");
@@ -177,7 +179,8 @@ export function newNgTranslate(http: HttpClient) {
     AthleteProfilePerformanceComponent,
     AthleteProfileReadinessComponent,
     UsersModalChooseAthletComponent,
-    TemplatesModalStartSessionComponent
+    TemplatesModalStartSessionComponent,
+    PopoverComponent
   ],
   imports: [
     FormsModule,
