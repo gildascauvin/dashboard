@@ -606,10 +606,11 @@ body {
 }
 
 @media (max-width: 480px) {
-  .popover {
-      transform: none!important;
-      margin:auto;
-      right: 0;
-      top:38px!important;
+  .popover{
+    position:fixed!important;
+    left:50%!important;
+    top:50%!important;
+    transform:translate(-50%,-50%) translate3d(0,0,0)!important;
+    margin: 0!important;
   }
 }
