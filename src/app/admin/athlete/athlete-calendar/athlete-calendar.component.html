@@ -131,7 +131,7 @@
                                       {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} <span *ngIf="set.value">@ {{ set.value }}{{ set.unit_label }}</span>
                                     </span>
                                     <span *ngIf="!movement.has_rep_unit">
-                                      {{ set.rep }} {{ movement.name }} @ <span *ngIf="set.value">@ {{ set.value }}{{ set.unit_label }}</span>
+                                      {{ set.rep }} {{ movement.name }} <span *ngIf="set.value">@ {{ set.value }}{{ set.unit_label }}</span>
                                     </span>
                                   </div>
 
