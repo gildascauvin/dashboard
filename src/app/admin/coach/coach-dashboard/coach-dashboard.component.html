@@ -123,8 +123,7 @@
                           *ngFor="let set of movement.sets"
                         >
                           <span *ngIf="set.set"
-                            >{{ set.set }} x {{ set.rep }} @ {{ set.value
-                            }}{{ set.unit_label }}</span
+                            >{{ set.set }} x {{ set.rep }} <span *ngIf="set.value">@ {{ set.value }}{{ set.unit_label }}</span></span
                           >
                         </div>
                       </div>
@@ -132,7 +131,7 @@
                     <div *ngSwitchCase="2">
                       <div class="movement-title">
                         <span
-                          class="mb-2" 
+                          class="mb-2"
                           *ngFor="
                             let movement of exercice.movements;
                             let indMov = index
@@ -141,12 +140,10 @@
                           <div *ngFor="let set of movement.sets">
                             <span *ngIf="movement.has_rep_unit">
                               {{ movement.name }} <br>
-                              {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} @ {{ set.value
-                              }}{{ set.unit_label }}
+                              {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} <span *ngIf="set.value">@ {{ set.value }}{{ set.unit_label }}</span>
                             </span>
                             <span *ngIf="!movement.has_rep_unit">
-                              {{ set.rep }} {{ movement.name }} @ {{ set.value
-                              }}{{ set.unit_label }}
+                              {{ set.rep }} {{ movement.name }} <span *ngIf="set.value">@ {{ set.value }}{{ set.unit_label }}</span>
                             </span>
                           </div>
                         </span>
@@ -167,12 +164,10 @@
                         <div *ngFor="let set of movement.sets">
                           <span *ngIf="movement.has_rep_unit">
                             {{ movement.name }} <br>
-                            {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} @ {{ set.value
-                            }}{{ set.unit_label }}
+                            {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} <span *ngIf="set.value">@ {{ set.value }}{{ set.unit_label }}</span>
                           </span>
                           <span *ngIf="set.set && !movement.has_rep_unit">
-                            {{ movement.sets[0].quantity }} {{ movement.name }} @ {{ set.value
-                            }}{{ set.unit_label }}</span>
+                            {{ movement.sets[0].quantity }} {{ movement.name }} <span *ngIf="set.value">@ {{ set.value }}{{ set.unit_label }}</span></span>
                         </div>
                       </div>
                       <div class="movement-content">
@@ -188,12 +183,10 @@
                         <div *ngFor="let set of movement.sets">
                           <span *ngIf="movement.has_rep_unit">
                             {{ movement.name }} <br>
-                            {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} @ {{ set.value
-                            }}{{ set.unit_label }}
+                            {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} <span *ngIf="set.value">@ {{ set.value }}{{ set.unit_label }}</span>
                             </span>
                           <span *ngIf="set.set && !movement.has_rep_unit">
-                            {{ movement.sets[0].quantity }} {{ movement.name }} @ {{ set.value
-                            }}{{ set.unit_label }}</span>
+                            {{ movement.sets[0].quantity }} {{ movement.name }} <span *ngIf="set.value">@ {{ set.value }}{{ set.unit_label }}</span></span>
                         </div>
                       </div>
                       <div class="movement-content">
@@ -215,12 +208,10 @@
                         <div *ngFor="let set of movement.sets">
                           <span *ngIf="movement.has_rep_unit">
                             {{ movement.name }} <br>
-                            {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} @ {{ set.value
-                            }}{{ set.unit_label }}
+                            {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} <span *ngIf="set.value">@ {{ set.value }}{{ set.unit_label }}</span>
                             </span>
                           <span *ngIf="set.set && !movement.has_rep_unit">
-                            {{ movement.sets[0].quantity }} {{ movement.name }} @ {{ set.value
-                            }}{{ set.unit_label }}</span>
+                            {{ movement.sets[0].quantity }} {{ movement.name }} <span *ngIf="set.value">@ {{ set.value }}{{ set.unit_label }}</span></span>
                         </div>
                       </div>
                       <div class="movement-content">
@@ -241,8 +232,8 @@
                       >
                         <span
                           >{{ exercice.cardio_cardio_movement.interval }}
-                          {{ exercice.cardio_cardio_movement.unit_label }} @
-                          {{ exercice.cardio_cardio_movement.value }} %
+                          {{ exercice.cardio_cardio_movement.unit_label }}
+                          <span *ngIf="exercice.cardio_cardio_movement.value">@ {{ exercice.cardio_cardio_movement.value }} %</span>
                         </span>
                       </div>
                       <div *ngIf="exercice.cardio_scoring == 2">
@@ -253,8 +244,7 @@
                           "
                         >
                           <span *ngIf="set.set"
-                            >{{ set.set }} x {{ set.interval }}
-                            {{ set.unit_label }} @ {{ set.value }} %</span
+                            >{{ set.set }} x {{ set.interval }} {{ set.unit_label }} <span *ngIf="set.value">@ {{ set.value }} %</span></span
                           >
                         </div>
                       </div>

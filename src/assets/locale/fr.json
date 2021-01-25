@@ -86,7 +86,7 @@
   "#more": "more",
   "#less": "less",
   "#Notes": "Notes",
-  "#Video link": "Video link",  
+  "#Video link": "Video link",
   "#clear": "clear",
   "#Copyright": "Copyright",
   "#Admin": "Admin",
@@ -265,7 +265,7 @@
   "#Profil Exercices evaluation":"Profil : Exercices evaluation",
   "#FAQ":"FAQ",
   "#Add an exercice":"Add an exercice",
-  "#Session name":"Session name"
-
+  "#Session name":"Session name",
+  "#Create a workout": "Create a workout"
 
 }
