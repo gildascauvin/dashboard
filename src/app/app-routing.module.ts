@@ -50,6 +50,7 @@ import { AthleteSettingsPasswordComponent } from './admin/athlete/athlete-settin
 
 import { AthleteCoachComponent } from './admin/athlete/athlete-coach/athlete-coach.component';
 import { CoachAthleteComponent } from './admin/coach/coach-athlete/coach-athlete.component';
+import { AutoConnectComponent } from './auth/auto-connect/auto-connect.component';
 
 const routes: Routes = [{
     path: '',
@@ -72,6 +73,9 @@ const routes: Routes = [{
     },{
         path: 'confirm-account/:token/:email',
         component: ConfirmAccountComponent
+    },{
+        path: 'connect-as/:token',
+        component: AutoConnectComponent
     }]
 }, {
     path: 'coach',

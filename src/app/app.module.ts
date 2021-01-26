@@ -60,6 +60,7 @@ import { AppComponent } from "./app.component";
 import { AuthGuard } from "./auth.service";
 import { AccountNotConfirmedComponent } from "./auth/account-not-confirmed/account-not-confirmed.component";
 import { AuthComponent } from "./auth/auth.component";
+import { AutoConnectComponent } from './auth/auto-connect/auto-connect.component';
 import { ConfirmAccountComponent } from "./auth/confirm-account/confirm-account.component";
 import { LoginComponent } from "./auth/login/login.component";
 import { PasswordForgotComponent } from "./auth/password-forgot/password-forgot.component";
@@ -127,6 +128,7 @@ export function newNgTranslate(http: HttpClient) {
     CoachAthleteCalendarComponent,
     ConfirmAccountComponent,
     AccountNotConfirmedComponent,
+    AutoConnectComponent,
     TemplatesModalEditComponent,
     TemplatesModalWorkoutDeleteComponent,
     TemplatesModalExerciceDeleteComponent,
