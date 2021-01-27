@@ -1,0 +1,7 @@
+<ng-container *ngIf="set.unit_label == 'RPE'">
+  <span *ngIf="set.value">@ {{ set.unit_label }}{{ set.value }}</span>
+</ng-container>
+
+<ng-container *ngIf="set.unit_label != 'RPE'">
+  <span *ngIf="set.value">@ {{ set.value }}{{ set.unit_label }}</span>
+</ng-container>

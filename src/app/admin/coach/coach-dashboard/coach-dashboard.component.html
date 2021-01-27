@@ -252,11 +252,7 @@
                     <div *ngSwitchCase="8">
                       <div class="movement-title">
                         {{ exercice.name }}
-                        <small
-                          >({{
-                            configExercices.flatCustom[exercice.custom_scoring]
-                          }})</small
-                        >
+                        <span class="tpc-badge tpc-badge-{{ exercice.custom_scoring }}">{{ configExercices.flatCustom[exercice.custom_scoring] }}</span>
                       </div>
                       <div class="movement-content custom-content">{{ exercice.custom }}</div>
                     </div>
