@@ -68,6 +68,8 @@ import { PasswordResetComponent } from "./auth/password-reset/password-reset.com
 import { RegisterComponent } from "./auth/register/register.component";
 import { InputAutocompleteComponent } from "./_/components/forms/input-autocomplete/input-autocomplete.component";
 import { CustomerProfileLevelComponent } from "./_/components/ui/customer-profile-level/customer-profile-level.component";
+import { AthleteMovementListComponent } from "./_/components/ui/athlete-movement-list/athlete-movement-list.component";
+import { AthleteMovementListUnitLabelComponent } from "./_/components/ui/athlete-movement-list-unit-label/athlete-movement-list-unit-label.component";
 import { CustomerStatsExerciceComponent } from "./_/components/ui/customer-stats-exercice/customer-stats-exercice.component";
 import { CustomerStatsRangeComponent } from "./_/components/ui/customer-stats-range/customer-stats-range.component";
 import { CustomerStatsComponent } from "./_/components/ui/customer-stats/customer-stats.component";
@@ -182,7 +184,9 @@ export function newNgTranslate(http: HttpClient) {
     AthleteProfileReadinessComponent,
     UsersModalChooseAthletComponent,
     TemplatesModalStartSessionComponent,
-    PopoverComponent
+    PopoverComponent,
+    AthleteMovementListComponent,
+    AthleteMovementListUnitLabelComponent
   ],
   imports: [
     FormsModule,
