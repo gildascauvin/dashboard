@@ -104,13 +104,11 @@
     <div *ngSwitchCase="8">
       <div class="movement-title">
         {{ exercice.name }}
-        <span class="tpc-badge tpc-badge-{{ exercice.custom_scoring }}">{{ configExercices.flatCustom[exercice.custom_scoring] }}</span>
+        <span *ngIf="exercice.custom_scoring > 0" class="tpc-badge tpc-badge-{{ exercice.custom_scoring }}">{{ configExercices.flatCustom[exercice.custom_scoring] }}</span>
       </div>
       <div class="movement-content custom-content">{{ exercice.custom }}</div>
     </div>
   </div>
 
-  <div *ngIf="hideLocalBox && exercice.description != undefined" class="exercice-comment">
-    {{ exercice.description }}
-  </div>
+  <div *ngIf="hideLocalBox && exercice.description != undefined" class="exercice-comment" [innerHTML]="exercice.description"></div>
 </div>

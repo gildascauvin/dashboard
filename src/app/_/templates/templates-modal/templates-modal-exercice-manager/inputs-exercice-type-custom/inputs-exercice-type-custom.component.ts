@@ -17,7 +17,7 @@ export class InputsExerciceTypeCustomComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-  	this.model.custom_scoring = this.model.custom_scoring || 1;
+  	this.model.custom_scoring = this.model.custom_scoring || 0;
   }
 
 }

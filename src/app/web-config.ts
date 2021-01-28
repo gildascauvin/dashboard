@@ -153,12 +153,14 @@ export const webConfig = {
 	 		{ id: 2, name: 'Varying'},
 	 	],
 	 	custom: [
+      { id: 0, name: 'none'},
 	 		{ id: 1, name: 'PR'},
 	 		{ id: 2, name: 'Comp'},
 	 		{ id: 3, name: 'Test'},
 	 		{ id: 4, name: 'Injury'},
 	 	],
 	 	flatCustom: {
+ 		  0: 'none',
 	 		1: 'PR',
 	 		2: 'Comp',
 	 		3: 'Test',
