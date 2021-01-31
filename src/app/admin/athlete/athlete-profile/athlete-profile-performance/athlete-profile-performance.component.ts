@@ -30,6 +30,7 @@ export class AthleteProfilePerformanceComponent implements OnInit {
   @Input() isFromUrl = true;
 
   bsModalRef: BsModalRef;
+  profileRef:any;
 
   currentTab: number = 0;
 
@@ -167,7 +168,28 @@ export class AthleteProfilePerformanceComponent implements OnInit {
 
   private _initData(user) {
   	if (user && user.data) {
-	  	this.user = _.cloneDeep(user);
+      this.user = _.cloneDeep(user);
+
+      const userProfilsWithoutRatio = this.user.profil.filter( (profile)=> 
+      (user.data.max_ref_id !== profile.movement_id) && (!profile.ratio_value))
+
+      const userProfilsWithRatio = this.user.profil.filter( (profile)=> 
+      profile.ratio_value && profile.ratio_value !== profile.record).sort( (a, b) => {
+        return this.getRatioMovement(b)- this.getRatioMovement(a)
+      });
+
+      const userProfilRefMax = this.user.profil.filter( (profile)=> 
+      user.data.max_ref_id === profile.movement_id);
+
+      this.user.profil = [...userProfilRefMax, ...userProfilsWithRatio, ...userProfilsWithoutRatio]
+      this.profileRef = this.user.profil.find( (profile) => profile.movement_id === this.user.data.max_ref_id );
+
+      this.user.profil =  this.user.profil.map(item => {
+          const obj = Object.assign({}, item);
+          obj.color = this.getRandomColor();
+          return obj;
+      });
+      
 
 	  	if (user.data.birthday) {
 	      let date = user.data.birthday.split('-');
@@ -179,5 +201,16 @@ export class AthleteProfilePerformanceComponent implements OnInit {
       this.userService[(!this.isCoach ? 'initUserInfos' : 'initUserClientInfos' )](user);
 			this.isLoading = false;
 		}
+  }
+  private getRatioMovement(value) {
+    return parseInt('' + value.record / value.ratio_value * 100)
+  }
+  getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.round(Math.random() * 15)];
+    }
+    return color;
   }
 }
