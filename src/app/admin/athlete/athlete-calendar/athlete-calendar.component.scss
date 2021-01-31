@@ -236,58 +236,10 @@
   }
 }
 
-.movement-container {
-  background-color: #ffffff;
-  padding: 10px;
-  font-size: 12px;
-  border-left: solid 3px #d44000;
-  margin-bottom: 10px;
-  min-height: 40px;
 
-  .movement-title {
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-
-  .movement-content {
-    font-weight: 100;
-  }
-}
 
 .container-calendar-template {
   margin-bottom: 100px;
-}
-
-.movement-type-1 {
-  border-left: solid 5px #666666;
-}
-
-.movement-type-2 {
-  border-left: solid 5px #d44000;
-}
-
-.movement-type-3 {
-  border-left: solid 5px #000000;
-}
-
-.movement-type-4 {
-  border-left: solid 5px #000000;
-}
-
-.movement-type-5 {
-  border-left: solid 5px #000000;
-}
-
-.movement-type-6 {
-  border-left: solid 5px #c1c1c1;
-}
-
-.movement-type-7 {
-  border-left: solid 5px #8d6767;
-}
-
-.movement-type-8 {
-  border-left: solid 5px #e37242;
 }
 
 .footer-action {
@@ -510,26 +462,6 @@
   }
 }
 
-.movement-container {
-  background-color: #ffffff;
-  padding: 10px;
-  font-size: 12px;
-  border-left: solid 3px #d44000;
-  margin-bottom: 10px;
-  min-height: 40px;
-  // -webkit-backdrop-filter: blur(20px);
-  // backdrop-filter: blur(20px);
-  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.15);
-  background-color: #ffffff;
-
-  .movement-title {
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-
-
-}
-
 .container-calendar-template {
   margin-bottom: 100px;
 }
@@ -625,24 +557,6 @@
 
 .list-cdk {
   min-height: 60px;
-}
-
-.add-exercice {
-  background-color: #f1f1f1;
-  font-family: Arial;
-  font-size: 14px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.29;
-  letter-spacing: 0.54px;
-  text-align: center;
-  color: #d44000;
-  border-radius: 5px;
-  border-radius: 5px;
-  border: 1px transparent !important;
-  padding: 0.4rem 1.5rem;
-  margin-bottom: 20px;
 }
 
 .calendar {

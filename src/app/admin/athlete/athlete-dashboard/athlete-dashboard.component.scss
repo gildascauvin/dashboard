@@ -139,7 +139,6 @@
   width: 100%;
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
-  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.15);
   background-color: #ffffff;
   margin-top: 13px;
 }
@@ -240,52 +239,10 @@
   }
 }
 
-.movement-container {
-  background-color: #ffffff;
-  padding: 20px 30px !important;
-  font-size: 12px;
-  border-left: solid 3px #d44000;
-  min-height: 40px;
 
-  .movement-title {
-    font-weight: 700;
-    font-size: 17px;
-    margin-bottom: 8px;
-  }
-
-  .movement-content {
-    font-size: 14px;
-    font-weight: 100;
-  }
-}
 
 .container-calendar-template {
   margin-bottom: 100px;
-}
-
-.movement-type-1 {
-  border-left: solid 5px #666666;
-}
-.movement-type-2 {
-  border-left: solid 5px #d44000;
-}
-.movement-type-3 {
-  border-left: solid 5px #000000;
-}
-.movement-type-4 {
-  border-left: solid 5px #000000;
-}
-.movement-type-5 {
-  border-left: solid 5px #000000;
-}
-.movement-type-6 {
-  border-left: solid 5px #c1c1c1;
-}
-.movement-type-7 {
-  border-left: solid 5px #8d6767;
-}
-.movement-type-8 {
-  border-left: solid 5px #e37242;
 }
 
   .fatigue-management-banner {

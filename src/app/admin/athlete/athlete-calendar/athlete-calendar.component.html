@@ -16,6 +16,17 @@
             </div>
           </div>
         <div class="date-title">{{ currentMonth | uppercase }}</div>
+
+        <label class="float-right">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" [(ngModel)]="hideLocalBox">
+              <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+              {{ '#Show comments' | dgTranslate }}
+            </label>
+          </div>
+        </label>
+
       </div>
 
       <div id="fixed-calendar-planning" cdkScrollable>
@@ -108,7 +119,11 @@
                               d.close()
                             "></i>
                         </div>
-                        <div *ngIf="!hideLocalBox" class="movement-container
+
+
+                        <app-athlete-movement-list [class]="'athlete-calendar'" [exercice]="exercice" [hideLocalBox]="hideLocalBox"></app-athlete-movement-list>
+                        <!--
+                        <div class="movement-container
                           movement-type-{{ exercice.type && exercice.type.id }}">
                           <div class="inputs-exercice-type" *ngIf="exercice.type" [ngSwitch]="exercice.type.id">
                             <div *ngSwitchCase="1">
@@ -220,18 +235,23 @@
                             <div *ngSwitchCase="8">
                               <div class="movement-title">
                                 {{ exercice.name }}
-                                <small>({{ configExercices.flatCustom[exercice.custom_scoring] }})</small>
+                                <span class="tpc-badge tpc-badge-{{ exercice.custom_scoring }}">{{ configExercices.flatCustom[exercice.custom_scoring] }}</span>
                               </div>
                               <div class="movement-content custom-content">
                                 {{ exercice.custom }}
                               </div>
                             </div>
                           </div>
+
+                          <div *ngIf="hideLocalBox && exercice.description != undefined" class="exercice-comment">
+                            {{ exercice.description }}
+                          </div>
                         </div>
+                        -->
                       </li>
                     </ul>
                   </div>
-                  <div class="box-body-workout bg-white text-center pt-0" *ngIf="day.workouts.length">
+                  <div class="bg-white text-center pt-0" *ngIf="day.workouts.length">
                     <button class="btn btn-block add-exercice mt-0" (click)="addExerciceToWorkout(
                       day,
                       workout.program.exercices,

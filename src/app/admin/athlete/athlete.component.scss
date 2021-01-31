@@ -200,3 +200,25 @@
     padding:7px 0 !important;
   }
 }
+
+
+.icon-invitation {
+  position: absolute;
+  height: 7px;
+  width: 7px;
+  background: #FA4332;
+  border-radius: 10px;
+  margin-left: 3px;
+
+  &.icon-invitation--menu {
+    margin-left: 5px;
+    height: 7px;
+    width: 7px;
+  }
+
+  @media (max-width: 480px) {
+    height: 10px;
+    width: 10px;
+    margin-left: -4px;
+  }
+}

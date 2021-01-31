@@ -1,0 +1,114 @@
+<div class="movement-container movement-container--{{ class }} movement-type-{{ exercice.type && exercice.type.id }}">
+  <div class="inputs-exercice-type" *ngIf="exercice.type" [ngSwitch]="exercice.type.id">
+
+
+    <div *ngSwitchCase="1">
+      <div class="movement-title" *ngFor="let movement of exercice.movements">
+        {{ movement.name }}
+        <div class="movement-content" *ngFor="let set of movement.sets">
+          <span *ngIf="set.set">{{ set.set }} x {{ set.rep }}
+            <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="2">
+      <div class="movement-title d-flex flex-column">
+        <span class="mb-2" *ngFor="let movement of exercice.movements; let indMov = index">
+          <div *ngFor="let set of movement.sets">
+            <span *ngIf="movement.has_rep_unit">
+              {{ movement.name }} <br>
+              {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
+            </span>
+            <span *ngIf="!movement.has_rep_unit">
+              {{ set.rep }} {{ movement.name }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
+            </span>
+          </div>
+        </span>
+        <div class="movement-content"><span>{{ exercice.sets }}{{ "#Sets" | dgTranslate }}</span></div>
+      </div>
+    </div>
+
+
+    <div *ngSwitchCase="3">
+      <div class="movement-title" *ngFor="let movement of exercice.movements">
+        <div *ngFor="let set of movement.sets">
+          <span *ngIf="movement.has_rep_unit">
+            {{ movement.name }} <br>
+            {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
+          </span>
+          <span *ngIf="set.set && !movement.has_rep_unit">
+            {{ movement.sets[0].quantity }} {{ movement.name }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
+          </span>
+        </div>
+      </div>
+      <div class="movement-content">
+        AMRAP: {{ exercice.amrap_timecap }}
+        {{ "#minutes" | dgTranslate }}
+      </div>
+    </div>
+
+    <div *ngSwitchCase="4">
+      <div class="movement-title" *ngFor="let movement of exercice.movements">
+        <div *ngFor="let set of movement.sets">
+          <span *ngIf="movement.has_rep_unit">
+            {{ movement.name }} <br>
+            {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
+          </span>
+          <span *ngIf="set.set && !movement.has_rep_unit">
+            {{ movement.sets[0].quantity }} {{ movement.name }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
+          </span>
+        </div>
+      </div>
+      <div class="movement-content">
+        <span *ngIf="exercice.time_style == 1">{{ exercice.time_style_fixed }}{{ "#rounds for time" | dgTranslate }}</span>
+        <span *ngIf="exercice.time_style == 2">{{ exercice.time_style_varying }}{{ "#rounds for time" | dgTranslate }}</span>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="5">
+      <div class="movement-title" *ngFor="let movement of exercice.movements">
+        <div *ngFor="let set of movement.sets">
+          <span *ngIf="movement.has_rep_unit">
+            {{ movement.name }} <br>
+            {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
+          </span>
+          <span *ngIf="set.set && !movement.has_rep_unit">{{ movement.sets[0].quantity }} {{ movement.name }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label></span>
+        </div>
+      </div>
+      <div class="movement-content">
+        EMOM ({{ exercice.emom_duration }} min every
+        {{ exercice.emom_seconds }} sec)
+      </div>
+    </div>
+
+
+    <div *ngSwitchCase="7">
+      <div class="movement-title" *ngIf="exercice.cardio_type">
+        {{ configExercices.cardio.flatType[exercice.cardio_type] }}
+      </div>
+      <div class="movement-content" *ngIf="exercice.cardio_scoring == 1">
+        <span>{{ exercice.cardio_cardio_movement.interval }}
+          {{ exercice.cardio_cardio_movement.unit_label }} <span *ngIf="exercice.cardio_cardio_movement.value">@ {{ exercice.cardio_cardio_movement.value }} %</span>
+        </span>
+      </div>
+      <div *ngIf="exercice.cardio_scoring == 2">
+        <div class="movement-content" *ngFor="let set of exercice.cardio_intervals_movement.sets">
+          <span *ngIf="set.set">{{ set.set }} x {{ set.interval }}{{ set.unit_label }} <span *ngIf="set.value">@ {{ set.value }} %</span></span>
+        </div>
+      </div>
+    </div>
+
+
+    <div *ngSwitchCase="8">
+      <div class="movement-title">
+        {{ exercice.name }}
+        <span *ngIf="exercice.custom_scoring > 0" class="tpc-badge tpc-badge-{{ exercice.custom_scoring }}">{{ configExercices.flatCustom[exercice.custom_scoring] }}</span>
+      </div>
+      <div class="movement-content custom-content">{{ exercice.custom }}</div>
+    </div>
+  </div>
+
+  <div *ngIf="hideLocalBox && exercice.description != undefined" class="exercice-comment" [innerHTML]="exercice.description"></div>
+</div>
