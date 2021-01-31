@@ -13,6 +13,7 @@ export class CustomerProfileLevelComponent implements OnInit {
     data: {},
     profil: [],
   };
+  @Input() resize: boolean = false;
 
   // Radar
   public radarChartOptions: RadialChartOptions = {
@@ -76,7 +77,7 @@ export class CustomerProfileLevelComponent implements OnInit {
     let radarChartData = [];
     let radarChartDataTwo = [];
     _.forEach(this.user.profil, (profil) => {
-      if (radarChartData.length < 6) {
+      if (profil.ratio_value && profil.ratio_value !== profil.record) {
         if (this.user.data.max_ref_id === profil.movement_id) {
           radarChartData.push(profil.record);
           radarChartDataTwo.push(profil.record);

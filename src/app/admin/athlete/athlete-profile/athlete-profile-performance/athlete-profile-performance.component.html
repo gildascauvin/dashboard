@@ -33,56 +33,96 @@
               {{ "#Review" | dgTranslate }}
             </button>
             <h4 class="movement-review-header">
-              {{ user.profil?.length }} {{ "#Movements" | dgTranslate }}
+              You personnal bests
             </h4>
           </div>
 
-          <div *ngFor="let profile of user.profil" class="list-group-item">
-            <button
-              *ngIf="user.data.max_ref_id !== profile.movement_id"
-              (click)="openDeleteModal(profile)"
-              class="btn float-right btn-light mr-2"
-            >
-              <i class="fa fa-trash text-danger"></i>
-            </button>
-            <button
-              (click)="openEditModal(profile)"
-              class="btn float-right btn-light ml-4 mr-2"
-            >
-              <i class="fa fa-pencil text-success"></i>
-            </button>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Exercice</th>
+                <th scope="col">Goal</th>
+                <th scope="col">Your RM</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container  *ngFor="let profile of user.profil; let i=index">
+                <tr>
+                  <td><b>{{ profile.movement.name }} </b>   <span
+                    *ngIf="user.data.max_ref_id === profile.movement_id"
+                    class="badge badge-primary"
+                    >{{ "#REF" | dgTranslate }}</span
+                  >
+                  <span
+                  *ngIf="
+                    profile.ratio_value && profile.ratio_value !== profile.record
+                  "
+                  >
+                    {{ profile | ratioMovement }}%
+                  </span>
+                
+                  </td>
+                  <td class="container-ratio"> 
+                    <span
+                    *ngIf="
+                      profile.ratio_value && profile.ratio_value !== profile.record
+                    "
+                    >
+                      {{ profile.ratio_value }}
+                      {{ profile.record_unit == 1 ? "kg" : "lbs" }}
+                    </span>
+                  </td>
+                    
+                  <td>
+                    <span>
+                      {{ profile.record }}
+                      {{ profile.record_unit == 1 ? "kg" : "lbs" }}
+                    </span>
+                  </td>
+                  <td>
+                    <button
+                    (click)="openEditModal(profile)"
+                    class="btn float-right btn-light ml-4 mr-2"
+                  >
+                    <i class="fa fa-pencil text-success"></i>
+                  </button>
+                  <button
+                  *ngIf="user.data.max_ref_id !== profile.movement_id"
+                  (click)="openDeleteModal(profile)"
+                  class="btn float-right btn-light mr-2"
+                >
+                  <i class="fa fa-trash text-danger"></i>
+                </button>
+                  </td>     
+                </tr>
+                <tr>
+                  <td class="container-progress" colspan="5">
+                    <div class="mb-2 progress height-progress">
+                    <div
+                      class="progress-bar"
+                      role="progressbar"
+                      [ngStyle]="{
+                        'width.%': profile | ratioMovement,
+                        'background-color': profile.color
+                      }"
+                      aria-valuenow="25"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div> 
 
-            <b>{{ profile.movement.name }} </b>
-            <span
-              *ngIf="user.data.max_ref_id === profile.movement_id"
-              class="badge badge-primary"
-              >{{ "#REF" | dgTranslate }}</span
-            >
-            <span
-              *ngIf="
-                profile.ratio_value && profile.ratio_value !== profile.record
-              "
-            >
-              <b class="ml-2 badge badge-light"
-                >{{ profile | ratioMovement }}%</b
-              >
-            </span>
-            <br />
-            Value: {{ profile.record }}
-            {{ profile.record_unit == 1 ? "kg" : "lbs" }}
-            <span
-              *ngIf="
-                profile.ratio_value && profile.ratio_value !== profile.record
-              "
-            >
-              - Ref: {{ profile.ratio_value }}
-              {{ profile.record_unit == 1 ? "kg" : "lbs" }}
-            </span>
-          </div>
+                  </td>
+                </tr> 
+              </ng-container>
+            
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-    <div class="col-md-6 mt-4">
+    <div class="col-md-6 mt-4 d-flex flex-column align-items-center">
+      <h4>Exercice evaluation based on your {{profileRef.movement.name}} </h4>
       <app-customer-profile-level [user]="user"></app-customer-profile-level>
     </div>
   </div>

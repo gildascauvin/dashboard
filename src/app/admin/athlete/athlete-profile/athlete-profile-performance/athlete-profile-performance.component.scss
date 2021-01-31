@@ -12,9 +12,10 @@
         font-weight: 700;
         margin-bottom: 30px;
       }
-      .profile-form-content {
-      }
     }
+  }
+  .list-group-item {
+    padding: .75rem;
   }
 
   .profile-right-bar {
@@ -112,4 +113,18 @@ a {
       margin-bottom: 0px !important;
     }
   }
+}
+
+.table {
+  background-color: white;
+  .container-ratio {
+    width: 22%;
+  }
+}
+
+.height-progress {
+  height: 5.2px;
+}
+.container-progress {
+  border:none;
 }

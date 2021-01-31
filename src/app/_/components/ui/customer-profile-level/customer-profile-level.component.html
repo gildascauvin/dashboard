@@ -1,4 +1,4 @@
-<div style="display: block">
+<div [ngClass]="{ 'chart-size-profile': resize }" class="chart-container-profile" style="display: block">
   <canvas baseChart
     [datasets]="radarChartData"
     [options]="radarChartOptions"

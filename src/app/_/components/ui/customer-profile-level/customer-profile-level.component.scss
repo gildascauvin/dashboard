@@ -1,0 +1,14 @@
+.chart-container-profile {
+    position: relative;
+    margin: auto;
+    height: 46vh;
+    width: 52vw;
+    @media (max-width: 720px) {
+      height: 40vh;
+      width: 86vw;
+    }
+}
+.chart-size-profile {
+    height: 40vh !important;
+    width: 22vw !important;
+}

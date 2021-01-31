@@ -20,7 +20,7 @@
           {{ "#Your strenght level" | dgTranslate }}
         </h3>
         <div class="mt-4 mb-4">
-          <app-customer-profile-level [user]="user"></app-customer-profile-level>
+          <app-customer-profile-level [user]="user" [resize]=true></app-customer-profile-level>
         </div>
         <a class="btn btn-secondary btn-edit-secondary"
            [routerLink]="links.performance">{{ "#Edit perfomances" | dgTranslate }}</a>
