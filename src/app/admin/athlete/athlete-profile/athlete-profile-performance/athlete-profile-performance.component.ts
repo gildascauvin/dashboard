@@ -194,7 +194,9 @@ export class AthleteProfilePerformanceComponent implements OnInit {
 
       this.user.profil =  this.user.profil.map(item => {
           const obj = Object.assign({}, item);
-          obj.color = this.getRandomColor();
+          if( this.profileRef !== item) {
+            obj.color = this.getRandomColor();
+          }
           return obj;
       });
       
