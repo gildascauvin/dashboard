@@ -182,7 +182,15 @@ export class AthleteProfilePerformanceComponent implements OnInit {
       user.data.max_ref_id === profile.movement_id);
 
       this.user.profil = [...userProfilRefMax, ...userProfilsWithRatio, ...userProfilsWithoutRatio]
-      this.profileRef = this.user.profil.find( (profile) => profile.movement_id === this.user.data.max_ref_id );
+      this.profileRef = this.user?.profil?.find( (profile) => profile?.movement_id === this.user?.data?.max_ref_id );
+
+
+      let index = this.user?.profil?.indexOf(this.profileRef);
+  
+  
+      this.user.profil[index].ratio_value = 100;
+      this.user.profil[index].record = 100;
+      this.user.profil[index].color = '#000000';
 
       this.user.profil =  this.user.profil.map(item => {
           const obj = Object.assign({}, item);

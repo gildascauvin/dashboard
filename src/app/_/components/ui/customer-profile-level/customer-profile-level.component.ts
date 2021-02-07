@@ -45,13 +45,13 @@ export class CustomerProfileLevelComponent implements OnInit {
   public radarChartData: ChartDataSets[] = [
     {
       data: [150, 120, 89, 120, 90],
-      label: 'Volume',
+      label: 'Your RM',
       backgroundColor: null,
       borderColor: '#000000',
     },
     {
       data: [150, 120, 89, 120, 90],
-      label: 'Max Ref',
+      label: 'Goal',
       backgroundColor: null,
       borderColor: '#FF0000',
     },
