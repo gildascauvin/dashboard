@@ -112,6 +112,7 @@ export class TemplatesModalStartSessionComponent implements OnInit {
       rate: this.workout.rate,
       energy: this.workout.energy,
       comment: this.workout.comment,
+      duration: this.workout.duration
     };
 
     if (this.onlyReadynessSurvey === true) {

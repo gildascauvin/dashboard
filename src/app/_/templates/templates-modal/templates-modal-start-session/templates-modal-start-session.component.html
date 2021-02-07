@@ -148,6 +148,11 @@
     </div>
 
     <div class="col-md-6 mt-4">
+      <label class="rate-label">{{ "#Training duration" | dgTranslate }}</label>
+      <input type="text" class="form-control" [(ngModel)]="workout.duration">
+    </div>
+
+    <div class="col-md-6 mt-4">
       <div class="form-group">
         <label class="comment-label">{{ "#Comment" | dgTranslate }}</label>
         <textarea

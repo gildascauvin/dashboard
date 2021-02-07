@@ -44,6 +44,7 @@
     "ng2-dragula": "^2.1.1",
     "ngx-bootstrap": "^5.6.1",
     "ngx-captcha": "^8.0.1",
+    "ngx-light-carousel": "^1.1.10",
     "ngx-toastr": "^12.0.1",
     "rxjs": "^6.5.5",
     "rxjs-compat": "^6.5.5",
