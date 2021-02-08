@@ -36,6 +36,10 @@ import { AthleteSettingsPlanComponent } from "./admin/athlete/athlete-settings/a
 import { AthleteSettingsProfileComponent } from "./admin/athlete/athlete-settings/athlete-settings-profile/athlete-settings-profile.component";
 import { AthleteSettingsComponent } from "./admin/athlete/athlete-settings/athlete-settings.component";
 import { AthleteStatsComponent } from "./admin/athlete/athlete-stats/athlete-stats.component";
+
+import { AthleteStatsTrainingOverloadComponent } from "./admin/athlete/athlete-stats/athlete-stats-training-overload/athlete-stats-training-overload.component";
+import { AthleteStatsFatigueManagementComponent } from "./admin/athlete/athlete-stats/athlete-stats-fatigue-management/athlete-stats-fatigue-management.component";
+
 import { AthleteComponent } from "./admin/athlete/athlete.component";
 import { CoachAthleteCalendarComponent } from "./admin/coach/coach-athlete/coach-athlete-calendar/coach-athlete-calendar.component";
 import { CoachAthleteLeadboardComponent } from "./admin/coach/coach-athlete/coach-athlete-leadboard/coach-athlete-leadboard.component";
@@ -101,6 +105,7 @@ import { TemplatesModalExerciceManagerComponent } from "./_/templates/templates-
 import { TemplatesModalStartSessionComponent } from "./_/templates/templates-modal/templates-modal-start-session/templates-modal-start-session.component";
 import { TemplatesModalWorkoutDeleteComponent } from "./_/templates/templates-modal/templates-modal-workout-delete/templates-modal-workout-delete.component";
 import { PopoverComponent } from './_/templates/templates-modal/popover/popover.component';
+import {NgxCarouselModule} from "ngx-light-carousel";
 
 
 export function newNgTranslate(http: HttpClient) {
@@ -120,6 +125,8 @@ export function newNgTranslate(http: HttpClient) {
     AthleteDashboardComponent,
     AthleteProfileComponent,
     AthleteStatsComponent,
+    AthleteStatsFatigueManagementComponent,
+    AthleteStatsTrainingOverloadComponent,
     AthleteCalendarComponent,
     CoachDashboardComponent,
     CoachProgramsComponent,
@@ -210,6 +217,7 @@ export function newNgTranslate(http: HttpClient) {
     PasswordStrengthMeterModule,
     NgxCaptchaModule,
     DragDropModule,
+    NgxCarouselModule
   ],
   providers: [
     {

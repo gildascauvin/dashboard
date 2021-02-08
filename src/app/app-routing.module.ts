@@ -22,6 +22,9 @@ import { ConfirmAccountComponent } from './auth/confirm-account/confirm-account.
 import { AthleteDashboardComponent } from './admin/athlete/athlete-dashboard/athlete-dashboard.component';
 import { AthleteProfileComponent } from './admin/athlete/athlete-profile/athlete-profile.component';
 import { AthleteStatsComponent } from './admin/athlete/athlete-stats/athlete-stats.component';
+import { AthleteStatsTrainingOverloadComponent } from './admin/athlete/athlete-stats/athlete-stats-training-overload/athlete-stats-training-overload.component';
+import { AthleteStatsFatigueManagementComponent } from './admin/athlete/athlete-stats/athlete-stats-fatigue-management/athlete-stats-fatigue-management.component';
+
 import { AthleteCalendarComponent } from './admin/athlete/athlete-calendar/athlete-calendar.component';
 import { AthleteNotificationsComponent } from './admin/athlete/athlete-notifications/athlete-notifications.component';
 import { AthleteProgramsComponent } from './admin/athlete/athlete-programs/athlete-programs.component';
@@ -116,7 +119,23 @@ const routes: Routes = [{
                     component: CoachAthleteCalendarComponent
                 },{
                     path: 'stats',
-                    component: CoachAthleteStatsComponent
+                    component: CoachAthleteStatsComponent,
+                    children: [
+                      {
+                        path: '',
+                        component: AthleteStatsFatigueManagementComponent,
+                        data: {
+                          isCoach: true,
+                          isAthlet: false,
+                        }
+                      },{
+                      path: 'overload',
+                      component: AthleteStatsTrainingOverloadComponent,
+                      data: {
+                        isCoach: true,
+                        isAthlet: false,
+                      }
+                    }]
                 }
             ],
         },{
@@ -199,7 +218,22 @@ const routes: Routes = [{
         }]
       },{
         path: 'stats',
-        component: AthleteStatsComponent
+        component: AthleteStatsComponent,
+        children: [{
+            path: '',
+            component: AthleteStatsFatigueManagementComponent,
+            data: {
+              isCoach: false,
+              isAthlet: true,
+            }
+          },{
+            path: 'overload',
+            component: AthleteStatsTrainingOverloadComponent,
+            data: {
+              isCoach: false,
+              isAthlet: true,
+            }
+          }]
     }]
 }];
 

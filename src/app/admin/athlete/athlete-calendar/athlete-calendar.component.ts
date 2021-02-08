@@ -271,14 +271,13 @@ export class AthleteCalendarComponent implements OnInit {
         date = addHours(date, nbHours);
         this.startDay = date;
       }
-      
+
       this.weeks.push(days);
     }
 
     this.cloneWeeks = _.cloneDeep(this.weeks);
 
     this.isLoadingScroll = false;
-    console.log('workouts', this.workouts)
   }
 
   private _initDate(startedAtModel?) {

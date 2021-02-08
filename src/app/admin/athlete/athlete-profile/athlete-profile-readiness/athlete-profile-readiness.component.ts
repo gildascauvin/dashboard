@@ -100,7 +100,6 @@ export class AthleteProfileReadinessComponent implements OnInit {
 
     this.user.data.birthday = `${this.birthdayModel.year}-${this.birthdayModel.month}-${this.birthdayModel.day}`;
 
-    // console.log('this.user', this.user);
   	this.usersService[(!this.isCoach ? 'updateUser' : 'updateClientUser' )](this.user).subscribe((user: any) => {
       if (!user.errors) {
         this.toastrService.success('MRV updated!');
