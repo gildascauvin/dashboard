@@ -187,9 +187,6 @@ export class AthleteProfilePerformanceComponent implements OnInit {
 
       let index = this.user?.profil?.indexOf(this.profileRef);
   
-  
-      this.user.profil[index].ratio_value = 100;
-      this.user.profil[index].record = 100;
       this.user.profil[index].color = '#000000';
 
       this.user.profil =  this.user.profil.map(item => {
