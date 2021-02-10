@@ -103,7 +103,7 @@
                       class="progress-bar"
                       role="progressbar"
                       [ngStyle]="{
-                        'width.%': profile | ratioMovement,
+                        'width.%': profileRef.id === profile.id ? 100 : profile | ratioMovement,
                         'background-color': profile.color
                       }"
                       aria-valuenow="25"
