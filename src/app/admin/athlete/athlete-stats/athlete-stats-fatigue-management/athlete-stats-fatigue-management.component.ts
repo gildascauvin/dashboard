@@ -17,6 +17,7 @@ import {UsersService} from "../../../../_/templates/users.service";
 })
 export class AthleteStatsFatigueManagementComponent implements OnInit {
   @Input() isFromUrl = true;
+  @Input() keepDates = true;
 
   bsModalRef: BsModalRef;
   profileRef: any;
@@ -81,8 +82,8 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
 
     let from = new Date();
     let to = new Date();
-    from.setDate(from.getDate() - 35);
-    to.setDate(to.getDate() - 7);
+    from.setDate(from.getDate() - 28);
+    to.setDate(to.getDate());
     let fromDate = this.formatDate(from) + ' 00:00:00';
     let toDate = this.formatDate(to) + ' 00:00:00';
 
@@ -135,7 +136,6 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
       this.links = {
         fatigueManagement: ['/coach', 'athlet', 'stats'],
         trainingOverload: ['/coach', 'athlet', 'stats', 'overload']
-
       }
     }
 
@@ -154,14 +154,21 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
       (component) => {
 
         let dataWeeklyLoad = this._compute_weeklyLoad(component.stats.weekly);
-        let weeklyLoad = dataWeeklyLoad.weeklyLoad;
         let weeklyLoadByDay = dataWeeklyLoad.weeklyLoadByDay;
 
-        let standardDeviation = StandardDeviationCore.standardDeviation(weeklyLoadByDay);
+        let totalDays = Math.round((component.endDay - component.startDay) / (1000 * 3600 * 24)) + 1;
+        let weekSelectedCount = totalDays / 7;
 
-        let averageLoad = weeklyLoad / component.stats.weekly.volume.length;
-        let monotony = averageLoad / standardDeviation;
-        let constraint = weeklyLoad * monotony;
+        let weeklyLoad = (weekSelectedCount > 0) ? dataWeeklyLoad.weeklyLoad / weekSelectedCount : dataWeeklyLoad.weeklyLoad;
+        let averageLoad = (weeklyLoad > 0) ? weeklyLoad / 7 : 0;
+
+        let standardDeviation = averageLoad;
+        if (weeklyLoadByDay.length > 1) {
+          standardDeviation = StandardDeviationCore.standardDeviation(weeklyLoadByDay);
+        }
+
+        let monotony = (averageLoad > 0) ? averageLoad / standardDeviation : 0;
+        let constraint = (weeklyLoad > 0) ? weeklyLoad * monotony : 0;
 
         this.data.standardDeviation = standardDeviation;
         this.data.monotony = monotony;
@@ -177,10 +184,14 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
         if (this.isFromUrl) {
           this.usersService.getAllWorkouts(fromDate, toDate, 1).subscribe((workouts: any) => {
             if (workouts) {
-              let customerStats = this.customerStatsComputerService.computeStatsForAllWorkouts(workouts);
+              let customerStats = this.customerStatsComputerService.computeStatsForAllWorkouts(workouts, true, from, to);
 
               let dataWeeklyLoad = this._compute_weeklyLoad(customerStats.stats.weekly);
-              this.data.rcac = weeklyLoad/dataWeeklyLoad.weeklyLoad;
+
+              console.log('last 4 stats', customerStats);
+              console.log('last 4 data', dataWeeklyLoad);
+
+              this.data.rcac = weeklyLoad/(dataWeeklyLoad.weeklyLoad / 4);
               this.data.rcac = Math.round((this.data.rcac + Number.EPSILON) * 100) / 100;
 
               this._initFatigueManagementData(this.data);
@@ -191,16 +202,30 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
 
           this.usersService.getAllClientWorkouts(clientId, fromDate, toDate, 1).subscribe((workouts: any) => {
             if (workouts) {
-              let customerStats = this.customerStatsComputerService.computeStatsForAllClientWorkouts(workouts);
+              let customerStats = this.customerStatsComputerService.computeStatsForAllClientWorkouts(workouts, true, from, to);
 
               let dataWeeklyLoad = this._compute_weeklyLoad(customerStats.stats.weekly);
-              this.data.rcac = weeklyLoad/dataWeeklyLoad.weeklyLoad;
+
+              console.log('last 4 stats', customerStats);
+              console.log('last 4 data', dataWeeklyLoad);
+
+              this.data.rcac = weeklyLoad/(dataWeeklyLoad.weeklyLoad / 4);
               this.data.rcac = Math.round((this.data.rcac + Number.EPSILON) * 100) / 100;
 
               this._initFatigueManagementData(this.data);
             }
           });
         }
+
+        console.log('---- Stats Results ----', {
+          'totalDays': totalDays,
+          'totalWeeks': weekSelectedCount,
+          'weeklyLoad': weeklyLoad,
+          'weeklyLoadByDay': weeklyLoadByDay,
+          'averageLoad': averageLoad,
+          'standardDeviation': standardDeviation,
+          'data':this.data
+        });
       }
     );
   }
@@ -223,17 +248,44 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
       let intensite = weekly.intensite[i] > 0 ? weekly.intensite[i] : 1;
       let rpe = weekly.rpe[i] > 0 ? weekly.rpe[i] : 1;
 
-      let externalLoad = (volume + tonnage + distance + duration) / 3;
-      let dailyLoad = externalLoad * ((intensite / 100 + rpe / 10) / 2);
+      let externalLoad = this._computeExternalLoad(volume, tonnage, distance, duration);
 
-      weeklyLoad += dailyLoad;
-      weeklyLoadByDay.push(dailyLoad);
+      if (externalLoad > 0) {
+        let averageIntensiteRPE = 0;
+        if (intensite > 0) { averageIntensiteRPE = intensite / 100;}
+        if (rpe > 0) { averageIntensiteRPE += rpe / 10;}
+        averageIntensiteRPE = (intensite > 0 && rpe > 0) ? averageIntensiteRPE / 2 : averageIntensiteRPE;
+
+        let dailyLoad = (averageIntensiteRPE > 0) ? externalLoad * averageIntensiteRPE : externalLoad;
+
+        weeklyLoad += dailyLoad;
+        weeklyLoadByDay.push(dailyLoad);
+      } else {
+        weeklyLoadByDay.push(0);
+      }
     }
 
     return {
       weeklyLoad: weeklyLoad,
       weeklyLoadByDay: weeklyLoadByDay
     };
+  }
+
+  private _computeExternalLoad(volume, tonnage, distance, duration)
+  {
+    let externalLoad = 0;
+    let count = 0;
+
+    if (volume > 0) { externalLoad += volume; count++; }
+    if (tonnage > 0) { externalLoad += tonnage; count++; }
+    if (distance > 0) { externalLoad += distance; count++; }
+    if (duration > 0) { externalLoad += duration; count++; }
+
+    if (externalLoad > 0 && count > 0) {
+      return externalLoad / count;
+    }
+
+    return 0;
   }
 
   private _initFatigueManagementData(data) {
@@ -456,9 +508,16 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
       let dayWorkouts = workouts[workoutDay];
 
       for (let workoutKey in dayWorkouts) {
-        energyScores += this._computeEnergyScore(dayWorkouts[workoutKey]);
-        energyScoresLength++;
+        let workoutEnergyScore = this._computeEnergyScore(dayWorkouts[workoutKey]);
+        if (workoutEnergyScore > 0) {
+          energyScores += workoutEnergyScore;
+          energyScoresLength++;
+        }
       }
+    }
+
+    if (energyScoresLength == 0) {
+      return 0;
     }
 
     return energyScores / energyScoresLength;
@@ -483,6 +542,19 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
     });
 
     return (totalDataConfirmed > 0) ? totalEnergy / (3 * totalDataConfirmed) * 100 : 0;
+  }
+
+  private _computeDateFromDatePicker(date, withtime?) {
+    let day = (date.day < 10) ? "0" + date.day : date.day;
+    let month = (date.month < 10) ? "0" + date.month : date.month;
+
+    let dateFormatted = date.year + "-" + month + "-" + day;
+
+    if (withtime === true) {
+      dateFormatted += " 00:00:00";
+    }
+
+    return dateFormatted;
   }
 
   private detectScreenSize() {

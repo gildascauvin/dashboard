@@ -20,6 +20,7 @@ export class CustomerStatsRangeComponent implements OnInit {
   @Input() showRange: boolean = true;
   @Input() isFromUrl = true;
   @Input() isOneDay = false;
+  @Input() keepDates = false;
 
   isLoading: boolean = false;
 
@@ -293,11 +294,22 @@ export class CustomerStatsRangeComponent implements OnInit {
   private _init(fromDate?, toDate?) {
     toDate = toDate || new Date();
     fromDate = fromDate || new Date();
-    if (!this.isOneDay) {
-      this.endDay = endOfWeek(toDate, { weekStartsOn: 1 });
-      this.startDay = startOfWeek(fromDate, { weekStartsOn: 1 });
+
+    if (this.keepDates == false) {
+      if (!this.isOneDay) {
+        this.endDay = endOfWeek(toDate, { weekStartsOn: 1 });
+        this.startDay = startOfWeek(fromDate, { weekStartsOn: 1 });
+      } else {
+        this.endDay = this.startDay = toDate;
+      }
     } else {
-      this.endDay = this.startDay = toDate;
+      if (format(toDate, 'yyyyMMdd') == format(fromDate, 'yyyyMMdd')) {
+        this.endDay = endOfWeek(toDate, { weekStartsOn: 1 });
+        this.startDay = startOfWeek(fromDate, { weekStartsOn: 1 });
+      } else {
+        this.endDay = toDate;
+        this.startDay = fromDate;
+      }
     }
 
     this.fromDate.year = parseInt("" + format(this.startDay, "yyyy"));
@@ -330,7 +342,7 @@ export class CustomerStatsRangeComponent implements OnInit {
         .getAllWorkouts(fromDate, toDate, 1)
         .subscribe((workouts: any) => {
           this.workouts = _.cloneDeep(workouts);
-          let customerStats = this.customerStatsComputerService.computeStatsForAllWorkouts(this.workouts);
+          let customerStats = this.customerStatsComputerService.computeStatsForAllWorkouts(this.workouts, this.keepDates);
           this._setCustomerStats(customerStats);
         });
     } else {
@@ -341,7 +353,7 @@ export class CustomerStatsRangeComponent implements OnInit {
         .subscribe((workouts: any) => {
 
           this.workouts = _.cloneDeep(workouts);
-          let customerStats = this.customerStatsComputerService.computeStatsForAllClientWorkouts(this.workouts);
+          let customerStats = this.customerStatsComputerService.computeStatsForAllClientWorkouts(this.workouts, this.keepDates);
           this._setCustomerStats(customerStats);
         });
     }
