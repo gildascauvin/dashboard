@@ -90,7 +90,7 @@ export class CustomerStatsComputerService {
   isOneDay: boolean = false;
   tabs: any = [];
 
-  computeStatsForAllClientWorkouts(workouts)
+  computeStatsForAllClientWorkouts(workouts, forceDaily?, from?, to?)
   {
     this._clean();
 
@@ -126,12 +126,18 @@ export class CustomerStatsComputerService {
         });
         let nbDays = 7;
         let diff = Math.abs(differenceInDays(startWeekDay, endWeekDay));
-        let isDaily = diff < 30;
+        let isDaily = (forceDaily && forceDaily == true) ? true : diff < 30;
 
         if (diff < nbDays) {
           diff = nbDays;
         }
         let currentDate = endWeekDay;
+
+        if (from && to) {
+          currentDate = from;
+          diff = Math.abs(differenceInDays(from, to));
+        }
+
         let modulo = isDaily ? 1 : 7;
         for (let i = 0; i < diff; i++) {
           if (i % modulo == 0) {
@@ -183,7 +189,7 @@ export class CustomerStatsComputerService {
     return this;
   }
 
-  computeStatsForAllWorkouts(workouts) {
+  computeStatsForAllWorkouts(workouts, forceDaily?, from?, to?) {
 
     this._clean();
     this.tabs = [];
@@ -218,15 +224,20 @@ export class CustomerStatsComputerService {
 
     let nbDays = 7;
     let diff = Math.abs(differenceInDays(startWeekDay, endWeekDay));
-    let isDaily = diff < 30;
+    let isDaily = (forceDaily && forceDaily == true) ? true : diff < 30;
 
     if (diff < nbDays) {
       diff = nbDays;
-    } else {
+    } else if (!forceDaily || forceDaily == false) {
       diff += 7;
     }
 
     let currentDate = endWeekDay;
+    if (from && to) {
+      currentDate = from;
+      diff = Math.abs(differenceInDays(from, to));
+    }
+
     let modulo = isDaily ? 1 : 7;
 
     for (let i = 0; i < diff; i++) {

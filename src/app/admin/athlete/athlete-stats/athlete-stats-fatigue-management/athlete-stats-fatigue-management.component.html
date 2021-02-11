@@ -9,7 +9,7 @@
 
     <div class="col-md-6 calendar-top">
       <div class="float-right">
-      <app-customer-stats-range [isFromUrl]="isFromUrl"></app-customer-stats-range>
+      <app-customer-stats-range [isFromUrl]="isFromUrl" [keepDates]="keepDates"></app-customer-stats-range>
       </div>
     </div>
   </div>
@@ -149,13 +149,13 @@
                 <div class="score energy-score">
                   <div class="value">{{ fatigueManagement.load.constraint }}</div>
                   <div class="subtitle">Constraint</div>
-                  <div class="description">Avoid overfatigue by controlling load and having varied sessions</div>
+                  <div class="description">{{ fatigueManagement.colors.load.descriptionConstraint }}</div>
                 </div>
                 <div class="subtitle-circle">{{ fatigueManagement.colors.load.textCircle }}</div>
                 <div class="score rpe-score">
                   <div class="value">{{ fatigueManagement.load.rcac }}</div>
                   <div class="subtitle">Workload zone</div>
-                  <div class="description">High load but a low risk of injury due to overfatigue</div>
+                  <div class="description">{{ fatigueManagement.colors.load.descriptionRCAC }}</div>
                 </div>
               </div>
           </div>
