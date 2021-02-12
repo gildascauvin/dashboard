@@ -182,8 +182,8 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
         let fromDate = this.formatDate(from) + ' 00:00:00';
         let toDate = this.formatDate(to) + ' 00:00:00';
 
-        console.log(from);
-        console.log(to);
+        //console.log(from);
+        //console.log(to);
 
         if (this.isFromUrl) {
           this.usersService.getAllWorkouts(fromDate, toDate, 1).subscribe((workouts: any) => {
