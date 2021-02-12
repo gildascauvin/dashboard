@@ -9,6 +9,8 @@ import {ResizeService} from '../../../../_/services/ui/resize-service.service';
 import {DOCUMENT} from "@angular/common";
 import {CustomerStatsComputerService} from "../../../../_/services/stats/customer-stats-computer.service";
 import {UsersService} from "../../../../_/templates/users.service";
+import {endOfWeek} from "date-fns";
+import * as _ from "lodash";
 
 @Component({
   selector: 'app-athlete-stats-fatigue-management',
@@ -79,13 +81,6 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    let from = new Date();
-    let to = new Date();
-    from.setDate(from.getDate() - 28);
-    to.setDate(to.getDate());
-    let fromDate = this.formatDate(from) + ' 00:00:00';
-    let toDate = this.formatDate(to) + ' 00:00:00';
 
     this.detectScreenSize();
 
@@ -181,6 +176,15 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
         this.data.monotony = Math.round((this.data.monotony + Number.EPSILON) * 100) / 100;
         this.data.energyScore = Math.round(this.data.energyScore);
 
+        let to = endOfWeek(component.startDay, {weekStartsOn: 1});
+        let from = _.clone(to);
+        from.setDate(from.getDate() - 27);
+        let fromDate = this.formatDate(from) + ' 00:00:00';
+        let toDate = this.formatDate(to) + ' 00:00:00';
+
+        console.log(from);
+        console.log(to);
+
         if (this.isFromUrl) {
           this.usersService.getAllWorkouts(fromDate, toDate, 1).subscribe((workouts: any) => {
             if (workouts) {
@@ -245,8 +249,8 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
       let tonnage = weekly.tonnage[i];
       let distance = weekly.distance[i];
       let duration = weekly.duration[i];
-      let intensite = weekly.intensite[i] > 0 ? weekly.intensite[i] : 1;
-      let rpe = weekly.rpe[i] > 0 ? weekly.rpe[i] : 1;
+      let intensite = weekly.intensite[i];
+      let rpe = weekly.rpe[i];
 
       let externalLoad = this._computeExternalLoad(volume, tonnage, distance, duration);
 
