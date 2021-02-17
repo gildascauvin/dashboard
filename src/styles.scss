@@ -1037,3 +1037,15 @@ $primary-color-red: #ff0502;
     }
   }
 }
+
+@media (max-width: 480px) {
+  .tpc-carousel {
+    .carousel {
+      padding-bottom: 0;
+    }
+
+    .indicators {
+      bottom: 50px;
+    }
+  }
+}
