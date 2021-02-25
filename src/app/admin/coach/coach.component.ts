@@ -69,6 +69,10 @@ export class CoachComponent implements OnInit {
     this.sub.onUpdate = this.userService.onUpdate.subscribe((user) => {
       this.currentUser = this.authService.getCurrentAthlet();
       this.user = this.authService.getUserData();
+
+      if (this.user.role_id == 1) {
+        this.router.navigateByUrl('/athlete/dashboard');
+      }
     });
 
     this.detectScreenSize();
