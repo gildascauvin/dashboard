@@ -61,9 +61,9 @@
                   >
                     {{ profile | ratioMovement }}%
                   </span>
-                
+
                   </td>
-                  <td class="container-ratio"> 
+                  <td class="container-ratio">
                     <span
                     *ngIf="
                       profile.ratio_value && profile.ratio_value !== profile.record
@@ -73,7 +73,7 @@
                       {{ profile.record_unit == 1 ? "kg" : "lbs" }}
                     </span>
                   </td>
-                    
+
                   <td>
                     <span>
                       {{ profile.record }}
@@ -94,14 +94,16 @@
                 >
                   <i class="fa fa-trash text-danger"></i>
                 </button>
-                  </td>     
+                  </td>
                 </tr>
                 <tr>
                   <td class="container-progress" colspan="5">
                     <div class="mb-2 progress height-progress">
+
                     <div
                       class="progress-bar"
                       role="progressbar"
+                      *ngIf="profileRef && profile"
                       [ngStyle]="{
                         'width.%': profileRef.movement_id === profile.movement_id ? 100 : profile | ratioMovement,
                         'background-color': profile.color
@@ -110,12 +112,12 @@
                       aria-valuemin="0"
                       aria-valuemax="100"
                     ></div>
-                  </div> 
+                  </div>
 
                   </td>
-                </tr> 
+                </tr>
               </ng-container>
-            
+
             </tbody>
           </table>
         </div>
