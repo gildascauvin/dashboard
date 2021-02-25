@@ -91,3 +91,19 @@
     margin-left: -75px;
   }
 }
+
+ul.nav-exos {
+  margin-bottom: -10px;
+
+  li.nav-item {
+    width: 50%;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 0;
+
+    a {
+      text-decoration: none;
+      border-radius: 0;
+    }
+  }
+}
