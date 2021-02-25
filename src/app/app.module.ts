@@ -39,6 +39,7 @@ import { AthleteStatsComponent } from "./admin/athlete/athlete-stats/athlete-sta
 
 import { AthleteStatsTrainingOverloadComponent } from "./admin/athlete/athlete-stats/athlete-stats-training-overload/athlete-stats-training-overload.component";
 import { AthleteStatsFatigueManagementComponent } from "./admin/athlete/athlete-stats/athlete-stats-fatigue-management/athlete-stats-fatigue-management.component";
+import { AthleteStatsEnergySystemsComponent } from "./admin/athlete/athlete-stats/athlete-stats-energy-systems/athlete-stats-energy-systems.component";
 
 import { AthleteComponent } from "./admin/athlete/athlete.component";
 import { CoachAthleteCalendarComponent } from "./admin/coach/coach-athlete/coach-athlete-calendar/coach-athlete-calendar.component";
@@ -76,6 +77,7 @@ import { AthleteMovementListComponent } from "./_/components/ui/athlete-movement
 import { AthleteMovementListUnitLabelComponent } from "./_/components/ui/athlete-movement-list-unit-label/athlete-movement-list-unit-label.component";
 import { CustomerStatsExerciceComponent } from "./_/components/ui/customer-stats-exercice/customer-stats-exercice.component";
 import { CustomerStatsRangeComponent } from "./_/components/ui/customer-stats-range/customer-stats-range.component";
+import { CustomerStatsSummaryComponent } from "./_/components/ui/customer-stats-summary/customer-stats-summary.component";
 import { CustomerStatsComponent } from "./_/components/ui/customer-stats/customer-stats.component";
 import { AutofocusDirective } from "./_/directives/autofocus.directive";
 import { RatioMovementPipe } from "./_/pipes/ratio-movement.pipe";
@@ -127,6 +129,7 @@ export function newNgTranslate(http: HttpClient) {
     AthleteStatsComponent,
     AthleteStatsFatigueManagementComponent,
     AthleteStatsTrainingOverloadComponent,
+    AthleteStatsEnergySystemsComponent,
     AthleteCalendarComponent,
     CoachDashboardComponent,
     CoachProgramsComponent,
@@ -168,6 +171,7 @@ export function newNgTranslate(http: HttpClient) {
     AthleteProfileModalProfileDeleteComponent,
     CustomerStatsComponent,
     CustomerStatsRangeComponent,
+    CustomerStatsSummaryComponent,
     CustomerStatsExerciceComponent,
     AthleteSettingsComponent,
     AthleteSettingsPlanComponent,
