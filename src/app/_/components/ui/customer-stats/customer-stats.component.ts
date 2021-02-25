@@ -20,6 +20,7 @@ import { CustomerStatsService } from "../customer-stats-range/customer-stats-ran
 export class CustomerStatsComponent implements OnInit {
   @Input() showCardio: boolean = true;
   @Input() showCanvas: boolean = true;
+  @Input() keepDates = true;
 
   @Input() isFromUrl = true;
   @Input() resize: boolean = false;
@@ -202,6 +203,7 @@ export class CustomerStatsComponent implements OnInit {
   ngOnInit(): void {
     this.sub.onStatsUpdated = this.customerStatsService.onStatsUpdated.subscribe(
       (component) => {
+
         this.usersService = component.usersService;
         this.calendar = component.calendar;
         this.formatter = component.formatter;

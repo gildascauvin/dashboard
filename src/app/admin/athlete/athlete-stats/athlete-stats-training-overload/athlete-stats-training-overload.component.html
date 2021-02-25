@@ -1,23 +1,35 @@
 <div class="container-fluid">
-  <div class="row pt-4">
-    <div class="col-md-6">
+  <div class="row pt-4 row-tpc-submenu-calendar">
+    <div class="col-md-6 pb-4">
       <ul class="tpc-submenu pb-4">
-        <li><a href="#" [routerLink]="links.fatigueManagement">{{ "#Fatigue management" | dgTranslate }}</a></li>
-        <li><a class="active" href="#" [routerLink]="links.trainingOverload">{{ "#Load analysis" | dgTranslate }}</a></li>
+        <ng-container *ngIf="size <= responsiveSize">
+          <li><a href="#" [routerLink]="links.fatigueManagement">{{ "#Fatigue" | dgTranslate }}</a></li>
+          <li><a class="active" href="#" [routerLink]="links.trainingOverload">{{ "#Load" | dgTranslate }}</a></li>
+          <li><a href="#" [routerLink]="links.energySystems">{{ "#Systems" | dgTranslate }}</a></li>
+        </ng-container>
+        <ng-container *ngIf="size > responsiveSize">
+          <li><a href="#" [routerLink]="links.fatigueManagement">{{ "#Fatigue management" | dgTranslate }}</a></li>
+          <li><a class="active" href="#" [routerLink]="links.trainingOverload">{{ "#Load analysis" | dgTranslate }}</a></li>
+          <li><a href="#" [routerLink]="links.energySystems">{{ "#Energy systems" | dgTranslate }}</a></li>
+        </ng-container>
+
+
       </ul>
     </div>
 
     <div class="col-md-6 calendar-top">
       <div class="float-right">
-        <app-customer-stats-range [isFromUrl]="isFromUrl"></app-customer-stats-range>
+        <app-customer-stats-range [isFromUrl]="isFromUrl" [keepDates]="keepDates"></app-customer-stats-range>
       </div>
     </div>
   </div>
 
+  <app-customer-stats-summary [isFromUrl]="isFromUrl"></app-customer-stats-summary>
+
   <div class="row container-stats">
     <div class="col-md-7">
       <div class="box-stats-left">
-        <app-customer-stats [isFromUrl]="isFromUrl"></app-customer-stats>
+        <app-customer-stats [isFromUrl]="isFromUrl" [keepDates]="keepDates"></app-customer-stats>
       </div>
     </div>
     <div class="col-md-5">

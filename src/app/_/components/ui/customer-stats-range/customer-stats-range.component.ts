@@ -372,7 +372,7 @@ export class CustomerStatsRangeComponent implements OnInit {
     this.stats = customerStats.stats;
     this.tabs = customerStats.tabs;
 
-    this.customerStatsService.onStatsUpdated.emit(this);
+    this.customerStatsService.onStatsUpdated.emit(_.cloneDeep(this));
   }
 
   private _clean() {

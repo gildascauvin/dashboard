@@ -54,6 +54,7 @@ import { AthleteSettingsPasswordComponent } from './admin/athlete/athlete-settin
 import { AthleteCoachComponent } from './admin/athlete/athlete-coach/athlete-coach.component';
 import { CoachAthleteComponent } from './admin/coach/coach-athlete/coach-athlete.component';
 import { AutoConnectComponent } from './auth/auto-connect/auto-connect.component';
+import {AthleteStatsEnergySystemsComponent} from "./admin/athlete/athlete-stats/athlete-stats-energy-systems/athlete-stats-energy-systems.component";
 
 const routes: Routes = [{
     path: '',
@@ -128,14 +129,24 @@ const routes: Routes = [{
                           isCoach: true,
                           isAthlet: false,
                         }
-                      },{
-                      path: 'overload',
-                      component: AthleteStatsTrainingOverloadComponent,
-                      data: {
-                        isCoach: true,
-                        isAthlet: false,
+                      },
+                      {
+                        path: 'overload',
+                        component: AthleteStatsTrainingOverloadComponent,
+                        data: {
+                          isCoach: true,
+                          isAthlet: false,
+                        }
+                      },
+                      {
+                        path: 'energy',
+                        component: AthleteStatsEnergySystemsComponent,
+                        data: {
+                          isCoach: true,
+                          isAthlet: false,
+                        }
                       }
-                    }]
+                    ]
                 }
             ],
         },{
@@ -229,6 +240,14 @@ const routes: Routes = [{
           },{
             path: 'overload',
             component: AthleteStatsTrainingOverloadComponent,
+            data: {
+              isCoach: false,
+              isAthlet: true,
+            }
+          },
+          {
+            path: 'energy',
+            component: AthleteStatsEnergySystemsComponent,
             data: {
               isCoach: false,
               isAthlet: true,

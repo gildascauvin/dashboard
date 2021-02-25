@@ -1,9 +1,17 @@
 <div class="container-fluid">
-  <div class="row pt-4">
+  <div class="row pt-4 row-tpc-submenu-calendar">
     <div class="col-md-6 pb-4">
       <ul class="tpc-submenu pb-4">
-        <li><a class="active" href="#" [routerLink]="links.fatigueManagement">{{ "#Fatigue management" | dgTranslate }}</a></li>
-        <li><a href="#" [routerLink]="links.trainingOverload">{{ "#Load analysis" | dgTranslate }}</a></li>
+        <ng-container *ngIf="size <= responsiveSize">
+          <li><a class="active" href="#" [routerLink]="links.fatigueManagement">{{ "#Fatigue" | dgTranslate }}</a></li>
+          <li><a href="#" [routerLink]="links.trainingOverload">{{ "#Load" | dgTranslate }}</a></li>
+          <li><a href="#" [routerLink]="links.energySystems">{{ "#Systems" | dgTranslate }}</a></li>
+        </ng-container>
+        <ng-container *ngIf="size > responsiveSize">
+          <li><a class="active" href="#" [routerLink]="links.fatigueManagement">{{ "#Fatigue management" | dgTranslate }}</a></li>
+          <li><a href="#" [routerLink]="links.trainingOverload">{{ "#Load analysis" | dgTranslate }}</a></li>
+          <li><a href="#" [routerLink]="links.energySystems">{{ "#Energy systems" | dgTranslate }}</a></li>
+        </ng-container>
       </ul>
     </div>
 
@@ -14,220 +22,15 @@
     </div>
   </div>
 
-  <div class="row" *ngIf="size <= responsiveSize">
-    <div class="col-12">
-      <ngx-light-carousel class="tpc-carousel" [options]="carouselOptions" [data]="carouselData">
-        <section ngx-light-carousel-container>
-          <article ngx-light-carousel-item>
-            <div class="slide w-100">
-                <div class="fatigue-management-banner fatigue-management-banner--left red-zone">
-              <div class="rectangle">
-                <div class="tpc-optimal-zone clearfix">
-                  <div class="optimal-zone--left {{ fatigueManagement.colors.load.color1 }}"></div>
-                  <div class="optimal-zone">
-
-                    <div class="tpc-circle">
-                      <div class="c100 p{{ fatigueManagement.colors.load.percent }} {{ fatigueManagement.colors.load.colorCircle }}">
-                        <div class="circle-content">
-                          <img src="assets/img/logo/logo-alt-re.png" srcset="assets/img/logo/logo-alt-re@2x.png 2x,assets/img/logo/logo-alt-re@3x.png 3x" class="logo">
-                          <span class="title">Load</span>
-                        </div>
-                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-                      </div>
-                    </div>
-
-                  </div>
-                  <div class="optimal-zone--right {{ fatigueManagement.colors.load.color2 }}"></div>
-                  <div class="score energy-score">
-                    <div class="value">{{ fatigueManagement.load.constraint }}</div>
-                    <div class="subtitle">Constraint</div>
-                    <div class="description">{{ fatigueManagement.colors.load.descriptionConstraint }}</div>
-                  </div>
-                  <div class="subtitle-circle">{{ fatigueManagement.colors.load.textCircle }}</div>
-                  <div class="score rpe-score">
-                    <div class="value">{{ fatigueManagement.load.rcac }}</div>
-                    <div class="subtitle">Workload zone</div>
-                    <div class="description">{{ fatigueManagement.colors.load.descriptionRCAC }}</div>
-                  </div>
-                </div>
-              </div>
-          </div>
-            </div>
-          </article>
-          <article ngx-light-carousel-item>
-            <div class="slide w-100">
-                <div class="fatigue-management-banner red-zone">
-                <div class="rectangle">
-                  <div class="tpc-optimal-zone tpc-optimal-zone--single clearfix">
-                    <div class="optimal-zone">
-                      <div class="tpc-circle">
-                        <div class="c100 p{{ fatigueManagement.colors.variation.percent }} {{ fatigueManagement.colors.variation.colorCircle }}">
-                          <div class="circle-content">
-                            <img src="assets/img/logo/logo-other.png" srcset="assets/img/logo/logo-other@2x.png 2x,assets/img/logo/logo-other@3x.png 3x" class="logo">
-                            <span class="title">Variation</span>
-                          </div>
-                          <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="score">
-                      <div class="value">{{ fatigueManagement.variation.monotony }}</div>
-                      <div class="subtitle">Monotonie</div>
-                      <div class="description">{{ fatigueManagement.colors.variation.description }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-          <article ngx-light-carousel-item>
-            <div class="slide w-100">
-                <div class="fatigue-management-banner fatigue-management-banner--right red-zone">
-                <div class="rectangle">
-                  <div class="tpc-optimal-zone clearfix">
-                    <div class="optimal-zone--left {{ fatigueManagement.colors.fitness.color1 }}"></div>
-                    <div class="optimal-zone">
-
-                      <div class="tpc-circle">
-                        <div class="c100 p{{ fatigueManagement.colors.fitness.percent }} {{ fatigueManagement.colors.fitness.colorCircle }}">
-                          <div class="circle-content">
-                            <img src="assets/img/logo/logo-cardio.png" srcset="assets/img/logo/logo-cardio@2x.png 2x,assets/img/logo/logo-cardio@3x.png 3x" class="logo">
-                            <span class="title">Fitness</span>
-                          </div>
-                          <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="optimal-zone--right {{ fatigueManagement.colors.fitness.color2 }}"></div>
-                    <div class="score energy-score">
-                      <div class="value">{{ fatigueManagement.fitness.fitness }}</div>
-                      <div class="subtitle">Fitness</div>
-                      <div class="description">{{ fatigueManagement.colors.fitness.descriptionFitness }}</div>
-                    </div>
-                    <div class="subtitle-circle">{{ fatigueManagement.colors.fitness.textCircle }}</div>
-                    <div class="score rpe-score">
-                      <div class="value">{{ fatigueManagement.fitness.energyScore }}%</div>
-                      <div class="subtitle">Energy score</div>
-                      <div class="description">{{ fatigueManagement.colors.fitness.descriptionEnergyScore }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-        </section>
-
-        <ng-template #carouselDot let-model>
-          <div class="ball bg-accent"></div>
-        </ng-template>
-
-      </ngx-light-carousel>
-    </div>
-  </div>
-
-  <div *ngIf="size > responsiveSize" class="row top-stats container-stats">
-    <div class="col-md-5">
-        <div class="fatigue-management-banner fatigue-management-banner--left red-zone">
-          <div class="rectangle">
-              <div class="tpc-optimal-zone clearfix">
-                <div class="optimal-zone--left {{ fatigueManagement.colors.load.color1 }}"></div>
-                <div class="optimal-zone">
-
-                  <div class="tpc-circle">
-                    <div class="c100 p{{ fatigueManagement.colors.load.percent }} {{ fatigueManagement.colors.load.colorCircle }}">
-                      <div class="circle-content">
-                        <img src="assets/img/logo/logo-alt-re.png" srcset="assets/img/logo/logo-alt-re@2x.png 2x,assets/img/logo/logo-alt-re@3x.png 3x" class="logo">
-                        <span class="title">Load</span>
-                      </div>
-                      <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-                    </div>
-                  </div>
-
-                </div>
-                <div class="optimal-zone--right {{ fatigueManagement.colors.load.color2 }}"></div>
-                <div class="score energy-score">
-                  <div class="value">{{ fatigueManagement.load.constraint }}</div>
-                  <div class="subtitle">Constraint</div>
-                  <div class="description">{{ fatigueManagement.colors.load.descriptionConstraint }}</div>
-                </div>
-                <div class="subtitle-circle">{{ fatigueManagement.colors.load.textCircle }}</div>
-                <div class="score rpe-score">
-                  <div class="value">{{ fatigueManagement.load.rcac }}</div>
-                  <div class="subtitle">Workload zone</div>
-                  <div class="description">{{ fatigueManagement.colors.load.descriptionRCAC }}</div>
-                </div>
-              </div>
-          </div>
-        </div>
-    </div>
-
-    <div class="col-md-2">
-      <div class="fatigue-management-banner red-zone">
-        <div class="rectangle">
-          <div class="tpc-optimal-zone tpc-optimal-zone--single clearfix">
-            <div class="optimal-zone">
-              <div class="tpc-circle">
-                <div class="c100 p{{ fatigueManagement.colors.variation.percent }} {{ fatigueManagement.colors.variation.colorCircle }}">
-                  <div class="circle-content">
-                    <img src="assets/img/logo/logo-other.png" srcset="assets/img/logo/logo-other@2x.png 2x,assets/img/logo/logo-other@3x.png 3x" class="logo">
-                    <span class="title">Variation</span>
-                  </div>
-                  <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-                </div>
-              </div>
-            </div>
-            <div class="score">
-              <div class="value">{{ fatigueManagement.variation.monotony }}</div>
-              <div class="subtitle">Monotonie</div>
-              <div class="description">{{ fatigueManagement.colors.variation.description }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-5">
-      <div class="fatigue-management-banner fatigue-management-banner--right red-zone">
-        <div class="rectangle">
-          <div class="tpc-optimal-zone clearfix">
-            <div class="optimal-zone--left {{ fatigueManagement.colors.fitness.color1 }}"></div>
-            <div class="optimal-zone">
-
-              <div class="tpc-circle">
-                <div class="c100 p{{ fatigueManagement.colors.fitness.percent }} {{ fatigueManagement.colors.fitness.colorCircle }}">
-                  <div class="circle-content">
-                    <img src="assets/img/logo/logo-cardio.png" srcset="assets/img/logo/logo-cardio@2x.png 2x,assets/img/logo/logo-cardio@3x.png 3x" class="logo">
-                    <span class="title">Fitness</span>
-                  </div>
-                  <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-                </div>
-              </div>
-
-            </div>
-            <div class="optimal-zone--right {{ fatigueManagement.colors.fitness.color2 }}"></div>
-            <div class="score energy-score">
-              <div class="value">{{ fatigueManagement.fitness.fitness }}</div>
-              <div class="subtitle">Fitness</div>
-              <div class="description">{{ fatigueManagement.colors.fitness.descriptionFitness }}</div>
-            </div>
-            <div class="subtitle-circle">{{ fatigueManagement.colors.fitness.textCircle }}</div>
-            <div class="score rpe-score">
-              <div class="value">{{ fatigueManagement.fitness.energyScore }}%</div>
-              <div class="subtitle">Energy score</div>
-              <div class="description">{{ fatigueManagement.colors.fitness.descriptionEnergyScore }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-  </div>
+  <app-customer-stats-summary [isFromUrl]="isFromUrl"></app-customer-stats-summary>
 
   <div class="row container-stats">
     <div class="col-md-7">
       <div class="box-stats-left">
+
+        <h3 class="text-center mt-4 mb-4">
+          {{ "#Perceived exhaustion and recovery" | dgTranslate }}
+        </h3>
 
         <div [ngClass]="{ 'chart-size': resize }" class="chart-container" style="display: block">
           <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
