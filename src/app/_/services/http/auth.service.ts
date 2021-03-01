@@ -131,7 +131,7 @@ export class AuthService {
     return this.httpService.checkResetPassword(password, token);
   }
 
-  logout(redirectTo?) {
+  logout(redirectTo?, withoutRedirection?) {
     redirectTo = redirectTo || '/';
 
     localStorage.removeItem(config.prefixApp + 'token');
@@ -140,7 +140,9 @@ export class AuthService {
     localStorage.removeItem(config.prefixApp + 'type_id');
     localStorage.removeItem(config.prefixApp + 'refresh_token');
 
-    this.router.navigateByUrl(redirectTo);
+    if (!withoutRedirection) {
+      this.router.navigateByUrl(redirectTo);
+    }
   }
 
   setUserToken(token) {

@@ -170,15 +170,19 @@ export class AthleteProfilePerformanceComponent implements OnInit {
   	if (user && user.data) {
       this.user = _.cloneDeep(user);
 
-      const userProfilsWithoutRatio = this.user.profil.filter( (profile)=> 
+      if (!this.user.profil) {
+        this.user.profil = [];
+      }
+
+      const userProfilsWithoutRatio = this.user.profil.filter( (profile)=>
       (user.data.max_ref_id !== profile.movement_id) && (!profile.ratio_value))
 
-      const userProfilsWithRatio = this.user.profil.filter( (profile)=> 
+      const userProfilsWithRatio = this.user.profil.filter( (profile)=>
       profile.ratio_value && profile.ratio_value !== profile.record).sort( (a, b) => {
         return this.getRatioMovement(b)- this.getRatioMovement(a)
       });
 
-      const userProfilRefMax = this.user.profil.filter( (profile)=> 
+      const userProfilRefMax = this.user.profil.filter( (profile)=>
       user.data.max_ref_id === profile.movement_id);
 
       this.user.profil = [...userProfilRefMax, ...userProfilsWithRatio, ...userProfilsWithoutRatio]
@@ -186,7 +190,7 @@ export class AthleteProfilePerformanceComponent implements OnInit {
 
 
       let index = this.user?.profil?.indexOf(this.profileRef);
-  
+
       this.user.profil[index].color = '#000000';
 
       this.user.profil =  this.user.profil.map(item => {
@@ -196,7 +200,7 @@ export class AthleteProfilePerformanceComponent implements OnInit {
           }
           return obj;
       });
-      
+
 
 	  	if (user.data.birthday) {
 	      let date = user.data.birthday.split('-');

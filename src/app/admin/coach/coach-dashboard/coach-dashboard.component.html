@@ -14,19 +14,23 @@
             </a>
           </div>
         </ng-container>
-        <button
-          class="btn btn-primary btn-edit-secondary"
-          (click)="openInvitationCreateModal()"
-        >
-          <i class="fa fa-plus"></i> {{ "#Create an athlet" | dgTranslate }}
-        </button>
-        <button
-          class="btn btn-secondary btn-edit-secondary mt-3"
-          routerLinkActive="active"
-          [routerLink]="['/coach', 'clients']"
-        >
-          {{ "#See all athlets" | dgTranslate }}
-        </button>
+        <div class="row">
+          <div class="col-md-12">
+            <button
+              class="btn btn-primary btn-edit-secondary"
+              (click)="openInvitationCreateModal()">
+              <i class="fa fa-plus"></i> {{ "#Create an athlet" | dgTranslate }}
+            </button>
+          </div>
+          <div class="col-md-12">
+            <button
+              class="btn btn-secondary btn-edit-secondary mt-3"
+              routerLinkActive="active"
+              [routerLink]="['/coach', 'clients']">
+              {{ "#See all athlets" | dgTranslate }}
+            </button>
+          </div>
+        </div>
       </div>
       <div class="strenght-level">
         <h3 class="strenght-level-title">{{ "#My programs" | dgTranslate }}</h3>
@@ -43,19 +47,25 @@
             </a>
           </div>
         </ng-container>
-        <button
-          class="btn btn-primary btn-edit-secondary"
-          (click)="openProgramCreateModal()"
-        >
-          <i class="fa fa-plus"></i> {{ "#Create an program" | dgTranslate }}
-        </button>
-        <button
-          class="btn btn-secondary btn-edit-secondary mt-3"
-          routerLinkActive="active"
-          [routerLink]="['/coach', 'programs']"
-        >
-          {{ "#See all programs" | dgTranslate }}
-        </button>
+        <div class="row">
+          <div class="col-md-12">
+            <button
+              class="btn btn-primary btn-edit-secondary"
+              (click)="openProgramCreateModal()">
+              <i class="fa fa-plus"></i> {{ "#Create an program" | dgTranslate }}
+            </button>
+          </div>
+          <div class="col-md-12">
+            <button
+              class="btn btn-secondary btn-edit-secondary mt-3"
+              routerLinkActive="active"
+              [routerLink]="['/coach', 'programs']">
+              {{ "#See all programs" | dgTranslate }}
+            </button>
+          </div>
+        </div>
+
+
       </div>
     </div>
   </div>

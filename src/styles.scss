@@ -718,6 +718,7 @@ body {
     margin: 0 auto;
     text-align: center;
     right: 0;
+    z-index: 1;
 
     .title {
       font-size: 35px;
@@ -850,6 +851,8 @@ $bg-color: #161616;
 $primary-color-green: #00d49d;
 $primary-color-yellow: #cfe223;
 $primary-color-red: #ff0502;
+$primary-color-gray: #c1c1c1;
+$primary-color-purple: #8f5ac3;
 
 .tpc-circle {
   display: inline-block;
@@ -982,6 +985,22 @@ $primary-color-red: #ff0502;
       }
     }
 
+    &.gray{
+      .bar, .fill { border-color: $primary-color-gray !important;}
+      &:hover{
+        > span { color: $primary-color-gray;}
+      }
+    }
+
+    &.purple{
+      .bar, .fill { border-color: $primary-color-purple !important;}
+      &:hover{
+        > span { color: $primary-color-purple;}
+      }
+    }
+
+
+
     &.bg-transparent {
       background: transparent !important;
     }
@@ -1016,7 +1035,29 @@ $primary-color-red: #ff0502;
   }
 
   @media (max-width: 480px) {
-    padding-top: 15px;
+    padding-bottom: 5px !important;
+    margin: 0 auto;
+    text-align:center;
+
+    li {
+      float:none;
+      display: inline-block;
+
+      a{
+        padding: 5px 0;
+        font-size: 14px;
+      }
+    }
+
+  }
+}
+
+@media (max-width: 480px) {
+  .row-tpc-submenu-calendar {
+    padding-top: 15px !important;
+    .pb-4 {
+      padding-bottom: 5px !important;
+    }
   }
 }
 
@@ -1042,6 +1083,10 @@ $primary-color-red: #ff0502;
   .tpc-carousel {
     .carousel {
       padding-bottom: 0;
+
+      section {
+        touch-action: pan-y !important;
+      }
     }
 
     .indicators {

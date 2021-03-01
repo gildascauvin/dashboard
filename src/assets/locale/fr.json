@@ -273,5 +273,10 @@
   "#more than": "90% and +",
   "#between eighty": "80 - 90%",
   "#between seventy": "70 - 80%",
-  "#less than": "70% and less"
+  "#less than": "70% and less",
+  "#Energy systems": "Energy systems",
+  "#Perceived exhaustion and recovery": "Perceived exhaustion and recovery",
+  "#Fatigue": "Fatigue",
+  "#Load": "Load",
+  "#Systems": "Systems"
 }

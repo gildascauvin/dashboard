@@ -21,6 +21,7 @@ export class CustomerStatsComponent implements OnInit {
   @Input() showCardio: boolean = true;
   @Input() showCanvas: boolean = true;
   @Output() statsUpdated: EventEmitter<any> = new EventEmitter();
+  @Input() keepDates = true;
 
   @Input() isFromUrl = true;
   @Input() resize: boolean = false;
@@ -203,6 +204,7 @@ export class CustomerStatsComponent implements OnInit {
   ngOnInit(): void {
     this.sub.onStatsUpdated = this.customerStatsService.onStatsUpdated.subscribe(
       (component) => {
+
         this.usersService = component.usersService;
         this.calendar = component.calendar;
         this.formatter = component.formatter;
