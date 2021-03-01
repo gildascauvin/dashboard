@@ -232,8 +232,11 @@ export const webConfig = {
 		{id:6,icon:'logo-plyo',classCss:"plyometrics-bar"},
 		// id category strenght
 		{id:7,icon:'logo-alt-re',classCss:"strenght-bar"},
-
-
+	],
+	categoriesIntensityIconClassCss:[
+		{id: 0, icon: "logo-alt-re", classCss: "strenght-bar"},
+		{id: 1, icon: "logo-power", classCss: "power-bar"},
+		{id: 2, icon: "logo-plyo", classCss: "plyometrics-bar"},
+		{id: 3, icon: "logo-stretch", classCss: "stretching-bar"}
 	]
-
 };

@@ -106,7 +106,7 @@ import { TemplatesModalStartSessionComponent } from "./_/templates/templates-mod
 import { TemplatesModalWorkoutDeleteComponent } from "./_/templates/templates-modal/templates-modal-workout-delete/templates-modal-workout-delete.component";
 import { PopoverComponent } from './_/templates/templates-modal/popover/popover.component';
 import {NgxCarouselModule} from "ngx-light-carousel";
-
+import { CustomerIntensityComponent } from "./_/components/ui/customer-intensity/customer-intensity.component";
 
 export function newNgTranslate(http: HttpClient) {
   return new NgTranslate(http, "../../assets/locale");
@@ -193,7 +193,8 @@ export function newNgTranslate(http: HttpClient) {
     TemplatesModalStartSessionComponent,
     PopoverComponent,
     AthleteMovementListComponent,
-    AthleteMovementListUnitLabelComponent
+    AthleteMovementListUnitLabelComponent,
+    CustomerIntensityComponent
   ],
   imports: [
     FormsModule,

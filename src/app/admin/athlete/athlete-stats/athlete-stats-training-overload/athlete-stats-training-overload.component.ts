@@ -8,6 +8,8 @@ import {AuthService} from "../../../../_/services/http/auth.service";
 })
 export class AthleteStatsTrainingOverloadComponent implements OnInit {
   @Input() isFromUrl = true;
+  stats:any;
+  categoriesData:any;
 
   user: any = {
     data: {},
@@ -25,7 +27,7 @@ export class AthleteStatsTrainingOverloadComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {  
     this.isCoach = this.authService.isCoach();
     this.isFromUrl = !this.isCoach;
 
@@ -41,5 +43,8 @@ export class AthleteStatsTrainingOverloadComponent implements OnInit {
         trainingOverload: ['/coach', 'athlet', 'stats', 'overload']
       }
     }
+  }
+  onUpdateStats(event) {
+    this.stats = event;
   }
 }

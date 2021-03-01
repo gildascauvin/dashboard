@@ -205,7 +205,7 @@
   "#Weekly overload": "Weekly overload",
   "#Volume": "Volume",
   "#Tonnage": "Tonnage",
-  "#Av. weight": "Av. %",
+  "#Av. weight": "Av. Intensity",
   "#Distance": "Distance",
   "#My programs": "My programs",
   "#workouts": "workouts",
@@ -269,5 +269,9 @@
   "#Add an exercice":"Add an exercice",
   "#Session name":"Session name",
   "#Create a workout": "Create a workout",
-  "#Readiness breakdown": "Readiness breakdown"
+  "#Readiness breakdown": "Readiness breakdown",
+  "#more than": "90% and +",
+  "#between eighty": "80 - 90%",
+  "#between seventy": "70 - 80%",
+  "#less than": "70% and less"
 }

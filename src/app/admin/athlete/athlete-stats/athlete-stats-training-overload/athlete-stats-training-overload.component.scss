@@ -35,10 +35,60 @@
     background-color: transparent !important;
   }
   .box-stats-right {
-    margin: 20px 0 20px 0;
+    margin: 20px 0 64px 0;
   }
   .calendar-top {
     padding: 0 15px 0 15px;
   }
 }
 
+.mrv-score {
+  width: 78px;
+  border: solid 6px #d44000;
+  border-radius: 49%;
+  height: 78px;
+  margin: 20px auto 5px;
+  text-align: center;
+  background-color: #fbfbfb;
+  &.red {
+    border: solid 6px #d44000;
+  }
+  &.purple {
+    border: solid 6px #9953c9;
+  }
+  &.black {
+    border: solid 6px #000000;
+  }
+  &.grey {
+    border: solid 6px #c1c1c1;
+  }
+  .mrv-score-icon {
+    font-family: Lato;
+  }
+
+  .mrv-score-number {
+    // width: 35px;
+    height: 33px;
+    // margin: 40px 13.5px 0 0;
+    font-family: Lato;
+    font-size: 15px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
+    text-align: center;
+    color: #0b0b0b;
+  }
+
+  .mrv-score-label {
+    font-family: Lato;
+    font-size: 12px;
+  }
+}
+
+.logo {
+  width: 43px;
+  height: 43px;
+  object-fit: contain;
+}
