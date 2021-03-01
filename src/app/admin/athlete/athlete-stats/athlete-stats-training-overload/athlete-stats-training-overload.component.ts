@@ -10,6 +10,8 @@ import {ResizeService} from "../../../../_/services/ui/resize-service.service";
 })
 export class AthleteStatsTrainingOverloadComponent implements OnInit {
   @Input() isFromUrl = true;
+  stats:any;
+  categoriesData:any;
   @Input() keepDates = true;
 
   size: number = 1;
@@ -56,7 +58,9 @@ export class AthleteStatsTrainingOverloadComponent implements OnInit {
       }
     }
   }
-
+  onUpdateStats(event) {
+    this.stats = event;
+  }
   private detectScreenSize() {
     const currentSize = this._document.body.clientWidth;
     this.size = currentSize;

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
 import {
   NgbCalendar,
   NgbDate,
@@ -20,6 +20,7 @@ import { CustomerStatsService } from "../customer-stats-range/customer-stats-ran
 export class CustomerStatsComponent implements OnInit {
   @Input() showCardio: boolean = true;
   @Input() showCanvas: boolean = true;
+  @Output() statsUpdated: EventEmitter<any> = new EventEmitter();
   @Input() keepDates = true;
 
   @Input() isFromUrl = true;
@@ -230,8 +231,11 @@ export class CustomerStatsComponent implements OnInit {
         this.categories = component.categories;
         this.fromDate = component.fromDate;
         this.toDate = component.toDate;
+        this.statsUpdated.emit(this.stats);
       }
     );
+
+    this.statsUpdated.emit(this.stats);
 
     this.sub.onStatsUpdatedStart = this.customerStatsService.onStatsUpdatedStart.subscribe(
       () => {

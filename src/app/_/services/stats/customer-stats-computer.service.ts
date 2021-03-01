@@ -31,6 +31,8 @@ export class CustomerStatsComputerService {
     },
     categories: {},
     movements: {},
+    cardioMvt: [],
+    intervalMvt: [],
     cardio: {
       volume: [],
       intensity: [],
@@ -99,6 +101,8 @@ export class CustomerStatsComputerService {
 
     this.barChartLabels = [];
     this.stats.movements = {};
+    this.stats.cardioMvt = [];
+    this.stats.intervalMvt = [];
     this.movements = [];
 
     let allKeys = Object.keys(workouts);
@@ -300,7 +304,6 @@ export class CustomerStatsComputerService {
         duration += parseInt(workout.duration);
         rpe += parseInt(workout.rate);
         workout.program.exercices.map((exercice) => {
-
           if (exercice.type.id === 1) {
             exercice.movements &&
             exercice.movements.map((movement) => {
@@ -564,7 +567,9 @@ export class CustomerStatsComputerService {
               cardioIntensite =
                 exercice.cardio_cardio_movement.value * cardioDistance;
               cardioIntensiteSize = exercice.cardio_cardio_movement.interval;
+              this.stats.cardioMvt.push(exercice.cardio_cardio_movement);
             } else if (exercice.cardio_scoring == 2) {
+              this.stats.intervalMvt.push(...exercice.cardio_intervals_movement.sets);
               exercice.cardio_intervals_movement.sets.map((set) => {
                 // cardioVolume += set.interval * set.set;
                 cardioDistance += set.interval * set.set;
@@ -572,12 +577,13 @@ export class CustomerStatsComputerService {
                 cardioIntensiteSize += set.interval * set.set;
               });
             }
-
             volume += cardioVolume;
             tonnage += cardioTonnage;
             distance += cardioDistance;
             intensite += cardioIntensite;
             intensiteSize += cardioIntensiteSize;
+
+            
 
             this.stats.categories[1].volume += cardioVolume;
             this.stats.categories[1].tonnage += Math.round((cardioTonnage + Number.EPSILON) * 100) / 100;
@@ -1231,7 +1237,8 @@ export class CustomerStatsComputerService {
       this.stats.movements[movement.movement_id].intensiteSize += intensiteSize;
     }
 
-    this.movements = [];
+
+
     for (let mvt in this.stats.movements) {
       this.stats.movements[mvt].intensity = parseFloat(
         "" +
@@ -1242,6 +1249,7 @@ export class CustomerStatsComputerService {
     }
 
     this.movements = _.sortBy(this.movements, "volume").reverse();
+
 
     if (this.stats.categories[parentId]) {
       if (

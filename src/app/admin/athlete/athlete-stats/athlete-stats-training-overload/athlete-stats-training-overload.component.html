@@ -29,7 +29,7 @@
   <div class="row container-stats">
     <div class="col-md-7">
       <div class="box-stats-left">
-        <app-customer-stats [isFromUrl]="isFromUrl" [keepDates]="keepDates"></app-customer-stats>
+        <app-customer-stats (statsUpdated)="onUpdateStats($event)" [keepDates]="keepDates" [isFromUrl]="isFromUrl"></app-customer-stats>
       </div>
     </div>
     <div class="col-md-5">
@@ -37,7 +37,21 @@
         <h3 class="text-center mt-4 mb-4">
           {{ "#Training breakdown" | dgTranslate }}
         </h3>
-        <app-customer-stats-exercice [isFromUrl]="isFromUrl"></app-customer-stats-exercice>
+        <div class="d-flex justify-content-center mb-4">
+          <div class="col-sm-3 col-md-3 text-center container-mrv">
+            <div class="mrv-score red">
+              <div class="mrv-score-icon">
+                <img src="assets/img/logo/logo-intensit.png" srcset="
+                    assets/img/logo/logo-intensit@2x.png 2x,
+                    assets/img/logo/logo-intensit@3x.png 3x
+                  " class="logo" />
+              </div>
+              <div class="mrv-score-number">{{ stats.weekly.intensiteRound }}</div>
+            </div>
+            <div class="label-round">{{ "#Av. weight" | dgTranslate | uppercase }}</div>
+          </div>
+        </div>
+        <app-customer-intensity></app-customer-intensity>
       </div>
     </div>
   </div>
