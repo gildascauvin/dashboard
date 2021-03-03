@@ -17,6 +17,7 @@ export class InputsExerciceTypeComplexComponent implements OnInit {
   configExercices: any = webConfig.exercices;
   movements: any[] = [];
   sub: any;
+  newMovement: any = [];
 
   constructor(private usersService: UsersService) {}
 
@@ -29,27 +30,46 @@ export class InputsExerciceTypeComplexComponent implements OnInit {
     this.sub && this.sub.unsubscribe();
   }
 
+  onCreatedNewMovement(item) {
+    this.onCloseNewMovement();
+    this.onSelectedItem(item);
+  }
+
+  onCloseNewMovement() {
+    this.newMovement = [{name: '', categoryId: '', unit: '', imageUrl: ''}];
+    this.movements = [];
+  }
+
   onSelectedItem(item) {
-    let clone = _.cloneDeep(item);
+    this.newMovement = [{name: '', categoryId: '', unit: '', imageUrl: ''}];
 
-    clone.unit = 1;
-    clone.sets = [
-      {
-        unit: 3,
-        rep_unit:1
-      },
-    ];
+    if (item.type && item.type == 'new') {
+      this.newMovement.name = item.name;
+      this.newMovement.unit = 0;
 
-    let profil = _.find(this.profil, {
-      movement_id: clone.movement_id,
-    });
+    } else {
 
-    if (profil) {
-      clone.max_unit = profil.record_unit;
-      clone.max_value = profil.record;
+      let clone = _.cloneDeep(item);
+
+      clone.unit = 1;
+      clone.sets = [
+        {
+          unit: 3,
+          rep_unit: 1
+        },
+      ];
+
+      let profil = _.find(this.profil, {
+        movement_id: clone.movement_id,
+      });
+
+      if (profil) {
+        clone.max_unit = profil.record_unit;
+        clone.max_value = profil.record;
+      }
+
+      this.model.movements.push(clone);
     }
-
-    this.model.movements.push(clone);
   }
 
   onChangeSearch(val) {
@@ -60,8 +80,16 @@ export class InputsExerciceTypeComplexComponent implements OnInit {
         .getAllMovements(val)
         .subscribe((response: any) => {
           if (response && response.content) {
-            this.movements = response.content;
+            if (response.count > 0) {
+              this.movements = response.content;
+            } else {
+              this.movements = [{
+                name: val,
+                type: 'new'
+              }];
+            }
           }
+
         });
     }
   }

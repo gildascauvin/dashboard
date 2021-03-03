@@ -109,6 +109,7 @@ import { TemplatesModalWorkoutDeleteComponent } from "./_/templates/templates-mo
 import { PopoverComponent } from './_/templates/templates-modal/popover/popover.component';
 import {NgxCarouselModule} from "ngx-light-carousel";
 import { CustomerIntensityComponent } from "./_/components/ui/customer-intensity/customer-intensity.component";
+import {ModuleNewMovementComponent} from "./_/templates/templates-modal/templates-modal-exercice-manager/module-new-movement/module-new-movement.component";
 
 export function newNgTranslate(http: HttpClient) {
   return new NgTranslate(http, "../../assets/locale");
@@ -155,6 +156,7 @@ export function newNgTranslate(http: HttpClient) {
     InputsExerciceTypeOpenComponent,
     InputsExerciceTypeCardioComponent,
     InputsExerciceTypeCustomComponent,
+    ModuleNewMovementComponent,
     InputAutocompleteComponent,
     AutofocusDirective,
     AthleteProgramsComponent,
