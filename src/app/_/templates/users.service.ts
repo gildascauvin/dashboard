@@ -43,6 +43,16 @@ export class UsersService {
     return this.httpService.get(`movement/?page=${page.pageNumber}&size=${page.size}&name=${page.name}`);
   }
 
+  getAllCategories() {
+    let page = {
+      totalElements: 0,
+      pageNumber: 0,
+      size: 500
+    };
+
+    return this.httpService.get(`category/?page=${page.pageNumber}&size=${page.size}`);
+  }
+
   getAllTemplates(val) {
     let page = {
       totalElements: 0,
@@ -259,5 +269,16 @@ export class UsersService {
 
   removeClientWorkout(workoutId) {
     return this.httpService.delete(`workout/client/${workoutId}`);
+  }
+
+  createMovement(name, category_id, unit)
+  {
+    let model = {
+      name: name,
+      category_id: category_id,
+      unit: unit
+    };
+
+    return this.httpService.post(`movement`, model);
   }
 }

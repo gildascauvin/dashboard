@@ -18,6 +18,7 @@ export class InputsExerciceTypeTimeComponent implements OnInit {
   movements: any[] = [];
   varyingStyle: any[] = [12, 8, 5];
   sub: any;
+  newMovement: any = [];
 
   typeChoice: number = 4;
 
@@ -43,27 +44,45 @@ export class InputsExerciceTypeTimeComponent implements OnInit {
     };
   }
 
+  onCreatedNewMovement(item) {
+    this.onCloseNewMovement();
+    this.onSelectedItem(item);
+  }
+
+  onCloseNewMovement() {
+    this.newMovement = [{name: '', categoryId: '', unit: '', imageUrl: ''}];
+    this.movements = [];
+  }
+
   onSelectedItem(item) {
-    let clone = _.cloneDeep(item);
+    this.newMovement = [{name: '', categoryId: '', unit: '', imageUrl: ''}];
 
-    clone.unit = 3;
-    clone.sets = [
-      {
-        unit: 3,
-        rep_unit: 1
-      },
-    ];
+    if (item.type && item.type == 'new') {
+      this.newMovement.name = item.name;
+      this.newMovement.unit = 0;
 
-    let profil = _.find(this.profil, {
-      movement_id: clone.movement_id,
-    });
+    } else {
+      let clone = _.cloneDeep(item);
 
-    if (profil) {
-      clone.max_unit = profil.record_unit;
-      clone.max_value = profil.record;
+      clone.unit = 3;
+      clone.sets = [
+        {
+          unit: 3,
+          rep_unit: 1
+        },
+      ];
+
+      let profil = _.find(this.profil, {
+        movement_id: clone.movement_id,
+      });
+
+      if (profil) {
+        clone.max_unit = profil.record_unit;
+        clone.max_value = profil.record;
+      }
+
+      this.model.movements.push(clone);
     }
-
-    this.model.movements.push(clone);
   }
 
   onChangeSearch(val) {
@@ -73,9 +92,15 @@ export class InputsExerciceTypeTimeComponent implements OnInit {
       this.sub = this.usersService
         .getAllMovements(val)
         .subscribe((response: any) => {
-          console.log("response", response);
           if (response && response.content) {
-            this.movements = response.content;
+            if (response.count > 0) {
+              this.movements = response.content;
+            } else {
+              this.movements = [{
+                name: val,
+                type: 'new'
+              }];
+            }
           }
         });
     }

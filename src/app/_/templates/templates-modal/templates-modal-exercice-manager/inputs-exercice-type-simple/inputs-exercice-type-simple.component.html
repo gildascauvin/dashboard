@@ -1,10 +1,12 @@
-<div class="col-md-12" *ngIf="!model.movements.length && !isStartSession">
+<div class="col-md-12" *ngIf="!model.movements.length && !isStartSession && !newMovement.name">
   <div class="form-group">
     <label>{{ "#Search movement" | dgTranslate }}</label>
     <tpc-input-autocomplete [data]="movements" type="workout" (handleOnChangeSearch)="onChangeSearch($event)"
       (onSelectedItem)="onSelectedItem($event)"></tpc-input-autocomplete>
   </div>
 </div>
+
+<tpc-module-new-movement (onCreatedNewMovement)="onCreatedNewMovement($event)" (onCloseNewMovement)="onCloseNewMovement()" [newMovement]="newMovement"></tpc-module-new-movement>
 
 <div class="col-md-12 container-mouvements" *ngIf="model.movements.length">
   <label>{{ "#Movements" | dgTranslate }}</label>
