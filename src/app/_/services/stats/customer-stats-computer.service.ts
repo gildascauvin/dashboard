@@ -1237,7 +1237,7 @@ export class CustomerStatsComputerService {
       this.stats.movements[movement.movement_id].intensiteSize += intensiteSize;
     }
 
-
+    this.movements = [];
 
     for (let mvt in this.stats.movements) {
       this.stats.movements[mvt].intensity = parseFloat(
