@@ -1,4 +1,4 @@
-<div class="col-md-12" *ngIf="!isStartSession">
+<div class="col-md-12" *ngIf="!isStartSession && !newMovement.name">
   <div class="form-group">
     <label>{{ "#Search movement" | dgTranslate }}</label>
     <tpc-input-autocomplete
@@ -10,9 +10,11 @@
   </div>
 </div>
 
+<tpc-module-new-movement (onCreatedNewMovement)="onCreatedNewMovement($event)" (onCloseNewMovement)="onCloseNewMovement()" [newMovement]="newMovement"></tpc-module-new-movement>
+
 <div class="col-md-12 mb-2 container-movements" *ngIf="model.movements.length">
   <label>{{ "#Movements" | dgTranslate }}</label>
-  
+
   <div  *ngFor="let movement of model.movements; let movementIndex = index">
     <button class="btn float-right" (click)="removeMovement(movementIndex)">
       <i class="fa fa-close"></i>
@@ -95,7 +97,7 @@
               class="form-control number-movement-list"
             />
           </div>
-  
+
           <div
             *ngIf="movement.has_value && movement.category_id !== 9"
           >
@@ -111,8 +113,8 @@
             </select>
           </div>
         </div>
-      
-      
+
+
       </div>
       <div class="d-flex flex-column justify-content-end container-badge"
       *ngIf="movement.has_value && movement.category_id !== 9">
@@ -181,7 +183,7 @@
           [(ngModel)]="model.amrap_timecap"
           placeholder="10"
           class="form-control amrap-input"
-          
+
         />
       </div>
     </div>

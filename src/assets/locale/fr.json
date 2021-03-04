@@ -278,5 +278,9 @@
   "#Perceived exhaustion and recovery": "Perceived exhaustion and recovery",
   "#Fatigue": "Fatigue",
   "#Load": "Load",
-  "#Systems": "Systems"
+  "#Systems": "Systems",
+  "#Custom Movement": "Custom Movement",
+  "#Category": "Category",
+  "#Unit": "Unit",
+  "#Movement created!": "Movement created!"
 }
