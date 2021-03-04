@@ -233,6 +233,7 @@ export function newNgTranslate(http: HttpClient) {
       multi: true,
     },
     AuthGuard,
+    UnitSizeComparPipe
   ],
   bootstrap: [AppComponent],
 })

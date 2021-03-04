@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { webConfig } from 'src/app/web-config';
 import { CustomerStatsService } from '../customer-stats-range/customer-stats-range.service';
-
+import { UnitSizeComparPipe } from "../../../pipes/unit-size-compar.pipe";
 @Component({
   selector: 'app-customer-intensity',
   templateUrl: './customer-intensity.component.html',
@@ -15,7 +15,7 @@ export class CustomerIntensityComponent implements OnInit {
   intervalMvts= [];
   cardioMvts=[];
 
-  constructor(private customerStatsService: CustomerStatsService) { }
+  constructor(private customerStatsService: CustomerStatsService, private unitSizeComparPipe: UnitSizeComparPipe) { }
 
   ngOnInit() {
     this.categoriesData[0] = this._setCategory("Max intensities","#more than", 0);
@@ -68,10 +68,21 @@ export class CustomerIntensityComponent implements OnInit {
           this.updateVolume(intensity, volume);
         });
 
+        let intensity:number;
+        let intensityPercentage;
+        let percentage;
+
         for (let mvtId in this.movements) {
           this.movements[mvtId]?.movements?.map((movement) => {
             movement.sets.map((set) => {
-              const intensity = Math.round(set.value);
+              if (set.unit == 1 || set.unit == 2) {
+                intensityPercentage =  this.unitSizeComparPipe.transform(set.value, movement.max_value, movement.max_unit, set.unit );
+                percentage = intensityPercentage.split(" ")[0];
+                intensity = +percentage;
+              } else {
+                intensity = Math.round(set.value);
+              }
+        
               const volume = set.rep * set.set;
               this.updateVolume(intensity, volume);
             })

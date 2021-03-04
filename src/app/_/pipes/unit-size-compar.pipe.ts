@@ -8,8 +8,6 @@ import { webConfig } from '../../web-config';
 export class UnitSizeComparPipe implements PipeTransform {
 
   transform(value: any, size: any, unit: any, setUnit: any) {
-    console.log(value, size, unit, setUnit, webConfig.conversion);
-
     // KG or LBS
     if (setUnit != 1 && setUnit != 2) {
     	return '';
@@ -20,7 +18,7 @@ export class UnitSizeComparPipe implements PipeTransform {
     let unitKeyCompar = this._setUnitCompar(setUnit);
 
     if (webConfig.conversion[unitKey] && webConfig.conversion[unitKey][unitKeyCompar]) {
-    	valueCompar = webConfig.conversion[unitKey][unitKeyCompar];
+      valueCompar = webConfig.conversion[unitKey][unitKeyCompar];
     }
 
     // Same Unit
