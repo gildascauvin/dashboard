@@ -201,6 +201,8 @@ export class CustomerStatsComputerService {
 
     this.barChartLabels = [];
     this.stats.movements = {};
+    this.stats.cardioMvt = [];
+    this.stats.intervalMvt = [];
     this.movements = [];
 
     let allKeys = Object.keys(workouts);
@@ -583,7 +585,7 @@ export class CustomerStatsComputerService {
             intensite += cardioIntensite;
             intensiteSize += cardioIntensiteSize;
 
-            
+
 
             this.stats.categories[1].volume += cardioVolume;
             this.stats.categories[1].tonnage += Math.round((cardioTonnage + Number.EPSILON) * 100) / 100;

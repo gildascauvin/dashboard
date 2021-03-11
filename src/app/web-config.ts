@@ -204,11 +204,15 @@ export const webConfig = {
 	 			{ id: 1, name: 'Meters'},
 	 			{ id: 2, name: 'Miles'},
 	 			{ id: 3, name: 'Yards'},
+        { id: 4, name: 'Minutes'},
+        { id: 5, name: 'Seconds'},
 	 		],
 	 		flatUnit: {
 	 			1: 'Meters',
 	 			2: 'Miles',
 	 			3: 'Yards',
+        4: 'Minutes',
+        5: 'Seconds'
 	 		}
 	 	}
  	},

@@ -311,6 +311,14 @@ export class TemplatesModalExerciceManagerComponent
       case "3":
         model[labelKey] = "Yards";
         break;
+      case 4:
+      case "4":
+        model[labelKey] = "Minutes";
+        break;
+      case 5:
+      case "5":
+        model[labelKey] = "Seconds";
+        break;
 
       default:
         model[labelKey] = "Meters";

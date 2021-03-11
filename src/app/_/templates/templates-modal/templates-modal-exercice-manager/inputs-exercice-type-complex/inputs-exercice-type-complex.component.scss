@@ -11,15 +11,27 @@
 
 .input-group-text {
   border: 0;
-  background-color: #ffffff;
+  background-color: transparent;
   margin-bottom: 6px;
 }
 .unit-list {
   border:none;
 }
+
+.list-group {
+  padding-top: 10px;
+}
+
 .list-group-item {
   padding: 10px 0 10px 20px;
+  border: none;
 }
+
+.list-group-item--repmax {
+  border-bottom: 1px solid #ddd;
+  padding-left: 8px;
+}
+
 @media (max-width: 480px) {
   .container-mouvements {
     padding: 0 15px 0 20px;
@@ -29,7 +41,6 @@
     z-index: 1000;
   }
   .list-group-item-step {
-    box-shadow: 0 0 black;
     padding: 0;
   }
   .list-group {
@@ -49,7 +60,7 @@
   .unit-list.one {
     width: 100%;
   }
-  
+
   .container-repmax-planning {
     width: 50%;
   }

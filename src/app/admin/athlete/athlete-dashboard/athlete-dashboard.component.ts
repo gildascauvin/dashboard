@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, Input, SimpleChanges, HostListener, ElementR
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { DOCUMENT } from '@angular/common';
 
-import { format, addHours, startOfISOWeek, startOfWeek, endOfWeek } from 'date-fns';
+import {format, addHours, startOfISOWeek, startOfWeek, endOfWeek, addMonths} from 'date-fns';
 import { ToastrService } from 'ngx-toastr';
 import * as _ from 'lodash';
 import { DoorgetsTranslateService } from 'doorgets-ng-translate';
@@ -17,6 +17,7 @@ import { ResizeService } from '../../../_/services/ui/resize-service.service';
 
 import { TemplatesModalExerciceManagerComponent } from '../../../_/templates/templates-modal/templates-modal-exercice-manager/templates-modal-exercice-manager.component';
 import {TemplatesModalStartSessionComponent} from "../../../_/templates/templates-modal/templates-modal-start-session/templates-modal-start-session.component";
+import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-athlete-dashboard',
@@ -32,7 +33,7 @@ export class AthleteDashboardComponent implements OnInit {
   user: any = {};
   currentDate: Date = new Date();
 
-  workouts: any = [];
+  workouts: any = {};
   flatWorkouts: any = [];
 
   configExercices: any = webConfig.exercices;
@@ -47,6 +48,12 @@ export class AthleteDashboardComponent implements OnInit {
     profile: ['/athlete', 'profile'],
     performance: ['/athlete', 'profile', 'performance']
   }
+
+  startedAtModel: NgbDateStruct = {
+    day: 10,
+    month: 3,
+    year: 2021,
+  };
 
   constructor(
     private authService: AuthService,
@@ -73,7 +80,7 @@ export class AthleteDashboardComponent implements OnInit {
       }
     }
 
-    this._initWorkouts();
+    //this._initWorkouts();
 
     this._initUser();
 
@@ -97,6 +104,40 @@ export class AthleteDashboardComponent implements OnInit {
     this.sub.onUpdate && this.sub.onUpdate.unsubscribe();
     this.sub.userInfo && this.sub.userInfo.unsubscribe();
   	this.sub.resizeSvc && this.sub.resizeSvc.unsubscribe();
+    this.sub.allWorkouts && this.sub.allWorkouts.unsubscribe();
+  }
+
+  onDateSelected(startedAtModel) {
+    this.workouts = {};
+    this.flatWorkouts = [];
+    this.flatWorkouts.push({date: new Date(), label: ''});
+
+    this.startedAtModel = startedAtModel ? startedAtModel : this.startedAtModel;
+    let fromDate = new Date(startedAtModel.year, startedAtModel.month - 1, startedAtModel.day);
+    let toDate = _.clone(fromDate);
+    toDate = addMonths(toDate, 3);
+
+    if (this.isFromUrl) {
+      this.sub.allWorkouts = this.usersService.getAllWorkouts(format(fromDate, 'yyyy-MM-dd'), format(toDate, 'yyy-MM-dd'), 1).subscribe((workouts: any) => {
+        let allKeys = Object.keys(workouts);
+        let isEmpty = allKeys.length == 0;
+
+        if (!isEmpty) {
+          this._initWorkouts(workouts);
+        }
+      });
+
+    } else {
+      let clientId = this.authService.getCurrentAthletId();
+      this.sub.allWorkouts = this.usersService.getAllClientWorkouts(clientId, format(fromDate, 'yyyy-MM-dd'), format(toDate, 'yyy-MM-dd'), 1).subscribe((workouts: any) => {
+        let allKeys = Object.keys(workouts);
+        let isEmpty = allKeys.length == 0;
+
+        if (!isEmpty) {
+          this._initWorkouts(workouts);
+        }
+      });
+    }
   }
 
   private _initUser() {
@@ -107,9 +148,8 @@ export class AthleteDashboardComponent implements OnInit {
       this.sub.userInfo = this.usersService.getUser().subscribe((user: any) => {
         if (user) {
           this.user = user;
-          // this.user.workouts = [];
 
-          this._initWorkouts();
+          this._initWorkouts(this.user.workouts);
 
           this.userService.initUserInfos(user);
           this.isLoading = false;
@@ -123,9 +163,7 @@ export class AthleteDashboardComponent implements OnInit {
       this.sub.userInfo = this.usersService.getUserClient(userClientId).subscribe((user: any) => {
         if (user) {
           this.user = user;
-          // this.user.workouts = [];
-
-          this._initWorkouts();
+          this._initWorkouts(this.user.workouts);
 
           if (this.isFromUrl) {
             this.userService.initUserInfos(user);
@@ -140,20 +178,24 @@ export class AthleteDashboardComponent implements OnInit {
     }
   }
 
-  private _initWorkouts() {
-    this.workouts = this.user.workouts && Object.keys(this.user.workouts) || [];
-
+  private _initWorkouts(workouts) {
+    this.workouts = workouts;
     this.flatWorkouts = [];
-    this.workouts.map((date) => {
-    	let _date = date.split('-');
 
-    	this.flatWorkouts.push({
-    		date: date,
-    		label: _date[2] + ' ' + this._getMonthName(_date[1]) + ' ' + _date[0]
-    	})
+    console.log(workouts);
 
-    	return date;
-    });
+    if (this.workouts) {
+      for (let date in this.workouts) {
+        let _date = date.split('-');
+
+        this.flatWorkouts.push({
+          date: date,
+          label: _date[2] + ' ' + this._getMonthName(_date[1]) + ' ' + _date[0]
+        });
+      }
+    } else {
+      this.flatWorkouts.push({date: new Date(), label: ''});
+    }
   }
 
   private _checkEmpty() {

@@ -42,6 +42,15 @@
 	margin-bottom: 7px;
 }
 
+.btn-light {
+  background-color: #f2f2f2;
+  border-color: #f2f2f2;
+}
+
+.flex-column-reverse {
+  padding-left: 20px;
+}
+
 @media (max-width: 480px) {
 	.number-movement-list {
 	  width:60px
@@ -49,4 +58,13 @@
 	.title-mouvement{
 		font-size: 14px;
 	}
+
+  .flex-column-reverse {
+    padding-left: 25px !important;
+    padding-bottom: 10px;
   }
+
+  .list-group-item-step {
+    padding: 0;
+  }
+}
