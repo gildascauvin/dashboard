@@ -14,17 +14,15 @@
 
 <div class="col-md-12 mb-2" *ngIf="model.movements.length">
   <label>{{ "#Movements" | dgTranslate }}</label>
-  <div  *ngFor="let movement of model.movements; let movementIndex = index">
+  <div class="list-group-item-step" *ngFor="let movement of model.movements; let movementIndex = index">
     <button class="btn float-right" (click)="removeMovement(movementIndex)">
       <i class="fa fa-close"></i>
     </button>
     <div class="number-movement-list-label ml-2">{{ movement.name }}</div>
     <popover [movement]="movement"></popover>
-  <div
-    class="list-group-item-step"
-  >
+  <div>
     <div class="row" *ngIf="isPlanning && movement.has_repmax">
-      <div class="col-md-12 pl-0">
+      <div class="col-md-12">
         <div class="form-row align-items-center">
           <div class="col-auto">
             <div class="input-group">

@@ -13,12 +13,21 @@
   display: inline-block;
 }
 
+.list-group-item {
+  border: none;
+}
+
 .input-group-text {
   border: 0;
   background-color: #ffffff;
 }
 .container-sets {
   width: 60%;
+}
+
+.btn-light {
+  background-color: #f2f2f2;
+  border-color: #f2f2f2;
 }
 
 @media (max-width: 480px) {

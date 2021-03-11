@@ -213,6 +213,35 @@ export class AthleteCalendarComponent implements OnInit {
     this.sub.workoutsGroupReset && this.sub.workoutsGroupReset.unsubscribe();
   }
 
+  getConnectedExercicesList() {
+    let list = [];
+
+    for(let y = 0; y < this.weeks.length; y++) {
+      for(let i = 0; i < this.weeks[y].length; i++) {
+        for( let j = 0; j < this.weeks[y][i].workouts.length; j++) {
+          let name = 'exercices-' + i + '-' + y + '-' + j;
+          list.push(name);
+        }
+      }
+    }
+
+    return list;
+  }
+
+  getConnectedList(prefix) {
+
+    let list = [];
+
+    for(let y = 0; y < this.weeks.length; y++) {
+      for(let i = 0; i < this.weeks[y].length; i++) {
+        let name = prefix + '-' + (y > 0 ? y*7 + i : i);
+        list.push(name);
+      }
+    }
+
+    return list;
+  }
+
   private _init(reset?) {
     if (reset) {
       let today = startOfWeek(new Date(), { weekStartsOn: 1 });
@@ -394,6 +423,8 @@ export class AthleteCalendarComponent implements OnInit {
           _.forEach(days.workouts, (workout, indexWorkout) => {
             const workoutFromCLone = dayWorkout.workouts[indexWorkout];
             if (workoutFromCLone) {
+              workoutFromCLone.started_at = dayWorkout.date + '00:00:00';
+
               console.log(workoutFromCLone);
               console.log(diff);
               workoutToSave.push(workoutFromCLone);
@@ -489,10 +520,13 @@ export class AthleteCalendarComponent implements OnInit {
     return (dragData: any) => true;
   }
 
-  onDragStart($event) {
+  onDragStart() {
     this.closeAllBoxes();
 
-    console.log("onDragStart", $event);
+    console.log("onDragStart");
+  }
+  onDragEnd(test){
+    console.log(test);
   }
 
   onDropSuccess($event) {

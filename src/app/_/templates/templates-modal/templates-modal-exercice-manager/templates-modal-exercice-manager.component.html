@@ -109,18 +109,6 @@
     </div>
   </div>
   <div class="row" *ngIf="model.step === 2">
-    <div class="col-md-12" *ngIf="isPlanning">
-      <div class="form-group">
-        <label>{{ "#Session name" | dgTranslate }}</label>
-        <input
-          placeholder="{{ '#Name' | dgTranslate }}"
-          [(ngModel)]="workout.name"
-          type="text"
-          class="form-control"
-        />
-      </div>
-    </div>
-
     <div class="inputs-exercice-type" [ngSwitch]="model.type.id">
       <tpc-inputs-exercice-type-simple
         [model]="model"

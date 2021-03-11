@@ -240,6 +240,19 @@
 }
 
 
+.title-group-datepicker {
+  h4 {
+    padding-top: 10px;
+  }
+
+  .input-group {
+    .calendar {
+      color: #000000 !important;
+      background-color: #e4e4e4;
+    }
+  }
+}
+
 
 .container-calendar-template {
   margin-bottom: 100px;
@@ -475,14 +488,18 @@
     margin-top: 0px !important;
   }
   .lead-body {
-    padding-bottom: 67px !important;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+    padding: 24px 20px 67px !important;
 
     .lead-body-content {
+
+      .title-date {
+        margin-bottom: 20px;
+      }
+
       .workout-session {
         padding: 1px !important;
         border-radius: 10px!important;
+        margin-top: 10px !important;
         .workout-session-title {
           padding-left: 16px;
           font-size: 16px !important;

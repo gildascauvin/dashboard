@@ -16,9 +16,25 @@
   margin-bottom: 6px;
 }
 
+.list-group {
+  padding-top: 10px;
+}
+
 .list-group-item {
   padding: 10px 0 10px 20px;
+  border: none;
 }
+
+.list-group-item--repmax {
+  border-bottom: 1px solid #ddd;
+  padding-left: 8px;
+}
+
+.btn-light {
+  background-color: #f2f2f2;
+  border-color: #f2f2f2;
+}
+
 .custom-form {
   display: flex;
   flex-direction: column-reverse;
@@ -36,6 +52,7 @@
   justify-content: space-between;
   width:61%;
 }
+
 @media (max-width: 480px) {
   .container-repmax {
     width: 100%;
@@ -52,7 +69,6 @@
     width: 60px;
   }
   .list-group-item-step {
-    box-shadow: 0 0 black;
     padding: 0;
   }
 

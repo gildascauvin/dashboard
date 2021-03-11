@@ -34,13 +34,29 @@
       </button>
     </div>
     <div class="lead-body-content" *ngIf="!isEmpty">
-      <div class="workout-date mb-4" *ngFor="let _wo of flatWorkouts">
-        <h4>{{ _wo.label }}</h4>
-        <ng-container *ngIf="user.workouts && user.workouts[_wo.date]">
-          <ng-container *ngFor="let workout of user.workouts[_wo.date]">
+
+      <div class="workout-date mb-4" *ngFor="let _wo of flatWorkouts; first as isFirst;">
+
+        <div class="row">
+          <div [ngClass]="[isFirst ? 'col-12 title-group-datepicker' : 'col-12']">
+            <div *ngIf="isFirst" [ngClass]="[size <= responsiveSize ? '' : 'float-right']">
+              <div class="input-group">
+                <input class="form-control calendar" name="dp" (ngModelChange)="onDateSelected($event)" (click)="d.toggle()"
+                       [ngModel]="startedAtModel" ngbDatepicker #d="ngbDatepicker" />
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="fa fa-calendar"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <h4 class="title-date">{{ _wo.label }}</h4>
+          </div>
+        </div>
+        <ng-container *ngIf="workouts && workouts[_wo.date]">
+          <ng-container *ngFor="let workout of workouts[_wo.date]; first as isFirstDay">
 
             <ng-container *ngIf="computeFatigueManagementData(workout) as fatigueManagementData">
-              <div *ngIf="checkIsToday(_wo.date)" class="fatigue-management-banner {{ fatigueManagementData.color }}-zone">
+              <div *ngIf="isFirst && isFirstDay && _wo.date !=''" class="fatigue-management-banner {{ fatigueManagementData.color }}-zone">
                 <div class="rectangle rectangle--{{ fatigueManagementData.status }}">
 
                   <ng-container *ngIf="fatigueManagementData.status == 'todo'">
@@ -124,7 +140,7 @@
                     let indexExercice = index
                   ">
 
-                  <app-athlete-movement-list [class]="'dashboard'" [exercice]="exercice" [hideLocalBox]="false"></app-athlete-movement-list>
+                  <app-athlete-movement-list [class]="'dashboard'" [exercice]="exercice" [hideLocalBox]="true"></app-athlete-movement-list>
                 </li>
               </ul>
             </div>

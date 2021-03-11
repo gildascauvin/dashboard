@@ -274,17 +274,24 @@
   padding: 0 15px 10px;
 
   @media (max-width: 480px) {
-    padding: 20px 0 10px;
+    padding: 0;
   }
 
   .date-title {
     font-size: 13pt;
     font-weight: bold;
     margin-left: 10px;
-    margin-top: 7px;
+    margin-top: 0;
+    line-height: 38px;
+    display: inline-block;
     @media (max-width: 480px) {
       display: none;
     }
+  }
+
+  .label-comment {
+    margin-bottom: 0;
+    padding-top: 8px;
   }
 }
 
@@ -553,6 +560,10 @@
 
 .list-group.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drop-list {
+  min-height: 100px;
 }
 
 .list-cdk {
