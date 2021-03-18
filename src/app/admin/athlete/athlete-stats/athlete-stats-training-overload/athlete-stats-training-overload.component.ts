@@ -48,7 +48,7 @@ export class AthleteStatsTrainingOverloadComponent implements OnInit {
       ? this.authService.getUserData()
       : this.authService.getUserClientData();
 
-
+    console.log('init training overload');
 
     if (this.isCoach) {
       this.links = {
