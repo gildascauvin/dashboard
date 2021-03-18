@@ -35,7 +35,7 @@ export class CustomerStatsSummaryComponent implements OnInit {
     }
 
     setTimeout(() => {
-      if (this.currentElementCarousel != this.sliderElement.current) {
+      if (this.sliderElement && this.currentElementCarousel != this.sliderElement.current) {
         this.currentElementCarousel = this.sliderElement.current;
 
         if (this.currentElementCarousel == 1) {
