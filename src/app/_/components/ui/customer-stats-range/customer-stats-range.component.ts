@@ -215,7 +215,6 @@ export class CustomerStatsRangeComponent implements OnInit {
 
     this.sub.onTabChanged = this.customerStatsSummaryService.onTabChanged.subscribe(
       (tab) => {
-        console.log('Sync workouts from stat-range');
         this._syncWorkouts();
       }
     );

@@ -81,12 +81,6 @@ export class CustomerStatsSummaryComponent implements OnInit {
 
   isCoach: boolean = false;
 
-  links: any = {
-    fatigueManagement: ['/athlete', 'stats'],
-    trainingOverload: ['/athlete', 'stats', 'overload'],
-    energySystems: ['/athlete', 'stats', 'energy']
-  }
-
   constructor(
     private customerStatsService: CustomerStatsService,
     private resizeSvc: ResizeService,
@@ -96,11 +90,6 @@ export class CustomerStatsSummaryComponent implements OnInit {
     private customerStatsSummaryService: CustomerStatsSummaryService,
     @Inject(DOCUMENT) private _document
   ) {
-  }
-
-  currentChange()
-  {
-    console.log('ok');
   }
 
   ngOnInit() {
@@ -138,14 +127,6 @@ export class CustomerStatsSummaryComponent implements OnInit {
     };
 
     this.isCoach = this.authService.isCoach();
-
-    if (this.isCoach) {
-      this.links = {
-        fatigueManagement: ['/coach', 'athlet', 'stats'],
-        trainingOverload: ['/coach', 'athlet', 'stats', 'overload'],
-        energySystems: ['/coach', 'athlet', 'stats', 'energy'],
-      }
-    }
 
     this.carouselData.push({title: 'Load'});
     this.carouselData.push({title: 'Variation'});
