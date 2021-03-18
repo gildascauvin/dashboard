@@ -48,8 +48,6 @@ export class AthleteStatsTrainingOverloadComponent implements OnInit {
       ? this.authService.getUserData()
       : this.authService.getUserClientData();
 
-
-
     if (this.isCoach) {
       this.links = {
         fatigueManagement: ['/coach', 'athlet', 'stats'],

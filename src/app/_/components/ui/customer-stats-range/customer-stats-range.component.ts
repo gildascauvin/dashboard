@@ -10,6 +10,7 @@ import { UsersService } from "../../../../_/templates/users.service";
 import { CustomerStatsService } from "./customer-stats-range.service";
 import {CustomerStatsComputerService} from "../../../services/stats/customer-stats-computer.service";
 import * as _ from "lodash";
+import {CustomerStatsSummaryService} from "../customer-stats-summary/customer-stats-summary.service";
 
 @Component({
   selector: "app-customer-stats-range",
@@ -202,7 +203,8 @@ export class CustomerStatsRangeComponent implements OnInit {
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter,
     public customerStatsService: CustomerStatsService,
-    public customerStatsComputerService: CustomerStatsComputerService
+    public customerStatsComputerService: CustomerStatsComputerService,
+    public customerStatsSummaryService: CustomerStatsSummaryService
   ) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), "d", 7);
@@ -211,9 +213,19 @@ export class CustomerStatsRangeComponent implements OnInit {
   ngOnInit() {
     this._clean();
 
+    this.sub.onTabChanged = this.customerStatsSummaryService.onTabChanged.subscribe(
+      (tab) => {
+        this._syncWorkouts();
+      }
+    );
+
     this._init();
 
     this._syncWorkouts();
+  }
+
+  ngOnDestroy(): void {
+    this.sub.onTabChanged && this.sub.onTabChanged.unsubscribe();
   }
 
   onDateSelection(date: NgbDate, datepicker) {

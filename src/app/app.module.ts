@@ -110,6 +110,8 @@ import { PopoverComponent } from './_/templates/templates-modal/popover/popover.
 import {NgxCarouselModule} from "ngx-light-carousel";
 import { CustomerIntensityComponent } from "./_/components/ui/customer-intensity/customer-intensity.component";
 import {ModuleNewMovementComponent} from "./_/templates/templates-modal/templates-modal-exercice-manager/module-new-movement/module-new-movement.component";
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 export function newNgTranslate(http: HttpClient) {
   return new NgTranslate(http, "../../assets/locale");
@@ -224,7 +226,8 @@ export function newNgTranslate(http: HttpClient) {
     PasswordStrengthMeterModule,
     NgxCaptchaModule,
     DragDropModule,
-    NgxCarouselModule
+    NgxCarouselModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     {

@@ -1,7 +1,7 @@
 <div class="row" *ngIf="size <= responsiveSize">
   <div class="col-12">
     <ngx-light-carousel class="tpc-carousel" [options]="carouselOptions" [data]="carouselData">
-      <section ngx-light-carousel-container>
+      <section ngx-light-carousel-container (touchend)="touchendCarousel()">
         <article ngx-light-carousel-item>
           <div class="slide w-100">
             <div class="fatigue-management-banner fatigue-management-banner--left red-zone">
@@ -103,7 +103,7 @@
       </section>
 
       <ng-template #carouselDot let-model>
-        <div class="ball bg-accent"></div>
+        <div (click)="touchendCarousel(true)" class="ball bg-accent"></div>
       </ng-template>
 
     </ngx-light-carousel>
@@ -112,7 +112,7 @@
 
 <div *ngIf="size > responsiveSize" class="row top-stats container-stats">
   <div class="col-md-5">
-    <div class="fatigue-management-banner fatigue-management-banner--left red-zone">
+    <div (click)="setActiveTab('fatigueManagement')" class="fatigue-management-banner fatigue-management-banner--left red-zone">
       <div class="rectangle">
         <div class="tpc-optimal-zone clearfix">
           <div class="optimal-zone--left {{ fatigueManagement.colors.load.color1 }}"></div>
@@ -144,10 +144,11 @@
         </div>
       </div>
     </div>
+    <div *ngIf="activeTab == 'fatigueManagement'" class="arrow"></div>
   </div>
 
   <div class="col-md-2">
-    <div class="fatigue-management-banner red-zone">
+    <div (click)="setActiveTab('trainingOverload')" class="fatigue-management-banner red-zone">
       <div class="rectangle">
         <div class="tpc-optimal-zone tpc-optimal-zone--single clearfix">
           <div class="optimal-zone">
@@ -169,10 +170,11 @@
         </div>
       </div>
     </div>
+    <div *ngIf="activeTab == 'trainingOverload'" class="arrow"></div>
   </div>
 
   <div class="col-md-5">
-    <div class="fatigue-management-banner fatigue-management-banner--right red-zone">
+    <div (click)="setActiveTab('energySystems')" class="fatigue-management-banner fatigue-management-banner--right red-zone">
       <div class="rectangle">
         <div class="tpc-optimal-zone clearfix">
           <div class="optimal-zone--left {{ fatigueManagement.colors.fitness.color1 }}"></div>
@@ -204,5 +206,6 @@
         </div>
       </div>
     </div>
+    <div *ngIf="activeTab == 'energySystems'" class="arrow"></div>
   </div>
 </div>
