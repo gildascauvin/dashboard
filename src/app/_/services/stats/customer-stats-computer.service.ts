@@ -91,6 +91,7 @@ export class CustomerStatsComputerService {
   isLoading: boolean = false;
   isOneDay: boolean = false;
   tabs: any = [];
+  movementsCustomer:any = [];
 
   computeStatsForAllClientWorkouts(workouts, forceDaily?, from?, to?)
   {
@@ -357,6 +358,7 @@ export class CustomerStatsComputerService {
           } else if (exercice.type.id === 2) {
             exercice.movements &&
             exercice.movements.map((movement) => {
+
               parentId = this.categories[movement.category_id];
 
               let _volume = 0;
@@ -395,7 +397,8 @@ export class CustomerStatsComputerService {
                   _tonnage,
                   _distance,
                   _intensite,
-                  _intensiteSize
+                  _intensiteSize,
+                  exercice.sets
                 );
               }
             });
@@ -404,6 +407,11 @@ export class CustomerStatsComputerService {
             exercice.movements &&
             exercice.movements.map((movement) => {
               parentId = this.categories[movement.category_id];
+
+              movement.sets.map((set) => {
+                set.rep = set.quantity;
+              })
+
 
               let _volume = 0;
               let _tonnage = 0;
@@ -445,7 +453,8 @@ export class CustomerStatsComputerService {
                   _tonnage,
                   _distance,
                   _intensite,
-                  _intensiteSize
+                  _intensiteSize,
+                  exercice.sets
                 );
               }
             });
@@ -454,6 +463,9 @@ export class CustomerStatsComputerService {
             exercice.movements &&
             exercice.movements.map((movement) => {
               parentId = this.categories[movement.category_id];
+              movement.sets.map((set) => {
+                set.rep = set.quantity;
+              })
 
               let _volume = 0;
               let _tonnage = 0;
@@ -498,7 +510,8 @@ export class CustomerStatsComputerService {
                   _tonnage,
                   _distance,
                   _intensite,
-                  _intensiteSize
+                  _intensiteSize,
+                  exercice.time_style_fixed
                 );
               }
             });
@@ -511,6 +524,10 @@ export class CustomerStatsComputerService {
             exercice.movements &&
             exercice.movements.map((movement) => {
               parentId = this.categories[movement.category_id];
+
+              movement.sets.map((set) => {
+                set.rep = set.quantity;
+              })
 
               /*if (!movement.sets[0].quantity || movement.sets[0].value) {
                 return;
@@ -555,7 +572,8 @@ export class CustomerStatsComputerService {
                   _tonnage,
                   _distance,
                   _intensite,
-                  _intensiteSize
+                  _intensiteSize,
+                  parseInt(exercice.emom_duration)
                 );
               }
             });
@@ -569,8 +587,10 @@ export class CustomerStatsComputerService {
               cardioIntensite =
                 exercice.cardio_cardio_movement.value * cardioDistance;
               cardioIntensiteSize = exercice.cardio_cardio_movement.interval;
-              this.stats.cardioMvt.push(exercice.cardio_cardio_movement);
+              this.stats.cardioMvt = this.stats.cardioMvt? this.stats.cardioMvt: [];
+              this.stats?.cardioMvt?.push(exercice.cardio_cardio_movement);
             } else if (exercice.cardio_scoring == 2) {
+              this.stats.intervalMvt = this.stats.intervalMvt? this.stats.intervalMvt: [];
               this.stats.intervalMvt.push(...exercice.cardio_intervals_movement.sets);
               exercice.cardio_intervals_movement.sets.map((set) => {
                 // cardioVolume += set.interval * set.set;
@@ -817,7 +837,8 @@ export class CustomerStatsComputerService {
                 _tonnage,
                 _distance,
                 _intensite,
-                _intensiteSize
+                _intensiteSize,
+                exercice.sets
               );
             }
           });
@@ -863,7 +884,8 @@ export class CustomerStatsComputerService {
                 _tonnage,
                 _distance,
                 _intensite,
-                _intensiteSize
+                _intensiteSize,
+                exercice.sets
               );
             }
 
@@ -914,7 +936,8 @@ export class CustomerStatsComputerService {
                 _tonnage,
                 _distance,
                 _intensite,
-                _intensiteSize
+                _intensiteSize,
+                exercice.sets
               );
             }
           });
@@ -966,7 +989,8 @@ export class CustomerStatsComputerService {
                 _tonnage,
                 _distance,
                 _intensite,
-                _intensiteSize
+                _intensiteSize,
+                exercice.sets
               );
             }
           });
@@ -1023,7 +1047,8 @@ export class CustomerStatsComputerService {
                 _tonnage,
                 _distance,
                 _intensite,
-                _intensiteSize
+                _intensiteSize,
+                exercice.sets
               );
             }
           });
@@ -1217,8 +1242,14 @@ export class CustomerStatsComputerService {
     tonnage,
     distance,
     intensite,
-    intensiteSize
+    intensiteSize,
+    sets?
   ) {
+    if(sets) {
+      movement.sets.map((set) => {
+        set.set = sets;
+      });
+    }
 
     if (!this.stats.movements[movement.movement_id]) {
       this.stats.movements[movement.movement_id] = {
@@ -1237,6 +1268,7 @@ export class CustomerStatsComputerService {
       this.stats.movements[movement.movement_id].distance += distance;
       this.stats.movements[movement.movement_id].intensite += intensite;
       this.stats.movements[movement.movement_id].intensiteSize += intensiteSize;
+
     }
 
     this.movements = [];

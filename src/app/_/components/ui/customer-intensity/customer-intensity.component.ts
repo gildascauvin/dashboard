@@ -42,39 +42,32 @@ export class CustomerIntensityComponent implements OnInit {
           totalMovements += this.movements[mvtId].intensiteSize;
         }
 
-        this.cardioMvts.forEach((mvt) => {
+        this.cardioMvts?.forEach((mvt) => {
           if(mvt.interval) {
             totalMovements += (mvt.interval / 100);
-          }
-        });
-
-        this.intervalMvts.forEach((mvt) => {
-          if(mvt.interval) {
-            totalMovements += (mvt.interval * mvt.set)/10;
-          }
-        });
-
-        this.cardioMvts.forEach((mvt) => {
-          if( mvt.interval) {
             const intensity = Math.round(mvt?.value);
             const volume = mvt.interval / 100;
             this.updateVolume(intensity, volume);
           }
         });
 
-        this.intervalMvts.forEach((set) => {
-          const intensity = Math.round(set.value);
-          const volume = (set.interval * set.set)/10;
-          this.updateVolume(intensity, volume);
+        this.intervalMvts?.forEach((mvt) => {
+          if(mvt.interval) {
+            totalMovements += (mvt.interval * mvt.set)/10;
+            const intensity = Math.round(mvt.value);
+            const volume = (mvt.interval * mvt.set)/10;
+            this.updateVolume(intensity, volume);
+          }
         });
 
         let intensity:number;
         let intensityPercentage;
         let percentage;
 
+
         for (let mvtId in this.movements) {
           this.movements[mvtId]?.movements?.map((movement) => {
-            movement.sets.map((set) => {
+            movement?.sets?.map((set) => {
               if (set.unit == 1 || set.unit == 2) {
                 intensityPercentage =  this.unitSizeComparPipe.transform(set.value, movement.max_value, movement.max_unit, set.unit );
                 percentage = intensityPercentage.split(" ")[0];
@@ -82,6 +75,7 @@ export class CustomerIntensityComponent implements OnInit {
               } else {
                 intensity = Math.round(set.value);
               }
+
         
               const volume = set.rep * set.set;
               this.updateVolume(intensity, volume);
