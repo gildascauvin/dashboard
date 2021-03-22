@@ -116,8 +116,6 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
   size: number = 1;
   responsiveSize: number = 768;
 
-
-
   user: any = {
     data: {},
     profil: []

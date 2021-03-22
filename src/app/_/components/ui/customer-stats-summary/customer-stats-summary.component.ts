@@ -1,5 +1,6 @@
-import {Component, Inject, Input, OnInit} from "@angular/core";
+import {Component, ElementRef, Inject, Input, OnInit, QueryList, ViewChild, ViewChildren} from "@angular/core";
 import {ngxLightOptions} from "ngx-light-carousel/public-api";
+import {NgxCarouselComponent} from "ngx-light-carousel";
 import {ResizeService} from "../../../services/ui/resize-service.service";
 import {DOCUMENT} from "@angular/common";
 import {CustomerStatsService} from "../customer-stats-range/customer-stats-range.service";
@@ -9,6 +10,7 @@ import * as _ from "lodash";
 import {UsersService} from "../../../templates/users.service";
 import {CustomerStatsComputerService} from "../../../services/stats/customer-stats-computer.service";
 import {AuthService} from "../../../services/http/auth.service";
+import { CustomerStatsSummaryService } from './customer-stats-summary.service';
 
 @Component({
   selector: "app-customer-stats-summary",
@@ -17,6 +19,35 @@ import {AuthService} from "../../../services/http/auth.service";
 })
 export class CustomerStatsSummaryComponent implements OnInit {
   @Input() isFromUrl = true;
+  currentElementCarousel: number = 0;
+
+  @ViewChild(NgxCarouselComponent) sliderElement: NgxCarouselComponent;
+
+  ngAfterViewInit() {
+      this.touchendCarousel();
+  }
+
+  touchendCarousel(timeout?){
+
+    let duration = 0;
+    if (timeout === true) {
+      duration = 1000;
+    }
+
+    setTimeout(() => {
+      if (this.sliderElement && this.currentElementCarousel != this.sliderElement.current) {
+        this.currentElementCarousel = this.sliderElement.current;
+
+        if (this.currentElementCarousel == 1) {
+          this.setActiveTab('trainingOverload');
+        } else if (this.currentElementCarousel == 2) {
+          this.setActiveTab('energySystems');
+        } else {
+          this.setActiveTab('fatigueManagement');
+        }
+      }
+    }, duration);
+  }
 
   size: number = 1;
   responsiveSize: number = 768;
@@ -25,6 +56,8 @@ export class CustomerStatsSummaryComponent implements OnInit {
 
   carouselOptions: ngxLightOptions;
   carouselData: any = [];
+
+  activeTab: string = 'fatigueManagement';
 
   data: any = {
     standardDeviation: 0,
@@ -46,12 +79,15 @@ export class CustomerStatsSummaryComponent implements OnInit {
     }
   };
 
+  isCoach: boolean = false;
+
   constructor(
     private customerStatsService: CustomerStatsService,
     private resizeSvc: ResizeService,
     private customerStatsComputerService: CustomerStatsComputerService,
     private usersService: UsersService,
     private authService: AuthService,
+    private customerStatsSummaryService: CustomerStatsSummaryService,
     @Inject(DOCUMENT) private _document
   ) {
   }
@@ -89,6 +125,8 @@ export class CustomerStatsSummaryComponent implements OnInit {
         }
       ],
     };
+
+    this.isCoach = this.authService.isCoach();
 
     this.carouselData.push({title: 'Load'});
     this.carouselData.push({title: 'Variation'});
@@ -170,12 +208,16 @@ export class CustomerStatsSummaryComponent implements OnInit {
         }
       }
     );
-
   }
 
   ngOnDestroy(): void {
     this.sub.onStatsUpdated && this.sub.onStatsUpdated.unsubscribe();
     this.sub.onStatsUpdatedStart && this.sub.onStatsUpdatedStart.unsubscribe();
+  }
+
+  setActiveTab(tab) {
+    this.activeTab = tab;
+    this.customerStatsSummaryService.onTabChanged.emit(tab);
   }
 
   private _initFatigueManagementData(data) {

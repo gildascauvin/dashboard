@@ -1,107 +1,80 @@
-<div class="container-fluid">
-  <div class="row pt-4 row-tpc-submenu-calendar">
-    <div class="col-md-6 pb-4">
-      <ul class="tpc-submenu pb-4">
-        <ng-container *ngIf="size <= responsiveSize">
-          <li><a href="#" [routerLink]="links.fatigueManagement">{{ "#Fatigue" | dgTranslate }}</a></li>
-          <li><a href="#" [routerLink]="links.trainingOverload">{{ "#Load" | dgTranslate }}</a></li>
-          <li><a class="active" href="#" [routerLink]="links.energySystems">{{ "#Systems" | dgTranslate }}</a></li>
-        </ng-container>
-        <ng-container *ngIf="size > responsiveSize">
-          <li><a href="#" [routerLink]="links.fatigueManagement">{{ "#Fatigue management" | dgTranslate }}</a></li>
-          <li><a href="#" [routerLink]="links.trainingOverload">{{ "#Load analysis" | dgTranslate }}</a></li>
-          <li><a class="active" href="#" [routerLink]="links.energySystems">{{ "#Energy systems" | dgTranslate }}</a></li>
-        </ng-container>
-      </ul>
-    </div>
+<div class="row container-stats">
+  <div class="col-md-7">
+    <div class="box-stats-left">
 
-    <div class="col-md-6 calendar-top">
-      <div class="float-right">
-      <app-customer-stats-range [isFromUrl]="isFromUrl" [keepDates]="keepDates"></app-customer-stats-range>
+      <h3 class="text-center mt-4 mb-4">
+        {{ "#Energy systems" | dgTranslate }}
+      </h3>
+
+      <div class="row mt-4 mb-4 container-score">
+        <div class="col-4 text-center container-mrv">
+
+          <div class="tpc-circle">
+            <div class="c100 p{{ stats.power.percent }} red">
+              <div class="circle-content">
+                <img src="assets/img/logo/logo-muscle.png" srcset="assets/img/logo/logo-muscle@2x.png 2x,assets/img/logo/logo-muscle@3x.png 3x" class="logo">
+                  <span class="title">{{ stats.power.percent }}%</span>
+              </div>
+              <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+              </div>
+            </div>
+            <div class="subtitle">Strength & power</div>
+          </div>
+
+        </div>
+        <div class="col-4 text-center container-mrv">
+
+          <div class="tpc-circle">
+            <div class="c100 p{{ stats.resistance.percent }} gray">
+              <div class="circle-content">
+                <img src="assets/img/logo/logo-alt-re.png" srcset="assets/img/logo/logo-alt-re@2x.png 2x,assets/img/logo/logo-alt-re@3x.png 3x" class="logo">
+                <span class="title">{{ stats.resistance.percent }}%</span>
+              </div>
+              <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+              </div>
+            </div>
+            <div class="subtitle">Resistance</div>
+          </div>
+
+        </div>
+        <div class="col-4 text-center container-mrv">
+
+          <div class="tpc-circle">
+            <div class="c100 p{{ stats.endurance.percent }} purple">
+              <div class="circle-content">
+                <img src="assets/img/logo/logo-intensit.png" srcset="assets/img/logo/logo-intensit@2x.png 2x,assets/img/logo/logo-intensit@3x.png 3x" class="logo">
+                <span class="title">{{ stats.endurance.percent }}%</span>
+              </div>
+              <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+              </div>
+            </div>
+            <div class="subtitle">Endurance</div>
+          </div>
+
+        </div>
+
       </div>
+
+      <div [ngClass]="{ 'chart-size': resize }" class="chart-container" style="display: block">
+        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+        </canvas>
+      </div>
+
     </div>
   </div>
-
-  <app-customer-stats-summary [isFromUrl]="isFromUrl"></app-customer-stats-summary>
-
-  <div class="row container-stats">
-    <div class="col-md-7">
-      <div class="box-stats-left">
-
-        <h3 class="text-center mt-4 mb-4">
-          {{ "#Energy systems" | dgTranslate }}
-        </h3>
-
-        <div class="row mt-4 mb-4 container-score">
-          <div class="col-4 text-center container-mrv">
-
-            <div class="tpc-circle">
-              <div class="c100 p{{ stats.power.percent }} red">
-                <div class="circle-content">
-                  <img src="assets/img/logo/logo-muscle.png" srcset="assets/img/logo/logo-muscle@2x.png 2x,assets/img/logo/logo-muscle@3x.png 3x" class="logo">
-                    <span class="title">{{ stats.power.percent }}%</span>
-                </div>
-                <div class="slice">
-                  <div class="bar"></div>
-                  <div class="fill"></div>
-                </div>
-              </div>
-              <div class="subtitle">Strength & power</div>
-            </div>
-
-          </div>
-          <div class="col-4 text-center container-mrv">
-
-            <div class="tpc-circle">
-              <div class="c100 p{{ stats.resistance.percent }} gray">
-                <div class="circle-content">
-                  <img src="assets/img/logo/logo-alt-re.png" srcset="assets/img/logo/logo-alt-re@2x.png 2x,assets/img/logo/logo-alt-re@3x.png 3x" class="logo">
-                  <span class="title">{{ stats.resistance.percent }}%</span>
-                </div>
-                <div class="slice">
-                  <div class="bar"></div>
-                  <div class="fill"></div>
-                </div>
-              </div>
-              <div class="subtitle">Resistance</div>
-            </div>
-
-          </div>
-          <div class="col-4 text-center container-mrv">
-
-            <div class="tpc-circle">
-              <div class="c100 p{{ stats.endurance.percent }} purple">
-                <div class="circle-content">
-                  <img src="assets/img/logo/logo-intensit.png" srcset="assets/img/logo/logo-intensit@2x.png 2x,assets/img/logo/logo-intensit@3x.png 3x" class="logo">
-                  <span class="title">{{ stats.endurance.percent }}%</span>
-                </div>
-                <div class="slice">
-                  <div class="bar"></div>
-                  <div class="fill"></div>
-                </div>
-              </div>
-              <div class="subtitle">Endurance</div>
-            </div>
-
-          </div>
-
-        </div>
-
-        <div [ngClass]="{ 'chart-size': resize }" class="chart-container" style="display: block">
-          <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-                  [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
-          </canvas>
-        </div>
-
-      </div>
-    </div>
-    <div class="col-md-5">
-      <div class="box-stats-right">
-        <h3 class="text-center mt-4 mb-4">
-          {{ "#Training breakdown" | dgTranslate }}
-        </h3>
-        <app-customer-stats-exercice [isFromUrl]="isFromUrl"></app-customer-stats-exercice>
-      </div>
+  <div class="col-md-5">
+    <div class="box-stats-right">
+      <h3 class="text-center mt-4 mb-4">
+        {{ "#Training breakdown" | dgTranslate }}
+      </h3>
+      <app-customer-stats-exercice [isFromUrl]="isFromUrl"></app-customer-stats-exercice>
     </div>
   </div>
 </div>

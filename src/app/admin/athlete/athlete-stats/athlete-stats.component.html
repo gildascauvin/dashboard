@@ -1,1 +1,23 @@
-<router-outlet></router-outlet>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 calendar-top">
+      <div class="float-right">
+        <app-customer-stats-range [isFromUrl]="isFromUrl" [keepDates]="keepDates"></app-customer-stats-range>
+      </div>
+    </div>
+  </div>
+
+  <app-customer-stats-summary [isFromUrl]="isFromUrl"></app-customer-stats-summary>
+
+  <ng-container *ngIf="activeTab == 'fatigueManagement'">
+    <app-athlete-stats-fatigue-management [isFromUrl]="isFromUrl" [keepDates]="keepDates"></app-athlete-stats-fatigue-management>
+  </ng-container>
+
+  <ng-container *ngIf="activeTab == 'trainingOverload'">
+    <app-athlete-stats-training-overload [isFromUrl]="isFromUrl" [keepDates]="keepDates"></app-athlete-stats-training-overload>
+  </ng-container>
+
+  <ng-container *ngIf="activeTab == 'energySystems'">
+    <app-athlete-energy-systems [isFromUrl]="isFromUrl" [keepDates]="keepDates"></app-athlete-energy-systems>
+  </ng-container>
+</div>
