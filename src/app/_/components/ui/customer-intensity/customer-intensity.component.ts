@@ -30,12 +30,15 @@ export class CustomerIntensityComponent implements OnInit {
     });
     this.sub.onStatsUpdated = this.customerStatsService.onStatsUpdated.subscribe(
       (component) => {
+        this.categoriesData.forEach((category) => {
+          category.percentage = 0;
+          category.volumeCategory = 0;
+        });
         const stats = component.stats;
         this.movements = stats.movements;
         this.cardioMvts = stats.cardioMvt;
         this.intervalMvts = stats.intervalMvt;
   
-
         let totalMovements = 0;
 
         for (let mvtId in this.movements) {
@@ -83,10 +86,12 @@ export class CustomerIntensityComponent implements OnInit {
             
         })
         }  
-        this.categoriesData[0].percentage = Math.round((this.categoriesData[0].volumeCategory / totalMovements) * 100);
-        this.categoriesData[1].percentage = Math.round((this.categoriesData[1].volumeCategory / totalMovements) * 100);
-        this.categoriesData[2].percentage = Math.round((this.categoriesData[2].volumeCategory / totalMovements) * 100);
-        this.categoriesData[3].percentage = Math.round((this.categoriesData[3].volumeCategory / totalMovements) * 100);
+        if(totalMovements != 0) {
+          this.categoriesData[0].percentage = Math.round((this.categoriesData[0].volumeCategory / totalMovements) * 100);
+          this.categoriesData[1].percentage = Math.round((this.categoriesData[1].volumeCategory / totalMovements) * 100);
+          this.categoriesData[2].percentage = Math.round((this.categoriesData[2].volumeCategory / totalMovements) * 100);
+          this.categoriesData[3].percentage = Math.round((this.categoriesData[3].volumeCategory / totalMovements) * 100);
+        }
       }
     );
     this.sub.onStatsUpdatedStart = this.customerStatsService.onStatsUpdatedStart.subscribe(
