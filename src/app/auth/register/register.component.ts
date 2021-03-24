@@ -11,6 +11,7 @@ import { webConfig } from '../../web-config';
 import { FormCore } from '../../_/core/form.core';
 
 import { RegisterService } from './register.service';
+import { LoginService } from '../login/login.service';
 
 @Component({
   selector: 'app-register',
@@ -65,6 +66,7 @@ export class RegisterComponent extends FormCore implements OnInit {
     private calendar: NgbCalendar,
     private toastrService: ToastrService,
     private signupService: RegisterService,
+    private loginService: LoginService,
     private reCaptchaV3Service: ReCaptchaV3Service,
     private doorgetsTranslateService: DoorgetsTranslateService) {
     super();
@@ -99,7 +101,7 @@ export class RegisterComponent extends FormCore implements OnInit {
         this.signupService.setUserRefreshToken(data.refresh_token);
         this.signupService.setUserType(this.model.role_id);
 
-        this.router.navigateByUrl('account-not-confirmed/' + this.model.email);
+        this.router.navigateByUrl(this.loginService.getUserPath());
       }
     });
   }
