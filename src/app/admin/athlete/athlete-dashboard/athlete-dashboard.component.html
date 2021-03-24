@@ -1,33 +1,5 @@
-<div class="lead-container d-flex">
-  <div class="col-md-3 lead-left-bar" *ngIf="size >= responsiveSize">
-    <div class="lead-bar-content">
-      <div class="readiness-level">
-        <h3 class="readiness-level-title">
-          {{ "#Your readiness level" | dgTranslate }}
-        </h3>
-        <div class="mrv-score">
-          <div class="mrv-score-icon"><i class="fa fa-heartbeat"></i></div>
-          <div class="mrv-score-number">
-            {{ (user.data && user.data.mrv_score) || 0 }}/10
-          </div>
-          <div class="mrv-score-label">{{ "#Score MRV" | dgTranslate }}</div>
-        </div>
-        <a class="btn btn-secondary btn-edit-secondary"
-           [routerLink]="links.profile">{{ "#Edit information" | dgTranslate }}</a>
-      </div>
-      <div class="strenght-level">
-        <h3 class="strenght-level-title">
-          {{ "#Your strenght level" | dgTranslate }}
-        </h3>
-        <div class="mt-4 mb-4">
-          <app-customer-profile-level [user]="user" [resize]=true></app-customer-profile-level>
-        </div>
-        <a class="btn btn-secondary btn-edit-secondary"
-           [routerLink]="links.performance">{{ "#Edit perfomances" | dgTranslate }}</a>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-6 lead-body">
+<div class="lead-container d-flex justify-content-center">
+  <div class="col-md-10 lead-body">
     <div class="lead-body-content text-center mt-4" *ngIf="isEmpty">
       <button class="btn btn-primary" (click)="openExerciceManagerModal()">
         <i class="fa fa-plus"></i> {{ "#Create a workout" | dgTranslate }}
@@ -147,14 +119,6 @@
           </ng-container>
         </ng-container>
       </div>
-    </div>
-  </div>
-  <div class="col-md-3 lead-right-bar" *ngIf="size >= responsiveSize">
-    <div class="lead-bar-content lead-bar-content-right">
-      <app-customer-stats-range [showRange]="false" [isFromUrl]="isFromUrl"></app-customer-stats-range>
-      <app-customer-stats [resize]="true" [showCardio]="false" [isFromUrl]="isFromUrl"></app-customer-stats>
-      <hr />
-      <app-customer-stats-exercice [isFromUrl]="isFromUrl" [isFromOverView]="true"></app-customer-stats-exercice>
     </div>
   </div>
 </div>
