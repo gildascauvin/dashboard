@@ -97,9 +97,12 @@ export class RegisterComponent extends FormCore implements OnInit {
         this.errors = data.errors;
         this.toastrService.error(data.message || 'An error has occurred');
       } else {
-        this.signupService.setUserToken(data.token);
-        this.signupService.setUserRefreshToken(data.refresh_token);
-        this.signupService.setUserType(this.model.role_id);
+        if (data.user) {
+          this.signupService.setUserToken(data.user.token);
+          this.signupService.setUserRefreshToken(data.user.refresh_token);
+          this.signupService.setUserType(data.user.role_id);
+          this.loginService.setUserId(data.user_id);
+        }
 
         this.router.navigateByUrl(this.loginService.getUserPath());
       }
