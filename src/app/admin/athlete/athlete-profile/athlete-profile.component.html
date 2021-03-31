@@ -1,1 +1,112 @@
-<router-outlet></router-outlet>
+<div class="container-fluid">
+  <div class="container-scroll">
+
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="module-metrics">
+
+          <div class="row">
+            <div class="col-6"><h3>Metrics</h3></div>
+            <div class="col-6">
+              <button (click)="openMetricCreateModal()" class="btn btn-primary float-right">
+                <i class="fa fa-plus"></i> {{ "#Add metric" | dgTranslate }}
+              </button>
+            </div>
+          </div>
+
+          <div class="groups">
+
+            <ngb-accordion *ngFor="let metricsGroup of metrics" activeIds="{{ currentGroupsOpened }}" class="tpc-accordion" #acc="ngbAccordion">
+              <ngb-panel id="group-{{ metricsGroup.group_id }}">
+                <ng-template ngbPanelHeader let-opened="opened">
+                  <div (click)="toggle('group-' + metricsGroup.group_id)" class="card-header-content d-flex align-items-center justify-content-between">
+                    <h1>{{ metricsGroup.name }}</h1>
+                    <i class="fa fa-{{ opened ? 'chevron-down' : 'chevron-right' }}" aria-hidden="true"></i>
+                  </div>
+                </ng-template>
+
+              <ng-template ngbPanelContent>
+                <div class="headers">
+                <div class="header">Name</div>
+                <div class="header">Goal</div>
+                <div class="header">Current</div>
+              </div>
+                <div class="metrics" (click)="selectMetric(metric)" *ngFor="let metric of metricsGroup.metrics">
+                  <div class="metric">{{ metric.name }}</div>
+                  <div class="metric">{{ metric.target }}</div>
+                  <div class="metric">{{ metric.current ? metric.current.result : '' }}</div>
+                  <div class="metric text-right">
+
+                    <div ngbDropdown placement="left" class="d-inline-block">
+                      <button class="btn btn-sm btn-toogle-select" (click)="$event.stopPropagation();" ngbDropdownToggle>
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                      </button>
+                      <div class="ngb-dropdown-menu" ngbDropdownMenu>
+                        <button ngbDropdownItem (click)="$event.stopPropagation();openMetricEditModal(metric)">
+                          <i class="fa fa-pencil mr-2"></i> {{ '#Edit' | dgTranslate }}
+                        </button>
+
+                        <button ngbDropdownItem (click)="$event.stopPropagation();removeMetric(metric)">
+                          <i class="fa fa-trash mr-2 text-danger"></i> {{ '#Delete' | dgTranslate }}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+                <button (click)="openMetricCreateModal(metricsGroup.name)" class="add-exercice mt-3 btn btn-block">+ {{ "#Add metrics" | dgTranslate }}</button>
+              </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div *ngIf="metricSelected.metric_id" class="panel-metric-selected col-12 col-md-6">
+        <div class="panel-metric-content">
+          <div class="module-stats">
+          <app-customer-stats-metric [metric]="metricSelected"></app-customer-stats-metric>
+        </div>
+          <div class="module-history">
+          <table>
+            <tr>
+              <th>{{ metricSelected.unit }}</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+
+            <tr class="row-new-result">
+              <td><input [(ngModel)]="newResult.result" type="text" class="form-control"></td>
+              <td>
+                <div class="input-group">
+                  <input class="form-control calendar"
+                       name="dp"
+                       (click)="d.toggle()"
+                       (ngModelChange)="onDateNewResultChange($event)"
+                       [ngModel]="newResult.date"
+                       ngbDatepicker
+                       #d="ngbDatepicker" />
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="fa fa-calendar"></i></button>
+                  </div>
+                </div>
+              </td>
+              <td><input (click)="saveNewResult()" class="btn btn-primary" type="button" value="Save"></td>
+            </tr>
+
+            <tr class="row-result" *ngFor="let result of metricSelected.results">
+              <td>{{ result.result }}</td>
+              <td>{{ result.date }}</td>
+              <td class="text-center"><i (click)="removeMetricResult(result)" class="fa fa-close"></i></td>
+            </tr>
+
+
+          </table>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

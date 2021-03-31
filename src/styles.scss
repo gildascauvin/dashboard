@@ -1101,3 +1101,93 @@ $primary-color-purple: #8f5ac3;
   background-color: #161616;
   border-radius: 3px;
 }
+
+.tpc-accordion {
+
+  .card {
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+
+    .card-header {
+      background: #fff;
+      border: none;
+      padding: 0;
+
+      .card-header-content {
+        padding: 30px;
+        cursor: pointer;
+      }
+
+      h1 {
+        font-size: 23px;
+      }
+    }
+
+    .card-body {
+      .headers {
+        padding: 10px;
+        .header {
+          color: #aaa;
+          font-weight: 500;
+          width: 25%;
+          display: inline-block;
+        }
+      }
+
+      .metrics {
+        padding: 20px;
+        margin: 15px 0;
+        box-shadow: 0 0 10px 0 rgb(138 138 138 / 20%);
+
+        &:hover {
+          background: #f1f1f1;
+          cursor: pointer;
+        }
+
+        .metric {
+          width: 25%;
+          display: inline-block;
+
+          .fa-cog {
+            font-size: 20px;
+            color: #888;
+
+            &:hover {
+              color: #444;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .tpc-accordion {
+    .card {
+      .card-body {
+        padding: 10px;
+
+        .headers {
+          .header {
+            width: 20%;
+
+            &:first-child {
+              width: 40%;
+            }
+          }
+        }
+
+        .metrics {
+          .metric {
+            width: 20%;
+            &:first-child {
+              width: 40%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

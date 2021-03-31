@@ -1,0 +1,48 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left"><i class="fa fa-plus"></i> {{ '#Edit a metric' | dgTranslate }}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" [disabled]="isLoading" (click)="cancel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+	<div class="row">
+
+		<div class="col-md-12">
+			<div class="form-group">
+        <label>{{ '#Name' | dgTranslate }} <small>({{ '#or exercice' | dgTranslate }})</small></label>
+        <input placeholder="Ex. 5RM back squat" [class.is-invalid]="errors.name" (input)="errors.name=false"  [(ngModel)]="modelMetric.name" type="text" autocomplete="off" class="form-control">
+			</div>
+		</div>
+
+		<div class="col-md-12">
+			<div class="form-group">
+        <label>{{ '#Unit' | dgTranslate }}</label>
+        <input placeholder="Ex. kg, minutes, meters, rounds..." [class.is-invalid]="errors.unit" (input)="errors.unit=false"  [(ngModel)]="modelMetric.unit" type="text" autocomplete="off" class="form-control">
+			</div>
+		</div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>{{ '#Target' | dgTranslate }} <small>({{ '#optional' | dgTranslate }})</small></label>
+        <input placeholder="Ex. kg, minutes, meters, rounds..." [class.is-invalid]="errors.target" (input)="errors.target=false"  [(ngModel)]="modelMetric.target" type="text" autocomplete="off" class="form-control">
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>{{ '#Group' | dgTranslate }}</label>
+        <input placeholder="Ex. Force, haltéro, saut, endurance, sprint..." [class.is-invalid]="errors.group" (input)="errors.group=false"  [(ngModel)]="modelMetric.group" type="text" autocomplete="off" class="form-control">
+      </div>
+    </div>
+
+	</div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-light mr-4" [disabled]="isLoading" (click)="cancel()">
+		<i class="fa fa-close"></i> {{ '#Cancel' | dgTranslate }}
+	</button>
+	<button class="btn btn-primary" [disabled]="isLoading" (click)="save()">
+		<i class="fa fa-save"></i>
+		{{ '#Save' | dgTranslate }}
+	</button>
+</div>

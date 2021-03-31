@@ -169,8 +169,9 @@ export const webConfig = {
 		 unit: [
 			{ id: 1, name: 'Meters'},
 			{ id: 2, name: 'Miles'},
+      { id: 4, name: 'Yards'},
 			{ id: 3, name: 'Minutes'},
-			{ id: 4, name: 'Yards'},
+      { id: 5, name: 'Seconds'},
 		],
 	 	emom: [
 	 		{ id: 1, name: 'Rounds'},

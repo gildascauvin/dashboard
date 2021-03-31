@@ -1,113 +1,88 @@
-
-.profile-container {
-	background-color: #F1F1F1;
-
-	.profile-left-bar {
-		.profile-form {
-			background-color: #FFFFFF;
-		    min-height: 600px;
-		    margin: 44px 60px;
-		    padding: 44px;
-			.profile-form-title {
-				font-size: 12pt;
-				font-weight: 700;
-				margin-bottom: 30px;
-			}
-			.profile-form-content {
-
-			}
-		}
-
-	}
-
-	.profile-right-bar {
-		.profile-mrv {
-			margin-top: 100px;
-			text-align: center;
-			padding: 0 56px;
-			.profile-mrv-title {
-				font-size: 12pt;
-				font-weight: 700;
-			}
-			.profile-mrv-content {
-				p {
-					color: #878787;
-					font-size: 16px;
-					margin-top: 30px;
-				}
-			}
-		}
-	}
+.container-fluid {
+  background: #f1f1f1;
+  padding-bottom: 80px;
 }
 
-.mrv-score {
-	  width: 125px;
-    border: solid 6px #d44000;
-    border-radius: 49%;
-    height: 125px;
-    margin: 20px auto;
-    text-align: center;
-    background-color: #fbfbfb;
+.calendar {
+  background-color: #e4e4e4;
+}
 
-    .mrv-score-icon {
-    	font-family: Lato;
-		  margin-top: 10px;
-		  margin-bottom: -10px;
+.module-metrics {
+  padding: 30px;
+
+  h3 {
+    font-size: 12pt;
+    font-weight: 700;
+  }
+}
+
+.module-stats {
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.module-history {
+  padding: 30px;
+  border-radius: 5px;
+
+  table {
+    width: 100%;
+
+    .row-new-result {
+      td {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+
+        &:first-child {
+          padding-left: 0;
+        }
+      }
     }
 
-    .mrv-score-number {
-		  font-size: 33px;
-		  font-family: Lato;
-		  font-weight: bold;
-		  margin-bottom: -5px;
-      line-height: 54px
+    .row-result {
+      td {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+
+        .fa-close {
+          cursor: pointer;
+        }
+      }
+
+      &:last-child {
+        td {
+          border-bottom: none;
+        }
+      }
     }
 
-    .mrv-score-label {
-    	font-family: Lato;
-		font-size: 12px;
-    }
+  }
 }
 
-.profile-review-form {
-    padding: 30px 50px;
-}
-
-.movement-review-header {
-	margin-top: 5px;
-	margin-bottom: 0px;
-	font-weight: 500;
-}
-
-.form-center-radio {
-	width: 300px;
-	margin: auto;
-	// margin-top: 25px;
-}
 @media (max-width: 480px) {
-	.profile-left-bar {
-		.profile-form {
-			margin: 30px 0px!important;
-		}
-	}
-	.profile-review-form {
-		padding: 30px 0px!important;
-	}
-	.profile-container{
-		.profile-right-bar{
-			 .profile-mrv{
-			   padding: 0px !important;
-			   margin-top: 0px !important;
-			 }
-		   }
-	   }
-	   .mrv-score{
-		.mrv-score-icon{
-		   margin-top: 12px !important;
-		   margin-bottom: 0px !important;
-		}
-		.mrv-score-number {
-			margin-bottom: 0px !important;
-		}
-   	  }
+  .module-metrics {
+    padding: 20px 0;
+  }
+
+  .module-stats {
+    padding: 15px;
+  }
+
+  .module-history {
+    padding: 15px;
+  }
+
+  .panel-metric-selected {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+
+    .panel-metric-content {
+      margin-top: 70px;
+      background: #fff;
+    }
+  }
 }

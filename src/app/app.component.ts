@@ -36,6 +36,7 @@ export class AppComponent {
           email: user.username
         }
       });
+
     }
   }
 }
