@@ -63,7 +63,7 @@
               <input *ngIf="movement.has_repetitions || movement.has_rep_unit" placeholder="1" [(ngModel)]="set.rep" [ngClass]="{ 'list-meters-unit':  movement.has_rep_unit }"
                 type="number" class="form-control number-movement-list" />
               <div *ngIf="movement.has_rep_unit">
-                <select [(ngModel)]="set.rep_unit" type="number" class="form-control number-movement-listform-control number-movement-list list-meters">
+                <select [(ngModel)]="set.rep_unit" type="number" class="form-control number-movement-list list-meters">
                   <option *ngFor="let unit of configExercices.unit" [value]="unit.id">
                     {{ unit.name }}
                   </option>

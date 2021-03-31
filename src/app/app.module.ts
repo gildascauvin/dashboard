@@ -29,6 +29,7 @@ import { AthleteProfileModalProfileEditComponent } from "./admin/athlete/athlete
 import { AthleteProfilePerformanceComponent } from "./admin/athlete/athlete-profile/athlete-profile-performance/athlete-profile-performance.component";
 import { AthleteProfileReadinessComponent } from "./admin/athlete/athlete-profile/athlete-profile-readiness/athlete-profile-readiness.component";
 import { AthleteProfileComponent } from "./admin/athlete/athlete-profile/athlete-profile.component";
+
 import { AthleteProgramsDetailComponent } from "./admin/athlete/athlete-programs/athlete-programs-detail/athlete-programs-detail.component";
 import { AthleteProgramsComponent } from "./admin/athlete/athlete-programs/athlete-programs.component";
 import { AthleteSettingsPasswordComponent } from "./admin/athlete/athlete-settings/athlete-settings-password/athlete-settings-password.component";
@@ -76,6 +77,8 @@ import { CustomerProfileLevelComponent } from "./_/components/ui/customer-profil
 import { AthleteMovementListComponent } from "./_/components/ui/athlete-movement-list/athlete-movement-list.component";
 import { AthleteMovementListUnitLabelComponent } from "./_/components/ui/athlete-movement-list-unit-label/athlete-movement-list-unit-label.component";
 import { CustomerStatsExerciceComponent } from "./_/components/ui/customer-stats-exercice/customer-stats-exercice.component";
+import { CustomerStatsMetricComponent } from "./_/components/ui/customer-stats-metric/customer-stats-metric.component";
+
 import { CustomerStatsRangeComponent } from "./_/components/ui/customer-stats-range/customer-stats-range.component";
 import { CustomerStatsSummaryComponent } from "./_/components/ui/customer-stats-summary/customer-stats-summary.component";
 import { CustomerStatsComponent } from "./_/components/ui/customer-stats/customer-stats.component";
@@ -106,6 +109,10 @@ import { InputsExerciceTypeTimeComponent } from "./_/templates/templates-modal/t
 import { TemplatesModalExerciceManagerComponent } from "./_/templates/templates-modal/templates-modal-exercice-manager/templates-modal-exercice-manager.component";
 import { TemplatesModalStartSessionComponent } from "./_/templates/templates-modal/templates-modal-start-session/templates-modal-start-session.component";
 import { TemplatesModalWorkoutDeleteComponent } from "./_/templates/templates-modal/templates-modal-workout-delete/templates-modal-workout-delete.component";
+import { MetricsModalCreateComponent } from "./_/templates/metrics/metrics-modal-create/metrics-modal-create.component";
+import { MetricsModalEditComponent } from "./_/templates/metrics/metrics-modal-edit/metrics-modal-edit.component";
+
+
 import { PopoverComponent } from './_/templates/templates-modal/popover/popover.component';
 import {NgxCarouselModule} from "ngx-light-carousel";
 import { CustomerIntensityComponent } from "./_/components/ui/customer-intensity/customer-intensity.component";
@@ -177,6 +184,9 @@ export function newNgTranslate(http: HttpClient) {
     CustomerStatsRangeComponent,
     CustomerStatsSummaryComponent,
     CustomerStatsExerciceComponent,
+    CustomerStatsMetricComponent,
+    MetricsModalCreateComponent,
+    MetricsModalEditComponent,
     AthleteSettingsComponent,
     AthleteSettingsPlanComponent,
     AthleteSettingsProfileComponent,

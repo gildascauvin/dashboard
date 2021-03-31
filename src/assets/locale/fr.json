@@ -283,5 +283,12 @@
   "#Category": "Category",
   "#Unit": "Unit",
   "#Movement created!": "Movement created!",
-  "#Show comments": "Show comments"
+  "#Show comments": "Show comments",
+  "#or exercice": "or exercice",
+  "#optional": "optional",
+  "#Latest result": "Latest result",
+  "#Group": "Group",
+  "#Add metric": "Add metric",
+  "#Add metrics": "Add metrics",
+  "#Target": "Target"
 }

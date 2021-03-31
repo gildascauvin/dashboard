@@ -101,7 +101,68 @@ export class TemplatesModalStartSessionComponent implements OnInit {
       this.step--;
     }
   }
+
+  setUnitLabel(model, key, labelKey) {
+    model[labelKey] = "%";
+    switch (model[key]) {
+      case 1:
+      case "1":
+        model[labelKey] = "kg";
+        break;
+      case 2:
+      case "2":
+        model[labelKey] = "lbs";
+        break;
+      case 3:
+      case "3":
+        model[labelKey] = "%";
+        break;
+      case 4:
+      case "4":
+        model[labelKey] = "RPE";
+        break;
+      case 5:
+      case "5":
+        model[labelKey] = "km/h";
+        break;
+
+      default:
+        model[labelKey] = "%";
+        break;
+    }
+  }
+
   save(isEndSession?: boolean) {
+
+    let exercices = this.workout.program.exercices.map((exercice) => {
+
+      let movements = exercice.movements.map((movement) => {
+        if (!movement.value) {
+          movement.value = 0;
+        }
+        console.log('movement',)
+        this.setUnitLabel(movement, "unit", "unit_label");
+
+        let sets = movement.sets.map((set) => {
+          this.setUnitLabel(set, "unit", "unit_label");
+
+          return {
+            unit: parseInt("" + set.unit) || 3,
+            set: set.set || 1,
+            rep: set.rep || 1,
+            value: set.value || 0,
+            quantity: set.quantity || 1,
+            unit_label: set.unit_label,
+            rep_unit: set.rep_unit || 1
+          };
+        });
+
+        movement.sets = sets;
+
+        return movement;
+      });
+    });
+
     let body: any = {
       user_id: this.userId,
       program_json: JSON.stringify(this.workout.program),

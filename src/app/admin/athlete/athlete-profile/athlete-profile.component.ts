@@ -1,22 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList} from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import {NgbDateStruct, NgbAccordion} from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-
-import { ChartDataSets, ChartType, RadialChartOptions } from 'chart.js';
-import { Label } from 'ng2-charts';
-
 import { webConfig } from '../../../web-config';
-
 import { AuthService } from '../../../_/services/http/auth.service';
 import { UserService } from '../../../_/services/model/user.service';
 import { UsersService } from '../../../_/templates/users.service';
-
-import { AthleteProfileModalProfileCreateComponent } from './athlete-profile-modal/athlete-profile-modal-profile-create/athlete-profile-modal-profile-create.component';
-import { AthleteProfileModalProfileEditComponent } from './athlete-profile-modal/athlete-profile-modal-profile-edit/athlete-profile-modal-profile-edit.component';
-import { AthleteProfileModalProfileDeleteComponent } from './athlete-profile-modal/athlete-profile-modal-profile-delete/athlete-profile-modal-profile-delete.component';
-
 import * as _ from 'lodash';
+import {MetricsModalCreateComponent} from "../../../_/templates/metrics/metrics-modal-create/metrics-modal-create.component";
+import {AthleteProfileService} from "./athlete-profile.service";
+import {MetricsModalEditComponent} from "../../../_/templates/metrics/metrics-modal-edit/metrics-modal-edit.component";
 
 @Component({
   selector: 'app-athlete-profile',
@@ -24,11 +17,16 @@ import * as _ from 'lodash';
   styleUrls: ['./athlete-profile.component.scss']
 })
 export class AthleteProfileComponent implements OnInit {
+  @Output() onSelectedMetric: EventEmitter<any> = new EventEmitter();
+  @ViewChildren('acc') accordions: QueryList<NgbAccordion>;
+
   @Input() isFromUrl = true;
 
-  bsModalRef: BsModalRef;
+  newResult: any = {};
+  newResultDate: any;
+  currentGroupsOpened: any = [];
 
-  currentTab: number = 0;
+  bsModalRef: BsModalRef;
 
   sub: any = {};
 
@@ -36,6 +34,9 @@ export class AthleteProfileComponent implements OnInit {
   	data: {},
     profil: []
   };
+
+  metrics: any = [];
+  metricSelected: any = {};
 
   isLoading = false;
 
@@ -52,7 +53,8 @@ export class AthleteProfileComponent implements OnInit {
     private modalService: BsModalService,
     private userService: UserService,
     private usersService: UsersService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private athleteProfileService: AthleteProfileService
   	) { }
 
   ngOnInit(): void {
@@ -60,119 +62,137 @@ export class AthleteProfileComponent implements OnInit {
       ? this.authService.getUserData()
       : this.authService.getUserClientData();
 
-    this._initUser();
+    this._initMetrics();
 
-    this.sub.subjectUpdateUsers = this.usersService.onUserUpdated.subscribe(() => {
-      this._initUser();
+    this.sub.createMetric = this.athleteProfileService.onCreatedMetric.subscribe(() => {
+      this._initMetrics();
+    });
+
+    this.sub.metricUnSelected = this.athleteProfileService.onUnSelectedMetric.subscribe(() => {
+      this.metricSelected = {};
+    });
+  }
+
+  _initMetrics() {
+    this.usersService.getAllClientMetrics(this.user.id).subscribe((metricsGroups: any) => {
+      this.metrics = metricsGroups;
+
+      _.forEach(metricsGroups, (metricsGroup) => {
+
+        if (this.isLoading === false) {
+          this.currentGroupsOpened.push('group-' + metricsGroup.group_id);
+          this.isLoading = true;
+        }
+
+        _.forEach(metricsGroup.metrics, (metric) => {
+
+          if (metric.metric_id == this.metricSelected.metric_id) {
+            this.metricSelected = metric;
+            this.athleteProfileService.onSelectedMetric.emit(this.metricSelected);
+          }
+        });
+      });
     });
   }
 
   ngOnDestroy(): void {
-    this.sub.subjectUpdateUsers && this.sub.subjectUpdateUsers.unsubscribe();
+    this.sub.createMetric && this.sub.createMetric.unsubscribe();
+    //this.sub.subjectUpdateUsers && this.sub.subjectUpdateUsers.unsubscribe();
   }
 
-  save() {
-		this.isLoading = true;
+  toggle(id:string): void {
+    this.accordions.forEach((accordion) => {
+      accordion.panels.forEach((panel) => {
+        if (panel.id == id) {
+          accordion.toggle(id);
 
-    this.user.data.birthday = `${this.birthdayModel.year}-${this.birthdayModel.month}-${this.birthdayModel.day}`;
+          const index = this.currentGroupsOpened.indexOf(id);
+          if (index > -1) {
+            this.currentGroupsOpened.splice(index, 1);
+          } else {
+            this.currentGroupsOpened.push(id);
+          }
+        }
+      });
+    });
+  }
 
-    // console.log('this.user', this.user);
-  	this.usersService[(this.isFromUrl ? 'updateUser' : 'updateClientUser' )](this.user).subscribe((user: any) => {
-      if (!user.errors) {
-        this.toastrService.success('MRV updated!');
-        this._initUser();
+  openMetricCreateModal(groupName?) {
+    const initialState = {
+      modelId: this.user.id,
+      groupName: groupName
+    };
+    this.bsModalRef = this.modalService.show(MetricsModalCreateComponent, {
+      keyboard: false,
+      initialState: initialState,
+      class: 'modal-xs'
+    });
+  }
+
+  openMetricEditModal(metric) {
+    const initialState = {
+      model: metric
+    };
+    this.bsModalRef = this.modalService.show(MetricsModalEditComponent, {
+      keyboard: false,
+      initialState: initialState,
+      class: 'modal-xs'
+    });
+  }
+
+  removeMetric(metric) {
+    let clientId = this.authService.getCurrentAthletId();
+
+    this.usersService.removeMetric(clientId, metric.metric_id).subscribe((data: any) => {
+      if (!data.errors) {
+        this._initMetrics();
+        this.toastrService.success('Metric removed !');
       } else {
         this.toastrService.error('An error has occurred');
       }
-
-  		this.isLoading = false;
-  	}, error => this.toastrService.error('An error has occurred'));
-  }
-
-  openCreateModal() {
-    const initialState = {
-      userId: this.user.id,
-      isFromUrl: this.isFromUrl,
-    };
-
-    this.bsModalRef = this.modalService.show(AthleteProfileModalProfileCreateComponent, {
-      keyboard: false,
-      initialState: initialState,
-      class: 'modal-xs',
+    }, (e) => {
+      this.toastrService.error('An error has occurred');
     });
   }
 
-  openDeleteModal(profile) {
-    const initialState = {
-      model: profile,
-      isFromUrl: this.isFromUrl,
-    };
+  removeMetricResult(metricResult) {
+    let clientId = this.authService.getCurrentAthletId();
 
-    this.bsModalRef = this.modalService.show(AthleteProfileModalProfileDeleteComponent, {
-      keyboard: false,
-      initialState: initialState,
-      class: 'modal-xs'
-    });
-  }
-
-  openEditModal(profile) {
-    const initialState = {
-      model: profile,
-      isFromUrl: this.isFromUrl,
-    };
-
-    this.bsModalRef = this.modalService.show(AthleteProfileModalProfileEditComponent, {
-      keyboard: false,
-      initialState: initialState,
-      class: 'modal-xs'
-    });
-  }
-
-  // events
-  public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
-  }
-
-  public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
-  }
-
-  private _initUser() {
-		this.isLoading = true;
-  	this.sub.userInfo && this.sub.userInfo.unsubscribe();
-
-    if (this.isFromUrl) {
-    	this.sub.userInfo = this.usersService.getUser().subscribe((user: any) => {
-      	this._initData(user);
-        this.isLoading = false;
-      });
-    } else {
-      let userClientId = this.authService.getCurrentAthletId();
-
-      this.sub.userInfo = this.usersService.getUserClient(userClientId).subscribe((user: any) => {
-        this._initData(user);
-        this.isLoading = false;
-      });
-    }
-  }
-
-  private _initData(user) {
-  	if (user && user.data) {
-	  	this.user = _.cloneDeep(user);
-
-	  	if (user.data.birthday) {
-	      let date = user.data.birthday.split('-');
-	      this.birthdayModel.day = parseInt(date[2]);
-	      this.birthdayModel.month = parseInt(date[1]);
-	      this.birthdayModel.year = parseInt(date[0]);
-	    }
-
-      if (this.isFromUrl) {
-	  	  this.userService.initUserInfos(user);
+    this.usersService.removeMetricResult(clientId, metricResult.metric_result_id).subscribe((data: any) => {
+      if (!data.errors) {
+        this._initMetrics();
+        this.toastrService.success('Result removed !');
       } else {
-        this.userService.initUserClientInfos(user);
+        this.toastrService.error('An error has occurred');
       }
-			this.isLoading = false;
-		}
+    }, (e) => {
+      this.toastrService.error('An error has occurred');
+    });
+  }
+
+  selectMetric(metric) {
+    this.metricSelected = metric;
+    this.athleteProfileService.onSelectedMetric.emit(this.metricSelected);
+  }
+
+  onDateNewResultChange(model) {
+    this.newResultDate =  model.day + "/" + model.month + "/" + model.year;
+  }
+
+  saveNewResult() {
+    let clientId = this.authService.getCurrentAthletId();
+
+    this.newResult.metric_id = this.metricSelected.metric_id;
+    this.newResult.user_id = clientId;
+    this.newResult.date = this.newResultDate;
+
+    this.usersService.createMetricResult(clientId, this.newResult).subscribe((data: any) => {
+      if (!data.errors) {
+        this._initMetrics();
+        this.toastrService.success('Metric created !');
+      } else {
+        this.toastrService.error(data.message || 'An error has occurred');
+      }
+    }, (e) => this.toastrService.error('An error has occurred'));
   }
 }

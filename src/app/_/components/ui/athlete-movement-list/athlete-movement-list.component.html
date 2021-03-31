@@ -6,7 +6,7 @@
       <div class="movement-title" *ngFor="let movement of exercice.movements">
         {{ movement.name }}
         <div class="movement-content" *ngFor="let set of movement.sets">
-          <span *ngIf="set.set">{{ set.set }} x {{ set.rep }}
+          <span *ngIf="set.set">{{ set.set }} x {{ set.rep }} {{ set.rep_unit ? getCardioUnitLabel(set.rep_unit) : '' }}
             <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
           </span>
         </div>

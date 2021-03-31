@@ -78,6 +78,16 @@ export class UsersService {
     return this.httpService.get(`workout?page=${page.pageNumber}&size=${page.size}&date=${page.date}`);
   }
 
+  getAllClientMetrics(clientId) {
+    let page: any = {
+      totalElements: 0,
+      pageNumber: 0,
+      size: 500,
+    };
+
+    return this.httpService.get(`metric/client/${clientId}?page=${page.pageNumber}&size=${page.size}`);
+  }
+
   getAllUserWorkouts(userId) {
     return this.httpService.get(`workout/client/user/${userId}`);
   }
@@ -280,5 +290,25 @@ export class UsersService {
     };
 
     return this.httpService.post(`movement`, model);
+  }
+
+  createMetric(clientId, model) {
+    return this.httpService.post(`metric/client/${clientId}`, model);
+  }
+
+  updateMetric(clientId, model) {
+    return this.httpService.put(`metric/client/${clientId}/${model.metric_id}`, model);
+  }
+
+  removeMetric(clientId, metricId) {
+    return this.httpService.delete(`metric/client/${clientId}/${metricId}`);
+  }
+
+  createMetricResult(clientId, model) {
+    return this.httpService.post(`metric-result/client/${clientId}`, model);
+  }
+
+  removeMetricResult(clientId, metricResultId) {
+    return this.httpService.delete(`metric-result/client/${clientId}/${metricResultId}`);
   }
 }

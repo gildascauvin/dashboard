@@ -1,0 +1,13 @@
+.chart-container {
+  width: 100%;
+}
+
+h1 {
+  font-size: 23px;
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 17px;
+  }
+}

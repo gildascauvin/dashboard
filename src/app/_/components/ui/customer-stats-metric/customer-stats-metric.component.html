@@ -1,0 +1,11 @@
+<div (click)="close()" class="d-flex align-items-center justify-content-between">
+  <h1>{{ metric.name }}</h1>
+  <i class="fa fa-close" aria-hidden="true"></i>
+</div>
+
+
+<div [ngClass]="{ 'chart-size': resize }" class="chart-container" style="display: block">
+  <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+          [plugins]="lineChartPlugins" [legend]="lineChartLegend" [chartType]="lineChartType">
+  </canvas>
+</div>
