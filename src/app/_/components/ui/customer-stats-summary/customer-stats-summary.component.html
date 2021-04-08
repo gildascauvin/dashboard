@@ -112,7 +112,7 @@
 
 <div *ngIf="size > responsiveSize" class="row top-stats container-stats">
   <div class="col-md-5">
-    <div (click)="setActiveTab('fatigueManagement')" class="fatigue-management-banner fatigue-management-banner--left red-zone">
+    <div (click)="setActiveTab('trainingOverload')" class="fatigue-management-banner fatigue-management-banner--left red-zone">
       <div class="rectangle">
         <div class="tpc-optimal-zone clearfix">
           <div class="optimal-zone--left {{ fatigueManagement.colors.load.color1 }}"></div>
@@ -144,11 +144,11 @@
         </div>
       </div>
     </div>
-    <div *ngIf="activeTab == 'fatigueManagement'" class="arrow"></div>
+    <div *ngIf="activeTab == 'trainingOverload'" class="arrow"></div>
   </div>
 
   <div class="col-md-2">
-    <div (click)="setActiveTab('trainingOverload')" class="fatigue-management-banner red-zone">
+    <div (click)="setActiveTab('energySystems')" class="fatigue-management-banner red-zone">
       <div class="rectangle">
         <div class="tpc-optimal-zone tpc-optimal-zone--single clearfix">
           <div class="optimal-zone">
@@ -170,11 +170,11 @@
         </div>
       </div>
     </div>
-    <div *ngIf="activeTab == 'trainingOverload'" class="arrow"></div>
+    <div *ngIf="activeTab == 'energySystems'" class="arrow"></div>
   </div>
 
   <div class="col-md-5">
-    <div (click)="setActiveTab('energySystems')" class="fatigue-management-banner fatigue-management-banner--right red-zone">
+    <div (click)="setActiveTab('fatigueManagement')" class="fatigue-management-banner fatigue-management-banner--right red-zone">
       <div class="rectangle">
         <div class="tpc-optimal-zone clearfix">
           <div class="optimal-zone--left {{ fatigueManagement.colors.fitness.color1 }}"></div>
@@ -206,6 +206,6 @@
         </div>
       </div>
     </div>
-    <div *ngIf="activeTab == 'energySystems'" class="arrow"></div>
+    <div *ngIf="activeTab == 'fatigueManagement'" class="arrow"></div>
   </div>
 </div>

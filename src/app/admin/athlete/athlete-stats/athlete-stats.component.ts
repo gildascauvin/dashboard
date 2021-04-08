@@ -13,7 +13,7 @@ export class AthleteStatsComponent implements OnInit {
 
   sub: any = {};
   isCoach: boolean = false;
-  activeTab: string = 'fatigueManagement';
+  activeTab: string = 'trainingOverload';
 
   constructor(
     private authService: AuthService,

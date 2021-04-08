@@ -29,6 +29,7 @@ import { AthleteProfileModalProfileEditComponent } from "./admin/athlete/athlete
 import { AthleteProfilePerformanceComponent } from "./admin/athlete/athlete-profile/athlete-profile-performance/athlete-profile-performance.component";
 import { AthleteProfileReadinessComponent } from "./admin/athlete/athlete-profile/athlete-profile-readiness/athlete-profile-readiness.component";
 import { AthleteProfileComponent } from "./admin/athlete/athlete-profile/athlete-profile.component";
+import { AthleteTeamComponent } from "./admin/athlete/athlete-team/athlete-team.component";
 
 import { AthleteProgramsDetailComponent } from "./admin/athlete/athlete-programs/athlete-programs-detail/athlete-programs-detail.component";
 import { AthleteProgramsComponent } from "./admin/athlete/athlete-programs/athlete-programs.component";
@@ -136,6 +137,7 @@ export function newNgTranslate(http: HttpClient) {
     AthleteComponent,
     AthleteDashboardComponent,
     AthleteProfileComponent,
+    AthleteTeamComponent,
     AthleteStatsComponent,
     AthleteStatsFatigueManagementComponent,
     AthleteStatsTrainingOverloadComponent,

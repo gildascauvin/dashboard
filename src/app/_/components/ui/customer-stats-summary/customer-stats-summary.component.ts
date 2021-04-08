@@ -39,11 +39,11 @@ export class CustomerStatsSummaryComponent implements OnInit {
         this.currentElementCarousel = this.sliderElement.current;
 
         if (this.currentElementCarousel == 1) {
-          this.setActiveTab('trainingOverload');
-        } else if (this.currentElementCarousel == 2) {
           this.setActiveTab('energySystems');
-        } else {
+        } else if (this.currentElementCarousel == 2) {
           this.setActiveTab('fatigueManagement');
+        } else {
+          this.setActiveTab('trainingOverload');
         }
       }
     }, duration);
@@ -57,7 +57,7 @@ export class CustomerStatsSummaryComponent implements OnInit {
   carouselOptions: ngxLightOptions;
   carouselData: any = [];
 
-  activeTab: string = 'fatigueManagement';
+  activeTab: string = 'trainingOverload';
 
   data: any = {
     standardDeviation: 0,

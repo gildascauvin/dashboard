@@ -290,5 +290,9 @@
   "#Group": "Group",
   "#Add metric": "Add metric",
   "#Add metrics": "Add metrics",
-  "#Target": "Target"
+  "#Target": "Target",
+  "#Team": "Team",
+  "#Add an athlet": "Add an athlet",
+  "#Add Athlet": "Add Athlet",
+  "#Overview": "Overview"
 }

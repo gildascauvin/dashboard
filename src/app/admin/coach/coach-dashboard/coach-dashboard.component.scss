@@ -11,17 +11,29 @@
   padding: 20px;
 }
 
+h4 {
+  margin-top: 40px;
+  margin-bottom: 0;
+}
+
 .lead-body {
   background-color: #f1f1f1;
-  padding: 43px;
+  padding: 0 40px 40px;
+  margin-top: -65px;
+
+  &.lead-body-athlete {
+    margin-top: 0;
+  }
+
   .lead-body-content {
     height: 100%;
     .workout-session {
       background-color: #ffffff;
-      padding: 10px 65px 30px;
+      padding: 15px;
       margin-top: 20px;
+      border-radius: 5px;
+
       .workout-session-title {
-        border-bottom: solid 2px #f1f1f1;
         font-family: Helvetica;
         font-size: 22px;
         font-weight: 500;
@@ -29,10 +41,8 @@
         font-style: normal;
         line-height: normal;
         letter-spacing: -0.14px;
-        color: #000000;
-        padding-bottom: 19px;
-        margin-bottom: 19px;
-        margin-top: 20px;
+        color: #000;
+        margin-bottom: 20px;
       }
       .workout-program-name {
         display: block;
@@ -331,23 +341,41 @@ a {
   display: none;
 }
 @media (max-width: 480px) {
+  h4 {
+    margin-top: 20px;
+  }
+
+
   .lead-container {
     margin-top: 0px !important;
   }
   .lead-body {
-    padding-bottom: 67px !important;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-    // padding: 20px!important;
+    margin: 0;
+    padding: 0;
+
     .lead-body-content {
       .workout-session {
-        padding: 1px !important;
+        padding: 10px 0;
         border-radius: 10px!important;
         .workout-session-title {
           padding-left: 16px;
           font-size: 16px !important;
+          margin-bottom: 10px;
         }
       }
+
+      .row--workouts {
+        .col-6 {
+          &:first-child {
+            padding-right: 7px;
+          }
+
+          &:last-child {
+            padding-left: 7px;
+          }
+        }
+      }
+
     }
   }
 
@@ -425,4 +453,424 @@ a {
 .link-text{
   font-size: 0.7rem;
   font-weight: bold;
+}
+
+.fatigue-management-banner {
+  .rectangle {
+    display: block;
+    margin: 0px 0px 18px 0px;;
+    padding: 21px 0;
+    box-shadow: 0 1px 6px 0 rgba(155, 155, 155, 0.5);
+    background-color: #161616;
+    border-radius: 3px;
+
+    &.rectangle--todo, &.rectangle--in-progress, &.rectangle--done {
+      text-align: center;
+    }
+
+    @media (max-width: 480px) {
+      padding: 21px 0 8px;
+    }
+
+    &.rectangle--done {
+      padding: 21px 0 8px;
+    }
+  }
+
+  .oval {
+    position: relative;
+    width: 112px;
+    height: 112px;
+    border: solid 6px #d44000;
+    border-radius: 49%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .circle-content {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 100px;
+    height: 100px;
+    vertical-align: top;
+    z-index: 2;
+    text-align: center;
+
+    .logo {
+      position: absolute;
+      top: 0;
+      left: 30px;
+      font-size: 10px;
+      width: 32px;
+      height: 32px;
+    }
+
+    .percentage {
+      display: block;
+      margin-top: 25px;
+      font-size: 40px;
+      color: #fff;
+    }
+
+    .sessions{
+      font-size: 12px;
+      margin-top: -7px;
+    }
+  }
+
+  .title {
+    color: #fff;
+    text-align: center;
+  }
+
+  .subtitle {
+    color: #777;
+    text-align: center;
+    padding: 5px 20px 0;
+    line-height: 19px;
+    font-size: 11px;
+
+    @media (max-width: 480px) {
+      padding: 10px 10px 20px;
+      line-height: 17px;
+    }
+  }
+
+  .content-oval {
+    font-family: Lato;
+    font-size: 32px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    font-weight: bold;
+  }
+
+  .cta{
+    display: block;
+    background: transparent;
+    text-decoration: none;
+    width: 116px;
+    border: solid 2px #d44000;
+    border-radius: 4px;
+    color: #ffffff;
+    text-align: center;
+    margin: auto;
+    margin-top: 19px;
+    margin-bottom: 19px;
+    padding: 4px;
+
+  }
+
+  .descriptions {
+    display: inline-block;
+    padding-left: 30px;
+    vertical-align: top;
+    padding-top: 20px;
+
+    &.descriptions--no-padding {
+      padding-top: 0 !important;
+    }
+
+    .title {
+      padding-top: 20px;
+
+      +.title {
+        padding-top: 0;
+      }
+    }
+  }
+
+  .title-separator {
+    display: inline-block;
+    padding-right: 5px;
+    color: #fff;
+  }
+
+  .rectangle--todo{
+    .descriptions {
+      .title {
+        display: inline-block;
+      }
+    }
+  }
+
+  .rectangle--in-progress {
+    .descriptions {
+      width: 50%;
+
+      .title {
+        padding-top: 30px;
+      }
+
+      .subtitle {
+        padding-left: 10px;
+        color: #fff;
+      }
+    }
+  }
+
+  .rectangle--done {
+    .descriptions {
+      display: block;
+      padding-left: 0;
+      padding-top: 0;
+      width: 50%;
+      text-align: center;
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    display: block;
+
+    .title-separator {
+      display: none !important;
+    }
+
+    .descriptions {
+      display: block;
+      width: 100%;
+      padding-top: 0;
+    }
+
+    .rectangle--todo{
+      .descriptions {
+        padding-left: 0;
+        padding-top: 0;
+        .title {
+          display: block;
+        }
+      }
+    }
+
+    .rectangle--in-progress {
+      .descriptions {
+        padding-left: 0;
+        width: 100%;
+      }
+
+      .title {
+        padding-top: 20px !important;
+      }
+
+      .subtitle {
+        color: #777 !important;
+        padding-left:0 !important;
+      }
+    }
+
+    .rectangle--done {
+      .descriptions {
+        padding-left:0 !important;
+        width: auto;
+      }
+    }
+  }
+}
+
+.tpc-optimal-zone {
+
+  .optimal-zone {
+    .title {
+      font-size: 20px;
+    }
+  }
+
+  .optimal-zone--right {
+    right: -30px;
+    width: 30px;
+  }
+
+  .optimal-zone--left {
+    left: -30px;
+    width: 30px;
+  }
+
+  .score {
+    width: 120px;
+
+    .value {
+      width: 120px;
+      font-size: 19px;
+    }
+  }
+
+  .energy-score {
+    margin-left: -60px;
+  }
+
+  .rpe-score {
+    margin-right: -60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .lead-body {
+    margin-top: 0;
+  }
+
+  .fatigue-management-banner {
+    .circle-content {
+      top: 0;
+      left: 0;
+      width: 80px;
+      height: 80px;
+
+      .percentage {
+        font-size: 16px;
+        margin-top: 35px;
+      }
+
+      .sessions {
+        font-size: 9px;
+      }
+
+      .logo {
+        top: 8px;
+        left: 25px;
+      }
+    }
+
+    .rectangle {
+      padding: 15px 0;
+
+      &.rectangle--done {
+        padding: 10px 0;
+      }
+
+      .tpc-circle {
+        .c100 {
+          font-size: 80px;
+        }
+      }
+    }
+
+    .rectangle--done {
+
+      .optimal-zone--left {
+        display: none;
+      }
+
+      .optimal-zone--right {
+        display: none;
+      }
+
+      .tpc-optimal-zone {
+        height: 90px;
+
+        .optimal-zone {
+          .title {
+            font-size: 16px;
+          }
+
+          .subtitle {
+            font-size: 9px;
+            padding-top: 0;
+          }
+        }
+
+        .energy-score {
+          margin-left: 6px;
+        }
+
+        .rpe-score {
+          margin-right: 6px;
+        }
+
+        .score {
+          width: 65px;
+          top: 50px;
+
+          .value {
+            width: 65px;
+            font-size: 11px;
+          }
+
+          .subtitle {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+}
+
+.btn-add-athlet {
+  position: relative;
+  display: block;
+  border: 2px dashed #ddd;
+  text-align: center;
+  vertical-align: middle;
+  width: 250px;
+  height: 250px;
+  border-radius: 150px;
+  margin-top: 60px;
+  margin-left: 20px;
+
+  .content {
+    position: absolute;
+    top: 60px;
+    width: 100%;
+    height: 120px;
+
+    .title {
+      color: #777;
+    }
+
+    .plus {
+      display:inline-block;
+      width:200px;
+      height:200px;
+      margin-top: -20px;
+
+      background:
+        linear-gradient(#fff,#fff),
+        linear-gradient(#fff,#fff),
+        #ddd;
+      background-position:center;
+      background-size: 50% 2px,2px 50%; /*thickness = 2px, length = 50% (25px)*/
+      background-repeat:no-repeat;
+    }
+
+    .alt {
+      background:
+        linear-gradient(#ddd,#ddd),
+        linear-gradient(#ddd,#ddd);
+      background-position:center;
+      background-size: 50% 2px,2px 50%; /*thickness = 2px, length = 50% (25px)*/
+      background-repeat:no-repeat;
+    }
+  }
+
+
+}
+
+
+@media (max-width: 480px) {
+  .btn-add-athlet {
+    width: 150px;
+    height: 150px;
+    margin-top: 70px;
+    margin-left: 10px;
+
+    .content {
+      top: 30px;
+      height: 100px;
+
+      .plus {
+        margin-top: -10px;
+        width: 100px;
+        height: 100px;
+      }
+    }
+  }
 }

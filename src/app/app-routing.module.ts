@@ -55,6 +55,7 @@ import { AthleteCoachComponent } from './admin/athlete/athlete-coach/athlete-coa
 import { CoachAthleteComponent } from './admin/coach/coach-athlete/coach-athlete.component';
 import { AutoConnectComponent } from './auth/auto-connect/auto-connect.component';
 import {AthleteStatsEnergySystemsComponent} from "./admin/athlete/athlete-stats/athlete-stats-energy-systems/athlete-stats-energy-systems.component";
+import {AthleteTeamComponent} from "./admin/athlete/athlete-team/athlete-team.component";
 
 const routes: Routes = [{
     path: '',
@@ -95,7 +96,7 @@ const routes: Routes = [{
                 {
                     path: 'dashboard',
                     component: CoachAthleteLeadboardComponent
-                },{
+                }, {
                     path: 'profile',
                     component: CoachAthleteProfileComponent,
                     children: [
@@ -182,6 +183,9 @@ const routes: Routes = [{
     children: [{
         path: 'dashboard',
         component: AthleteDashboardComponent
+      }, {
+        path: 'team',
+        component: AthleteTeamComponent
       },{
         path: 'profile',
         component: AthleteProfileComponent,
