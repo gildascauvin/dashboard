@@ -27,13 +27,25 @@ export class AppComponent {
 
       let user = this.authService.isCoach() ? this.authService.getUserClientData() : this.authService.getUserData();
 
+      let coachId = user.id;
+      let coachEmail = user.username;
+
+      if (this.authService.isAthlet()) {
+        if (user.coachs[0]) {
+          coachId = user.coachs[0].user_id;
+          coachEmail = user.coachs[0].coach.username;
+        }
+      }
+
       pendo.initialize({
         visitor: {
-          id: 'visitor_' + user.id
+          id: 'visitor_' + user.id,
+          role: this.authService.isCoach() ? 'coach' : 'athlete',
+          registered_at: user.registered_at
         },
         account: {
-          id: user.id,
-          email: user.username
+          id: coachId,
+          email: coachEmail
         }
       });
 

@@ -1,11 +1,5 @@
 import { DOCUMENT } from "@angular/common";
-import {
-  Component,
-  ElementRef,
-  HostListener,
-  Inject,
-  OnInit,
-} from "@angular/core";
+import {Component, ElementRef, HostListener, Inject, Input, OnInit,} from "@angular/core";
 import { DoorgetsTranslateService } from "doorgets-ng-translate";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { webConfig } from "../../../web-config";
@@ -16,6 +10,8 @@ import { UsersModalProgramCreateComponent } from "../../../_/templates/programs/
 import { TemplatesModalExerciceManagerComponent } from "../../../_/templates/templates-modal/templates-modal-exercice-manager/templates-modal-exercice-manager.component";
 import { UsersService } from "../../../_/templates/users.service";
 import { UsersModalInvitationCreateComponent } from "../coach-clients/coach-clients-modal/users-modal-invitation-create/users-modal-invitation-create.component";
+import {FatigueManagementComputerService} from "../../../_/services/stats/fatigue-management-computer.service";
+import * as _ from "lodash";
 
 @Component({
   selector: "app-coach-dashboard",
@@ -23,6 +19,8 @@ import { UsersModalInvitationCreateComponent } from "../coach-clients/coach-clie
   styleUrls: ["./coach-dashboard.component.scss"],
 })
 export class CoachDashboardComponent implements OnInit {
+  @Input() isFromUrl = true;
+
   bsModalRef: BsModalRef;
 
   sub: any = {};
@@ -40,6 +38,9 @@ export class CoachDashboardComponent implements OnInit {
   size: number = 768;
   responsiveSize: number = 768;
 
+  totalColumn: number = 3;
+  rowNumbers : number[];
+
   constructor(
     private authService: AuthService,
     private userService: UserService,
@@ -48,35 +49,39 @@ export class CoachDashboardComponent implements OnInit {
     private modalService: BsModalService,
     private doorgetsTranslateService: DoorgetsTranslateService,
     private elementRef: ElementRef,
+    private fatigueManagementComputer: FatigueManagementComputerService,
     @Inject(DOCUMENT) private _document
   ) {}
 
   ngOnInit(): void {
-    this.user = this.authService.getUserData();
-    this.authService.setCurrentAthletId(0);
-    this.authService.setCurrentAthlet({});
-
-    this._initWorkouts();
-
-    this._initUser();
-
-    this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe(
-      (o) => {
-        this._initUser();
-      }
-    );
-
-    this.sub.onUpdate = this.userService.onUpdate.subscribe((user) => {
-      this.user = this.authService.getUserData();
-      this._checkEmpty();
-    });
-
-    this.sub.onUserUpdated = this.usersService.onUserUpdated.subscribe(() => {
-      this.user = this.authService.getUserData();
-      this._checkEmpty();
-    });
-
     this.detectScreenSize();
+    this._computeResponsiveGrid();
+
+    if (this.isFromUrl) {
+      this.authService.setCurrentAthletId(0);
+      this.authService.setCurrentAthlet({});
+
+      this._initUser();
+
+      this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe(
+        (o) => {
+          this._initUser();
+        }
+      );
+
+      this.sub.onUpdate = this.userService.onUpdate.subscribe((user) => {
+        this.user = this.authService.getUserData();
+        this._checkEmpty();
+      });
+
+      this.sub.onUserUpdated = this.usersService.onUserUpdated.subscribe(() => {
+        this.user = this.authService.getUserData();
+        this._checkEmpty();
+      });
+
+    } else {
+      this._initUser();
+    }
   }
 
   ngOnDestroy(): void {
@@ -84,6 +89,7 @@ export class CoachDashboardComponent implements OnInit {
     this.sub.userInfo && this.sub.userInfo.unsubscribe();
     this.sub.resizeSvc && this.sub.resizeSvc.unsubscribe();
     this.sub.onUserUpdated && this.sub.onUserUpdated.unsubscribe();
+    this.sub.onWorkoutSaved && this.sub.onWorkoutSaved.unsubscribe();
   }
 
   setCurrentAthletId(clientId) {
@@ -110,28 +116,72 @@ export class CoachDashboardComponent implements OnInit {
   }
 
   private _initWorkouts() {
-    this.usersService
-      .getAllUserWorkouts(this.user.id)
-      .subscribe((userWorkouts) => {
-        this.workouts = (userWorkouts && Object.keys(userWorkouts)) || [];
-        this.userWorkouts = userWorkouts;
-        this.flatWorkouts = [];
 
-        this.workouts =
-          (this.userWorkouts && Object.keys(this.userWorkouts)) || [];
-        this.workouts.map((date) => {
-          let _date = date.split("-");
+    if (this.isFromUrl) {
+      this.usersService
+        .getAllUserWorkouts(this.user.id)
+        .subscribe((userWorkouts) => {
+          this.workouts = (userWorkouts && Object.keys(userWorkouts)) || [];
+          this.userWorkouts = userWorkouts;
+          this.flatWorkouts = [];
 
-          this.flatWorkouts.push({
-            date: date,
-            label:
-              _date[2] + " " + this._getMonthName(_date[1]) + " " + _date[0],
+          this.workouts.map((date) => {
+            let _date = date.split("-");
+
+            this.flatWorkouts.push({
+              date: date,
+              label: _date[2] + " " + this._getMonthName(_date[1]) + " " + _date[0],
+            });
+
+            return date;
           });
-
-          return date;
+          this._checkEmpty();
         });
-        this._checkEmpty();
-      });
+    } else {
+
+      this.workouts = [];
+      this.flatWorkouts = [];
+      this.userWorkouts = [];
+
+      for (let i in this.user.coachs) {
+        let coachId = this.user.coachs[i].user_id;
+
+        this.usersService
+          .getAllUserWorkouts(coachId)
+          .subscribe((userWorkouts) => {
+            let userWorkoutsKeys = (userWorkouts && Object.keys(userWorkouts)) || [];
+
+            for(let key in userWorkoutsKeys) {
+              if (this.workouts.indexOf(userWorkoutsKeys[key]) < 0) {
+                this.workouts.push(userWorkoutsKeys[key]);
+              }
+            }
+
+            if (this.userWorkouts.length == 0) {
+              this.userWorkouts = userWorkouts;
+            } else {
+              for(let workoutKey in userWorkouts) {
+                this.userWorkouts[workoutKey] = _.concat(this.userWorkouts[workoutKey], userWorkouts[workoutKey]);
+              }
+            }
+
+            this.flatWorkouts = [];
+
+            this.workouts.map((date) => {
+              let _date = date.split("-");
+
+              this.flatWorkouts.push({
+                date: date,
+                label: _date[2] + " " + this._getMonthName(_date[1]) + " " + _date[0],
+              });
+
+              return date;
+            });
+            this._checkEmpty();
+          });
+      }
+    }
+
   }
 
   private _checkEmpty() {
@@ -180,6 +230,19 @@ export class CoachDashboardComponent implements OnInit {
       case "12":
         return this.doorgetsTranslateService.instant("#December");
     }
+  }
+
+  private _computeResponsiveGrid() {
+    if (this.size < this.responsiveSize) {
+      this.totalColumn = 2;
+    }
+
+    this.rowNumbers = Array.from({length: this.totalColumn}, (_, i) => i);
+  }
+
+  computeFatigueManagementData(workout) {
+    let fatigueManagement = this.fatigueManagementComputer.compute(workout);
+    return fatigueManagement;
   }
 
   openExerciceManagerModal() {

@@ -39,6 +39,12 @@
             </span>
             <div class="btn-group float-right">
               <a
+                class="links-menu mr-4"
+                [routerLink]="['/coach', 'dashboard']"
+              >
+                <i class="fa fa-user"></i> {{ "#Team" | dgTranslate }}
+              </a>
+              <a
                 class="links-menu mr-2"
                 routerLinkActive="active"
                 [routerLink]="['/coach', 'programs']"
@@ -204,13 +210,25 @@
   <ul class="nav nav-tabs nav-pills nav-fill">
     <li class="nav-item">
       <a
+        #team="routerLinkActive"
+        class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
+        routerLinkActive="active"
+        [routerLink]="['/coach', 'dashboard']"
+      >
+        <img class="icon mr-2" src="{{team.isActive ? 'assets/img/team_active.svg' : 'assets/img/team_inactive.svg'}}"/>
+        <span [ngClass]="{ 'isActive': team.isActive }">{{ "#Team" | dgTranslate }}</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a
         #dashboard="routerLinkActive"
         class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
         routerLinkActive="active"
         [routerLink]="['/coach', 'athlet', 'dashboard']"
       >
           <img class="icon" src="{{dashboard.isActive ? 'assets/img/dashboard_active.svg' : 'assets/img/dashboard_inactive.svg'}}"/>
-          <span [ngClass]="{ 'isActive': dashboard.isActive }">{{ "#Dashboard" | dgTranslate }}</span>
+          <span [ngClass]="{ 'isActive': dashboard.isActive }">{{ "#Overview" | dgTranslate }}</span>
       </a>
     </li>
     <li class="nav-item">
@@ -276,7 +294,7 @@
         <i class="fa fa-folder mr-2"></i>
         {{ "#Programs" | dgTranslate }}
       </a>
-    
+
       <a
         class="list-group-item list-group-item-action"
         [routerLink]="['/coach', 'clients']"
