@@ -120,6 +120,11 @@ import { CustomerIntensityComponent } from "./_/components/ui/customer-intensity
 import {ModuleNewMovementComponent} from "./_/templates/templates-modal/templates-modal-exercice-manager/module-new-movement/module-new-movement.component";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import {CoachDashboardPlanningComponent} from "./admin/coach/coach-dashboard/coach-dashboard-planning/coach-dashboard-planning.component";
+import {CoachDashboardPerformanceComponent} from "./admin/coach/coach-dashboard/coach-dashboard-performance/coach-dashboard-performance.component";
+import {CoachDashboardWellnessComponent} from "./admin/coach/coach-dashboard/coach-dashboard-wellness/coach-dashboard-wellness.component";
+import {CoachDashboardMenuComponent} from "./admin/coach/coach-dashboard/coach-dashboard-menu/coach-dashboard-menu.component";
+import {AthletePerformanceComponent} from "./admin/athlete/athlete-performance/athlete-performance.component";
 
 export function newNgTranslate(http: HttpClient) {
   return new NgTranslate(http, "../../assets/locale");
@@ -138,12 +143,17 @@ export function newNgTranslate(http: HttpClient) {
     AthleteDashboardComponent,
     AthleteProfileComponent,
     AthleteTeamComponent,
+    AthletePerformanceComponent,
     AthleteStatsComponent,
     AthleteStatsFatigueManagementComponent,
     AthleteStatsTrainingOverloadComponent,
     AthleteStatsEnergySystemsComponent,
     AthleteCalendarComponent,
     CoachDashboardComponent,
+    CoachDashboardPlanningComponent,
+    CoachDashboardPerformanceComponent,
+    CoachDashboardWellnessComponent,
+    CoachDashboardMenuComponent,
     CoachProgramsComponent,
     CoachSettingsComponent,
     CoachNotificationsComponent,

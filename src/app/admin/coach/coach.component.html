@@ -4,7 +4,10 @@
 >
   <div class="container">
     <h1 class="pb-2 ml-md-0 ml-sm-3 ml-0 mr-3 pt-2">
-      <a [routerLink]="['/coach', 'dashboard']" class="img-logo-brand"
+      <a
+        [routerLink]="['/coach', 'dashboard']"
+        (click)="setActiveTab('planning')"
+        class="img-logo-brand"
         ><img src="/assets/img/logo-final.png" width="82" height="82" alt=""
       /></a>
     </h1>
@@ -41,6 +44,7 @@
               <a
                 class="links-menu mr-4"
                 [routerLink]="['/coach', 'dashboard']"
+                (click)="setActiveTab('planning')"
               >
                 <i class="fa fa-user"></i> {{ "#Team" | dgTranslate }}
               </a>
@@ -70,8 +74,8 @@
                   <a
                     class="dropdown-item"
                     [routerLink]="['/coach', 'dashboard']"
-                    >{{ "#Dashboard" | dgTranslate }}</a
-                  >
+                    (click)="setActiveTab('planning')"
+                    >{{ "#Dashboard" | dgTranslate }}</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" [routerLink]="['/coach', 'clients']">
                     {{ "#Athlets" | dgTranslate }}
@@ -169,6 +173,7 @@
         <span class="left-menu-title"
           >
           <a [routerLink]="['/coach', 'dashboard']"
+             (click)="setActiveTab('planning')"
           >
           <img src="/assets/img/logo-final.png" width="30" height="30" alt=""/>
           </a>
@@ -214,6 +219,7 @@
         class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
         routerLinkActive="active"
         [routerLink]="['/coach', 'dashboard']"
+        (click)="setActiveTab('planning')"
       >
         <img class="icon mr-2" src="{{team.isActive ? 'assets/img/team_active.svg' : 'assets/img/team_inactive.svg'}}"/>
         <span [ngClass]="{ 'isActive': team.isActive }">{{ "#Team" | dgTranslate }}</span>
@@ -278,7 +284,7 @@
 
       <a
       class="list-group-item list-group-item-action"
-      (click)="hiddenMenu()"
+      (click)="hiddenMenu();setActiveTab('planning')"
       routerLinkActive="active"
       [routerLink]="['/coach', 'dashboard']"
       >

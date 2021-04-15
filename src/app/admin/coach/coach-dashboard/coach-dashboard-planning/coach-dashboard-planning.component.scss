@@ -713,7 +713,15 @@ a {
 
 @media (max-width: 480px) {
   .lead-body {
-    margin-top: 65px;
+    margin-top: 50px;
+
+    &.lead-body-athlete {
+      margin-top: 50px;
+    }
+  }
+
+  .col-training-zone {
+    margin-left: 68px;
   }
 
   .fatigue-management-banner {
@@ -869,6 +877,40 @@ a {
         margin-top: -10px;
         width: 100px;
         height: 100px;
+      }
+    }
+  }
+}
+
+
+.nav-bottom-header {
+  color: #ffffff;
+  position: absolute;
+  left: 0;
+  top: 65px;
+  height: 65px;
+  padding: 8px 0 10px 164px;
+  width: 100%;
+  background-color: #161616;
+
+  .content-header {
+    margin-top: 10px;
+
+    .nav-link {
+      text-transform: uppercase;
+      padding-bottom: 10px !important;
+      font-size: 14px;
+      margin-right: 50px;
+      text-decoration: none !important;
+      color: #e1e1e1;
+      @media (max-width: 480px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      &.active {
+        border-bottom: solid 3px #d44000;
       }
     }
   }
