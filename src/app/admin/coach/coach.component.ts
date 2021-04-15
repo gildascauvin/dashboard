@@ -13,6 +13,7 @@ import { ResizeService } from '../../_/services/ui/resize-service.service';
 
 import { TemplatesModalExerciceManagerComponent } from '../../_/templates/templates-modal/templates-modal-exercice-manager/templates-modal-exercice-manager.component';
 import { UsersModalChooseAthletComponent } from './coach-clients/coach-clients-modal/users-modal-choose-athlet/users-modal-choose-athlet.component';
+import {CoachDashboardMenuService} from "./coach-dashboard/coach-dashboard-menu/coach-dashboard-menu.service";
 
 @Component({
   selector: 'app-coach',
@@ -52,6 +53,7 @@ export class CoachComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private elementRef: ElementRef,
+    private coachDashboardMenuService: CoachDashboardMenuService,
     @Inject(DOCUMENT) private _document) { }
 
   ngOnInit(): void {
@@ -80,7 +82,7 @@ export class CoachComponent implements OnInit {
     this.isSelected = false;
     let paths = this.router.url.split('/');
 
-    if (paths.length >= 4 && paths[2] !== 'settings' && paths[2] !== 'programs') {
+    if (paths.length >= 4 && paths[2] !== 'settings' && paths[2] !== 'programs' && paths[2] !== 'dashboard') {
       this.isSelected = true;
     }
 
@@ -92,7 +94,7 @@ export class CoachComponent implements OnInit {
           this.currentUserId = 0;
 
           let paths = this.router.url.split('/');
-          if (paths.length >= 4 && paths[2] !== 'settings' && paths[2] !== 'programs') {
+          if (paths.length >= 4 && paths[2] !== 'settings' && paths[2] !== 'programs' && paths[2] !== 'dashboard') {
             this.isSelected = true;
             this.currentUser = this.authService.getCurrentAthlet() || {};
             this.currentUserId = this.authService.getCurrentAthletId() || 0;
@@ -210,6 +212,11 @@ export class CoachComponent implements OnInit {
     } else {
       this.router.navigateByUrl("/coach/dashboard", { skipLocationChange: true });
     }
+  }
+
+  setActiveTab(tab) {
+    console.log('emit from team menu nav');
+    this.coachDashboardMenuService.onTabChanged.emit(tab);
   }
 
   // private _initClient(isInit?) {

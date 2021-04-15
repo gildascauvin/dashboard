@@ -56,6 +56,10 @@ import { CoachAthleteComponent } from './admin/coach/coach-athlete/coach-athlete
 import { AutoConnectComponent } from './auth/auto-connect/auto-connect.component';
 import {AthleteStatsEnergySystemsComponent} from "./admin/athlete/athlete-stats/athlete-stats-energy-systems/athlete-stats-energy-systems.component";
 import {AthleteTeamComponent} from "./admin/athlete/athlete-team/athlete-team.component";
+import {CoachDashboardPlanningComponent} from "./admin/coach/coach-dashboard/coach-dashboard-planning/coach-dashboard-planning.component";
+import {CoachDashboardPerformanceComponent} from "./admin/coach/coach-dashboard/coach-dashboard-performance/coach-dashboard-performance.component";
+import {CoachDashboardWellnessComponent} from "./admin/coach/coach-dashboard/coach-dashboard-wellness/coach-dashboard-wellness.component";
+import {AthletePerformanceComponent} from "./admin/athlete/athlete-performance/athlete-performance.component";
 
 const routes: Routes = [{
     path: '',
@@ -88,7 +92,19 @@ const routes: Routes = [{
     canActivate: [AuthGuard],
     children: [{
             path: 'dashboard',
-            component: CoachDashboardComponent
+            component: CoachDashboardComponent,
+            children: [
+              {
+                  path: '',
+                  component: CoachDashboardPlanningComponent
+              },{
+                  path: 'performance',
+                  component: CoachDashboardPerformanceComponent
+              },{
+                  path: 'wellness',
+                  component: CoachDashboardWellnessComponent
+              }
+            ]
         },{
             path: 'athlet',
             component: CoachAthleteComponent,
@@ -186,6 +202,9 @@ const routes: Routes = [{
       }, {
         path: 'team',
         component: AthleteTeamComponent
+      }, {
+        path: 'performance',
+        component: AthletePerformanceComponent
       },{
         path: 'profile',
         component: AthleteProfileComponent,

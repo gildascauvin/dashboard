@@ -19,8 +19,8 @@ export class AppComponent {
   ngOnInit() {
     this.doorgetsTranslateService.init({
       languages: ['en', 'fr'],
-      current: 'fr',
-      default: 'fr'
+      current: 'en',
+      default: 'en'
     });
 
     if (this.loginService.isLogged()) {
