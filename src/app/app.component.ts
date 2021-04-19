@@ -31,7 +31,7 @@ export class AppComponent {
       let coachEmail = user.username;
 
       if (this.authService.isAthlet()) {
-        if (user.coachs[0]) {
+        if (user.coachs && user.coachs[0]) {
           coachId = user.coachs[0].user_id;
           coachEmail = user.coachs[0].coach.username;
         }
