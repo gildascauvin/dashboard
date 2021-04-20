@@ -109,14 +109,14 @@
   class="responsive-left-menu fixed-bottom text-white"
 >
   <ul class="nav nav-tabs nav-pills nav-fill">
-    <li *ngIf="user.coachs.length > 0" class="nav-item">
+    <li *ngIf="user.coachs && user.coachs.length > 0" class="nav-item">
       <a
         #team="routerLinkActive"
         class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
         routerLinkActive="active"
         [routerLink]="['team']"
       >
-        <img class="icon mr-2" src="{{team.isActive ? 'assets/img/team_active.svg' : 'assets/img/team_inactive.svg'}}"/>
+        <img class="icon" src="{{team.isActive ? 'assets/img/team_active.svg' : 'assets/img/team_inactive.svg'}}"/>
         <span [ngClass]="{ 'isActive': team.isActive }">{{ "#Team" | dgTranslate }}</span>
       </a>
     </li>

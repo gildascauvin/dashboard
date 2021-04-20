@@ -221,7 +221,7 @@
         [routerLink]="['/coach', 'dashboard']"
         (click)="setActiveTab('planning')"
       >
-        <img class="icon mr-2" src="{{team.isActive ? 'assets/img/team_active.svg' : 'assets/img/team_inactive.svg'}}"/>
+        <img class="icon" src="{{team.isActive ? 'assets/img/team_active.svg' : 'assets/img/team_inactive.svg'}}"/>
         <span [ngClass]="{ 'isActive': team.isActive }">{{ "#Team" | dgTranslate }}</span>
       </a>
     </li>
