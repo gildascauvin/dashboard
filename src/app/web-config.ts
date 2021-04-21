@@ -243,5 +243,10 @@ export const webConfig = {
 		{id: 1, icon: "logo-power", classCss: "power-bar"},
 		{id: 2, icon: "logo-plyo", classCss: "plyometrics-bar"},
 		{id: 3, icon: "logo-stretch", classCss: "stretching-bar"}
-	]
+	],
+  plans: {
+ 	  3: 'Free trial',
+    4: 'Paywall',
+    5: 'Premium'
+  }
 };

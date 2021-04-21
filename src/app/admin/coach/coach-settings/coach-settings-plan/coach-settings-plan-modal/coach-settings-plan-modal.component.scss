@@ -1,0 +1,36 @@
+.modal-body {
+  padding: 40px;
+  background: #222;
+
+  .mail-to {
+    color: #d44000;
+    font-size: 16px;
+    margin: 20px 0 5px;
+    display: inline-block;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  p {
+    color: #fff;
+    margin: 0;
+  }
+
+  a {
+    text-decoration: none;
+
+    &.btn {
+      border-radius: 5px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-body {
+    p, a {
+      font-size: 13px;
+    }
+  }
+}

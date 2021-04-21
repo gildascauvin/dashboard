@@ -25,7 +25,7 @@ export class AppComponent {
 
     if (this.loginService.isLogged()) {
 
-      let user = this.authService.isCoach() ? this.authService.getUserClientData() : this.authService.getUserData();
+      let user = this.authService.isCoach() ? this.authService.getUserData() : this.authService.getUserClientData();
 
       let coachId = user.id;
       let coachEmail = user.username;
@@ -48,7 +48,6 @@ export class AppComponent {
           email: coachEmail
         }
       });
-
     }
   }
 }

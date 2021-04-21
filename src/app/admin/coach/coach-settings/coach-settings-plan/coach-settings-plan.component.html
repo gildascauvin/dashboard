@@ -1,1 +1,1 @@
-<b>{{ '#Plan' | dgTranslate }}:</b> Free
+<b>{{ '#Plan' | dgTranslate }}:</b> {{ configPlans[user.plan_id] ? configPlans[user.plan_id] : "Free" }}

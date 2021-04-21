@@ -22,8 +22,6 @@ export class CoachDashboardComponent implements OnInit {
   ngOnInit(): void {
     let paths = this.router.url.split('/');
 
-    console.log(paths);
-
     if (paths.length >= 3 && ((paths[2] === 'coach' && paths[3] === 'performance') || ((paths[1] === 'athlete' && paths[2] === 'performance')))) {
         this.setActiveTab('performance');
     }
