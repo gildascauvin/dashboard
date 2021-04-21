@@ -9,7 +9,7 @@
                   <div class="text-right">
                     <div class="btn-group">
 
-                      <a class="links-menu mr-4" routerLinkActive="active" [routerLink]="['/athlete', 'team']">
+                      <a *ngIf="user.coachs && user.coachs.length > 0" class="links-menu mr-4" routerLinkActive="active" [routerLink]="['/athlete', 'team']">
                         <i class="fa fa-user"></i> {{ '#Team' | dgTranslate }}
                       </a>
 

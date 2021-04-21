@@ -14,6 +14,8 @@ import { ResizeService } from '../../_/services/ui/resize-service.service';
 import { TemplatesModalExerciceManagerComponent } from '../../_/templates/templates-modal/templates-modal-exercice-manager/templates-modal-exercice-manager.component';
 import { UsersModalChooseAthletComponent } from './coach-clients/coach-clients-modal/users-modal-choose-athlet/users-modal-choose-athlet.component';
 import {CoachDashboardMenuService} from "./coach-dashboard/coach-dashboard-menu/coach-dashboard-menu.service";
+import {UsersService} from "../../_/templates/users.service";
+import {CoachSettingsPlanModalComponent} from "./coach-settings/coach-settings-plan/coach-settings-plan-modal/coach-settings-plan-modal.component";
 
 @Component({
   selector: 'app-coach',
@@ -48,6 +50,7 @@ export class CoachComponent implements OnInit {
     private _cdr: ChangeDetectorRef,
     private authService: AuthService,
     private userService: UserService,
+    private usersService: UsersService,
     private modalService: BsModalService,
     private resizeSvc: ResizeService,
     private router: Router,
@@ -102,6 +105,8 @@ export class CoachComponent implements OnInit {
         }
       }
     );
+
+    this._verifyUserPlan();
   }
 
   ngOnDestroy(): void {
@@ -113,8 +118,28 @@ export class CoachComponent implements OnInit {
     });
   }
 
+  _verifyUserPlan() {
+    this.usersService.getOne(this.user.id).subscribe((user: any) => {
+      this._initData(user);
+      if (user && user.plan_id == 4) {
+        this.openPaywallModal();
+      }
+    });
+  }
+
   logout() {
     this.authService.logout();
+  }
+
+  openPaywallModal() {
+    const initialState = {};
+
+    this.bsModalRef = this.modalService.show(CoachSettingsPlanModalComponent, {
+      keyboard: false,
+      backdrop: 'static',
+      initialState: initialState,
+      class: 'modal-lg modal--plan'
+    });
   }
 
   openExerciceManagerModal() {
@@ -248,5 +273,12 @@ export class CoachComponent implements OnInit {
 
     this.size = currentSize;
     this.resizeSvc.onResize(currentSize);
+  }
+
+  private _initData(user) {
+    if (user && user.data) {
+      this.user = _.cloneDeep(user);
+      this.userService.initUserInfos(user);
+    }
   }
 }

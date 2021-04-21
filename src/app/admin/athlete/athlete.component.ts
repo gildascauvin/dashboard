@@ -11,6 +11,9 @@ import { UserService } from '../../_/services/model/user.service';
 import { ResizeService } from '../../_/services/ui/resize-service.service';
 
 import { TemplatesModalExerciceManagerComponent } from '../../_/templates/templates-modal/templates-modal-exercice-manager/templates-modal-exercice-manager.component';
+import {UsersService} from "../../_/templates/users.service";
+import * as _ from "lodash";
+import {CoachSettingsPlanModalComponent} from "../coach/coach-settings/coach-settings-plan/coach-settings-plan-modal/coach-settings-plan-modal.component";
 
 @Component({
   selector: 'app-athlete',
@@ -37,6 +40,7 @@ export class AthleteComponent implements OnInit {
   constructor(
   	private authService: AuthService,
     private userService: UserService,
+    private usersService: UsersService,
     private modalService: BsModalService,
     private resizeSvc: ResizeService,
     private router: Router,
@@ -61,6 +65,7 @@ export class AthleteComponent implements OnInit {
     });
 
     this.detectScreenSize();
+    this._verifyUserPlan();
   }
 
   ngOnDestroy(): void {
@@ -74,6 +79,26 @@ export class AthleteComponent implements OnInit {
 
   logout() {
   	this.authService.logout();
+  }
+
+  _verifyUserPlan() {
+    this.usersService.getOne(this.user.id).subscribe((user: any) => {
+      this._initData(user);
+      if (user && user.plan_id == 4) {
+        this.openPaywallModal();
+      }
+    });
+  }
+
+  openPaywallModal() {
+    const initialState = {};
+
+    this.bsModalRef = this.modalService.show(CoachSettingsPlanModalComponent, {
+      keyboard: false,
+      backdrop: 'static',
+      initialState: initialState,
+      class: 'modal-lg modal--plan'
+    });
   }
 
   openExerciceManagerModal() {
@@ -153,5 +178,12 @@ export class AthleteComponent implements OnInit {
     console.log('detectScreenSize');
     this.size = currentSize;
     this.resizeSvc.onResize(currentSize);
+  }
+
+  private _initData(user) {
+    if (user && user.data) {
+      this.user = _.cloneDeep(user);
+      this.userService.initUserClientInfos(user);
+    }
   }
 }
