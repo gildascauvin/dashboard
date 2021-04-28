@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import {Component, Inject, Input, OnInit} from "@angular/core";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import * as _ from "lodash";
 import { BsModalRef } from "ngx-bootstrap/modal";
@@ -7,19 +7,31 @@ import { webConfig } from "../../../../web-config";
 import { FormModalCore } from "../../../../_/core/form-modal.core";
 import { TemplatesService } from "../../templates.service";
 import { UsersService } from "../../users.service";
+import {ResizeService} from "../../../services/ui/resize-service.service";
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: "tpc-templates-modal-exercice-manager",
   templateUrl: "./templates-modal-exercice-manager.component.html",
   styleUrls: ["./templates-modal-exercice-manager.component.scss"],
 })
-export class TemplatesModalExerciceManagerComponent
-  extends FormModalCore
-  implements OnInit {
+export class TemplatesModalExerciceManagerComponent extends FormModalCore implements OnInit {
+
+  exerciceTypes = {
+    1: {name: 'Simple exercices', description: 'An exercice for reps, meters...'},
+    2: {name: 'Complex exercices', description: 'Set of multiple movments (complex, supersets, plyo + Sprints...)'},
+    3: {name: 'Timed exercices', description: 'Circuit and cross training: Hiit, Amrap, For time, Emoms...'},
+    7: {name: 'Cardio & intervals', description: 'Long distance/time and intervals'},
+    8: {name: 'Custom', description: 'Do you own thing !'}
+  };
+
+  size: number = 1;
+  responsiveSize: number = 768;
+
   model: any = {
     movements: [],
     name: "",
-    step: 1,
+    step: 1
   };
   @Input() test: any;
 
@@ -68,7 +80,9 @@ export class TemplatesModalExerciceManagerComponent
     public bsModalRef: BsModalRef,
     private usersService: UsersService,
     private templatesService: TemplatesService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    @Inject(DOCUMENT) private _document,
+    private resizeSvc: ResizeService
   ) {
     super();
   }
@@ -86,9 +100,20 @@ export class TemplatesModalExerciceManagerComponent
   }
 
   ngOnInit(): void {
+    this.detectScreenSize();
+
     if (this.modelInput) {
       this.model = this.modelInput;
     }
+
+    // create
+    if (this.model.step == 1) {
+      this.model.step = 2;
+      this.model.type = {id: 8, name: 'Custom',};
+    }
+
+    console.log('ngOnInit:', this.model);
+
     if (this.workoutInput) {
       this.workout = this.workoutInput;
     }
@@ -108,8 +133,6 @@ export class TemplatesModalExerciceManagerComponent
 
     this.model.sets = this.model.sets || 5;
     this.model.updated = true;
-
-    console.log(this);
   }
 
   ngOnDestroy(): void {
@@ -333,5 +356,13 @@ export class TemplatesModalExerciceManagerComponent
       id: id,
       name: name,
     };
+
+    console.log(this.model);
+  }
+
+  private detectScreenSize() {
+    const currentSize = this._document.body.clientWidth;
+    this.size = currentSize;
+    this.resizeSvc.onResize(currentSize);
   }
 }
