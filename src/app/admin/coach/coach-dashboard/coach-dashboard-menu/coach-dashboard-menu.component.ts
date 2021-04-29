@@ -17,7 +17,8 @@ export class CoachDashboardMenuComponent implements OnInit {
 
   links : any = {
     planning: ['/coach', 'dashboard'],
-    performance: ['/coach', 'dashboard', 'performance']
+    performance: ['/coach', 'dashboard', 'performance'],
+    wellness: ['/coach', 'dashboard', 'wellness'],
   };
 
   constructor(
@@ -31,7 +32,8 @@ export class CoachDashboardMenuComponent implements OnInit {
     if (this.isFromUrl === false) {
       this.links = {
         planning: ['/athlete', 'team'],
-        performance: ['/athlete', 'performance']
+        performance: ['/athlete', 'performance'],
+        wellness: ['/athlete', 'wellness']
       };
     }
   }

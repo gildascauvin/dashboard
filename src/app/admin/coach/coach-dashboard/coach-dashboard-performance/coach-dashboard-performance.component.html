@@ -11,7 +11,7 @@
           <th class="hidden-mobile" scope="col"></th>
         </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="dataPerformanceIsLoading">
         <tr *ngFor="let client of clients; let i = index">
           <td class="td-circle-user">
             <div class="tpc-circle">
