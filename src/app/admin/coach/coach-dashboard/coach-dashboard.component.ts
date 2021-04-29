@@ -22,13 +22,16 @@ export class CoachDashboardComponent implements OnInit {
   ngOnInit(): void {
     let paths = this.router.url.split('/');
 
-    if (paths.length >= 3 && ((paths[2] === 'coach' && paths[3] === 'performance') || ((paths[1] === 'athlete' && paths[2] === 'performance')))) {
+    if (paths.length >= 3 && ((paths[1] === 'coach' && paths[3] === 'performance') || ((paths[1] === 'athlete' && paths[2] === 'performance')))) {
         this.setActiveTab('performance');
+    }
+
+    if (paths.length >= 3 && ((paths[1] === 'coach' && paths[3] === 'wellness') || ((paths[1] === 'athlete' && paths[2] === 'wellness')))) {
+      this.setActiveTab('wellness');
     }
 
     this.sub.onTabChanged = this.coachDashboardMenuService.onTabChanged.subscribe(
       (tab) => {
-        console.log('subscribe : ' + tab);
         this.setActiveTab(tab);
       }
     );

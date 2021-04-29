@@ -60,6 +60,7 @@ import {CoachDashboardPlanningComponent} from "./admin/coach/coach-dashboard/coa
 import {CoachDashboardPerformanceComponent} from "./admin/coach/coach-dashboard/coach-dashboard-performance/coach-dashboard-performance.component";
 import {CoachDashboardWellnessComponent} from "./admin/coach/coach-dashboard/coach-dashboard-wellness/coach-dashboard-wellness.component";
 import {AthletePerformanceComponent} from "./admin/athlete/athlete-performance/athlete-performance.component";
+import {AthleteWellnessComponent} from "./admin/athlete/athlete-wellness/athlete-wellness.component";
 
 const routes: Routes = [{
     path: '',
@@ -205,6 +206,9 @@ const routes: Routes = [{
       }, {
         path: 'performance',
         component: AthletePerformanceComponent
+      },{
+        path: 'wellness',
+        component: AthleteWellnessComponent
       },{
         path: 'profile',
         component: AthleteProfileComponent,

@@ -25,6 +25,16 @@
           <span> {{ "#Performance" | dgTranslate }}</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a
+          class="nav-link py-0 d-flex"
+          (click)="setActiveTab('wellness')"
+          [routerLink]="this.links.wellness"
+          [ngClass]="{ 'active': activeTab == 'wellness' }"
+        >
+          <span> {{ "#Wellness" | dgTranslate }}</span>
+        </a>
+      </li>
     </ul>
   </div>
 </div>

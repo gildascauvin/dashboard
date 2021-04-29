@@ -22,7 +22,9 @@ export class CoachDashboardPerformanceComponent implements OnInit {
   bsModalRef: BsModalRef;
   sub: any = {};
 
-  dataPerformanceClients : any = [];
+  dataPerformanceIsLoading: boolean = false;
+  dataPerformanceClients: any = [];
+  dataPerformanceSorting: any = [];
 
   clients: any;
 
@@ -83,23 +85,30 @@ export class CoachDashboardPerformanceComponent implements OnInit {
     let fromDate = this.formatDate(from) + ' 00:00:00';
     let toDate = this.formatDate(to) + ' 00:00:00';
 
-    clients.forEach((client) => {
+    clients.forEach((client, key) => {
       let clientId = client.client_id;
 
       this.sub.onGetAllWorkout = this.usersService
         .getAllClientWorkouts(clientId, fromDate, toDate, 1)
         .subscribe((workouts: any) => {
-          this.dataPerformanceClients[clientId] = this._computePerformance(workouts);
+          this.dataPerformanceClients[clientId] = this._computePerformance(clientId, client.status, workouts);
+
+          if (Object.is(this.clients.length - 1, key)) {
+            this.clients.sort((a,b) => this.dataPerformanceSorting['client-id-' + b.client_id] - this.dataPerformanceSorting['client-id-' + a.client_id]);
+            this.dataPerformanceIsLoading = true;
+          }
         });
     });
   }
 
-  _computePerformance(workouts) {
+  _computePerformance(clientId, clientStatus, workouts) {
 
     let energyScores = 0;
     let energyScoresLength = 0;
     let rpeScores = 0;
     let rpeScoresLength = 0;
+
+    let totalCompleteData = 0;
 
     for (let dayWorkout in workouts) {
       let dayWorkouts = workouts[dayWorkout];
@@ -137,13 +146,25 @@ export class CoachDashboardPerformanceComponent implements OnInit {
     if (zoneScore > 1.33) {
       zoneName = 'Recovery';
       zoneColor = 'yellow';
+      totalCompleteData += 2;
     } else if (zoneScore < -1.33) {
       zoneName = 'Overreaching';
       zoneColor = 'red';
+      totalCompleteData += 1;
     } else if (zoneScore !== null) {
       zoneName = 'Optimal';
       zoneColor = 'green';
+      totalCompleteData += 3;
     }
+
+    // en attente
+    if (clientStatus == 1) {
+      totalCompleteData = -1;
+    } else if (clientStatus == 3) {
+      totalCompleteData = -2;
+    }
+
+    this.dataPerformanceSorting['client-id-' + clientId] = totalCompleteData;
 
     return {
       'zoneColor': zoneColor,

@@ -8,3 +8,7 @@
     <app-coach-dashboard-performance [isFromUrl]="isFromUrl"></app-coach-dashboard-performance>
   </ng-container>
 
+  <ng-container *ngIf="activeTab == 'wellness'">
+    <app-coach-dashboard-wellness [isFromUrl]="isFromUrl"></app-coach-dashboard-wellness>
+  </ng-container>
+
