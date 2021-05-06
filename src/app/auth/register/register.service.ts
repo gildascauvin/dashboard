@@ -19,6 +19,15 @@ export class RegisterService {
       .signup(model);
   }
 
+  confirmSignupDemo(data) {
+    return this.loginService.confirmSignupDemo(data);
+  }
+
+  signupDemo() {
+    return this.loginService
+      .signupDemo();
+  }
+
   isAthlet() {
     return this.loginService.isAthlet();
   }

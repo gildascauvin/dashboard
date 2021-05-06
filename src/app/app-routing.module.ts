@@ -31,6 +31,8 @@ import { AthleteProgramsComponent } from './admin/athlete/athlete-programs/athle
 import { AthleteProgramsDetailComponent } from './admin/athlete/athlete-programs/athlete-programs-detail/athlete-programs-detail.component';
 import { AthleteProfilePerformanceComponent } from './admin/athlete/athlete-profile/athlete-profile-performance/athlete-profile-performance.component';
 import { AthleteProfileReadinessComponent } from './admin/athlete/athlete-profile/athlete-profile-readiness/athlete-profile-readiness.component';
+import { AthleteOnboardingComponent } from './admin/athlete/athlete-onboarding/athlete-onboarding.component';
+
 
 import { CoachDashboardComponent } from './admin/coach/coach-dashboard/coach-dashboard.component';
 
@@ -86,6 +88,9 @@ const routes: Routes = [{
     },{
         path: 'connect-as/:token',
         component: AutoConnectComponent
+    },{
+        path: 'onboarding',
+        component: AthleteOnboardingComponent
     }]
 }, {
     path: 'coach',

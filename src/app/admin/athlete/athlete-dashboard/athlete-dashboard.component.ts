@@ -19,6 +19,7 @@ import { TemplatesModalExerciceManagerComponent } from '../../../_/templates/tem
 import {TemplatesModalStartSessionComponent} from "../../../_/templates/templates-modal/templates-modal-start-session/templates-modal-start-session.component";
 import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 import {FatigueManagementComputerService} from "../../../_/services/stats/fatigue-management-computer.service";
+import {AthleteDashboardService} from "./athlete-dashboard.service";
 
 @Component({
   selector: 'app-athlete-dashboard',
@@ -27,6 +28,7 @@ import {FatigueManagementComputerService} from "../../../_/services/stats/fatigu
 })
 export class AthleteDashboardComponent implements OnInit {
   @Input() isFromUrl = true;
+  @Input() hideCalendar = false;
 
   bsModalRef: BsModalRef;
 
@@ -66,6 +68,7 @@ export class AthleteDashboardComponent implements OnInit {
     private elementRef: ElementRef,
     private fatigueManagementComputer: FatigueManagementComputerService,
     @Inject(DOCUMENT) private _document,
+    private athleteDashboardService: AthleteDashboardService
   	) {
 
   }
@@ -103,6 +106,7 @@ export class AthleteDashboardComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
+    this.sub.onWorkoutSaved && this.sub.onWorkoutSaved.unsubscribe();
     this.sub.onUpdate && this.sub.onUpdate.unsubscribe();
     this.sub.userInfo && this.sub.userInfo.unsubscribe();
   	this.sub.resizeSvc && this.sub.resizeSvc.unsubscribe();
@@ -283,6 +287,37 @@ export class AthleteDashboardComponent implements OnInit {
 
     this.bsModalRef = this.modalService.show(
       TemplatesModalStartSessionComponent,
+      {
+        keyboard: false,
+        initialState: initialState,
+        class: "modal-lg",
+      }
+    );
+  }
+
+  addExerciceToWorkout(day, exercices, workout) {
+    this.athleteDashboardService.onWorkoutUpdated.emit();
+
+    exercices.push(this.getExercice());
+    let model = exercices[exercices.length - 1];
+
+    if (!model.step) {
+      model.step = 1;
+    }
+
+    const initialState = {
+      day: day,
+      model: model,
+      workout: workout,
+      isPlanning: true,
+      userId: this.user.id,
+      profil: this.user.profil || [],
+      isFromUrl: this.isFromUrl,
+      // model: _.cloneDeep(model),
+    };
+
+    this.bsModalRef = this.modalService.show(
+      TemplatesModalExerciceManagerComponent,
       {
         keyboard: false,
         initialState: initialState,

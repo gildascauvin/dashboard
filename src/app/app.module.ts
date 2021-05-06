@@ -127,6 +127,7 @@ import {CoachDashboardMenuComponent} from "./admin/coach/coach-dashboard/coach-d
 import {AthletePerformanceComponent} from "./admin/athlete/athlete-performance/athlete-performance.component";
 import {CoachSettingsPlanModalComponent} from "./admin/coach/coach-settings/coach-settings-plan/coach-settings-plan-modal/coach-settings-plan-modal.component";
 import {AthleteWellnessComponent} from "./admin/athlete/athlete-wellness/athlete-wellness.component";
+import {AthleteOnboardingComponent} from "./admin/athlete/athlete-onboarding/athlete-onboarding.component";
 
 export function newNgTranslate(http: HttpClient) {
   return new NgTranslate(http, "../../assets/locale");
@@ -143,6 +144,7 @@ export function newNgTranslate(http: HttpClient) {
     CoachComponent,
     AthleteComponent,
     AthleteDashboardComponent,
+    AthleteOnboardingComponent,
     AthleteProfileComponent,
     AthleteTeamComponent,
     AthletePerformanceComponent,

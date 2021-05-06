@@ -5,6 +5,7 @@ import { AuthService } from "src/app/_/services/http/auth.service";
 import { UserService } from "src/app/_/services/model/user.service";
 import { TemplatesService } from "../../templates.service";
 import { UsersService } from "../../users.service";
+import {AthleteDashboardService} from "../../../../admin/athlete/athlete-dashboard/athlete-dashboard.service";
 
 @Component({
   selector: "app-templates-modal-start-session",
@@ -36,7 +37,8 @@ export class TemplatesModalStartSessionComponent implements OnInit {
     private authService: AuthService,
     private usersService: UsersService,
     private userService: UserService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private athleteDashboardService: AthleteDashboardService
   ) {}
 
   ngOnInit(): void {
@@ -133,6 +135,8 @@ export class TemplatesModalStartSessionComponent implements OnInit {
   }
 
   save(isEndSession?: boolean) {
+
+    this.athleteDashboardService.onEnergyScoreUpdated.emit();
 
     let exercices = this.workout.program.exercices.map((exercice) => {
 
