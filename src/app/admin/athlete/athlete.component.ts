@@ -77,6 +77,10 @@ export class AthleteComponent implements OnInit {
     });
   }
 
+  signupDemo() {
+    this.router.navigateByUrl('/signup');
+  }
+
   logout() {
   	this.authService.logout();
   }

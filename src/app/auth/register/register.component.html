@@ -65,6 +65,12 @@
 											{{ "#By clicking on 'Signup', you accept the terms of use" | dgTranslate }}
 										</div>
 									</div>
+
+                  <div *ngIf="!isDemoAccount" class="col-md-12 mt-2">
+                    <div class="form-group no-margin">
+                      <a class="btn btn-secondary btn-secondary--register btn-block" href="#" [routerLink]="['/onboarding']">{{ '#Subscribe later' | dgTranslate }}</a>
+                    </div>
+                  </div>
 								</div>
 							</div>
 						</div>

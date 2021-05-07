@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DoorgetsTranslateService } from 'doorgets-ng-translate';
 import {LoginService} from "./auth/login/login.service";
 import {AuthService} from "./_/services/http/auth.service";
+import {Router} from "@angular/router";
 
 declare let pendo: any;
 
@@ -12,6 +13,7 @@ declare let pendo: any;
 })
 export class AppComponent {
   constructor(
+    private router: Router,
     private doorgetsTranslateService: DoorgetsTranslateService,
     private loginService: LoginService,
     private authService: AuthService) {}
@@ -48,6 +50,15 @@ export class AppComponent {
           email: coachEmail
         }
       });
+
+      if(user.onboarding !== null && (
+        (
+          user.plan_id === 6 && user.onboarding.signup == false)
+        || (user.plan_id !== 6 && user.onboarding.skip === false)
+      )
+      ) {
+        this.router.navigateByUrl('/onboarding');
+      }
     }
   }
 }

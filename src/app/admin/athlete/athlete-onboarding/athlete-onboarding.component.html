@@ -1,0 +1,35 @@
+<ng-container *ngIf="isLogged">
+  <nav class="navbar navbar-expand-md fixed-top">
+      <a href="#" class="img-logo-brand" [routerLink]="['onboarding']"><img src="/assets/img/logo-final.png" width="82" height="82" alt=""></a>
+      <div class="nav-header">
+        <button *ngIf="user.plan_id == 6" (click)="signup()" class="btn btn-primary float-right mr-4">Signup</button>
+        <button *ngIf="user.plan_id != 6" (click)="skip()" class="btn btn-primary float-right mr-4">Skip</button>
+        <ul class="navbar-nav flex-row justify-content-center">
+          <li class="nav-item active">
+            <span class="position">1</span>
+            <a class="nav-link d-sm-flex">
+              <span class="title">{{ size <= responsiveSize ? 'Session' : 'Create 1st session' }}</span>
+            </a>
+          </li>
+
+          <li [ngClass]="[onboardingStep.firstSession ? 'nav-item active' : 'nav-item']">
+            <span class="position">2</span>
+            <a class="nav-link d-sm-flex">
+              <span class="title">{{ size <= responsiveSize ? 'Energy' : 'Energy level' }}</span>
+            </a>
+          </li>
+
+          <li [ngClass]="[onboardingStep.firstSession && onboardingStep.energyScore ? 'nav-item active' : 'nav-item']">
+            <span class="position">3</span>
+            <a class="nav-link d-sm-flex">
+              <span class="title">{{ size <= responsiveSize ? 'Stats' : 'Get training stats' }}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+  </nav>
+
+  <div class="container-fluid content">
+      <app-athlete-dashboard [isFromUrl]="isFromUrl" [hideCalendar]="hideCalendar"></app-athlete-dashboard>
+  </div>
+</ng-container>

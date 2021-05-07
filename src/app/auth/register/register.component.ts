@@ -12,6 +12,10 @@ import { FormCore } from '../../_/core/form.core';
 
 import { RegisterService } from './register.service';
 import { LoginService } from '../login/login.service';
+import { AuthService } from 'src/app/_/services/http/auth.service';
+import * as _ from "lodash";
+import {UsersService} from "../../_/templates/users.service";
+import { UserService } from 'src/app/_/services/model/user.service';
 
 @Component({
   selector: 'app-register',
@@ -22,6 +26,8 @@ export class RegisterComponent extends FormCore implements OnInit {
   siteKey: string = '6LfTXvwUAAAAAE-jlWk3OAvIkAxucJ-neT4bCdYM';
   recaptcha: any;
   token: any;
+
+  config = webConfig;
 
   baseColor = '#FFF';
   strength: number = 0;
@@ -61,8 +67,14 @@ export class RegisterComponent extends FormCore implements OnInit {
   timezone: any[] = webConfig.timezone;
   configMrv: any = webConfig.mrv;
 
+  sub: any = {};
+  isDemoAccount: boolean = false;
+
   constructor(
     private router: Router,
+    private usersService: UsersService,
+    private userService: UserService,
+    private authService: AuthService,
     private calendar: NgbCalendar,
     private toastrService: ToastrService,
     private signupService: RegisterService,
@@ -76,7 +88,14 @@ export class RegisterComponent extends FormCore implements OnInit {
     this.currentLanguage = this.doorgetsTranslateService.getConfig().current
 
     if (this.signupService.isLogged()) {
-      this.router.navigateByUrl(this.signupService.getUserPath());
+      let user = this.authService.isCoach() ? this.authService.getUserData() : this.authService.getUserClientData();
+
+      if( user.plan_id == 6 && user.onboarding !== undefined && user.onboarding.signup === true) {
+        this.isDemoAccount = true;
+      } else {
+        this.isDemoAccount = false;
+        this.router.navigateByUrl(this.signupService.getUserPath());
+      }
     }
 
     // this.reCaptchaV3Service.execute(this.siteKey, 'homepage', (token) => {
@@ -92,21 +111,54 @@ export class RegisterComponent extends FormCore implements OnInit {
 
     this.model.birthday = `${this.birthdayModel.year}-${this.birthdayModel.month}-${this.birthdayModel.day}`;
 
-    this.signupService.signup(this.model).subscribe((data: any) => {
-      if (data.errors) {
-        this.errors = data.errors;
-        this.toastrService.error(data.message || 'An error has occurred');
-      } else {
-        if (data.user) {
-          this.signupService.setUserToken(data.user.token);
-          this.signupService.setUserRefreshToken(data.user.refresh_token);
-          this.signupService.setUserType(data.user.role_id);
-          this.loginService.setUserId(data.user_id);
-        }
+    if (this.isDemoAccount === false) {
+      this.signupService.signup(this.model).subscribe((data: any) => {
+        if (data.errors) {
+          this.errors = data.errors;
+          this.toastrService.error(data.message || 'An error has occurred');
+        } else {
+          if (data.user) {
+            this.signupService.setUserToken(data.user.token);
+            this.signupService.setUserRefreshToken(data.user.refresh_token);
+            this.signupService.setUserType(data.user.role_id);
+            this.loginService.setUserId(data.user_id);
+          }
 
-        this.router.navigateByUrl(this.loginService.getUserPath());
-      }
-    });
+          this.router.navigateByUrl('/onboarding');
+        }
+      });
+    } else {
+
+      let user = this.authService.isCoach() ? this.authService.getUserData() : this.authService.getUserClientData();
+
+      let data = {
+        'user': user,
+        'model': this.model
+      };
+
+      this.signupService.confirmSignupDemo(data).subscribe((data: any) => {
+
+        if (data.errors) {
+          this.errors = data.errors;
+          this.toastrService.error(data.message || 'An error has occurred');
+        } else {
+
+          if (data.user) {
+
+            localStorage.removeItem(this.config.prefixApp + 'athlet_id');
+            localStorage.removeItem(this.config.prefixApp + 'user');
+            localStorage.removeItem(this.config.prefixApp + 'user_client');
+
+            this.signupService.setUserToken(data.user.token);
+            this.signupService.setUserRefreshToken(data.user.refresh_token);
+            this.signupService.setUserType(data.user.role_id);
+            this.loginService.setUserId(data.user_id);
+          }
+
+          this.router.navigateByUrl(this.loginService.getUserPath());
+        }
+      });
+    }
   }
 
   handleSuccessCaptcha(e) {

@@ -11,7 +11,7 @@
 
         <div class="row">
           <div [ngClass]="[isFirst ? 'col-12 title-group-datepicker' : 'col-12']">
-            <div *ngIf="isFirst" [ngClass]="[size <= responsiveSize ? '' : 'float-right']">
+            <div *ngIf="isFirst && hideCalendar === false" [ngClass]="[size <= responsiveSize ? '' : 'float-right']">
               <div class="input-group">
                 <input class="form-control calendar" name="dp" (ngModelChange)="onDateSelected($event)" (click)="d.toggle()"
                        [ngModel]="startedAtModel" ngbDatepicker #d="ngbDatepicker" />
@@ -44,7 +44,8 @@
                     </div>
 
                     <div class="descriptions">
-                      <div class="title">Hi {{ user.data.firstname }}</div>
+                      <ng-container *ngIf="user.plan_id != 6"><div class="title">Hi {{ user.data.firstname }}</div></ng-container>
+                      <ng-container *ngIf="user.plan_id == 6"><div class="title">Hi</div></ng-container>
                       <div class="title title-separator">,</div>
                       <div class="title">How do you feel today ?</div>
                       <button class="cta text-white" (click)="openStartSessionModal(workout, workout.day, true)">User input</button>
@@ -102,7 +103,7 @@
               <div *ngIf="workout.name" class="workout-session-title">
                 {{ workout.name }}
               </div>
-              <button *ngIf="checkIsToday(_wo.date)" class="btn btn-primary start-session"
+              <button *ngIf="checkIsToday(_wo.date) && workout.program.exercices.length > 0" class="btn btn-primary start-session"
                       (click)="openStartSessionModal(workout, workout.day)">
                 {{ "#Start Session" | dgTranslate }}
               </button>
@@ -115,6 +116,14 @@
                   <app-athlete-movement-list [class]="'dashboard'" [exercice]="exercice" [hideLocalBox]="true"></app-athlete-movement-list>
                 </li>
               </ul>
+
+              <button *ngIf="hideCalendar" class="btn btn-block add-exercice mt-3" (click)="addExerciceToWorkout(
+                      workout.day,
+                      workout.program.exercices,
+                      workout
+                    );">
+                {{"#Add an exercice" | dgTranslate }}
+              </button>
             </div>
           </ng-container>
         </ng-container>

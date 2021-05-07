@@ -62,6 +62,14 @@ export class AuthService {
     return this.httpService.signup(data);
   }
 
+  signupDemo() {
+    return this.httpService.signupDemo();
+  }
+
+  confirmSignupDemo(data) {
+    return this.httpService.confirmSignupDemo(data);
+  }
+
   refreshToken() {
     return this.httpService.refreshToken();
   }

@@ -21,6 +21,8 @@ export class HttpService {
   baseConfirmAccount: string = webConfig.base + 'confirm-account';
   baseNotConfirmAccount: string = webConfig.base + 'resend-confirm-account';
   baseSingup: string = webConfig.base + 'register';
+  baseSignupDemo: string = webConfig.base + 'register-demo';
+  baseConfirmSignupDemo: string = webConfig.base + 'register-demo-confirm';
   baseRefreshToken: string = webConfig.base + 'token-refresh';
 
   baseForgotPassword: string = webConfig.base + 'forgot-password';
@@ -87,6 +89,14 @@ export class HttpService {
 
   signup(data) {
     return this.http.post(this.baseSingup, data);
+  }
+
+  signupDemo() {
+    return this.http.post(this.baseSignupDemo, []);
+  }
+
+  confirmSignupDemo(data) {
+    return this.http.post(this.baseConfirmSignupDemo, data);
   }
 
   refreshToken() {
