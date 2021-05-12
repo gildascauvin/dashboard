@@ -194,6 +194,7 @@ export class TemplatesModalStartSessionComponent implements OnInit {
       } else {
         this.usersService.onWorkoutSaved.emit(this.workout);
         if (isEndSession) {
+          this.athleteDashboardService.onStartSessionEnded.emit();
           this.bsModalRef.hide();
         } else {
           this.showNextStep();

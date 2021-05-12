@@ -51,12 +51,7 @@ export class AppComponent {
         }
       });
 
-      if(user.onboarding !== null && (
-        (
-          user.plan_id === 6 && user.onboarding.signup == false)
-        || (user.plan_id !== 6 && user.onboarding.skip === false)
-      )
-      ) {
+      if(user.onboarding !== null && user.onboarding.signup == false && user.onboarding.skip === false) {
         this.router.navigateByUrl('/onboarding');
       }
     }

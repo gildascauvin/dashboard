@@ -3,7 +3,6 @@
   <div class="form-row flex-md-wrap p-4 form-new-movement--content">
 
     <div class="col-md-3 col-6">
-
       <div class="d-flex flex-column justify-content-end">
         <div class="input-group flex-column-reverse">
           <input [(ngModel)]="newMovement.name" type="text" class="form-control" />
@@ -30,7 +29,7 @@
       </div>
     </div>
 
-    <div class="col-md-4 col-12">
+    <div class="col-md-4 col-6">
       <div [ngClass]="[size <= responsiveSize ? 'form-group pt-4' : 'form-group pl-4']">
         <div class="d-flex flex-column justify-content-end">
           <div class="input-group flex-column-reverse">
@@ -46,13 +45,21 @@
       </div>
     </div>
 
-    <div class="row">
-      <div [ngClass]="[size <= responsiveSize ? 'col-12 pt-4' : 'col-12']">
-        <button class="btn btn-primary mr-4" (click)="closeNewMovementForm()">{{ '#Cancel' | dgTranslate }}</button>
-        <button class="btn btn-light mr-4" (click)="saveNewMovementForm()">{{ '#Done' | dgTranslate }}</button>
+      <div [ngClass]="[size <= responsiveSize ? 'col-6 pt-4' : 'col-md-4']">
+        <div class="d-flex flex-column justify-content-end">
+          <div class="input-group flex-column-reverse">
+            <input [(ngModel)]="newMovement.imageUrl" type="text" class="form-control" />
+            <div class="input-group-apppend">
+              <span [ngClass]="[size <= responsiveSize ? 'fs-14 p-0' : 'p-0']">{{"#Youtube / image URL" | dgTranslate}}</span>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
 
+      <div [ngClass]="[size <= responsiveSize ? 'col-12 pt-3 d-flex flex-row-reverse' : 'col-md-8 pt-3 d-flex flex-row-reverse']">
+        <button [ngClass]="[size <= responsiveSize ? 'btn btn-gray' : 'btn btn-gray mr-4']" (click)="saveNewMovementForm()">{{ '#Done' | dgTranslate }}</button>
+        <button class="btn btn-light mr-4" (click)="closeNewMovementForm()">{{ '#Cancel' | dgTranslate }}</button>
+      </div>
   </div>
 
 </div>

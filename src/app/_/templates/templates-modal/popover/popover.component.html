@@ -1,13 +1,38 @@
 <ng-template #popContent>
-  <div class="text-center">
-    <img
-      *ngIf="movement.icon"
-      [src]="movement.icon"
-      class="mt-2 mb-2 img-fluid"
-    />
-  </div>
-  <span> {{ movement.description }}</span>
+  <ng-container *ngIf="!movement.icon">
+
+    <div class="row">
+      <div class="col-8">
+        <div class="d-flex flex-column justify-content-end">
+          <div class="input-group flex-column-reverse">
+            <input [(ngModel)]="newMovementIcon" type="text" class="form-control" />
+            <div class="input-group-apppend">
+              <span>{{"#Youtube / image URL" | dgTranslate}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4 pt-3">
+        <button class="btn btn-gray" (click)="updateMovementForm()">{{ '#Done' | dgTranslate }}</button>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="movement.icon">
+    <div class="text-center">
+
+      <ng-container *ngIf="isVideo">
+        <iframe width="{{ videoWidth }}" height="{{ videoHeight }}" [src]="videoSrc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </ng-container>
+
+      <ng-container *ngIf="isVideo === false">
+        <img *ngIf="movement.icon" [src]="movement.icon" class="mt-2 mb-2 img-fluid"/>
+      </ng-container>
+
+    </div>
+    <span> {{ movement.description }}</span>
+  </ng-container>
 </ng-template>
-<button  class="btn btn-default pr-0" container="body" placement="right" [ngbPopover]="popContent" [popoverTitle]="movement.name">
+<button  class="btn btn-default pr-0" container="body" placement="right" [autoClose]="popoverAutoClose" [popoverClass]="popoverClass" [ngbPopover]="popContent" [popoverTitle]="movement.name">
   <i class="fa fa-camera"></i>
 </button>
