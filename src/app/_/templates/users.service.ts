@@ -281,15 +281,21 @@ export class UsersService {
     return this.httpService.delete(`workout/client/${workoutId}`);
   }
 
-  createMovement(name, category_id, unit)
+  createMovement(name, category_id, unit, image_url)
   {
     let model = {
       name: name,
       category_id: category_id,
-      unit: unit
+      unit: unit,
+      image_url: image_url
     };
 
     return this.httpService.post(`movement`, model);
+  }
+
+  updateMovement(model)
+  {
+    return this.httpService.put(`movement/${model.movement_id}`, model);
   }
 
   createMetric(clientId, model) {

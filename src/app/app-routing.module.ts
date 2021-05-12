@@ -63,6 +63,8 @@ import {CoachDashboardPerformanceComponent} from "./admin/coach/coach-dashboard/
 import {CoachDashboardWellnessComponent} from "./admin/coach/coach-dashboard/coach-dashboard-wellness/coach-dashboard-wellness.component";
 import {AthletePerformanceComponent} from "./admin/athlete/athlete-performance/athlete-performance.component";
 import {AthleteWellnessComponent} from "./admin/athlete/athlete-wellness/athlete-wellness.component";
+import {CoachSettingsLanguageComponent} from "./admin/coach/coach-settings/coach-settings-language/coach-settings-language.component";
+import {AthleteSettingsLanguageComponent} from "./admin/athlete/athlete-settings/athlete-settings-language/athlete-settings-language.component";
 
 const routes: Routes = [{
     path: '',
@@ -191,6 +193,9 @@ const routes: Routes = [{
                 path: 'password',
                 component: CoachSettingsPasswordComponent
               },{
+                path: 'language',
+                component: CoachSettingsLanguageComponent
+              },{
                 path: 'plan',
                 component: CoachSettingsPlanComponent
             }]
@@ -252,6 +257,9 @@ const routes: Routes = [{
         children: [{
             path: 'profile',
             component: AthleteSettingsProfileComponent
+          },{
+            path: 'language',
+            component: AthleteSettingsLanguageComponent
           },{
             path: 'password',
             component: AthleteSettingsPasswordComponent

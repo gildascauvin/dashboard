@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import {DoorgetsTranslateService} from "doorgets-ng-translate";
 
 @Component({
   selector: 'tpc-input-autocomplete',
@@ -11,16 +12,17 @@ export class InputAutocompleteComponent implements OnInit {
   @Input() type = "normal";
   @Input() clear = true;
   @Input() data = [];
-  @Input() label = 'Search movement';
+  @Input() label = '';
 
   @ViewChild('auto') auto;
   @Output() onSelectedItem: EventEmitter<any> = new EventEmitter();
   @Output() onCleared: EventEmitter<any> = new EventEmitter();
   @Output() handleOnChangeSearch: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(private doorgetsTranslateService: DoorgetsTranslateService) { }
 
   ngOnInit(): void {
+    this.label = this.doorgetsTranslateService.instant("#Search movement");
   }
 
   selectEvent(item) {

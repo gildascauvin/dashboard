@@ -27,10 +27,10 @@
               assets/img/logo/logo-power@3x.png 3x
             " class="logo">
             <span class="content-oval">{{userWorkouts[_workout.date].length}}</span>
-            <div class="text-white sessions">Sessions</div>
+            <div class="text-white sessions">{{ "#Sessions" | dgTranslate }}</div>
           </div>
           <div class="athlets">
-            <a class="text-white" href="https://app.theperfclub.com/coach/clients">All athlets</a>
+            <a class="text-white" href="https://app.theperfclub.com/coach/clients">{{ "#All athlets" | dgTranslate }}</a>
           </div>
 
         </div>
@@ -69,7 +69,7 @@
                                          srcset="assets/img/logo/logo-power@2x.png 2x,assets/img/logo/logo-power@3x.png 3x"
                                          class="logo">
                                     <span class="percentage">?/10</span>
-                                    <div class="text-white sessions">Energy</div>
+                                    <div class="text-white sessions">{{ "#Energy" | dgTranslate }}</div>
                                   </div>
                                   <div class="slice">
                                     <div class="bar"></div>
@@ -87,7 +87,7 @@
                                          srcset="assets/img/logo/logo-power@2x.png 2x,assets/img/logo/logo-power@3x.png 3x"
                                          class="logo">
                                     <span class="percentage">{{ fatigueManagementData.energy }}%</span>
-                                    <div class="text-white sessions">Energy</div>
+                                    <div class="text-white sessions">{{ "#Energy" | dgTranslate }}</div>
                                   </div>
                                   <div class="slice">
                                     <div class="bar"></div>
@@ -102,16 +102,16 @@
                                 <div class="optimal-zone--left {{ fatigueManagementData.colorEnergy }}"></div>
                                 <div class="optimal-zone">
                                   <div class="title">{{ fatigueManagementData.zoneName }}</div>
-                                  <div class="subtitle">Zone</div>
+                                  <div class="subtitle">{{ "#Zone" | dgTranslate }}</div>
                                 </div>
                                 <div class="optimal-zone--right {{ fatigueManagementData.colorRPE }}"></div>
                                 <div class="score energy-score {{ fatigueManagementData.colorEnergy }}">
                                   <div class="value">{{ fatigueManagementData.energyScore }}/10</div>
-                                  <div class="subtitle">Energy score</div>
+                                  <div class="subtitle">{{ "#Energy score" | dgTranslate }}</div>
                                 </div>
                                 <div class="score rpe-score {{ fatigueManagementData.colorRPE }}">
                                   <div class="value">{{ fatigueManagementData.rpeScore }}/10</div>
-                                  <div class="subtitle">RPE</div>
+                                  <div class="subtitle">{{ "#RPE" | dgTranslate }}</div>
                                 </div>
                               </div>
                             </ng-container>

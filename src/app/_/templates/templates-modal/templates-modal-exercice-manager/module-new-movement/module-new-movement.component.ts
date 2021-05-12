@@ -52,7 +52,7 @@ export class ModuleNewMovementComponent implements OnInit {
   }
 
   saveNewMovementForm() {
-    this.usersService.createMovement(this.newMovement.name, this.newMovement.categoryId, this.newMovement.unit)
+    this.usersService.createMovement(this.newMovement.name, this.newMovement.categoryId, this.newMovement.unit, this.newMovement.imageUrl)
       .subscribe((response: any) => {
         if (response.errors) {
           this.toastrService.error(response.message);

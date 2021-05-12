@@ -128,6 +128,8 @@ import {AthletePerformanceComponent} from "./admin/athlete/athlete-performance/a
 import {CoachSettingsPlanModalComponent} from "./admin/coach/coach-settings/coach-settings-plan/coach-settings-plan-modal/coach-settings-plan-modal.component";
 import {AthleteWellnessComponent} from "./admin/athlete/athlete-wellness/athlete-wellness.component";
 import {AthleteOnboardingComponent} from "./admin/athlete/athlete-onboarding/athlete-onboarding.component";
+import { CoachSettingsLanguageComponent } from './admin/coach/coach-settings/coach-settings-language/coach-settings-language.component';
+import {AthleteSettingsLanguageComponent} from "./admin/athlete/athlete-settings/athlete-settings-language/athlete-settings-language.component";
 
 export function newNgTranslate(http: HttpClient) {
   return new NgTranslate(http, "../../assets/locale");
@@ -208,6 +210,7 @@ export function newNgTranslate(http: HttpClient) {
     AthleteSettingsPlanComponent,
     AthleteSettingsProfileComponent,
     AthleteSettingsPasswordComponent,
+    AthleteSettingsLanguageComponent,
     UnitSizeLabelPipe,
     UnitSizeComparPipe,
     RatioMovementPipe,
@@ -217,6 +220,7 @@ export function newNgTranslate(http: HttpClient) {
     CoachSettingsPlanModalComponent,
     CoachSettingsProfileComponent,
     CoachSettingsPasswordComponent,
+    CoachSettingsLanguageComponent,
     UsersModalInvitationCreateComponent,
     UsersModalInvitationDeleteComponent,
     AthleteCoachComponent,

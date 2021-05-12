@@ -11,6 +11,7 @@ import {UsersService} from "../../../templates/users.service";
 import {CustomerStatsComputerService} from "../../../services/stats/customer-stats-computer.service";
 import {AuthService} from "../../../services/http/auth.service";
 import { CustomerStatsSummaryService } from './customer-stats-summary.service';
+import {DoorgetsTranslateService} from "doorgets-ng-translate";
 
 @Component({
   selector: "app-customer-stats-summary",
@@ -88,6 +89,7 @@ export class CustomerStatsSummaryComponent implements OnInit {
     private usersService: UsersService,
     private authService: AuthService,
     private customerStatsSummaryService: CustomerStatsSummaryService,
+    private doorgetsTranslateService: DoorgetsTranslateService,
     @Inject(DOCUMENT) private _document
   ) {
   }
@@ -330,26 +332,26 @@ export class CustomerStatsSummaryComponent implements OnInit {
     let color1 = 'red';
     let color2 = 'red';
 
-    let descriptionConstraint = 'Load is dangerously high. High risk of injury due to overfatigue';
-    let descriptionRCAC = 'Load is too high. High risk of injury due to overfatigue';
+    let descriptionConstraint = this.doorgetsTranslateService.instant('#Load is dangerously high. High risk of injury due to overfatigue');
+    let descriptionRCAC = this.doorgetsTranslateService.instant('#Load is too high. High risk of injury due to overfatigue');
 
     if (data.constraint < 6000) {
-      descriptionConstraint = 'Load is under control. You can continue to overload';
+      descriptionConstraint = this.doorgetsTranslateService.instant('#Load is under control. You can continue to overload');
       color1 = 'green';
     } else if (data.constraint < 9000) {
-      descriptionConstraint = 'Load starts to be too high. Reduce load to avoid overfatigue';
+      descriptionConstraint = this.doorgetsTranslateService.instant('#Load starts to be too high. Reduce load to avoid overfatigue');
       color1 = 'yellow';
     }
 
     if (data.rcac < 0.8) {
       color2 = 'yellow1';
-      descriptionRCAC = 'Training load is too low. Increase load gradually';
+      descriptionRCAC = this.doorgetsTranslateService.instant('#Training load is too low. Increase load gradually');
     } else if (data.rcac < 1.3) {
       color2 = 'green';
-      descriptionRCAC = 'High load but low risk of injury due to overfatigue. Good job';
+      descriptionRCAC = this.doorgetsTranslateService.instant('#High load but low risk of injury due to overfatigue. Good job');
     } else if (data.rcac < 1.5) {
       color2 = 'yellow2';
-      descriptionRCAC = 'Load has increased too fast. Reduce load to avoid overfatigue';
+      descriptionRCAC = this.doorgetsTranslateService.instant('#Load has increased too fast. Reduce load to avoid overfatigue');
     }
 
     let colorCircle = 'red';
@@ -359,55 +361,55 @@ export class CustomerStatsSummaryComponent implements OnInit {
 
     if (color1 == 'green' && color2 == 'yellow1') {
       colorCircle = 'yellow';
-      textCircle = 'undertraining';
+      textCircle = this.doorgetsTranslateService.instant('#undertraining');
       percent = 40;
     } else if (color1 == 'green' && color2 == 'green') {
       colorCircle = 'green';
-      textCircle = 'Optimal';
+      textCircle = this.doorgetsTranslateService.instant('#Optimal');
       percent = 50;
     } else if (color1 == 'green' && color2 == 'yellow2') {
       colorCircle = 'yellow';
-      textCircle = 'overreaching';
+      textCircle = this.doorgetsTranslateService.instant('#overreaching');
       percent = 60;
     } else if (color1 == 'green' && color2 == 'red') {
       colorCircle = 'red';
-      textCircle = 'overreaching';
+      textCircle = this.doorgetsTranslateService.instant('#overreaching');
       percent = 60;
 
 
     } else if (color1 == 'yellow' && color2 == 'yellow1') {
       colorCircle = 'yellow';
-      textCircle = 'overreaching';
+      textCircle = this.doorgetsTranslateService.instant('#overreaching');
       percent = 60;
     } else if (color1 == 'yellow' && color2 == 'green') {
       colorCircle = 'yellow';
-      textCircle = 'overreaching';
+      textCircle = this.doorgetsTranslateService.instant('#overreaching');
       percent = 70;
     } else if (color1 == 'yellow' && color2 == 'yellow2') {
       colorCircle = 'red';
-      textCircle = 'overtraining';
+      textCircle = this.doorgetsTranslateService.instant('#overtraining');
       percent = 80;
     } else if (color1 == 'yellow' && color2 == 'red') {
       colorCircle = 'red';
-      textCircle = 'overtraining';
+      textCircle = this.doorgetsTranslateService.instant('#overtraining');
       percent = 90;
 
 
     } else if (color1 == 'red' && color2 == 'yellow1') {
       colorCircle = 'red';
-      textCircle = 'overtraining';
+      textCircle = this.doorgetsTranslateService.instant('#overtraining');
       percent = 70;
     } else if (color1 == 'red' && color2 == 'green') {
       colorCircle = 'red';
-      textCircle = 'overtraining';
+      textCircle = this.doorgetsTranslateService.instant('#overtraining');
       percent = 80;
     } else if (color1 == 'red' && color2 == 'yellow2') {
       colorCircle = 'red';
-      textCircle = 'overtraining';
+      textCircle = this.doorgetsTranslateService.instant('#overtraining');
       percent = 90;
     } else if (color1 == 'red' && color2 == 'red') {
       colorCircle = 'red';
-      textCircle = 'overtraining';
+      textCircle = this.doorgetsTranslateService.instant('#overtraining');
       percent = 100;
     }
 
@@ -430,18 +432,18 @@ export class CustomerStatsSummaryComponent implements OnInit {
 
     let colorCircle = 'red';
     let percent = (data.monotony > 2.5) ? 100 : (data.monotony * 40);
-    let description = 'Your training is not varied enough, it can cause injury and avoid good recovery';
+    let description = this.doorgetsTranslateService.instant('#Your training is not varied enough, it can cause injury and avoid good recovery');
 
     if (data.monotony < 1.5) {
-      description = 'Your training is well designed with good variation, it avoid injury and promote recovery';
+      description = this.doorgetsTranslateService.instant('#Your training is well designed with good variation, it avoid injury and promote recovery');
       colorCircle = 'green';
 
     } else if (data.monotony < 2) {
-      description = 'Your training is well designed, keep some variety to avoid injury and recover well';
+      description = this.doorgetsTranslateService.instant('#Your training is well designed, keep some variety to avoid injury and recover well');
       colorCircle = 'yellow';
 
     } else if (data.monotony < 2.5) {
-      description = 'Your training has not enough variation, it can cause injury and underperformance';
+      description = this.doorgetsTranslateService.instant('#Your training has not enough variation, it can cause injury and underperformance');
       colorCircle = 'red';
     }
 
@@ -459,20 +461,20 @@ export class CustomerStatsSummaryComponent implements OnInit {
     let colorCircle = 'red';
     let textCircle = '';
     let percent = 0;
-    let descriptionEnergyScore = 'Good job at recovering and having a healthy lifestyle';
-    let descriptionFitness = 'To peak or recover, consider reducing load and/or varying sessions';
+    let descriptionEnergyScore = this.doorgetsTranslateService.instant('#Good job at recovering and having a healthy lifestyle');
+    let descriptionFitness = this.doorgetsTranslateService.instant('#To peak or recover, consider reducing load and/or varying sessions');
 
     if (data.fitness > 0) {
       color1 = 'green';
-      descriptionFitness = 'Your load and training design is good for peaking and performance';
+      descriptionFitness = this.doorgetsTranslateService.instant('#Your load and training design is good for peaking and performance');
     }
 
     if (data.energyScore < 60) {
       color2 = 'red';
-      descriptionEnergyScore = 'You seem rather tired : focus on recovery and having a healthy lifestyle';
+      descriptionEnergyScore = this.doorgetsTranslateService.instant('#You seem rather tired : focus on recovery and having a healthy lifestyle');
     } else if (data.energyScore < 80) {
       color2 = 'yellow';
-      descriptionEnergyScore = 'It seems like you are a bit tired but doing ok';
+      descriptionEnergyScore = this.doorgetsTranslateService.instant('#It seems like you are a bit tired but doing ok');
     }
 
     if (color1 == 'green' && color2 == 'green') {

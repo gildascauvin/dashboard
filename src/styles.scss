@@ -62,9 +62,23 @@ body {
   border: 0;
 }
 
+.btn-gray {
+  background-color: #868e95 !important;
+  color: #f1f1f1 !important;
+}
+
 .btn-edit-secondary {
   padding: 5px 20px;
 }
+
+
+.fs-10 {font-size: 10px !important;}
+.fs-11 {font-size: 11px !important;}
+.fs-12 {font-size: 12px !important;}
+.fs-13 {font-size: 13px !important;}
+.fs-14 {font-size: 14px !important;}
+.fs-15 {font-size: 15px !important;}
+.fs-16 {font-size: 16px !important;}
 
 a {
   color: rgba(112, 83, 211, 1);
@@ -1220,5 +1234,25 @@ $primary-color-purple: #8f5ac3;
   &:hover {
     color: #000 !important;
     text-decoration: none !important;
+  }
+}
+
+
+.popover {
+  &.popover--video {
+    max-width: 600px !important;
+
+    @media (max-width: 480px) {
+      max-width: 350px !important;
+    }
+  }
+
+  &.popover--update-url {
+    max-width: 350px !important;
+    height: 160px;
+
+    @media (max-width: 480px) {
+      width: 350px !important;
+    }
   }
 }

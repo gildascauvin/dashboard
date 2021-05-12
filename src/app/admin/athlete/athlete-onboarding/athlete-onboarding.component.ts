@@ -93,6 +93,12 @@ export class AthleteOnboardingComponent implements OnInit {
         this.updateOnboarding();
       }
     );
+
+    this.sub.onStartSessionEnded = this.athleteDashboardService.onStartSessionEnded.subscribe(() => {
+      if (this.onboardingStep.firstSession === true && this.onboardingStep.energyScore === true) {
+        this.skip();
+      }
+    });
   }
 
   private _checkOnboardingStatus() {
@@ -115,6 +121,7 @@ export class AthleteOnboardingComponent implements OnInit {
     this.sub.userClientInfo && this.sub.userClientInfo.unsubscribe();
     this.sub.onWorkoutUpdated && this.sub.onWorkoutUpdated.unsubscribe();
     this.sub.onEnergyScoreUpdated && this.sub.onEnergyScoreUpdated.unsubscribe();
+    this.sub.onStartSessionEnded && this.sub.onStartSessionEnded.unsubscribe();
   }
 
   updateOnboarding() {
@@ -140,13 +147,13 @@ export class AthleteOnboardingComponent implements OnInit {
     }
   }
 
-  signup() {
-    this.onboardingStep.signup = true;
-    this.updateOnboarding();
-  }
-
   skip() {
-    this.onboardingStep.skip = true;
+    if (this.user.plan_id == 6) {
+      this.onboardingStep.signup = true;
+    } else {
+      this.onboardingStep.skip = true;
+    }
+
     this.updateOnboarding();
   }
 

@@ -16,6 +16,7 @@ import { UsersModalChooseAthletComponent } from './coach-clients/coach-clients-m
 import {CoachDashboardMenuService} from "./coach-dashboard/coach-dashboard-menu/coach-dashboard-menu.service";
 import {UsersService} from "../../_/templates/users.service";
 import {CoachSettingsPlanModalComponent} from "./coach-settings/coach-settings-plan/coach-settings-plan-modal/coach-settings-plan-modal.component";
+import {DoorgetsTranslateService} from "doorgets-ng-translate";
 
 @Component({
   selector: 'app-coach',
@@ -57,12 +58,16 @@ export class CoachComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private elementRef: ElementRef,
     private coachDashboardMenuService: CoachDashboardMenuService,
+    private doorgetsTranslateService: DoorgetsTranslateService,
     @Inject(DOCUMENT) private _document) { }
 
   ngOnInit(): void {
     this._document.body.style.background = '#FFF';
 
     this.user = this.authService.getUserData();
+
+    let language = this.user.data.language_id == 1 ? 'fr' : 'en';
+    this.doorgetsTranslateService.setCurrent(language);
 
     if (this.user.role_id == 1) {
       this.router.navigateByUrl('/athlete/dashboard');

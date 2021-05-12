@@ -6,7 +6,7 @@
         <div class="module-metrics">
 
           <div class="row">
-            <div class="col-6"><h3>Metrics</h3></div>
+            <div class="col-6"><h3>{{ "#Metrics" | dgTranslate }}</h3></div>
             <div class="col-6">
               <button (click)="openMetricCreateModal()" class="btn btn-primary float-right">
                 <i class="fa fa-plus"></i> {{ "#Add metric" | dgTranslate }}
@@ -27,9 +27,9 @@
 
               <ng-template ngbPanelContent>
                 <div class="headers">
-                <div class="header">Name</div>
-                <div class="header">Goal</div>
-                <div class="header">Current</div>
+                <div class="header">{{ "#Name" | dgTranslate }}</div>
+                <div class="header">{{ "#Goal" | dgTranslate }}</div>
+                <div class="header">{{ "#Current" | dgTranslate }}</div>
               </div>
                 <div class="metrics" (click)="selectMetric(metric)" *ngFor="let metric of metricsGroup.metrics">
                   <div class="metric">{{ metric.name }}</div>
@@ -93,7 +93,7 @@
                   </div>
                 </div>
               </td>
-              <td><input (click)="saveNewResult()" class="btn btn-primary" type="button" value="Save"></td>
+              <td><input (click)="saveNewResult()" class="btn btn-primary" type="button" value="{{ '#Save' | dgTranslate }}"></td>
             </tr>
 
             <tr class="row-result" *ngFor="let result of metricSelected.results">

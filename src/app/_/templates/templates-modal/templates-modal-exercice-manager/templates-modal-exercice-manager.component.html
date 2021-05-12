@@ -2,13 +2,13 @@
 
   <ul>
     <li [ngClass]="{ 'active': model.type.id == 8 }" (click)="selectType(8, 'Custom')">
-      <ng-container *ngIf="size >= responsiveSize">{{ "Text notes" | dgTranslate }}</ng-container>
-      <ng-container *ngIf="size < responsiveSize">{{ "Text" | dgTranslate }}</ng-container>
+      <ng-container *ngIf="size >= responsiveSize">{{ "#Text notes" | dgTranslate }}</ng-container>
+      <ng-container *ngIf="size < responsiveSize">{{ "#Text" | dgTranslate }}</ng-container>
     </li>
-    <li [ngClass]="{ 'active': model.type.id == 1 }" (click)="selectType(1, 'Simple exercices')">{{ "Simple" | dgTranslate }}</li>
-    <li [ngClass]="{ 'active': model.type.id == 2 }" (click)="selectType(2, 'Complex exercices')">{{ "Complex" | dgTranslate }}</li>
-    <li [ngClass]="{ 'active': model.type.id == 3 }" (click)="selectType(3, 'Timed exercices')">{{ "Circuits" | dgTranslate }}</li>
-    <li [ngClass]="{ 'active': model.type.id == 7 }" (click)="selectType(7, 'Cardio & intervals')">{{ "Cardio" | dgTranslate }}</li>
+    <li [ngClass]="{ 'active': model.type.id == 1 }" (click)="selectType(1, 'Simple exercices')">{{ "#Simple" | dgTranslate }}</li>
+    <li [ngClass]="{ 'active': model.type.id == 2 }" (click)="selectType(2, 'Complex exercices')">{{ "#Complex" | dgTranslate }}</li>
+    <li [ngClass]="{ 'active': model.type.id == 3 }" (click)="selectType(3, 'Timed exercices')">{{ "#Circuits" | dgTranslate }}</li>
+    <li [ngClass]="{ 'active': model.type.id == 7 }" (click)="selectType(7, 'Cardio & intervals')">{{ "#Cardio" | dgTranslate }}</li>
   </ul>
 
   <button type="button" class="close pull-right" aria-label="Close" [disabled]="isLoading" (click)="cancel()">
@@ -68,7 +68,7 @@
     <div class="col-md-12 mt-2">
       <div class="form-group">
         <label>{{ "#Notes" | dgTranslate }}</label>
-        <textarea placeholder="My comments" [(ngModel)]="model.description" class="form-control"></textarea>
+        <textarea placeholder="{{ '#My comments' | dgTranslate }}" [(ngModel)]="model.description" class="form-control"></textarea>
       </div>
     </div>
   </div>
