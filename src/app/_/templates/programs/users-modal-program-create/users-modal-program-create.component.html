@@ -22,13 +22,13 @@
 		<div class="col-md-12">
 			<div class="form-group">
 				<label>{{ '#Name' | dgTranslate }}</label>
-				<input placeholder="My program nam" [class.is-invalid]="errors.name" (input)="errors.name=false"  [(ngModel)]="modelProgram.name" type="text" autocomplete="off" class="form-control">
+				<input placeholder="{{ '#My program name' | dgTranslate }}" [class.is-invalid]="errors.name" (input)="errors.name=false"  [(ngModel)]="modelProgram.name" type="text" autocomplete="off" class="form-control">
 			</div>
 		</div>
 		<div class="col-md-12">
 			<div class="form-group">
 				<label>{{ '#Description' | dgTranslate }} <small>({{ '#Optional' | dgTranslate }})</small></label>
-				<textarea placeholder="My program description" [class.is-invalid]="errors.description" (input)="errors.description=false"  [(ngModel)]="modelProgram.description" class="form-control"></textarea>
+				<textarea placeholder="{{ '#My program description' | dgTranslate }}" [class.is-invalid]="errors.description" (input)="errors.description=false"  [(ngModel)]="modelProgram.description" class="form-control"></textarea>
 			</div>
 		</div>
 	</div>

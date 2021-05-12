@@ -1,9 +1,12 @@
 import {Injectable} from '@angular/core';
+import {DoorgetsTranslateService} from "doorgets-ng-translate";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FatigueManagementComputerService {
+
+  constructor(private doorgetsTranslateService: DoorgetsTranslateService) { }
 
   compute(workout) {
 
@@ -19,18 +22,18 @@ export class FatigueManagementComputerService {
     }
 
     if (rate <= 0) {
-      let title = 'Autoregulation tips';
+      let title = this.doorgetsTranslateService.instant('#Autoregulation tips');
       let subtitle = '';
       let color = '';
 
       if (energyScore > 80) {
-        subtitle = 'It seems like you are in a good shape, you can push yourself to a hard session.';
+        subtitle = this.doorgetsTranslateService.instant('#It seems like you are in a good shape, you can push yourself to a hard session.');
         color = 'green';
       } else if (energyScore < 60) {
-        subtitle = 'It seems like you rather tired. Do a light session to recover or rest.';
+        subtitle = this.doorgetsTranslateService.instant('#It seems like you rather tired. Do a light session to recover or rest.');
         color = 'red';
       } else {
-        subtitle = 'It seems like you are a bit tired. Adjust your session according to how you feel.';
+        subtitle = this.doorgetsTranslateService.instant('#It seems like you are a bit tired. Adjust your session according to how you feel.');
         color = 'yellow';
       }
 
@@ -59,14 +62,14 @@ export class FatigueManagementComputerService {
     }
 
     if (zoneScore > 1.33) {
-      zoneName = 'Recovery';
-      subtitle = 'It seems like you had an easy session. While it is good for recovering or peaking, it is not optimal for improving.';
+      zoneName = this.doorgetsTranslateService.instant('#Recovery');
+      subtitle = this.doorgetsTranslateService.instant('#It seems like you had an easy session. While it is good for recovering or peaking, it is not optimal for improving.');
     } else if (zoneScore < -1.33) {
-      zoneName = 'Overreaching';
-      subtitle = 'It seems like you did a very trying session. You might consider doing a recovery session or having a rest day.';
+      zoneName = this.doorgetsTranslateService.instant('#Overreaching');
+      subtitle = this.doorgetsTranslateService.instant('#It seems like you did a very trying session. You might consider doing a recovery session or having a rest day.');
     } else {
-      zoneName = 'Optimal';
-      subtitle = 'It seems like you did an optimal session. Take a well deserved rest and you will be ready to train again!';
+      zoneName = this.doorgetsTranslateService.instant('#Optimal');
+      subtitle = this.doorgetsTranslateService.instant('#It seems like you did an optimal session. Take a well deserved rest and you will be ready to train again!');
     }
 
     if (energyScore > 80) {

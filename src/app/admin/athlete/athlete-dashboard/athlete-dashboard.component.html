@@ -37,18 +37,18 @@
                         <div class="circle-content">
                           <img src="assets/img/logo/logo-power.png" srcset="assets/img/logo/logo-power@2x.png 2x,assets/img/logo/logo-power@3x.png 3x" class="logo">
                           <span class="percentage">?/10</span>
-                          <div class="text-white sessions">Energy</div>
+                          <div class="text-white sessions">{{ "#Energy" | dgTranslate }}</div>
                         </div>
                         <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                       </div>
                     </div>
 
                     <div class="descriptions">
-                      <ng-container *ngIf="user.plan_id != 6"><div class="title">Hi {{ user.data.firstname }}</div></ng-container>
-                      <ng-container *ngIf="user.plan_id == 6"><div class="title">Hi</div></ng-container>
+                      <ng-container *ngIf="user.plan_id != 6"><div class="title">{{ "#Hi" | dgTranslate }} {{ user.data.firstname }}</div></ng-container>
+                      <ng-container *ngIf="user.plan_id == 6"><div class="title">{{ "#Hi" | dgTranslate }}</div></ng-container>
                       <div class="title title-separator">,</div>
-                      <div class="title">How do you feel today ?</div>
-                      <button class="cta text-white" (click)="openStartSessionModal(workout, workout.day, true)">User input</button>
+                      <div class="title">{{ "#How do you feel today ?" | dgTranslate }}</div>
+                      <button class="cta text-white" (click)="openStartSessionModal(workout, workout.day, true)">{{ "#User input" | dgTranslate }}</button>
                     </div>
                   </ng-container>
 
@@ -58,7 +58,7 @@
                         <div class="circle-content">
                           <img src="assets/img/logo/logo-power.png" srcset="assets/img/logo/logo-power@2x.png 2x,assets/img/logo/logo-power@3x.png 3x" class="logo">
                           <span class="percentage">{{ fatigueManagementData.energy }}%</span>
-                          <div class="text-white sessions">Energy</div>
+                          <div class="text-white sessions">{{ "#Energy" | dgTranslate }}</div>
                         </div>
                         <div class="slice">
                           <div class="bar"></div>
@@ -78,20 +78,20 @@
                       <div class="optimal-zone--left {{ fatigueManagementData.colorEnergy }}"></div>
                       <div class="optimal-zone">
                         <div class="title">{{ fatigueManagementData.zoneName }}</div>
-                        <div class="subtitle">Zone</div>
+                        <div class="subtitle">{{ "#Zone" | dgTranslate }}</div>
                       </div>
                       <div class="optimal-zone--right {{ fatigueManagementData.colorRPE }}"></div>
                       <div class="score energy-score {{ fatigueManagementData.colorEnergy }}">
                         <div class="value">{{ fatigueManagementData.energyScore }}/10</div>
-                        <div class="subtitle">Energy score</div>
+                        <div class="subtitle">{{ "#Energy score" | dgTranslate }}</div>
                       </div>
                       <div class="score rpe-score {{ fatigueManagementData.colorRPE }}">
                         <div class="value">{{ fatigueManagementData.rpeScore }}/10</div>
-                        <div class="subtitle">RPE</div>
+                        <div class="subtitle">{{ "#RPE" | dgTranslate }}</div>
                       </div>
                     </div>
                     <div class="descriptions">
-                      <div class="title">Autoregulation tips</div>
+                      <div class="title">{{ "#Autoregulation tips" | dgTranslate }}</div>
                       <div class="subtitle">{{ fatigueManagementData.subtitle }}</div>
                     </div>
                   </ng-container>

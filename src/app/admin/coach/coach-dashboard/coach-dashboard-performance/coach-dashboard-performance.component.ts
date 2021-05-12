@@ -7,6 +7,7 @@ import {UsersService} from "../../../../_/templates/users.service";
 import {UserService} from "../../../../_/services/model/user.service";
 import {CoachDashboardMenuService} from "../coach-dashboard-menu/coach-dashboard-menu.service";
 import {endOfWeek} from "date-fns";
+import {DoorgetsTranslateService} from "doorgets-ng-translate";
 
 @Component({
   selector: "app-coach-dashboard-performance",
@@ -38,7 +39,8 @@ export class CoachDashboardPerformanceComponent implements OnInit {
     private userService: UserService,
     private usersService: UsersService,
     private modalService: BsModalService,
-    private coachDashboardMenuService: CoachDashboardMenuService
+    private coachDashboardMenuService: CoachDashboardMenuService,
+    private doorgetsTranslateService: DoorgetsTranslateService
   ) {}
 
   ngOnInit(): void {
@@ -144,15 +146,15 @@ export class CoachDashboardPerformanceComponent implements OnInit {
     }
 
     if (zoneScore > 1.33) {
-      zoneName = 'Recovery';
+      zoneName = this.doorgetsTranslateService.instant('#Recovery');
       zoneColor = 'yellow';
       totalCompleteData += 2;
     } else if (zoneScore < -1.33) {
-      zoneName = 'Overreaching';
+      zoneName = this.doorgetsTranslateService.instant('#Overreaching');
       zoneColor = 'red';
       totalCompleteData += 1;
     } else if (zoneScore !== null) {
-      zoneName = 'Optimal';
+      zoneName = this.doorgetsTranslateService.instant('#Optimal');
       zoneColor = 'green';
       totalCompleteData += 3;
     }

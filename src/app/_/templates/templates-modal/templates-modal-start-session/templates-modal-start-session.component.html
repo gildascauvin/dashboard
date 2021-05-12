@@ -117,7 +117,7 @@
       <div class="form-group">
         <label>{{ "#Notes" | dgTranslate }}</label>
         <textarea
-          placeholder="My comments"
+          placeholder="{{ '#My comments' | dgTranslate }}"
           [(ngModel)]="model.description"
           class="form-control"
         ></textarea>
@@ -156,7 +156,7 @@
       <div class="form-group">
         <label class="comment-label">{{ "#Comment" | dgTranslate }}</label>
         <textarea
-          placeholder="My comments"
+          placeholder="{{ '#My comments' | dgTranslate }}"
           [(ngModel)]="workout.comment"
           class="form-control"
         ></textarea>

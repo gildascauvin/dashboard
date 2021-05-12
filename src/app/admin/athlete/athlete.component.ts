@@ -14,6 +14,7 @@ import { TemplatesModalExerciceManagerComponent } from '../../_/templates/templa
 import {UsersService} from "../../_/templates/users.service";
 import * as _ from "lodash";
 import {CoachSettingsPlanModalComponent} from "../coach/coach-settings/coach-settings-plan/coach-settings-plan-modal/coach-settings-plan-modal.component";
+import {DoorgetsTranslateService} from "doorgets-ng-translate";
 
 @Component({
   selector: 'app-athlete',
@@ -45,12 +46,17 @@ export class AthleteComponent implements OnInit {
     private resizeSvc: ResizeService,
     private router: Router,
     private elementRef: ElementRef,
-  	@Inject(DOCUMENT) private _document) { }
+  	@Inject(DOCUMENT) private _document,
+    private doorgetsTranslateService: DoorgetsTranslateService,
+    ) { }
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentAthlet() || {};
     this._document.body.style.background = '#FFF';
     this.user = this.authService.getUserData();
+
+    let language = this.user.data.language_id == 1 ? 'fr' : 'en';
+    this.doorgetsTranslateService.setCurrent(language);
 
     if (this.user.role_id == 3) {
       this.router.navigateByUrl('/coach/dashboard');
