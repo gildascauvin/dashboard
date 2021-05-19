@@ -361,7 +361,7 @@ export class CustomerStatsSummaryComponent implements OnInit {
 
     if (color1 == 'green' && color2 == 'yellow1') {
       colorCircle = 'yellow';
-      textCircle = this.doorgetsTranslateService.instant('#undertraining');
+      textCircle = this.doorgetsTranslateService.instant('#Undertraining');
       percent = 40;
     } else if (color1 == 'green' && color2 == 'green') {
       colorCircle = 'green';
@@ -369,47 +369,47 @@ export class CustomerStatsSummaryComponent implements OnInit {
       percent = 50;
     } else if (color1 == 'green' && color2 == 'yellow2') {
       colorCircle = 'yellow';
-      textCircle = this.doorgetsTranslateService.instant('#overreaching');
+      textCircle = this.doorgetsTranslateService.instant('#Overreaching');
       percent = 60;
     } else if (color1 == 'green' && color2 == 'red') {
       colorCircle = 'red';
-      textCircle = this.doorgetsTranslateService.instant('#overreaching');
+      textCircle = this.doorgetsTranslateService.instant('#Overreaching');
       percent = 60;
 
 
     } else if (color1 == 'yellow' && color2 == 'yellow1') {
       colorCircle = 'yellow';
-      textCircle = this.doorgetsTranslateService.instant('#overreaching');
+      textCircle = this.doorgetsTranslateService.instant('#Overreaching');
       percent = 60;
     } else if (color1 == 'yellow' && color2 == 'green') {
       colorCircle = 'yellow';
-      textCircle = this.doorgetsTranslateService.instant('#overreaching');
+      textCircle = this.doorgetsTranslateService.instant('#Overreaching');
       percent = 70;
     } else if (color1 == 'yellow' && color2 == 'yellow2') {
       colorCircle = 'red';
-      textCircle = this.doorgetsTranslateService.instant('#overtraining');
+      textCircle = this.doorgetsTranslateService.instant('#Overtraining');
       percent = 80;
     } else if (color1 == 'yellow' && color2 == 'red') {
       colorCircle = 'red';
-      textCircle = this.doorgetsTranslateService.instant('#overtraining');
+      textCircle = this.doorgetsTranslateService.instant('#Overtraining');
       percent = 90;
 
 
     } else if (color1 == 'red' && color2 == 'yellow1') {
       colorCircle = 'red';
-      textCircle = this.doorgetsTranslateService.instant('#overtraining');
+      textCircle = this.doorgetsTranslateService.instant('#Overtraining');
       percent = 70;
     } else if (color1 == 'red' && color2 == 'green') {
       colorCircle = 'red';
-      textCircle = this.doorgetsTranslateService.instant('#overtraining');
+      textCircle = this.doorgetsTranslateService.instant('#Overtraining');
       percent = 80;
     } else if (color1 == 'red' && color2 == 'yellow2') {
       colorCircle = 'red';
-      textCircle = this.doorgetsTranslateService.instant('#overtraining');
+      textCircle = this.doorgetsTranslateService.instant('#Overtraining');
       percent = 90;
     } else if (color1 == 'red' && color2 == 'red') {
       colorCircle = 'red';
-      textCircle = this.doorgetsTranslateService.instant('#overtraining');
+      textCircle = this.doorgetsTranslateService.instant('#Overtraining');
       percent = 100;
     }
 
