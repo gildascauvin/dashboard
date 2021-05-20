@@ -17,6 +17,14 @@
           </div>
         <div class="date-title">{{ currentMonth | uppercase }}</div>
 
+        <div class="switch-planning">
+          <div class="custom-control custom-switch">
+            <label class="switch-planning--label" for="custom-switch-planning">Planification</label>
+            <input type="checkbox" class="custom-control-input" id="custom-switch-planning" [(ngModel)]="switchPlanning">
+            <label class="custom-control-label custom-control-label--red" for="custom-switch-planning"></label>
+          </div>
+        </div>
+
         <label class="float-right label-comment">
           <div class="checkbox">
             <label>
@@ -27,6 +35,23 @@
           </div>
         </label>
 
+      </div>
+
+      <div *ngIf="switchPlanning" class="planning-gantt">
+        <div (click)="openPlanningAddModal()" class="planning-content" [ngStyle]="{'height.px': totalPlanningHeight}">
+          <div class="month" *ngFor="let planningMonth of planningMonthes"><label>{{ planningMonth.name }}</label></div>
+
+          <ng-container *ngFor="let planning of plannings">
+            <div class="planning" [ngStyle]="{'left.px': planning.style.left, 'width.px': planning.style.width, 'top.px': planning.style.top}">
+              <label>{{ planning.name }}</label>
+              <div class="float-right">
+                <i class="fa fa-pencil i-btn mr-4" placement="top" ngbTooltip="{{ '#Edit' | dgTranslate }}" (click)="$event.stopPropagation();openPlanningEditModal(planning.planning_id);t.close()" #t="ngbTooltip"></i>
+                <i #d="ngbTooltip" class="fa fa-trash i-btn pze-ez" placement="top" ngbTooltip="{{ '#Delete' | dgTranslate }}" (click)="$event.stopPropagation();openPlanningDeleteModal(planning.planning_id);d.close()"></i>
+              </div>
+            </div>
+          </ng-container>
+          <div *ngIf="showNowPosition" class="cursor-now" [ngStyle]="{'left.px': nowLeftPosition}"></div>
+        </div>
       </div>
 
       <div id="fixed-calendar-planning" cdkScrollable>
