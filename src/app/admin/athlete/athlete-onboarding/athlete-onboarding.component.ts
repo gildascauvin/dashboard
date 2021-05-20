@@ -11,6 +11,7 @@ import {ResizeService} from "../../../_/services/ui/resize-service.service";
 import {DOCUMENT} from "@angular/common";
 import {ToastrService} from "ngx-toastr";
 import {webConfig} from "../../../web-config";
+import {DoorgetsTranslateService} from "doorgets-ng-translate";
 
 @Component({
   selector: "app-athlete-onboarding",
@@ -50,6 +51,7 @@ export class AthleteOnboardingComponent implements OnInit {
     private resizeSvc: ResizeService,
     private toastrService: ToastrService,
     @Inject(DOCUMENT) private _document,
+    private doorgetsTranslateService: DoorgetsTranslateService,
   ) {
 
   }
@@ -67,6 +69,7 @@ export class AthleteOnboardingComponent implements OnInit {
         this.sub.userInfo = this.usersService.getUser().subscribe((user: any) => {
           this._initData(user);
           this._checkOnboardingStatus();
+          this._setDefaultLocale();
         });
       } else {
 
@@ -77,6 +80,7 @@ export class AthleteOnboardingComponent implements OnInit {
           this.sub.userClientInfo = this.usersService.getUserClient(this.coach.clients[0].client_id).subscribe((user: any) => {
             this._initData(user);
             this._checkOnboardingStatus();
+            this._setDefaultLocale();
           });
         });
       }
@@ -99,6 +103,11 @@ export class AthleteOnboardingComponent implements OnInit {
         this.skip();
       }
     });
+  }
+
+  private _setDefaultLocale() {
+    let language = this.user.data.language_id == 1 ? 'fr' : 'en';
+    this.doorgetsTranslateService.setCurrent(language);
   }
 
   private _checkOnboardingStatus() {

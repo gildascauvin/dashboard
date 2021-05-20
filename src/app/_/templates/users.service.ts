@@ -88,6 +88,16 @@ export class UsersService {
     return this.httpService.get(`metric/client/${clientId}?page=${page.pageNumber}&size=${page.size}`);
   }
 
+  getAllClientPlannings(clientId, fromDate) {
+    let page: any = {
+      totalElements: 0,
+      pageNumber: 0,
+      size: 500,
+    };
+
+    return this.httpService.get(`planning/client/${clientId}?page=${page.pageNumber}&size=${page.size}&fromDate=${fromDate}`);
+  }
+
   getAllUserWorkouts(userId) {
     return this.httpService.get(`workout/client/user/${userId}`);
   }
@@ -316,5 +326,17 @@ export class UsersService {
 
   removeMetricResult(clientId, metricResultId) {
     return this.httpService.delete(`metric-result/client/${clientId}/${metricResultId}`);
+  }
+
+  createPlanning(clientId, model) {
+    return this.httpService.post(`planning/client/${clientId}`, model);
+  }
+
+  updatePlanning(clientId, model) {
+    return this.httpService.put(`planning/client/${clientId}/${model.planning_id}`, model);
+  }
+
+  removePlanning(clientId, planningId) {
+    return this.httpService.delete(`planning/client/${clientId}/${planningId}`);
   }
 }

@@ -77,7 +77,7 @@ export class PopoverComponent implements OnInit, PipeTransform {
 
   private _initPopover()
   {
-    if (this.movement.icon == '') {
+    if (!this.movement.icon) {
       this.popoverAutoClose = 'outside';
     } else {
       try {

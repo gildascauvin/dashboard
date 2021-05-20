@@ -4,6 +4,7 @@ import * as pluginDataLabels from "chartjs-plugin-datalabels";
 import * as _ from 'lodash';
 import {Label} from "ng2-charts";
 import {AthleteProfileService} from "../../../../admin/athlete/athlete-profile/athlete-profile.service";
+import {DoorgetsTranslateService} from "doorgets-ng-translate";
 
 @Component({
   selector: 'app-customer-stats-metric',
@@ -80,11 +81,13 @@ export class CustomerStatsMetricComponent implements OnInit {
   lineChartType: ChartType = "line";
 
   constructor(
-    private athleteProfileService: AthleteProfileService
+    private athleteProfileService: AthleteProfileService,
+    private doorgetsTranslateService: DoorgetsTranslateService,
   ) {
   }
 
   ngOnInit(): void {
+    this.lineChartData[0].label = this.doorgetsTranslateService.instant('#Metric');
 
     this.sub.metricSelected = this.athleteProfileService.onSelectedMetric.subscribe((metric: any) => {
       this.metric = metric;

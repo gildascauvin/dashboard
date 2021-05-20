@@ -130,6 +130,9 @@ import {AthleteWellnessComponent} from "./admin/athlete/athlete-wellness/athlete
 import {AthleteOnboardingComponent} from "./admin/athlete/athlete-onboarding/athlete-onboarding.component";
 import { CoachSettingsLanguageComponent } from './admin/coach/coach-settings/coach-settings-language/coach-settings-language.component';
 import {AthleteSettingsLanguageComponent} from "./admin/athlete/athlete-settings/athlete-settings-language/athlete-settings-language.component";
+import {PlanningModalEditComponent} from "./_/templates/planning/planning-modal-edit/planning-modal-edit.component";
+import {PlanningModalCreateComponent} from "./_/templates/planning/planning-modal-create/planning-modal-create.component";
+import {PlanningModalDeleteComponent} from "./_/templates/planning/planning-modal-delete/planning-modal-delete.component";
 
 export function newNgTranslate(http: HttpClient) {
   return new NgTranslate(http, "../../assets/locale");
@@ -206,6 +209,9 @@ export function newNgTranslate(http: HttpClient) {
     CustomerStatsMetricComponent,
     MetricsModalCreateComponent,
     MetricsModalEditComponent,
+    PlanningModalCreateComponent,
+    PlanningModalEditComponent,
+    PlanningModalDeleteComponent,
     AthleteSettingsComponent,
     AthleteSettingsPlanComponent,
     AthleteSettingsProfileComponent,

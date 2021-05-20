@@ -34,6 +34,10 @@ import { TemplatesModalExerciceManagerComponent } from "../../../_/templates/tem
 import { TemplatesModalWorkoutDeleteComponent } from "../../../_/templates/templates-modal/templates-modal-workout-delete/templates-modal-workout-delete.component";
 import { TemplatesService } from "../../../_/templates/templates.service";
 import { UsersService } from "../../../_/templates/users.service";
+import {PlanningModalCreateComponent} from "../../../_/templates/planning/planning-modal-create/planning-modal-create.component";
+import {AthleteCalendarService} from "./athlete-calendar.service";
+import {PlanningModalDeleteComponent} from "../../../_/templates/planning/planning-modal-delete/planning-modal-delete.component";
+import {PlanningModalEditComponent} from "../../../_/templates/planning/planning-modal-edit/planning-modal-edit.component";
 
 @Component({
   selector: "app-athlete-calendar",
@@ -58,6 +62,13 @@ export class AthleteCalendarComponent implements OnInit {
 
   hideLocalBox: boolean = false;
 
+  switchPlanning: boolean = false;
+  planningMonthes: any = [];
+  totalPlanningHeight: number = 250;
+  nowLeftPosition : number = 20;
+  showNowPosition: boolean = true;
+  widthMonth: number = 180;
+
   hover: any = {};
   timer: any = {};
 
@@ -81,6 +92,7 @@ export class AthleteCalendarComponent implements OnInit {
   showPasteCopiedWorkouts: boolean = false;
 
   workouts: any = {};
+  plannings: any = [];
 
   endDay: any = endOfWeek(new Date(), { weekStartsOn: 1 });
   startDay: any = startOfWeek(new Date(), { weekStartsOn: 1 });
@@ -109,6 +121,7 @@ export class AthleteCalendarComponent implements OnInit {
     private templatesService: TemplatesService,
     private doorgetsTranslateService: DoorgetsTranslateService,
     private calendar: NgbCalendar,
+    private athleteCalendarService: AthleteCalendarService,
     public formatter: NgbDateParserFormatter,
   ) {}
 
@@ -186,6 +199,87 @@ export class AthleteCalendarComponent implements OnInit {
         this._init();
       }
     };
+
+    this._initPlannings();
+
+    this.sub.onPlanningCreated = this.athleteCalendarService.onCreatedPlanning.subscribe(() => {
+      this._initPlannings();
+    });
+
+    this.sub.onPlanningRemoved = this.athleteCalendarService.onRemovedPlanning.subscribe(() => {
+      this._initPlannings();
+    });
+
+    this.sub.onPlanningUpdated = this.athleteCalendarService.onUpdatedPlanning.subscribe(() => {
+      this._initPlannings();
+    });
+
+  }
+
+  private _initPlannings() {
+    let month = ((this.startedAtModel.month < 10) ? '0' : '') + this.startedAtModel.month;
+    let day = ((this.startedAtModel.day < 10) ? '0' : '') + this.startedAtModel.day;
+    let fromDate = this.startedAtModel.year + '-' + month + '-' + day;
+
+    this.sub.onPlanningsUpdated = this.usersService.getAllClientPlannings(this.user.id, fromDate).subscribe((data: any) => {
+
+      if (data.gantt.diff_position_now) {
+        this.showNowPosition = true;
+        this.nowLeftPosition = data.gantt.diff_position_now * this.widthMonth;
+      } else {
+        this.showNowPosition = false;
+      }
+
+
+      if (data.plannings && data.plannings.length > 0) {
+        this._setPlanningMonthes(this.startedAtModel.month, data.gantt.total_monthes);
+        this._computePlannings(data.plannings);
+        this.totalPlanningHeight = data.plannings.length * 50 + 40;
+        if (this.totalPlanningHeight < 250) {
+          this.totalPlanningHeight = 250;
+        }
+      } else {
+        this.plannings = [];
+        this._setPlanningMonthes(this.startedAtModel.month, 12);
+        this.totalPlanningHeight = 250;
+      }
+    });
+  }
+
+  private _computePlannings(plannings) {
+
+
+    let heightPlanning = 45;
+    let minLeft = 20;
+    let minWidth = 10;
+
+    _.forEach(plannings, (planning, idPlanning) => {
+
+      planning.style = {
+        top: planning.position * heightPlanning,
+        left: planning.diff_from_start > 0 ? planning.diff_from_start * this.widthMonth : minLeft,
+        width: planning.diff > 0 ? planning.diff * this.widthMonth : minWidth
+      };
+    });
+
+    this.plannings = plannings;;
+  }
+
+  private _setPlanningMonthes(startMonth, totalMonth) {
+
+    this.planningMonthes = [];
+    let year = 0;
+    let currentMonth = parseInt(startMonth);
+
+    for(let i = startMonth; i < (startMonth + totalMonth); i++) {
+      this.planningMonthes.push({'id': i + '-' + year, 'name': this._getMonthName(currentMonth)});
+      currentMonth++;
+
+      if (currentMonth > 12) {
+        currentMonth = 1;
+        year++;
+      }
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -211,6 +305,10 @@ export class AthleteCalendarComponent implements OnInit {
     this.sub.onGetAllWorkout && this.sub.onGetAllWorkout.unsubscribe();
     this.sub.onUpdate && this.sub.onUpdate.unsubscribe();
     this.sub.workoutsGroupReset && this.sub.workoutsGroupReset.unsubscribe();
+    this.sub.onPlanningCreated && this.sub.onPlanningCreated.unsubscribe();
+    this.sub.onPlanningUpdated && this.sub.onPlanningUpdated.unsubscribe();
+    this.sub.onPlanningRemoved && this.sub.onPlanningRemoved.unsubscribe();
+    this.sub.onPlanningsUpdated && this.sub.onPlanningsUpdated.unsubscribe();
   }
 
   getConnectedExercicesList() {
@@ -466,6 +564,7 @@ export class AthleteCalendarComponent implements OnInit {
   onDateSelected($event) {
     this._initDate($event);
     this._syncWorkouts($event, true);
+    this._initPlannings();
   }
 
   duplicateWorkout(workout) {
@@ -628,6 +727,64 @@ export class AthleteCalendarComponent implements OnInit {
         keyboard: false,
         initialState: initialState,
         class: "modal-lg",
+      }
+    );
+  }
+
+  openPlanningAddModal() {
+
+    console.log('open planning add modal');
+
+    const initialState = {
+      userId: this.user.id,
+    };
+
+    this.bsModalRef = this.modalService.show(
+      PlanningModalCreateComponent,
+      {
+        keyboard: false,
+        initialState: initialState,
+        class: "modal-lg",
+      }
+    );
+  }
+
+  openPlanningEditModal(planningId) {
+    let selectedPlanning = null;
+    for(let planning in this.plannings) {
+      if (this.plannings[planning].planning_id == planningId) {
+        selectedPlanning = this.plannings[planning];
+        break;
+      }
+    }
+
+    const initialState = {
+      userId: this.user.id,
+      model: selectedPlanning,
+    };
+
+    this.bsModalRef = this.modalService.show(
+      PlanningModalEditComponent,
+      {
+        keyboard: false,
+        initialState: initialState,
+        class: "modal-lg",
+      }
+    );
+  }
+
+  openPlanningDeleteModal(planningId) {
+    const initialState = {
+      userId: this.user.id,
+      planningId: planningId
+    };
+
+    this.bsModalRef = this.modalService.show(
+      PlanningModalDeleteComponent,
+      {
+        keyboard: false,
+        initialState: initialState,
+        class: "modal-xs",
       }
     );
   }

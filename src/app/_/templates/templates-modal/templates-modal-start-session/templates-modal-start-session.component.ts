@@ -6,6 +6,7 @@ import { UserService } from "src/app/_/services/model/user.service";
 import { TemplatesService } from "../../templates.service";
 import { UsersService } from "../../users.service";
 import {AthleteDashboardService} from "../../../../admin/athlete/athlete-dashboard/athlete-dashboard.service";
+import {DoorgetsTranslateService} from "doorgets-ng-translate";
 
 @Component({
   selector: "app-templates-modal-start-session",
@@ -38,27 +39,28 @@ export class TemplatesModalStartSessionComponent implements OnInit {
     private usersService: UsersService,
     private userService: UserService,
     private toastrService: ToastrService,
-    private athleteDashboardService: AthleteDashboardService
+    private athleteDashboardService: AthleteDashboardService,
+    private doorgetsTranslateService: DoorgetsTranslateService,
   ) {}
 
   ngOnInit(): void {
     this.scores = [
-      { name: "Bad", value: 1 },
-      { name: "Average", value: 2 },
-      { name: "Good", value: 3 },
+      { name: this.doorgetsTranslateService.instant("#Bad"), value: 1 },
+      { name: this.doorgetsTranslateService.instant("#Average"), value: 2 },
+      { name: this.doorgetsTranslateService.instant("#Good"), value: 3 },
     ];
 
     this.rates = [
-      { name: "No activity", value: 1 },
-      { name: "Very light", value: 2 },
-      { name: "Light", value: 3 },
-      { name: "Moderate", value: 4 },
-      { name: "Vigorous", value: 5 },
-      { name: "Challenging", value: 6 },
-      { name: "Somewhat hard", value: 7 },
-      { name: "Hard", value: 8 },
-      { name: "Very hard", value: 9 },
-      { name: "Extremely hard", value: 10 },
+      { name: this.doorgetsTranslateService.instant("#No activity"), value: 1 },
+      { name: this.doorgetsTranslateService.instant("#Very light"), value: 2 },
+      { name: this.doorgetsTranslateService.instant("#Light"), value: 3 },
+      { name: this.doorgetsTranslateService.instant("#Moderate"), value: 4 },
+      { name: this.doorgetsTranslateService.instant("#Vigorous"), value: 5 },
+      { name: this.doorgetsTranslateService.instant("#Challenging"), value: 6 },
+      { name: this.doorgetsTranslateService.instant("#Somewhat hard"), value: 7 },
+      { name: this.doorgetsTranslateService.instant("#Hard"), value: 8 },
+      { name: this.doorgetsTranslateService.instant("#Very hard"), value: 9 },
+      { name: this.doorgetsTranslateService.instant("#Extremely hard"), value: 10 },
     ];
 
     this.options = Array.from(
