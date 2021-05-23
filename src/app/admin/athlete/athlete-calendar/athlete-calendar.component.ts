@@ -232,7 +232,7 @@ export class AthleteCalendarComponent implements OnInit {
 
 
       if (data.plannings && data.plannings.length > 0) {
-        this._setPlanningMonthes(this.startedAtModel.month, data.gantt.total_monthes);
+        this._setPlanningMonthes(data.gantt.start_planning_month, data.gantt.total_monthes);
         this._computePlannings(data.plannings);
         this.totalPlanningHeight = data.plannings.length * 50 + 40;
         if (this.totalPlanningHeight < 250) {
