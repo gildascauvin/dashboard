@@ -22,7 +22,7 @@
   background-color: #ffffff;
 }
 .container-sets {
-  width: 60%;
+  width: 80%;
 }
 
 .btn-light {
@@ -30,7 +30,25 @@
   border-color: #f2f2f2;
 }
 
+.list-group-item--repmax {
+  border-bottom: 1px solid #ddd;
+  padding-left: 8px;
+}
+
+.badge-success {
+  margin-bottom: 7px;
+}
+
+.container-repmax {
+  justify-content: space-between;
+  width: 80%;
+}
+
 @media (max-width: 480px) {
+  .container-repmax {
+    width: 80%;
+  }
+
   .input-group-text {
     padding-left: 0;
   }
@@ -40,18 +58,30 @@
   }
   .unit-list {
     width: 94px;
-    margin-right: 11px;
+    margin-right: 5px;
   }
   .list-group-item {
-    margin-left: -16px;
-    margin-right: -16px;
+    margin: 0;
     padding-left: 20px !important;
   }
+
+  .list-group-item-step {
+    padding: 0;
+  }
+
   .container-item-step {
     padding-left: 1px;
     padding-right: 5px;
   }
   .container-sets {
     width: 100%;
+  }
+
+  .list-meters, .list-meters-unit {
+    width:80px;
+  }
+
+  .badge-success {
+    margin-left: 0 !important;
   }
 }

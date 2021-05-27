@@ -14,10 +14,7 @@
 
 <div class="col-md-12 container-mouvements" *ngIf="model.movements.length">
   <label>{{ "#Movements" | dgTranslate }}</label>
-  <div
-    *ngFor="let movement of model.movements; let movementIndex = index"
-    class="list-group-item-step"
-  >
+  <div *ngFor="let movement of model.movements; let movementIndex = index" class="list-group-item-step">
     <button class="btn float-right" (click)="removeMovement(movementIndex)">
       <i class="fa fa-close"></i>
     </button>
@@ -42,93 +39,33 @@
             </div>
           </div>
           <div class="col-auto" *ngIf="movement.has_rep_unit">
-            <select
-              [(ngModel)]="movement.max_unit"
-              type="number"
-              class="form-control number-movement-list unit-list one"
-            >
-              <option
-                *ngFor="let unit of configExercices.size"
-                [value]="unit.id"
-              >
+            <select [(ngModel)]="movement.max_unit" type="number" class="form-control number-movement-list unit-list one">
+              <option *ngFor="let unit of configExercices.size" [value]="unit.id">
                 {{ unit.name }}
               </option>
             </select>
           </div>
         </div>
       </li>
-      <li
-        *ngFor="let set of movement.sets; let setIndex = index"
-        class="list-group-item pt-0"
-      >
-        <button
-          class="btn float-right remove-button"
-          *ngIf="movement.sets.length > 1"
-          (click)="removeSet(movement.sets, setIndex)"
-        >
+
+      <li class="list-group-item list-group-item--repmax" *ngIf="isPlanning && !movement.has_repmax">
+        <div class="form-row flex-nowrap flex-md-wrap align-items-center">
+          <div class="col-md-auto col-9">
+            <div class="input-group">
+              <div class="input-group-prepppend d-flex justify-content-center">
+                <span class="input-group-text pb-0 pt-0">{{ "#MAS" | dgTranslate }}</span>
+              </div>
+              <input placeholder="1" [(ngModel)]="movement.mas_value" type="number" class="form-control number-movement-list" />
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li *ngFor="let set of movement.sets; let setIndex = index" class="list-group-item pt-0">
+        <button class="btn float-right remove-button" *ngIf="movement.sets.length > 1" (click)="removeSet(movement.sets, setIndex)">
           <i class="fa fa-close"></i>
         </button>
 
-        <!-- <div class="form-row align-items-center">
-          <div class="col-auto" *ngIf="movement.has_repetitions">
-            <div class="input-group">
-              <input
-                placeholder="1"
-                [(ngModel)]="set.rep"
-                type="number"
-                class="form-control number-movement-list"
-              />
-              <div class="input-group-apppend">
-                <span class="input-group-text">Reps</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-auto" *ngIf="movement.has_value">
-            <input
-              placeholder="90"
-              [(ngModel)]="set.value"
-              type="number"
-              class="form-control number-movement-list ml-2 mr-2"
-            />
-          </div>
-
-          <div class="col-auto">
-            <select
-              [(ngModel)]="set.unit"
-              type="number"
-              class="form-control number-movement-list"
-            >
-              <option [value]="1">kg</option>
-              <option [value]="2">lbs</option>
-              <option [value]="3">%</option>
-            </select>
-            <span
-              *ngIf="movement.max_value && set.unit == 3 && isPlanning"
-              class="ml-2 badge badge-success"
-            >
-              {{
-                set.value | unitSizeLabel: movement.max_value:movement.max_unit
-              }}
-            </span>
-            <span
-              *ngIf="
-                movement.max_value &&
-                (set.unit == 1 || set.unit == 2) &&
-                isPlanning
-              "
-              class="ml-2 badge badge-success"
-            >
-              {{
-                set.value
-                  | unitSizeCompar
-                    : movement.max_value
-                    : movement.max_unit
-                    : set.unit
-              }}
-            </span>
-          </div>
-        </div> -->
         <div class="form-row flex-nowrap flex-md-wrap container-repmax align-items-end">
           <div class="custom-form justify-content-end">
             <div class="input-group flex-column-reverse">
@@ -139,27 +76,12 @@
                 type="number"
                 class="form-control number-movement-list"
               />
-              <div *ngIf="movement.has_rep_unit">
-                <select
-                  [(ngModel)]="set.rep_unit"
-                  type="number"
-                  class="form-control number-movement-list list-meters"
-                >
-                  <option
-                    *ngFor="let unit of configExercices.unit"
-                    [value]="unit.id"
-                  >
+              <div>
+                <select [(ngModel)]="set.rep_unit" class="form-control number-movement-list list-meters">
+                  <option *ngFor="let unit of configExercices.unit" [value]="unit.id">
                     {{ unit.name }}
                   </option>
                 </select>
-              </div>
-              <div
-                class="input-group-apppend"
-                *ngIf="movement.has_repetitions && !movement.has_rep_unit"
-              >
-                <span class="input-group-text p-0">{{
-                  "#Reps" | dgTranslate
-                }}</span>
               </div>
             </div>
           </div>
@@ -190,38 +112,27 @@
 
             </div>
           </div>
-          <div class="d-flex flex-column justify-content-end container-badge"
-          *ngIf="movement.has_value && movement.category_id !== 9">
-            <span
-            *ngIf="movement.max_value && set.unit == 3 && isPlanning"
-            class="ml-3 badge badge-success"
-            >
-            {{
-              set.value
-                | unitSizeLabel: movement.max_value:movement.max_unit
-            }}
+          <div class="d-flex flex-column justify-content-end container-badge" *ngIf="movement.has_value && movement.category_id !== 9">
+            <span *ngIf="movement.max_value && set.unit == 3 && set.rep_unit == 6 && isPlanning" class="ml-3 badge badge-success">
+              {{ set.value | unitSizeLabel: movement.max_value:movement.max_unit }}
             </span>
-            <span
-            *ngIf="
-              movement.max_value &&
-              (set.unit == 1 || set.unit == 2) &&
-              isPlanning
-            "
-            class="ml-3 badge badge-success"
-            >
-            {{
-              set.value
-                | unitSizeCompar
-                  : movement.max_value
-                  : movement.max_unit
-                  : set.unit
-            }}
+            <span *ngIf="movement.max_value && (set.unit == 1 || set.unit == 2) && set.rep_unit == 6 && isPlanning" class="ml-3 badge badge-success">
+              {{ set.value | unitSizeCompar : movement.max_unit : movement.max_value : set.unit }}
+            </span>
+
+            <span *ngIf="movement.mas_value && isPlanning && set.rep_unit != 6" class="ml-2 badge badge-success">
+              {{ set.value | maximumAerobicSpeed
+              : set.rep
+                : set.rep_unit
+                : set.unit
+                : movement.mas_value
+              }}
             </span>
         </div>
         </div>
       </li>
     </ul>
-    <button class="btn mt-2" (click)="addSet(movement.sets)">
+    <button class="btn mt-2" (click)="addSet(movement)">
       <i class="fa fa-plus"></i> {{ "#Add set" | dgTranslate }}
     </button>
   </div>

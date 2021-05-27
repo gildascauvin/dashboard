@@ -284,6 +284,19 @@ export class CustomerStatsComputerService {
     return this;
   }
 
+  _calcVolumeAndDistance(rep_unit, rep, set) {
+    let volume = 0;
+    let distance = 0;
+
+    if (rep_unit == 6) {
+      volume = rep * set;
+    } else {
+      distance = rep * set;
+    }
+
+    return {'volume': volume, 'distance': distance};
+  }
+
   _initPart(part) {
     if (this.workouts[part.date]) {
       part.workouts = this.workouts[part.date];
@@ -319,11 +332,11 @@ export class CustomerStatsComputerService {
               let _intensiteSize = 0;
 
               movement.sets.map((set) => {
-                if (movement.has_rep_unit) {
-                  _distance += set.rep * set.set;
-                } else {
-                  _volume += set.rep * set.set;
-                }
+
+                let resultVD = this._calcVolumeAndDistance(set.rep_unit, set.rep, set.set);
+                _volume += resultVD.volume;
+                _distance += resultVD.distance;
+
                 let calcul = this._calcIntensiteTonnage(
                   movement.max_value,
                   set.unit_label,
@@ -368,9 +381,11 @@ export class CustomerStatsComputerService {
               let _intensiteSize = 0;
 
               movement.sets.map((set) => {
-                if (movement.has_rep_unit)
-                  _distance = set.rep * exercice.sets;
-                else _volume += set.rep * exercice.sets;
+
+                let resultVD = this._calcVolumeAndDistance(set.rep_unit, set.rep, exercice.sets);
+                _volume += resultVD.volume;
+                _distance += resultVD.distance;
+
                 let calcul = this._calcIntensiteTonnage(
                   movement.max_value,
                   set.unit_label,
@@ -412,22 +427,15 @@ export class CustomerStatsComputerService {
                 set.rep = set.quantity;
               })
 
-
               let _volume = 0;
               let _tonnage = 0;
-              // movement.sets[0].quantity *
-              // exercice.sets *
-              // movement.sets[0].value;
               let _distance = 0;
               let _intensite = 0;
-              // movement.sets[0].quantity *
-              // exercice.sets *
-              // movement.sets[0].value;
-              if (movement.has_rep_unit) {
-                _distance = movement.sets[0].quantity * exercice.sets;
-              } else {
-                _volume += movement.sets[0].quantity * exercice.sets;
-              }
+
+              let resultVD = this._calcVolumeAndDistance(movement.sets[0].rep_unit, movement.sets[0].quantity, exercice.sets);
+              _volume += resultVD.volume;
+              _distance += resultVD.distance;
+
               let calcul = this._calcIntensiteTonnage(
                 movement.max_value,
                 movement.sets[0].unit_label,
@@ -582,19 +590,31 @@ export class CustomerStatsComputerService {
             var cardioVolume = 0;
             var cardioTonnage = 0;
             if (exercice.cardio_scoring == 1) {
-              //cardioVolume += exercice.cardio_cardio_movement.interval;
-              cardioDistance = exercice.cardio_cardio_movement.interval;
-              cardioIntensite =
-                exercice.cardio_cardio_movement.value * cardioDistance;
+
+              let resultVD = this._calcVolumeAndDistance(
+                exercice.cardio_cardio_movement.unit,
+                exercice.cardio_cardio_movement.interval,
+                1
+              );
+
+              cardioVolume = resultVD.volume;
+              cardioDistance = resultVD.distance;
+              cardioIntensite = exercice.cardio_cardio_movement.value * cardioDistance;
               cardioIntensiteSize = exercice.cardio_cardio_movement.interval;
+
               this.stats.cardioMvt = this.stats.cardioMvt? this.stats.cardioMvt: [];
               this.stats?.cardioMvt?.push(exercice.cardio_cardio_movement);
+
             } else if (exercice.cardio_scoring == 2) {
+
               this.stats.intervalMvt = this.stats.intervalMvt? this.stats.intervalMvt: [];
               this.stats.intervalMvt.push(...exercice.cardio_intervals_movement.sets);
               exercice.cardio_intervals_movement.sets.map((set) => {
-                // cardioVolume += set.interval * set.set;
-                cardioDistance += set.interval * set.set;
+
+                let resultVD = this._calcVolumeAndDistance(set.unit, set.interval, set.set);
+
+                cardioVolume += resultVD.volume;
+                cardioDistance += resultVD.distance;
                 cardioIntensite += set.value * set.interval * set.set;
                 cardioIntensiteSize += set.interval * set.set;
               });
