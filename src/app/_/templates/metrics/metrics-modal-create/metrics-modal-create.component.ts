@@ -59,7 +59,7 @@ export class MetricsModalCreateComponent extends FormModalCore implements OnInit
   save() {
 	  this.startLoading();
 
-    let clientId = this.authService.getCurrentAthletId();
+    let clientId = this.authService.isCoach() ? this.authService.getCurrentAthletId() : this.modelId;
 
 	  this.modelMetric.user_id = this.modelId;
     this.modelMetric.date = this.metricDate;

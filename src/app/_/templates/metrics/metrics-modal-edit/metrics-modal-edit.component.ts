@@ -54,7 +54,7 @@ export class MetricsModalEditComponent extends FormModalCore implements OnInit {
   save() {
 	  this.startLoading();
 
-    let clientId = this.authService.getCurrentAthletId();
+    let clientId = this.modelMetric.user_id;
 
     this.usersService.updateMetric(clientId, this.modelMetric).subscribe((data: any) => {
     if (!data.errors) {
