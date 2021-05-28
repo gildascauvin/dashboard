@@ -2,16 +2,8 @@
   <div class="form-group">
     <label>{{ "#Cardio" | dgTranslate }}</label>
     <div class="form-inline">
-      <div
-        class="btn-group btn-group-toggle"
-        ngbRadioGroup
-        [(ngModel)]="model.cardio_type"
-      >
-        <label
-          ngbButtonLabel
-          class="btn-light"
-          *ngFor="let cardioType of configExercices.cardio.type"
-        >
+      <div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]="model.cardio_type">
+        <label ngbButtonLabel class="btn-light" *ngFor="let cardioType of configExercices.cardio.type">
           <input ngbButton type="radio" [value]="cardioType.id" />
           {{ cardioType.name }}
         </label>
@@ -23,16 +15,8 @@
 <div class="col-md-12">
   <div class="form-group">
     <div class="form-inline">
-      <div
-        class="btn-group btn-group-toggle"
-        ngbRadioGroup
-        [(ngModel)]="model.cardio_scoring"
-      >
-        <label
-          ngbButtonLabel
-          class="btn-light"
-          *ngFor="let cardioScoring of configExercices.cardio.cardio"
-        >
+      <div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]="model.cardio_scoring">
+        <label ngbButtonLabel class="btn-light" *ngFor="let cardioScoring of configExercices.cardio.cardio">
           <input ngbButton type="radio" [value]="cardioScoring.id" />
           {{ cardioScoring.name }}
         </label>
@@ -44,45 +28,54 @@
 <div class="col-md-12 container-item-step" *ngIf="model.cardio_scoring == 1">
   <div class="list-group-item-step">
     <ul class="list-group">
+
+      <li class="list-group-item list-group-item--repmax" *ngIf="isPlanning">
+        <div class="form-row flex-nowrap flex-md-wrap align-items-center">
+          <div class="col-md-auto col-9">
+            <div class="input-group">
+              <div class="input-group-prepppend d-flex justify-content-center">
+                <span class="input-group-text pb-0 pt-0">{{ "#MAS" | dgTranslate }}</span>
+              </div>
+              <input placeholder="1" [(ngModel)]="model.cardio_cardio_movement.mas_value" type="number" class="form-control number-movement-list" />
+            </div>
+          </div>
+        </div>
+      </li>
+
       <li class="list-group-item">
-        <div class="form-row align-items-end justify-content-between container-sets">
+        <div class="form-row flex-nowrap flex-md-wrap container-repmax d-flex">
           <div>
             <div class="input-group">
-              <input
-                placeholder="100"
-                [(ngModel)]="model.cardio_cardio_movement.interval"
-                type="number"
-                class="form-control number-movement-list"
-              />
+              <input placeholder="100" [(ngModel)]="model.cardio_cardio_movement.interval" type="number" class="form-control number-movement-list"/>
             </div>
           </div>
           <div>
-            <select
-              [(ngModel)]="model.cardio_cardio_movement.unit"
-              type="number"
-              class="form-control number-movement-list unit-list"
-            >
-              <option
-                *ngFor="let unit of configExercices.cardio.unit"
-                [value]="unit.id"
-              >
+            <select [(ngModel)]="model.cardio_cardio_movement.unit" class="form-control number-movement-list unit-list">
+              <option *ngFor="let unit of configExercices.cardio.unit" [value]="unit.id">
                 {{ unit.name }}
               </option>
             </select>
           </div>
           <div>
             <div class="input-group">
-              <input
-                placeholder="80"
-                [(ngModel)]="model.cardio_cardio_movement.value"
-                type="number"
-                class="form-control number-movement-list ml-2 mr-2"
-              />
+              <input placeholder="80" [(ngModel)]="model.cardio_cardio_movement.value" type="number" class="form-control number-movement-list ml-2 mr-2"/>
               <div class="input-group-apppend">
                 <span class="input-group-text">%</span>
               </div>
             </div>
           </div>
+
+          <div class="d-flex flex-column justify-content-end container-badge" *ngIf="isPlanning && model.cardio_cardio_movement.unit != 6">
+            <span class="ml-2 badge badge-success">
+              {{ model.cardio_cardio_movement.value | maximumAerobicSpeed
+                : model.cardio_cardio_movement.interval
+                : model.cardio_cardio_movement.unit
+                : 3
+                : model.cardio_cardio_movement.mas_value
+              }}
+            </span>
+          </div>
+
         </div>
       </li>
     </ul>
@@ -92,13 +85,21 @@
 <div class="col-md-12 container-item-step" *ngIf="model.cardio_scoring == 2">
   <div class="list-group-item-step">
     <ul class="list-group">
-      <li
-        *ngFor="
-          let set of model.cardio_intervals_movement.sets;
-          let setIndex = index
-        "
-        class="list-group-item pt-0"
-      >
+
+      <li class="list-group-item list-group-item--repmax" *ngIf="isPlanning">
+        <div class="form-row flex-nowrap flex-md-wrap align-items-center">
+          <div class="col-md-auto col-9">
+            <div class="input-group">
+              <div class="input-group-prepppend d-flex justify-content-center">
+                <span class="input-group-text pb-0 pt-0">{{ "#MAS" | dgTranslate }}</span>
+              </div>
+              <input placeholder="1" [(ngModel)]="model.cardio_intervals_movement.mas_value" type="number" class="form-control number-movement-list" />
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li *ngFor="let set of model.cardio_intervals_movement.sets;let setIndex = index" class="list-group-item pt-0">
         <button
           class="btn float-right"
           *ngIf="model.cardio_intervals_movement.sets.length > 1"
@@ -107,55 +108,50 @@
           <i class="fa fa-close"></i>
         </button>
 
-        <div class="form-row align-items-end justify-content-between container-sets">
-          <div>
+
+        <div class="form-row flex-nowrap flex-md-wrap container-repmax d-flex">
+          <div class="d-flex flex-column justify-content-end">
             <div class="input-group flex-column-reverse">
-              <input
-                placeholder="1"
-                [(ngModel)]="set.set"
-                type="number"
-                class="form-control number-movement-list"
-              />
+              <input placeholder="1" [(ngModel)]="set.set" type="number" class="form-control number-movement-list" />
               <div class="input-group-apppend">
-                <span class="input-group-text pl-0">Sets</span>
+                <span class="input-group-text p-0">{{
+                  "#Sets" | dgTranslate
+                  }}</span>
               </div>
             </div>
           </div>
-        
-          <div>
-            <select
-              [(ngModel)]="set.unit"
-              type="number"
-              class="form-control number-movement-list unit-list"
-            >
-              <option
-                *ngFor="let unit of configExercices.cardio.unit"
-                [value]="unit.id"
-              >
-                {{ unit.name }}
-              </option>
-            </select>
-            <div class="input-group">
-              <input
-                placeholder="100"
-                [(ngModel)]="set.interval"
-                type="number"
-                class="form-control number-movement-list"
-              />
+
+          <div class="custom-form d-flex flex-column justify-content-end">
+            <div class="input-group flex-column-reverse">
+              <input placeholder="1" [(ngModel)]="set.interval" type="number" class="form-control number-movement-list list-meters-unit" />
+              <div>
+                <select [(ngModel)]="set.unit" class="form-control number-movement-list list-meters">
+                  <option *ngFor="let unit of configExercices.cardio.unit" [value]="unit.id">
+                    {{ unit.name }}
+                  </option>
+                </select>
+              </div>
             </div>
           </div>
+
           <div class="custom-form">
             <div class="input-group flex-column-reverse">
-              <input
-                placeholder="90"
-                [(ngModel)]="set.value"
-                type="number"
-                class="form-control number-movement-list ml-2 mr-2"
-              />
+              <input placeholder="90" [(ngModel)]="set.value" type="number" class="form-control number-movement-list ml-2 mr-2"/>
               <div class="input-group-apppend">
                 <span class="input-group-text">%</span>
               </div>
             </div>
+          </div>
+
+          <div class="d-flex flex-column justify-content-end container-badge" *ngIf="isPlanning && set.unit != 6">
+            <span class="ml-2 badge badge-success">
+              {{ set.value | maximumAerobicSpeed
+                : set.interval
+                : set.unit
+                : 3
+                : model.cardio_intervals_movement.mas_value
+              }}
+            </span>
           </div>
         </div>
       </li>

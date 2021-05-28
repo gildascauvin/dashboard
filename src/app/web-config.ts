@@ -167,9 +167,8 @@ export const webConfig = {
 	 		4: 'Injury',
 		 },
 		 unit: [
+			{ id: 6, name: 'Reps'},
 			{ id: 1, name: 'Meters'},
-			{ id: 2, name: 'Miles'},
-      { id: 4, name: 'Yards'},
 			{ id: 3, name: 'Minutes'},
       { id: 5, name: 'Seconds'},
 		],
@@ -202,16 +201,14 @@ export const webConfig = {
 	 			{ id: 2, name: 'Intervals'},
 	 		],
 	 		unit: [
+				{ id: 6, name: 'Reps'},
 	 			{ id: 1, name: 'Meters'},
-	 			{ id: 2, name: 'Miles'},
-	 			{ id: 3, name: 'Yards'},
         { id: 4, name: 'Minutes'},
         { id: 5, name: 'Seconds'},
 	 		],
 	 		flatUnit: {
+				6: 'Reps',
 	 			1: 'Meters',
-	 			2: 'Miles',
-	 			3: 'Yards',
         4: 'Minutes',
         5: 'Seconds'
 	 		}

@@ -141,7 +141,7 @@ export class AthleteProfileComponent implements OnInit {
   }
 
   removeMetric(metric) {
-    let clientId = this.authService.getCurrentAthletId();
+    let clientId = this.user.id;
 
     this.usersService.removeMetric(clientId, metric.metric_id).subscribe((data: any) => {
       if (!data.errors) {
@@ -156,7 +156,7 @@ export class AthleteProfileComponent implements OnInit {
   }
 
   removeMetricResult(metricResult) {
-    let clientId = this.authService.getCurrentAthletId();
+    let clientId = this.user.id;
 
     this.usersService.removeMetricResult(clientId, metricResult.metric_result_id).subscribe((data: any) => {
       if (!data.errors) {
@@ -180,7 +180,7 @@ export class AthleteProfileComponent implements OnInit {
   }
 
   saveNewResult() {
-    let clientId = this.authService.getCurrentAthletId();
+    let clientId = this.user.id;
 
     this.newResult.metric_id = this.metricSelected.metric_id;
     this.newResult.user_id = clientId;

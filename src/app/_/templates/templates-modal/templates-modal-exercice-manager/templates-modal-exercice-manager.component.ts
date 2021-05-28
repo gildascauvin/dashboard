@@ -151,7 +151,7 @@ export class TemplatesModalExerciceManagerComponent extends FormModalCore implem
       if (!movement.value) {
         movement.value = 0;
       }
-      console.log('movement',)
+
       this.setUnitLabel(movement, "unit", "unit_label");
 
       let sets = movement.sets.map((set) => {
@@ -326,14 +326,6 @@ export class TemplatesModalExerciceManagerComponent extends FormModalCore implem
   setCardioUnitLabel(model, key, labelKey) {
     model[labelKey] = "Meters";
     switch (model[key]) {
-      case 2:
-      case "2":
-        model[labelKey] = "Miles";
-        break;
-      case 3:
-      case "3":
-        model[labelKey] = "Yards";
-        break;
       case 4:
       case "4":
         model[labelKey] = "Minutes";
@@ -341,6 +333,10 @@ export class TemplatesModalExerciceManagerComponent extends FormModalCore implem
       case 5:
       case "5":
         model[labelKey] = "Seconds";
+        break;
+      case 6:
+      case "6":
+        model[labelKey] = "Reps";
         break;
 
       default:

@@ -19,6 +19,11 @@ export class AthleteMovementListComponent implements OnInit {
 
   getCardioUnitLabel(key) {
     const labelObj = this.configExercices.unit.find(obj => obj.id == key);
-    return labelObj.name;
+
+    if (labelObj) {
+      return labelObj.name;
+    }
+
+    return '';
   }
 }

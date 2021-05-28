@@ -1,56 +1,42 @@
 <div class="col-md-12 form-new-movement" *ngIf="newMovement.name">
 
-  <div class="form-row flex-md-wrap p-4 form-new-movement--content">
-
-    <div class="col-md-3 col-6">
-      <div class="d-flex flex-column justify-content-end">
-        <div class="input-group flex-column-reverse">
-          <input [(ngModel)]="newMovement.name" type="text" class="form-control" />
-          <div class="input-group-apppend">
-            <span *ngIf="size <= responsiveSize" class="p-0">{{"#Movement" | dgTranslate}}</span>
-            <span *ngIf="size > responsiveSize" class="p-0">{{"#Custom Movement" | dgTranslate}}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4 col-6">
-      <div class="d-flex flex-column justify-content-end">
-        <div class="input-group flex-column-reverse">
-          <select [(ngModel)]="newMovement.categoryId" class="form-control number-movement-list category-list pt-1">
-            <option *ngFor="let category of categories" [value]="category.category_id">
-              {{ category.name }}
-            </option>
-          </select>
-          <div class="input-group-apppend">
-            <span class="p-0">{{"#Category" | dgTranslate}}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4 col-6">
-      <div [ngClass]="[size <= responsiveSize ? 'form-group pt-4' : 'form-group pl-4']">
+  <div class="p-4 form-new-movement--content">
+    <div class="row">
+      <div class="col-6 col-md-4">
         <div class="d-flex flex-column justify-content-end">
           <div class="input-group flex-column-reverse">
-            <div class="btn-group btn-group-toggle btn-group-toggle--dark" ngbRadioGroup [(ngModel)]="newMovement.unit">
-              <label ngbButtonLabel class="btn-light"><input ngbButton type="radio" [value]="0" />{{ "Rep" | dgTranslate }}</label>
-              <label ngbButtonLabel class="btn-light"><input ngbButton type="radio" [value]="1" />{{ "Distance" | dgTranslate }}</label>
-            </div>
+            <input [(ngModel)]="newMovement.name" type="text" class="form-control" />
             <div class="input-group-apppend">
-              <span class="p-0">{{"#Unit" | dgTranslate}}</span>
+              <span *ngIf="size <= responsiveSize" class="p-0">{{"#Movement" | dgTranslate}}</span>
+              <span *ngIf="size > responsiveSize" class="p-0">{{"#Custom Movement" | dgTranslate}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4">
+        <div class="d-flex flex-column justify-content-end">
+          <div class="input-group flex-column-reverse">
+            <select [(ngModel)]="newMovement.categoryId" class="form-control number-movement-list category-list pt-1">
+              <option *ngFor="let category of categories" [value]="category.category_id">
+                {{ category.name }}
+              </option>
+            </select>
+            <div class="input-group-apppend">
+              <span class="p-0">{{"#Category" | dgTranslate}}</span>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-      <div [ngClass]="[size <= responsiveSize ? 'col-6 pt-4' : 'col-md-4']">
+    <div class="row pt-3">
+      <div [ngClass]="[size <= responsiveSize ? 'col-md-6 col-12' : 'col-md-4']">
         <div class="d-flex flex-column justify-content-end">
           <div class="input-group flex-column-reverse">
             <input [(ngModel)]="newMovement.imageUrl" type="text" class="form-control" />
             <div class="input-group-apppend">
-              <span [ngClass]="[size <= responsiveSize ? 'fs-14 p-0' : 'p-0']">{{"#Youtube / image URL" | dgTranslate}}</span>
+              <span class="p-0">{{"#Youtube / image URL" | dgTranslate}}</span>
             </div>
           </div>
         </div>
@@ -60,6 +46,7 @@
         <button [ngClass]="[size <= responsiveSize ? 'btn btn-gray' : 'btn btn-gray mr-4']" (click)="saveNewMovementForm()">{{ '#Done' | dgTranslate }}</button>
         <button class="btn btn-light mr-4" (click)="closeNewMovementForm()">{{ '#Cancel' | dgTranslate }}</button>
       </div>
+    </div>
   </div>
 
 </div>

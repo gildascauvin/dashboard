@@ -133,6 +133,7 @@ import {AthleteSettingsLanguageComponent} from "./admin/athlete/athlete-settings
 import {PlanningModalEditComponent} from "./_/templates/planning/planning-modal-edit/planning-modal-edit.component";
 import {PlanningModalCreateComponent} from "./_/templates/planning/planning-modal-create/planning-modal-create.component";
 import {PlanningModalDeleteComponent} from "./_/templates/planning/planning-modal-delete/planning-modal-delete.component";
+import {MaximumAerobicSpeedPipe} from "./_/pipes/maximum-aerobic-speed.pipe";
 
 export function newNgTranslate(http: HttpClient) {
   return new NgTranslate(http, "../../assets/locale");
@@ -218,6 +219,7 @@ export function newNgTranslate(http: HttpClient) {
     AthleteSettingsPasswordComponent,
     AthleteSettingsLanguageComponent,
     UnitSizeLabelPipe,
+    MaximumAerobicSpeedPipe,
     UnitSizeComparPipe,
     RatioMovementPipe,
     CoachClientsComponent,

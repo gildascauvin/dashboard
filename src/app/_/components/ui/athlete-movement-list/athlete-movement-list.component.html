@@ -6,7 +6,7 @@
       <div class="movement-title" *ngFor="let movement of exercice.movements">
         {{ movement.name }}
         <div class="movement-content" *ngFor="let set of movement.sets">
-          <span *ngIf="set.set">{{ set.set }} x {{ set.rep }} {{ movement.has_rep_unit && set.rep_unit ? getCardioUnitLabel(set.rep_unit) : '' }}
+          <span *ngIf="set.set">{{ set.set }} x {{ set.rep }} {{ set.rep_unit && set.rep_unit != 6 ? getCardioUnitLabel(set.rep_unit) : '' }}
             <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
           </span>
         </div>
@@ -17,11 +17,11 @@
       <div class="movement-title d-flex flex-column">
         <span class="mb-2" *ngFor="let movement of exercice.movements; let indMov = index">
           <div *ngFor="let set of movement.sets">
-            <span *ngIf="movement.has_rep_unit">
+            <span *ngIf="set.rep_unit && set.rep_unit != 6">
               {{ movement.name }} <br>
               {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
             </span>
-            <span *ngIf="!movement.has_rep_unit">
+            <span *ngIf="set.rep_unit && set.rep_unit == 6">
               {{ set.rep }} {{ movement.name }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
             </span>
           </div>
@@ -34,11 +34,11 @@
     <div *ngSwitchCase="3">
       <div class="movement-title" *ngFor="let movement of exercice.movements">
         <div *ngFor="let set of movement.sets">
-          <span *ngIf="movement.has_rep_unit">
+          <span *ngIf="set.rep_unit && set.rep_unit != 6">
             {{ movement.name }} <br>
             {{ movement.sets[0].quantity }} {{ getCardioUnitLabel(set.rep_unit) }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
           </span>
-          <span *ngIf="set.set && !movement.has_rep_unit">
+          <span *ngIf="set.set && set.rep_unit && set.rep_unit == 6">
             {{ movement.sets[0].quantity }} {{ movement.name }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
           </span>
         </div>
@@ -52,11 +52,11 @@
     <div *ngSwitchCase="4">
       <div class="movement-title" *ngFor="let movement of exercice.movements">
         <div *ngFor="let set of movement.sets">
-          <span *ngIf="movement.has_rep_unit">
+          <span *ngIf="set.rep_unit && set.rep_unit != 6">
             {{ movement.name }} <br>
-            {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
+            {{ movement.sets[0].quantity }} {{ getCardioUnitLabel(set.rep_unit) }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
           </span>
-          <span *ngIf="set.set && !movement.has_rep_unit">
+          <span *ngIf="set.set && set.rep_unit && set.rep_unit == 6">
             {{ movement.sets[0].quantity }} {{ movement.name }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
           </span>
         </div>
@@ -70,11 +70,13 @@
     <div *ngSwitchCase="5">
       <div class="movement-title" *ngFor="let movement of exercice.movements">
         <div *ngFor="let set of movement.sets">
-          <span *ngIf="movement.has_rep_unit">
+          <span *ngIf="set.rep_unit && set.rep_unit != 6">
             {{ movement.name }} <br>
-            {{ set.rep }} {{ getCardioUnitLabel(set.rep_unit) }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
+            {{ movement.sets[0].quantity }} {{ getCardioUnitLabel(set.rep_unit) }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
           </span>
-          <span *ngIf="set.set && !movement.has_rep_unit">{{ movement.sets[0].quantity }} {{ movement.name }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label></span>
+          <span *ngIf="set.set && set.rep_unit && set.rep_unit == 6">
+            {{ movement.sets[0].quantity }} {{ movement.name }} <app-athlete-movement-list-unit-label [set]="set"></app-athlete-movement-list-unit-label>
+          </span>
         </div>
       </div>
       <div class="movement-content">
@@ -90,12 +92,12 @@
       </div>
       <div class="movement-content" *ngIf="exercice.cardio_scoring == 1">
         <span>{{ exercice.cardio_cardio_movement.interval }}
-          {{ exercice.cardio_cardio_movement.unit_label }} <span *ngIf="exercice.cardio_cardio_movement.value">@ {{ exercice.cardio_cardio_movement.value }} %</span>
+          {{ exercice.cardio_cardio_movement && exercice.cardio_cardio_movement.unit == 6 ? "" : exercice.cardio_cardio_movement.unit_label }} <span *ngIf="exercice.cardio_cardio_movement.value">@ {{ exercice.cardio_cardio_movement.value }} %</span>
         </span>
       </div>
       <div *ngIf="exercice.cardio_scoring == 2">
         <div class="movement-content" *ngFor="let set of exercice.cardio_intervals_movement.sets">
-          <span *ngIf="set.set">{{ set.set }} x {{ set.interval }}{{ set.unit_label }} <span *ngIf="set.value">@ {{ set.value }} %</span></span>
+          <span *ngIf="set.set">{{ set.set }} x {{ set.interval }}{{ set.unit && set.unit == 6 ? "" : set.unit_label }} <span *ngIf="set.value">@ {{ set.value }} %</span></span>
         </div>
       </div>
     </div>
