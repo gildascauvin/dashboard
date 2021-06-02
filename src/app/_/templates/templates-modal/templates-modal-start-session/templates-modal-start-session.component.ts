@@ -45,9 +45,11 @@ export class TemplatesModalStartSessionComponent implements OnInit {
 
   ngOnInit(): void {
     this.scores = [
-      { name: this.doorgetsTranslateService.instant("#Bad"), value: 1 },
-      { name: this.doorgetsTranslateService.instant("#Average"), value: 2 },
-      { name: this.doorgetsTranslateService.instant("#Good"), value: 3 },
+      { name: this.doorgetsTranslateService.instant("#Very bad"), value: 1 },
+      { name: this.doorgetsTranslateService.instant("#Bad"), value: 2 },
+      { name: this.doorgetsTranslateService.instant("#Average"), value: 3 },
+      { name: this.doorgetsTranslateService.instant("#Good"), value: 4 },
+      { name: this.doorgetsTranslateService.instant("#Very good"), value: 5 },
     ];
 
     this.rates = [

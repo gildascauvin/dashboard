@@ -420,6 +420,7 @@ export class CustomerStatsRangeComponent implements OnInit {
     this.stats.categories[5] = this._setCategory("Stretching", 5);
     this.stats.categories[6] = this._setCategory("Plyometrics", 6);
     this.stats.categories[7] = this._setCategory("General Strenght", 7);
+    this.stats.categories[8] = this._setCategory("Technic", 68);
 
     this.movements = [];
     this.categoriesData = [];

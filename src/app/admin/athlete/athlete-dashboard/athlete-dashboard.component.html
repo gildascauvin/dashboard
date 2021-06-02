@@ -103,9 +103,11 @@
               <div *ngIf="workout.name" class="workout-session-title">
                 {{ workout.name }}
               </div>
-              <button *ngIf="checkIsToday(_wo.date) && workout.program.exercices.length > 0" class="btn btn-primary start-session"
+              <button *ngIf="checkIsToday(_wo.date) && workout.program.exercices.length > 0"
+                      [ngClass]="workout.is_session_started ? 'btn-secondary' : 'btn-primary'"
+                      class="btn start-session"
                       (click)="openStartSessionModal(workout, workout.day)">
-                {{ "#Start Session" | dgTranslate }}
+                {{ workout.is_session_started ? ("#Update Session" | dgTranslate) : ("#Start Session" | dgTranslate) }}
               </button>
               <ul class="list-group more-padding">
                 <li class="list-group-item box-exercice" *ngFor="

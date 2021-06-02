@@ -23,14 +23,21 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
 
   @Input() resize: boolean = false;
 
-  lineEnergyData: any = [];
+  lineRecoveryData: any = [];
   lineRpeData: any = [];
+
+  lineDietData: any = [];
+  lineSleepData: any = [];
+  lineEnergyData: any = [];
+  lineMoodData: any = [];
+  lineStressData: any = [];
+
   lineChartLabels: Label[] = [];
 
   lineChartData: ChartDataSets[] = [
     {
-      data: this.lineEnergyData,
-      label: "Energy",
+      data: this.lineRecoveryData,
+      label: "Recovery",
       fill: false,
       backgroundColor: "#000",
       borderColor: "#000",
@@ -54,7 +61,78 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
       pointBorderColor: '#D44000',
       pointBackgroundColor: '#fff',
       spanGaps: true
-  }];
+  },
+    {
+      data: this.lineDietData,
+      label: "Diet",
+      fill: false,
+      backgroundColor: "#D44000",
+      borderColor: "#D44000",
+      borderWidth: 2,
+      borderDash: [8, 4],
+      pointStyle: 'dash',
+      pointRadius: 7,
+      pointBorderColor: '#D44000',
+      pointBackgroundColor: '#fff',
+      spanGaps: true
+    },
+    {
+      data: this.lineSleepData,
+      label: "Sleep",
+      fill: false,
+      backgroundColor: "#000",
+      borderColor: "#000",
+      borderWidth: 2,
+      borderDash: [8, 4],
+      pointStyle: 'dash',
+      pointRadius: 7,
+      pointBorderColor: '#000',
+      pointBackgroundColor: '#fff',
+      spanGaps: true
+    },
+    {
+      data: this.lineEnergyData,
+      label: "Energy",
+      fill: false,
+      backgroundColor: "#c1c1c1",
+      borderColor: "#c1c1c1",
+      borderWidth: 2,
+      borderDash: [8, 4],
+      pointStyle: 'dash',
+      pointRadius: 7,
+      pointBorderColor: '#c1c1c1',
+      pointBackgroundColor: '#fff',
+      spanGaps: true
+    },
+    {
+      data: this.lineMoodData,
+      label: "Mood",
+      fill: false,
+      backgroundColor: "#e37242",
+      borderColor: "#e37242",
+      borderWidth: 2,
+      borderDash: [8, 4],
+      pointStyle: 'dash',
+      pointRadius: 7,
+      pointBorderColor: '#e37242',
+      pointBackgroundColor: '#fff',
+      spanGaps: true
+    },
+    {
+      data: this.lineStressData,
+      label: "Stress",
+      fill: false,
+      backgroundColor: "#8d6767",
+      borderColor: "#8d6767",
+      borderWidth: 2,
+      borderDash: [8, 4],
+      pointStyle: 'dash',
+      pointRadius: 7,
+      pointBorderColor: '#8d6767',
+      pointBackgroundColor: '#fff',
+      spanGaps: true
+    },
+  ];
   lineChartOptions: ChartOptions = {
     responsive: true,
     legend: {
@@ -167,9 +245,15 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
         this.lineChartData[0].data = [];
         this.lineChartData[1].data = [];
 
-        this.lineEnergyData = [];
+        this.lineRecoveryData = [];
         this.lineRpeData = [];
         this.lineChartLabels = [];
+
+        this.lineDietData = [];
+        this.lineSleepData = [];
+        this.lineEnergyData = [];
+        this.lineMoodData = [];
+        this.lineStressData = [];
       }
     );
 
@@ -215,11 +299,11 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
         let currentMood = parseInt(workout.mood);
         let currentStress = parseInt(workout.stress);
 
-        if (currentDiet > 0) { diet += currentDiet / 3 * 10; dietLength++;}
-        if (currentSleep > 0) { sleep += currentSleep / 3 * 10; sleepLength++;}
-        if (currentEnergy > 0) { energy += currentEnergy / 3 * 10; energyLength++;}
-        if (currentMood > 0) { mood += currentMood / 3 * 10; moodLength++;}
-        if (currentStress > 0) { stress += currentStress / 3 * 10; stressLength++;}
+        if (currentDiet > 0) { diet += currentDiet / 5 * 10; dietLength++;}
+        if (currentSleep > 0) { sleep += currentSleep / 5 * 10; sleepLength++;}
+        if (currentEnergy > 0) { energy += currentEnergy / 5 * 10; energyLength++;}
+        if (currentMood > 0) { mood += currentMood / 5 * 10; moodLength++;}
+        if (currentStress > 0) { stress += currentStress / 5 * 10; stressLength++;}
       }
     }
 
@@ -253,9 +337,21 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
     this.lineChartData[0].data = [];
     this.lineChartData[1].data = [];
 
-    this.lineEnergyData = [];
+    this.lineChartData[2].data = [];
+    this.lineChartData[3].data = [];
+    this.lineChartData[4].data = [];
+    this.lineChartData[5].data = [];
+    this.lineChartData[6].data = [];
+
+    this.lineRecoveryData = [];
     this.lineRpeData = [];
     this.lineChartLabels = [];
+
+    this.lineDietData = [];
+    this.lineSleepData = [];
+    this.lineEnergyData = [];
+    this.lineMoodData = [];
+    this.lineStressData = [];
 
     let currentDate = _.clone(startDay);
     let diff = Math.abs(differenceInDays(startDay, endDay));
@@ -277,34 +373,71 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
 
         let dayWorkouts = workouts[property];
 
-        let energyScores = 0;
-        let energyScoresLength = 0;
+        let recoveryScores = 0;
+        let recoveryScoresLength = 0;
         let rpeScores = 0;
         let rpeScoresLength = 0;
 
-        for (let workoutKey in dayWorkouts) {
-          let workoutEnergyScore = this._computeEnergyScore(dayWorkouts[workoutKey]);
+        let dietScores = 0;
+        let dietScoresLength = 0;
+        let sleepScores = 0;
+        let sleepScoresLength = 0;
+        let energyScores = 0;
+        let energyScoresLength = 0;
+        let moodScores = 0;
+        let moodScoresLength = 0;
+        let stressScores = 0;
+        let stressScoresLength = 0;
 
-          if (workoutEnergyScore > 0) {
-            energyScores += workoutEnergyScore;
-            energyScoresLength++;
+
+        for (let workoutKey in dayWorkouts) {
+          let workoutRecoveryScore = this._computeEnergyScore(dayWorkouts[workoutKey]);
+
+          if (workoutRecoveryScore > 0) {
+            recoveryScores += workoutRecoveryScore;
+            recoveryScoresLength++;
           }
           if (dayWorkouts[workoutKey].rate > 0) {
             rpeScores += dayWorkouts[workoutKey].rate;
             rpeScoresLength++;
           }
+
+          if (dayWorkouts[workoutKey].diet > 0)   {dietScores += dayWorkouts[workoutKey].diet; dietScoresLength++;}
+          if (dayWorkouts[workoutKey].sleep > 0)  {sleepScores += dayWorkouts[workoutKey].sleep; sleepScoresLength++;}
+          if (dayWorkouts[workoutKey].energy > 0) {energyScores += dayWorkouts[workoutKey].energy; energyScoresLength++;}
+          if (dayWorkouts[workoutKey].mood > 0)   {moodScores += dayWorkouts[workoutKey].mood; moodScoresLength++;}
+          if (dayWorkouts[workoutKey].stress > 0) {stressScores += dayWorkouts[workoutKey].stress; stressScoresLength++;}
         }
 
-        this.lineEnergyData.push((energyScoresLength > 0) ? Math.round(((energyScores / energyScoresLength / 10) + Number.EPSILON) * 100) / 100 : null);
+        this.lineRecoveryData.push((recoveryScoresLength > 0) ? Math.round(((recoveryScores / recoveryScoresLength / 10) + Number.EPSILON) * 100) / 100 : null);
         this.lineRpeData.push((rpeScoresLength > 0) ? Math.round(((rpeScores / rpeScoresLength) + Number.EPSILON) * 100) / 100 : null);
+
+        this.lineDietData.push((dietScoresLength > 0) ? Math.round(((dietScores / dietScoresLength / 5 * 10) + Number.EPSILON) * 100) / 100 : null);
+        this.lineSleepData.push((sleepScoresLength > 0) ? Math.round(((sleepScores / sleepScoresLength / 5 * 10) + Number.EPSILON) * 100) / 100 : null);
+        this.lineEnergyData.push((energyScoresLength > 0) ? Math.round(((energyScores / energyScoresLength / 5 * 10) + Number.EPSILON) * 100) / 100 : null);
+        this.lineMoodData.push((moodScoresLength > 0) ? Math.round(((moodScores / moodScoresLength / 5 * 10) + Number.EPSILON) * 100) / 100 : null);
+        this.lineStressData.push((stressScoresLength > 0) ? Math.round(((stressScores / stressScoresLength / 5 * 10) + Number.EPSILON) * 100) / 100 : null);
+
       } else {
-        this.lineEnergyData.push(null);
+        this.lineRecoveryData.push(null);
         this.lineRpeData.push(null);
+
+        this.lineDietData.push(null);
+        this.lineSleepData.push(null);
+        this.lineEnergyData.push(null);
+        this.lineMoodData.push(null);
+        this.lineStressData.push(null);
       }
     }
 
-    this.lineChartData[0].data = this.lineEnergyData;
+    this.lineChartData[0].data = this.lineRecoveryData;
     this.lineChartData[1].data = this.lineRpeData;
+
+    this.lineChartData[2].data = this.lineDietData;
+    this.lineChartData[3].data = this.lineSleepData;
+    this.lineChartData[4].data = this.lineEnergyData;
+    this.lineChartData[5].data = this.lineMoodData;
+    this.lineChartData[6].data = this.lineStressData;
   }
 
   private _computeEnergyScore(workout) {
@@ -325,7 +458,7 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
       }
     });
 
-    return (totalDataConfirmed > 0) ? totalEnergy / (3 * totalDataConfirmed) * 100 : 0;
+    return (totalDataConfirmed > 0) ? totalEnergy / (5 * totalDataConfirmed) * 100 : 0;
   }
 
   private detectScreenSize() {

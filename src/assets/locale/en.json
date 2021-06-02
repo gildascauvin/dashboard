@@ -389,10 +389,13 @@
   "#Fitness": "Fitness",
   "#Variation": "Variation",
   "#Energy score": "Energy score",
+  "#Very bad": "Very bad",
   "#Bad": "Bad",
   "#Average": "Average",
   "#Good": "Good",
+  "#Very good": "Very good",
   "#Edit a metric": "Edit a metric",
   "#Resistance": "Resistance",
-  "#Endurance" : "Endurance"
+  "#Endurance" : "Endurance",
+  "#Update Session": "Update session"
 }

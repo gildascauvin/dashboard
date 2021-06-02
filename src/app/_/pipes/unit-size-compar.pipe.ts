@@ -8,6 +8,9 @@ import { webConfig } from '../../web-config';
 export class UnitSizeComparPipe implements PipeTransform {
 
   transform(value: any, size: any, unit: any, setUnit: any) {
+
+    if (!value) { value = 0;}
+
     // KG or LBS
     if (setUnit != 1 && setUnit != 2) {
     	return '';
