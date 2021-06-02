@@ -704,6 +704,15 @@ export class CustomerStatsComputerService {
           )
           : 0;
 
+      this.stats.categories[68].intensity =
+        this.stats.categories[68].intensiteSize != 0
+          ? parseInt(
+          "" +
+          this.stats.categories[68].intensite /
+          this.stats.categories[68].intensiteSize
+          )
+          : 0;
+
       this.stats.weekly.intensite.push(
         parseInt("" + intensite / intensiteSize)
       );
@@ -1153,6 +1162,11 @@ export class CustomerStatsComputerService {
       this.stats.categories[7].intensite /
       this.stats.categories[7].intensiteSize
     );
+    this.stats.categories[68].intensity = parseInt(
+      "" +
+      this.stats.categories[68].intensite /
+      this.stats.categories[68].intensiteSize
+    );
 
     this.stats.weekly.intensite.push(
       parseInt("" + intensite / intensiteSize) | 0
@@ -1364,6 +1378,7 @@ export class CustomerStatsComputerService {
     this.stats.categories[5] = this._setCategory("Stretching", 5);
     this.stats.categories[6] = this._setCategory("Plyometrics", 6);
     this.stats.categories[7] = this._setCategory("General Strenght", 7);
+    this.stats.categories[68] = this._setCategory("Technic", 68);
 
     this.movements = [];
     this.categoriesData = [];

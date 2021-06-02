@@ -111,6 +111,6 @@ export class FatigueManagementComputerService {
       }
     });
 
-    return (totalDataConfirmed > 0) ? totalEnergy / (3 * totalDataConfirmed) * 100 : 0;
+    return (totalDataConfirmed > 0) ? totalEnergy / (5 * totalDataConfirmed) * 100 : 0;
   }
 }

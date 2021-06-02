@@ -377,9 +377,11 @@
   "#Language": "Langue",
   "#Variation": "Variation",
   "#Energy score": "Score d'énergie",
+  "#Very bad": "Très mauvais",
   "#Bad": "Mauvais",
   "#Average": "Moyen",
   "#Good": "Bon",
+  "#Very good": "Très bien",
   "#Edit a metric": "Modifier un métrique",
   "#Resistance": "Resistance",
   "#Endurance" : "Endurance",
@@ -394,5 +396,6 @@
   "#Contactez-nous": "Contactez-nous",
   "#Vous pensez que c'est une erreur ? Vous avez une question ou besoin de plus de temps ?": "Vous pensez que c'est une erreur ? Vous avez une question ou besoin de plus de temps ?",
   "#et nous déverouillerons votre compte.": "et nous déverouillerons votre compte.",
-  "#Youtube / image URL": "Youtube / image URL"
+  "#Youtube / image URL": "Youtube / image URL",
+  "#Update Session": "Modifier la séance"
 }

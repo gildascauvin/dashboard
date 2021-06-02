@@ -122,9 +122,11 @@
                         ngbTooltip="{{ '#Duplicate' | dgTranslate }}" #t="ngbTooltip"
                         (click)="duplicateWorkout(workout); t.close()"></i>
                     </div>
-                    <button *ngIf="day.day == startedAtModel.day && day.month == startedAtModel.month" class="btn btn-primary start-session"
-                      (click)="openStartSessionModal(workout, day)">
-                      {{ "#Start Session" | dgTranslate }}
+                    <button *ngIf="day.day == startedAtModel.day && day.month == startedAtModel.month"
+                            [ngClass]="workout.is_session_started ? 'btn-secondary' : 'btn-primary'"
+                            class="btn start-session"
+                            (click)="openStartSessionModal(workout, day)">
+                      {{ workout.is_session_started ? ("#Update Session" | dgTranslate) : ("#Start Session" | dgTranslate) }}
                     </button>
                     <ul class="list-group list-cdk"
                         cdkDropList
