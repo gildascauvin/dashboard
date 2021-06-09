@@ -16,37 +16,14 @@
   }
 }
 
-.movement-type-1 {
-  border-left: solid 5px #666666;
-}
-
-.movement-type-2 {
-  border-left: solid 5px #d44000;
-}
-
-.movement-type-3 {
-  border-left: solid 5px #000000;
-}
-
-.movement-type-4 {
-  border-left: solid 5px #000000;
-}
-
-.movement-type-5 {
-  border-left: solid 5px #000000;
-}
-
-.movement-type-6 {
-  border-left: solid 5px #c1c1c1;
-}
-
-.movement-type-7 {
-  border-left: solid 5px #8d6767;
-}
-
-.movement-type-8 {
-  border-left: solid 5px #e37242;
-}
+.movement-type-1 {border-left: solid 5px #666666;}
+.movement-type-2 {border-left: solid 5px #d44000;}
+.movement-type-3 {border-left: solid 5px #000000;}
+.movement-type-4 {border-left: solid 5px #000000;}
+.movement-type-5 {border-left: solid 5px #000000;}
+.movement-type-6 {border-left: solid 5px #c1c1c1;}
+.movement-type-7 {border-left: solid 5px #8d6767;}
+.movement-type-8 {border-left: solid 5px #e37242;}
 
 .movement-container {
   background-color: #ffffff;
@@ -55,10 +32,7 @@
   border-left: solid 3px #d44000;
   margin-bottom: 10px;
   min-height: 40px;
-  // -webkit-backdrop-filter: blur(20px);
-  // backdrop-filter: blur(20px);
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.15);
-  background-color: #ffffff;
 
   .movement-title {
     font-weight: 700;
@@ -85,29 +59,28 @@
       font-weight: 100;
     }
 
-    .movement-type-1 {
-      border-left: solid 5px #666666;
-    }
-    .movement-type-2 {
-      border-left: solid 5px #d44000;
-    }
-    .movement-type-3 {
-      border-left: solid 5px #000000;
-    }
-    .movement-type-4 {
-      border-left: solid 5px #000000;
-    }
-    .movement-type-5 {
-      border-left: solid 5px #000000;
-    }
-    .movement-type-6 {
-      border-left: solid 5px #c1c1c1;
-    }
-    .movement-type-7 {
-      border-left: solid 5px #8d6767;
-    }
-    .movement-type-8 {
-      border-left: solid 5px #e37242;
+    &.movement-type-1 {border-left: solid 5px #666666;}
+    &.movement-type-2 {border-left: solid 5px #d44000;}
+    &.movement-type-3 {border-left: solid 5px #000000;}
+    &.movement-type-4 {border-left: solid 5px #000000;}
+    &.movement-type-5 {border-left: solid 5px #000000;}
+    &.movement-type-6 {border-left: solid 5px #c1c1c1;}
+    &.movement-type-7 {border-left: solid 5px #8d6767;}
+    &.movement-type-8 {border-left: solid 5px #e37242;}
+  }
+}
+
+@media (max-width: 480px) {
+  .movement-container {
+
+    &.movement-container--dashboard {
+      .movement-title {
+        font-size: 15px !important;
+      }
+
+      .movement-content {
+        font-size: 11px !important;
+      }
     }
   }
 }

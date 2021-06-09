@@ -55,9 +55,6 @@ export class PopoverComponent implements OnInit, PipeTransform {
   }
 
   updateMovementForm() {
-    console.log(this.newMovementIcon);
-    console.log(this.movement);
-
     let model = {
       movement_id: this.movement.movement_id,
       icon: this.newMovementIcon
@@ -82,8 +79,6 @@ export class PopoverComponent implements OnInit, PipeTransform {
     } else {
       try {
         let url = new URL(this.movement.icon);
-
-        console.log(url);
 
         if (url.host == this.HOST_YOUTUBE) {
           let videoId = url.searchParams.get('v');

@@ -74,6 +74,14 @@ export class AthleteDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let now = new Date();
+
+    this.startedAtModel = {
+      day: now.getDate(),
+      month: (now.getMonth() + 1),
+      year: now.getFullYear()
+    };
+
     this.user = this.isFromUrl
       ? this.authService.getUserData()
       : this.authService.getUserClientData();

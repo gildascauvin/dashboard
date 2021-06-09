@@ -322,7 +322,7 @@ export class CoachProgramsDetailComponent implements OnInit {
   openProgramAthleteManagerModal() {
     const initialState = {
       programId: this.id,
-      program: _.cloneDeep(this.weeks),
+      program: _.cloneDeep(this.model),
       athletes: this.user.clients,
     };
 
@@ -337,7 +337,7 @@ export class CoachProgramsDetailComponent implements OnInit {
     const initialState = {
       modelId: this.id,
       athletes: this.currentModel.clients,
-      program: _.cloneDeep(this.weeks)
+      program: _.cloneDeep(this.model)
     };
 
     this.bsModalRef = this.modalService.show(UsersModalProgramAthleteManagerMeComponent, {

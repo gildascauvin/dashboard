@@ -346,7 +346,10 @@ export class CustomerStatsComputerService {
                 );
                 _tonnage += calcul["tonnage"];
                 _intensite += calcul["intensite"];
-                _intensiteSize += set.rep * set.set;
+
+                if (calcul["intensite"] > 0) {
+                  _intensiteSize += set.rep * set.set;
+                }
               });
 
               volume += _volume;
@@ -395,7 +398,9 @@ export class CustomerStatsComputerService {
                 );
                 _tonnage += calcul["tonnage"];
                 _intensite += calcul["intensite"];
-                _intensiteSize += set.rep * exercice.sets;
+                if (calcul["intensite"] > 0) {
+                  _intensiteSize += set.rep * exercice.sets;
+                }
               });
 
               volume += _volume;
@@ -445,7 +450,8 @@ export class CustomerStatsComputerService {
               );
               _tonnage += calcul["tonnage"];
               _intensite += calcul["intensite"];
-              let _intensiteSize = movement.sets[0].quantity * exercice.sets;
+              let _intensiteSize = (calcul["intensite"] > 0) ? movement.sets[0].quantity * exercice.sets : 0;
+
 
               volume += _volume;
               tonnage += _tonnage;
@@ -501,8 +507,7 @@ export class CustomerStatsComputerService {
               );
               _tonnage += calcul["tonnage"];
               _intensite += calcul["intensite"];
-              let _intensiteSize =
-                movement.sets[0].quantity * exercice.time_style_fixed;
+              let _intensiteSize = (calcul["intensite"] > 0) ? movement.sets[0].quantity * exercice.time_style_fixed : 0;
 
               volume += _volume;
               tonnage += _tonnage;
@@ -564,7 +569,7 @@ export class CustomerStatsComputerService {
               _tonnage += calcul["tonnage"];
               _intensite += calcul["intensite"];
 
-              let _intensiteSize = movement.sets[0].quantity * sets;
+              let _intensiteSize = (calcul["intensite"] > 0) ? movement.sets[0].quantity * sets : 0;
 
               volume += _volume;
               tonnage += _tonnage;
@@ -849,7 +854,10 @@ export class CustomerStatsComputerService {
               );
               _tonnage += calcul["tonnage"];
               _intensite += calcul["intensite"];
-              _intensiteSize += set.rep * set.set;
+
+              if (calcul["intensite"] > 0) {
+                _intensiteSize += set.rep * set.set;
+              }
             });
 
             volume += _volume;
@@ -896,7 +904,10 @@ export class CustomerStatsComputerService {
               );
               _tonnage += calcul["tonnage"];
               _intensite += calcul["intensite"];
-              _intensiteSize += set.rep * exercice.sets;
+
+              if (calcul["intensite"] > 0) {
+                _intensiteSize += set.rep * exercice.sets;
+              }
             });
 
             volume += _volume;
@@ -949,7 +960,8 @@ export class CustomerStatsComputerService {
             );
             _tonnage += calcul["tonnage"];
             _intensite += calcul["intensite"];
-            let _intensiteSize = movement.sets[0].quantity * exercice.sets;
+
+            let _intensiteSize = (calcul["intensite"] > 0) ? movement.sets[0].quantity * exercice.sets : 0;
 
             volume += _volume;
             tonnage += _tonnage;
@@ -1001,8 +1013,7 @@ export class CustomerStatsComputerService {
             );
             _tonnage += calcul["tonnage"];
             _intensite += calcul["intensite"];
-            let _intensiteSize =
-              movement.sets[0].quantity * exercice.time_style_fixed;
+            let _intensiteSize = (calcul["intensite"] > 0) ? movement.sets[0].quantity * exercice.time_style_fixed : 0;
 
             volume += _volume;
             tonnage += _tonnage;
@@ -1060,7 +1071,7 @@ export class CustomerStatsComputerService {
             _tonnage += calcul["tonnage"];
             _intensite += calcul["intensite"];
 
-            let _intensiteSize = movement.sets[0].quantity * sets;
+            let _intensiteSize = (calcul["intensite"] > 0) ? movement.sets[0].quantity * sets : 0;
 
             volume += _volume;
             tonnage += _tonnage;

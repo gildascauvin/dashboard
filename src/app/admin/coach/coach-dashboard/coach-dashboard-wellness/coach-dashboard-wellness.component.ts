@@ -187,7 +187,7 @@ export class CoachDashboardWellnessComponent implements OnInit {
     if (scoreLength == 0 || score == 0) {
       result = 0;
     } else {
-      result = score / scoreLength / 3 * 10;
+      result = score / scoreLength / 5 * 10;
       result = Math.round((result + Number.EPSILON) * 10) / 10;
 
       color = 'yellow';
