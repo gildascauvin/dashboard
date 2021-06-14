@@ -117,7 +117,7 @@
               {{ set.value | unitSizeLabel: movement.max_value:movement.max_unit }}
             </span>
             <span *ngIf="movement.max_value && (set.unit == 1 || set.unit == 2) && set.rep_unit == 6 && isPlanning" class="ml-3 badge badge-success">
-              {{ set.value | unitSizeCompar : movement.max_unit : movement.max_value : set.unit }}
+              {{ set.value | unitSizeCompar : movement.max_value : movement.max_unit : set.unit }}
             </span>
 
             <span *ngIf="movement.mas_value && isPlanning && set.rep_unit != 6" class="ml-2 badge badge-success">

@@ -1,16 +1,3 @@
-.lead-left-bar,
-.lead-right-bar {
-  background-color: #fff;
-}
-.lead-bar-content {
-  height: 100%;
-  padding-top: 35px;
-}
-
-.lead-bar-content-right {
-  padding: 20px;
-}
-
 h4 {
   margin-top: 40px;
   margin-bottom: 0;
@@ -103,19 +90,6 @@ h4 {
   text-align: center;
 
   .weekly-overload-title {
-    font-size: 12pt;
-    font-weight: 700;
-  }
-}
-
-.strenght-level {
-  width: 80%;
-  margin: 30px auto;
-  padding: 15px 0;
-  border-bottom: solid 1px #f1f1f1;
-  text-align: left;
-
-  .strenght-level-title {
     font-size: 12pt;
     font-weight: 700;
   }
@@ -378,15 +352,6 @@ a {
     }
   }
 
-  .movement-container {
-    .movement-title {
-      font-size: 15px !important;
-    }
-
-    .movement-content {
-      font-size: 11px !important;
-    }
-  }
   .rectangle {
     display: block;
     margin: 0px 0px 18px 0px;;

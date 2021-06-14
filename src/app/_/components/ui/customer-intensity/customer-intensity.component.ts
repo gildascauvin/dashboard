@@ -38,11 +38,14 @@ export class CustomerIntensityComponent implements OnInit {
         this.movements = stats.movements;
         this.cardioMvts = stats.cardioMvt;
         this.intervalMvts = stats.intervalMvt;
-  
+
         let totalMovements = 0;
 
         for (let mvtId in this.movements) {
-          totalMovements += this.movements[mvtId].intensiteSize;
+          console.log(this.movements[mvtId]);
+          if (this.movements[mvtId].intensite > 0) {
+            totalMovements += this.movements[mvtId].intensiteSize;
+          }
         }
 
         this.cardioMvts?.forEach((mvt) => {
@@ -67,7 +70,6 @@ export class CustomerIntensityComponent implements OnInit {
         let intensityPercentage;
         let percentage;
 
-
         for (let mvtId in this.movements) {
           this.movements[mvtId]?.movements?.map((movement) => {
             movement?.sets?.map((set) => {
@@ -79,13 +81,12 @@ export class CustomerIntensityComponent implements OnInit {
                 intensity = Math.round(set.value);
               }
 
-        
               const volume = set.rep * set.set;
               this.updateVolume(intensity, volume);
             })
-            
         })
-        }  
+        }
+
         if(totalMovements != 0) {
           this.categoriesData[0].percentage = Math.round((this.categoriesData[0].volumeCategory / totalMovements) * 100);
           this.categoriesData[1].percentage = Math.round((this.categoriesData[1].volumeCategory / totalMovements) * 100);
@@ -108,7 +109,7 @@ export class CustomerIntensityComponent implements OnInit {
       this.categoriesData[1].volumeCategory  += volume;
     } else if(intensity >= 70 && intensity <= 79) {
       this.categoriesData[2].volumeCategory  += volume;
-    } else {
+    } else if (intensity > 0) {
       this.categoriesData[3].volumeCategory  += volume;
     }
   }
