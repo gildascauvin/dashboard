@@ -1,73 +1,79 @@
 <div [ngClass]="[isFromUrl ? 'row lead-body d-flex justify-content-center' : 'row lead-body lead-body-athlete d-flex justify-content-center']">
   <div class="col-md-10">
-    <div class="col-md-12 container-table">
+    <div class="container-table">
       <table class="table">
         <thead>
         <tr>
-          <th scope="col col-training-zone"><span class="show-mobile">{{ "#Training zone" | dgTranslate }}</span></th>
-          <th class="text-center hidden-mobile" scope="col">{{ "#Training zone" | dgTranslate }}</th>
-          <th class="text-center" scope="col">{{ "#Energy" | dgTranslate }}</th>
-          <th class="text-center" scope="col">{{ "#RPE" | dgTranslate }}</th>
-          <th class="hidden-mobile" scope="col"></th>
+          <th class="col-training-zone" scope="col"></th>
+          <th class="text-center hidden-mobile" scope="col">{{ "#RPE" | dgTranslate }}</th>
+          <th class="text-center hidden-mobile" scope="col">{{ "#Constraint" | dgTranslate }}</th>
+          <th class="text-center hidden-mobile" scope="col">{{ "#Overload" | dgTranslate }}</th>
+          <th class="text-center hidden-mobile" scope="col">{{ "#Variation" | dgTranslate }}</th>
+          <th class="text-center hidden-mobile" scope="col">{{ "#Lifestyle" | dgTranslate }}</th>
         </tr>
         </thead>
         <tbody *ngIf="dataPerformanceIsLoading">
         <tr *ngFor="let client of clients; let i = index">
           <td class="td-circle-user">
             <div class="tpc-circle">
-              <div class="c100 p70 {{ dataPerformanceClients[client.client_id] ? dataPerformanceClients[client.client_id].zoneColor : '' }}">
+              <div class="c100 p{{ dataPerformanceClients[client.client_id] && dataPerformanceClients[client.client_id].load.constraintRounded > 0 ? dataPerformanceClients[client.client_id].colors.load.percent : 0 }} {{ dataPerformanceClients[client.client_id] && dataPerformanceClients[client.client_id].load.constraintRounded > 0 ? dataPerformanceClients[client.client_id].colors.load.colorCircle : '' }}">
                 <div class="circle-content">
-                  <span class="title">{{ client.profile ? client.profile.firstname.substr(0,1) + client.profile.lastname.substr(0,1) : client.client_name.substr(0, 2) }}</span>
+                  <span class="title">{{ dataPerformanceClients[client.client_id] && dataPerformanceClients[client.client_id].load.constraintRounded > 0 ? dataPerformanceClients[client.client_id].load.constraintRounded : '' }}</span>
                 </div>
                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
               </div>
             </div>
 
             <div class="user-infos">
-              <ng-container *ngIf="client.status == 2 && dataPerformanceClients[client.client_id] && dataPerformanceClients[client.client_id].zoneName != ''">
-              <span class="show-mobile font-weight-bold color-{{ dataPerformanceClients[client.client_id].zoneColor }}">
-                {{ dataPerformanceClients[client.client_id].zoneName }}
-              </span>
+              <ng-container *ngIf="client.status == 2 && dataPerformanceClients[client.client_id] && dataPerformanceClients[client.client_id].fitness.energyScore != ''">
+                <div class="font-weight-bold color-{{ dataPerformanceClients[client.client_id].colors.zone.color }}">
+                  {{ dataPerformanceClients[client.client_id].zone.name }}
+                </div>
               </ng-container>
               <ng-container *ngIf="client.status == 2 && isFromUrl === true">
-              <a class="username text-dark" [routerLink]="['/coach', 'athlet', 'dashboard']" (click)="setCurrentAthletId(client.client_id)">
-                {{ client.client_name }}
-              </a>
+                <a class="username text-dark" [routerLink]="['/coach', 'athlet', 'dashboard']" (click)="setCurrentAthletId(client.client_id)">
+                  {{ client.client_name }}
+                </a>
               </ng-container>
               <ng-container *ngIf="client.status != 2 || isFromUrl === false">
                 <a class="username text-dark">{{ client.client_name }}</a>
               </ng-container>
             </div>
           </td>
-          <td class="text-center hidden-mobile">
-            <ng-container *ngIf="client.status == 2 && dataPerformanceClients[client.client_id] && dataPerformanceClients[client.client_id].zoneName != ''">
-              <span class="font-weight-bold color-{{ dataPerformanceClients[client.client_id].zoneColor }}">
-                {{ dataPerformanceClients[client.client_id].zoneName }}
-              </span>
-            </ng-container>
 
-          </td>
-          <td class="text-center">
-            <i *ngIf="client.status == 3" class="fa fa-ban text-danger"></i>
-            <i *ngIf="client.status == 1" class="fa fa-hourglass-start text-warning"></i>
-            <ng-container *ngIf="client.status == 2 && dataPerformanceClients[client.client_id] && dataPerformanceClients[client.client_id].energyScore !== null">
-              <img class="icon" src="assets/img/logo/icon-energy.svg"/>
-              <div class="score">{{ dataPerformanceClients[client.client_id].energyScore }}/10</div>
+          <td class="text-center hidden-mobile">
+            <ng-container *ngIf="client.status == 2 && dataPerformanceClients[client.client_id] && dataPerformanceClients[client.client_id].rpe.rpe != ''">
+              <span class="badge {{ dataPerformanceClients[client.client_id].colors.rpe.color }}">{{ dataPerformanceClients[client.client_id].rpe.rpe }}<span class="hidden-mobile">/10</span></span>
             </ng-container>
           </td>
-          <td class="text-center">
-            <ng-container *ngIf="client.status == 2 && dataPerformanceClients[client.client_id] && dataPerformanceClients[client.client_id].rpeScore !== null">
-              <img class="icon" src="assets/img/logo/icon-rpe.svg"/>
-              <div class="score">{{ dataPerformanceClients[client.client_id].rpeScore }}/10</div>
+
+          <td class="text-center hidden-mobile">
+            <ng-container *ngIf="client.status == 2 && dataPerformanceClients[client.client_id] && dataPerformanceClients[client.client_id].load.constraint != ''">
+              <span class="badge {{ dataPerformanceClients[client.client_id].colors.load.color1 }}">{{ dataPerformanceClients[client.client_id].load.constraint }}</span>
             </ng-container>
           </td>
-          <td class="hidden-mobile">
-            <button *ngIf="isFromUrl === true" class="btn btn-light" (click)="openInvitationDeleteModal(client)"><i class="fa fa-trash text-danger"></i></button>
+
+          <td class="text-center hidden-mobile">
+            <ng-container *ngIf="client.status == 2 && dataPerformanceClients[client.client_id] && dataPerformanceClients[client.client_id].load.rcac != ''">
+              <span class="badge {{ dataPerformanceClients[client.client_id].colors.load.color2 }}">{{ dataPerformanceClients[client.client_id].load.rcac }}</span>
+            </ng-container>
           </td>
+
+          <td class="text-center hidden-mobile">
+            <ng-container *ngIf="client.status == 2 && dataPerformanceClients[client.client_id] && dataPerformanceClients[client.client_id].variation.monotony != ''">
+              <span class="badge {{ dataPerformanceClients[client.client_id].colors.variation.colorCircle }}">{{ dataPerformanceClients[client.client_id].variation.monotony }}</span>
+            </ng-container>
+          </td>
+
+          <td class="text-center hidden-mobile">
+            <ng-container *ngIf="client.status == 2 && dataPerformanceClients[client.client_id] && dataPerformanceClients[client.client_id].lifestyle.value != '' && dataPerformanceClients[client.client_id].has_stats === true">
+              <span class="badge {{ dataPerformanceClients[client.client_id].colors.lifestyle.color }}">{{ dataPerformanceClients[client.client_id].lifestyle.value }}<span class="hidden-mobile">/10</span></span>
+            </ng-container>
+          </td>
+
         </tr>
         </tbody>
       </table>
     </div>
   </div>
 </div>
-

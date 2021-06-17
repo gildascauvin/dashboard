@@ -1,24 +1,24 @@
 <div [ngClass]="[isFromUrl ? 'row lead-body d-flex justify-content-center' : 'row lead-body lead-body-athlete d-flex justify-content-center']">
   <div class="col-md-10">
-    <div class="col-md-12 container-table">
+    <div class="container-table">
       <table class="table">
         <thead>
         <tr>
-          <th class="col-training-zone" scope="col">{{ "#Training zone" | dgTranslate }}</th>
-          <th class="text-center" scope="col">{{ "#Diet" | dgTranslate }}</th>
-          <th class="text-center" scope="col">{{ "#Sleep" | dgTranslate }}</th>
-          <th class="text-center" scope="col">{{ "#Mood" | dgTranslate }}</th>
-          <th class="text-center" scope="col">{{ "#Energy" | dgTranslate }}</th>
-          <th class="text-center" scope="col">{{ "#Stress" | dgTranslate }}</th>
+          <th class="col-training-zone" scope="col"></th>
+          <th class="text-center hidden-mobile" scope="col">{{ "#Diet" | dgTranslate }}</th>
+          <th class="text-center hidden-mobile" scope="col">{{ "#Sleep" | dgTranslate }}</th>
+          <th class="text-center hidden-mobile" scope="col">{{ "#Mood" | dgTranslate }}</th>
+          <th class="text-center hidden-mobile" scope="col">{{ "#Energy" | dgTranslate }}</th>
+          <th class="text-center hidden-mobile" scope="col">{{ "#Stress" | dgTranslate }}</th>
         </tr>
         </thead>
         <tbody *ngIf="dataWellnessIsLoading">
         <tr *ngFor="let client of clients; let i = index">
           <td class="td-circle-user">
             <div class="tpc-circle">
-              <div class="c100 p70 {{ dataWellnessClients[client.client_id] ? dataWellnessClients[client.client_id].zoneColor : '' }}">
+              <div class="c100 p{{ dataWellnessClients[client.client_id] ? dataWellnessClients[client.client_id].energyScore : 70 }} {{ dataWellnessClients[client.client_id] ? dataWellnessClients[client.client_id].zoneColor : '' }}">
                 <div class="circle-content">
-                  <span class="title">{{ client.profile ? client.profile.firstname.substr(0,1) + client.profile.lastname.substr(0,1) : client.client_name.substr(0, 2) }}</span>
+                  <span class="title">{{ dataWellnessClients[client.client_id] ? dataWellnessClients[client.client_id].energyScore + '%' : '' }}</span>
                 </div>
                 <div class="slice"><div class="bar"></div><div class="fill"></div></div>
               </div>
@@ -26,7 +26,7 @@
 
             <div class="user-infos">
               <ng-container *ngIf="client.status == 2 && dataWellnessClients[client.client_id] && dataWellnessClients[client.client_id].zoneName != ''">
-              <div class="hidden-mobile font-weight-bold color-{{ dataWellnessClients[client.client_id].zoneColor }}">
+              <div class="font-weight-bold color-{{ dataWellnessClients[client.client_id].zoneColor }}">
                 {{ dataWellnessClients[client.client_id].zoneName }}
               </div>
               </ng-container>
@@ -41,31 +41,31 @@
             </div>
           </td>
 
-          <td class="text-center">
+          <td class="text-center hidden-mobile">
             <ng-container *ngIf="client.status == 2 && dataWellnessClients[client.client_id] && dataWellnessClients[client.client_id].diet.value != ''">
               <span class="badge {{ dataWellnessClients[client.client_id].diet.color }}">{{ dataWellnessClients[client.client_id].diet.value }}<span class="hidden-mobile">/10</span></span>
             </ng-container>
           </td>
 
-          <td class="text-center">
+          <td class="text-center hidden-mobile">
             <ng-container *ngIf="client.status == 2 && dataWellnessClients[client.client_id] && dataWellnessClients[client.client_id].sleep.value != ''">
               <span class="badge {{ dataWellnessClients[client.client_id].sleep.color }}">{{ dataWellnessClients[client.client_id].sleep.value }}<span class="hidden-mobile">/10</span></span>
             </ng-container>
           </td>
 
-          <td class="text-center">
+          <td class="text-center hidden-mobile">
             <ng-container *ngIf="client.status == 2 && dataWellnessClients[client.client_id] && dataWellnessClients[client.client_id].mood.value != ''">
               <span class="badge {{ dataWellnessClients[client.client_id].mood.color }}">{{ dataWellnessClients[client.client_id].mood.value }}<span class="hidden-mobile">/10</span></span>
             </ng-container>
           </td>
 
-          <td class="text-center">
+          <td class="text-center hidden-mobile">
             <ng-container *ngIf="client.status == 2 && dataWellnessClients[client.client_id] && dataWellnessClients[client.client_id].energy.value != ''">
               <span class="badge {{ dataWellnessClients[client.client_id].energy.color }}">{{ dataWellnessClients[client.client_id].energy.value }}<span class="hidden-mobile">/10</span></span>
             </ng-container>
           </td>
 
-          <td class="text-center">
+          <td class="text-center hidden-mobile">
             <ng-container *ngIf="client.status == 2 && dataWellnessClients[client.client_id] && dataWellnessClients[client.client_id].stress.value != ''">
               <span class="badge {{ dataWellnessClients[client.client_id].stress.color }}">{{ dataWellnessClients[client.client_id].stress.value }}<span class="hidden-mobile">/10</span></span>
             </ng-container>

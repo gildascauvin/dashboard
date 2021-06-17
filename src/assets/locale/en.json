@@ -337,7 +337,6 @@
   "#Undertraining": "Undertraining",
   "#Overtraining": "Overtraining",
   "#Constraint": "Constraint",
-  "#Workload zone": "Workload zone",
   "#Text": "Text",
   "#Simple": "Simple",
   "#Complex": "Complex",
@@ -393,9 +392,13 @@
   "#Bad": "Bad",
   "#Average": "Average",
   "#Good": "Good",
+  "#Good1": "Good",
   "#Very good": "Very good",
+  "#Very low": "Very low",
   "#Edit a metric": "Edit a metric",
   "#Resistance": "Resistance",
   "#Endurance" : "Endurance",
-  "#Update Session": "Update session"
+  "#Update Session": "Update session",
+  "#Overload": "Overload",
+  "#Lifestyle": "Lifestyle"
 }

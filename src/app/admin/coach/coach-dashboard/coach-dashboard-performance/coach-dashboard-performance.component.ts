@@ -6,8 +6,10 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {UsersService} from "../../../../_/templates/users.service";
 import {UserService} from "../../../../_/services/model/user.service";
 import {CoachDashboardMenuService} from "../coach-dashboard-menu/coach-dashboard-menu.service";
-import {endOfWeek} from "date-fns";
+import {endOfWeek, startOfWeek} from "date-fns";
 import {DoorgetsTranslateService} from "doorgets-ng-translate";
+import {CustomerStatsComputerService} from "../../../../_/services/stats/customer-stats-computer.service";
+import {CustomerStatsSummaryService} from "../../../../_/components/ui/customer-stats-summary/customer-stats-summary.service";
 
 @Component({
   selector: "app-coach-dashboard-performance",
@@ -40,7 +42,9 @@ export class CoachDashboardPerformanceComponent implements OnInit {
     private usersService: UsersService,
     private modalService: BsModalService,
     private coachDashboardMenuService: CoachDashboardMenuService,
-    private doorgetsTranslateService: DoorgetsTranslateService
+    private doorgetsTranslateService: DoorgetsTranslateService,
+    public customerStatsComputerService: CustomerStatsComputerService,
+    private customerStatsSummaryService: CustomerStatsSummaryService,
   ) {}
 
   ngOnInit(): void {
@@ -81,122 +85,63 @@ export class CoachDashboardPerformanceComponent implements OnInit {
 
   computeAllPerformances(clients) {
 
-    let to = endOfWeek(new Date(), {weekStartsOn: 1});
-    let from = _.clone(to);
-    from.setDate(from.getDate() - 7);
+    let globalFrom = startOfWeek(new Date(), { weekStartsOn: 1 });
+    let from = _.clone(globalFrom);
+    from.setDate(from.getDate() - 21);
+
+    let to = endOfWeek(new Date(), { weekStartsOn: 1 });
+    let globalTo = _.clone(to);
+
+    let globalFromDate = this.formatDate(globalFrom) + ' 00:00:00';
+    let globalToDate = this.formatDate(globalTo) + ' 00:00:00';
     let fromDate = this.formatDate(from) + ' 00:00:00';
     let toDate = this.formatDate(to) + ' 00:00:00';
+
 
     clients.forEach((client, key) => {
       let clientId = client.client_id;
 
       this.sub.onGetAllWorkout = this.usersService
-        .getAllClientWorkouts(clientId, fromDate, toDate, 1)
-        .subscribe((workouts: any) => {
-          this.dataPerformanceClients[clientId] = this._computePerformance(clientId, client.status, workouts);
+        .getAllClientWorkouts(clientId, globalFromDate, globalToDate, 1)
+        .subscribe((globalWorkouts: any) => {
 
-          if (Object.is(this.clients.length - 1, key)) {
-            this.clients.sort((a,b) => this.dataPerformanceSorting['client-id-' + b.client_id] - this.dataPerformanceSorting['client-id-' + a.client_id]);
-            this.dataPerformanceIsLoading = true;
-          }
+          let globalCustomerStats = this.customerStatsComputerService.computeStatsForAllClientWorkouts(globalWorkouts, true);
+          globalCustomerStats = _.cloneDeep(globalCustomerStats);
+
+            this.usersService
+            .getAllClientWorkouts(clientId, fromDate, toDate, 1)
+            .subscribe((workouts: any) => {
+            if (workouts) {
+              let customerStats = this.customerStatsComputerService.computeStatsForAllClientWorkouts(workouts, true, from, to);
+
+              this.dataPerformanceClients[clientId] = this.customerStatsSummaryService.computeStatFatigueManagement(
+                globalWorkouts,
+                workouts,
+                globalCustomerStats.stats,
+                customerStats,
+                globalFrom,
+                globalTo
+              );
+
+              if (this.dataPerformanceClients[clientId].colors.zone.color == "red") {
+                this.dataPerformanceSorting['client-id-' + clientId] = 4;
+              } else if (this.dataPerformanceClients[clientId].colors.zone.color == "green") {
+                this.dataPerformanceSorting['client-id-' + clientId] = 3;
+              } else if (this.dataPerformanceClients[clientId].colors.zone.color == "yellow") {
+                this.dataPerformanceSorting['client-id-' + clientId] = 2;
+              } else {
+                this.dataPerformanceSorting['client-id-' + clientId] = 1;
+              }
+
+              if (Object.is(this.clients.length - 1, key)) {
+                this.clients.sort((a, b) => this.dataPerformanceSorting['client-id-' + b.client_id] - this.dataPerformanceSorting['client-id-' + a.client_id]);
+                this.dataPerformanceIsLoading = true;
+              }
+
+            }
+          });
         });
     });
-  }
-
-  _computePerformance(clientId, clientStatus, workouts) {
-
-    let energyScores = 0;
-    let energyScoresLength = 0;
-    let rpeScores = 0;
-    let rpeScoresLength = 0;
-
-    let totalCompleteData = 0;
-
-    for (let dayWorkout in workouts) {
-      let dayWorkouts = workouts[dayWorkout];
-
-      for (let workoutKey in dayWorkouts) {
-        let workoutEnergyScore = this._computeEnergyScore(dayWorkouts[workoutKey]);
-
-        if (workoutEnergyScore > 0) {
-          energyScores += workoutEnergyScore;
-          energyScoresLength++;
-        }
-        if (dayWorkouts[workoutKey].rate > 0) {
-          rpeScores += dayWorkouts[workoutKey].rate;
-          rpeScoresLength++;
-        }
-      }
-    }
-
-    let energyScore = (energyScoresLength > 0) ? Math.round(((energyScores / energyScoresLength / 10) + Number.EPSILON) * 100) / 100 : null;
-    let rpeScore = (rpeScoresLength > 0) ? Math.round(((rpeScores / rpeScoresLength) + Number.EPSILON) * 100) / 100 : null;
-    let zoneScore = (energyScore !== null && rpeScore !== null) ? energyScore - rpeScore : null;
-
-    let colorRPE = '';
-    let zoneName = '';
-    let zoneColor = '';
-
-    if (rpeScore > 8) {
-      colorRPE = 'red';
-    } else if (rpeScore < 6) {
-      colorRPE = 'green';
-    } else {
-      colorRPE = 'yellow';
-    }
-
-    if (zoneScore > 1.33) {
-      zoneName = this.doorgetsTranslateService.instant('#Recovery');
-      zoneColor = 'yellow';
-      totalCompleteData += 2;
-    } else if (zoneScore < -1.33) {
-      zoneName = this.doorgetsTranslateService.instant('#Overreaching');
-      zoneColor = 'red';
-      totalCompleteData += 1;
-    } else if (zoneScore !== null) {
-      zoneName = this.doorgetsTranslateService.instant('#Optimal');
-      zoneColor = 'green';
-      totalCompleteData += 3;
-    }
-
-    // en attente
-    if (clientStatus == 1) {
-      totalCompleteData = -1;
-    } else if (clientStatus == 3) {
-      totalCompleteData = -2;
-    }
-
-    this.dataPerformanceSorting['client-id-' + clientId] = totalCompleteData;
-
-    return {
-      'zoneColor': zoneColor,
-      'rpeScore': rpeScore,
-      'zoneScore': zoneScore,
-      'energyScore': energyScore,
-      'colorRPE': colorRPE,
-      'zoneName': zoneName
-    };
-  }
-
-  private _computeEnergyScore(workout) {
-    let diet = parseInt(workout.diet);
-    let sleep = parseInt(workout.sleep);
-    let mood = parseInt(workout.mood);
-    let energy = parseInt(workout.energy);
-    let stress = parseInt(workout.stress);
-
-    let energyDatas = [diet, sleep, mood, energy, stress];
-
-    let totalEnergy = 0;
-    let totalDataConfirmed = 0;
-    energyDatas.forEach(function (data) {
-      if (data > 0) {
-        totalDataConfirmed++
-        totalEnergy += data;
-      }
-    });
-
-    return (totalDataConfirmed > 0) ? totalEnergy / (5 * totalDataConfirmed) * 100 : 0;
   }
 
   setCurrentAthletId(clientId) {

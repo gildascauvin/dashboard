@@ -1,19 +1,31 @@
-$primary-color-green: #00d49d;
-$primary-color-yellow: #cfe223;
 $primary-color-red: #ff0502;
+$primary-color-yellow: #cfe223;
+$primary-color-green: #00d49d;
+
 
 .show-mobile {
   display: none;
 }
 
 .td-circle-user {
+  margin-left: 30px;
   display: flex;
   align-items: center;
+}
+
+.col-training-zone {
+  padding-left: 120px;
+}
+
+.lead-body {
+  margin: 0;
+  padding: 0;
 }
 
 table {
   border-collapse: separate;
   border-spacing: 0 20px;
+  margin-bottom: 0;
   padding-bottom: 50px;
 
   thead {
@@ -54,8 +66,11 @@ table {
   }
 }
 
+.user-infos {
+  margin-left: 20px;
+}
+
 .username {
-  padding-left: 10px;
   text-decoration: none;
   font-weight: 500;
 }
@@ -65,14 +80,14 @@ table {
     font-size: 60px;
 
     .circle-content {
-      font-size: 36px;
+      font-size: 34px;
       text-align: center;
 
       .title {
         text-transform: uppercase;
         position:relative;
         z-index: 1;
-        font-size: 20px;
+        font-size: 15px;
         color: #fff;
       }
     }
@@ -83,17 +98,52 @@ table {
   }
 }
 
+
+.badge {
+  font-size: 15px;
+  padding: 13px 18px;
+  border-radius: 30px;
+
+  &.red {
+    background: $primary-color-red;
+    color: #fff;
+  }
+
+  &.yellow {
+    background: $primary-color-yellow;
+    color: #000;
+  }
+
+  &.green {
+    background: $primary-color-green;
+    color: #000;
+  }
+}
+
 @media (max-width: 480px) {
   table {
     border-collapse: separate;
+    table-layout: fixed;
     border-spacing: 0 20px;
 
     thead {
       tr {
         th {
+          border-bottom: none;
+          font-size: 11px;
+          padding: 5px;
+
           &:first-child {
-            width: 55%;
+            width: 30%;
           }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          padding: 5px;
         }
       }
     }
@@ -113,18 +163,30 @@ table {
 
   .tpc-circle {
     width: auto;
-  }
-
-  .user-infos {
     margin-left: 10px;
-  }
-
-  .username {
-    padding-left: 0;
+    margin-right: 10px;
   }
 
   .username, .score {
     font-size: 13px;
+  }
 
+  .td-circle-user {
+    margin-left: 0;
+  }
+
+  .col-training-zone {
+    padding-left: 0;
+  }
+
+  .user-infos {
+    margin-left: 5px;
+  }
+
+  .badge {
+    font-size: 11px;
+    padding: 6px 10px;
+    border-radius: 30px;
   }
 }
+
