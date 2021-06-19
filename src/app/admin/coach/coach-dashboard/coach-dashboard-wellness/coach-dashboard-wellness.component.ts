@@ -107,8 +107,6 @@ export class CoachDashboardWellnessComponent implements OnInit {
 
     let energyScores = 0;
     let energyScoresLength = 0;
-    let rpeScores = 0;
-    let rpeScoresLength = 0;
     let totalCompleteData = 0;
 
     let listScores = ['diet', 'sleep', 'mood', 'energy', 'stress'];
@@ -129,41 +127,32 @@ export class CoachDashboardWellnessComponent implements OnInit {
           energyScoresLength++;
         }
 
-        if (dayWorkouts[workoutKey].rate > 0) {
-          rpeScores += dayWorkouts[workoutKey].rate;
-          rpeScoresLength++;
-        }
-
         listScores.forEach(function(scoreName) {
           if (dayWorkouts[workoutKey][scoreName] > 0) {
             scores[scoreName] += dayWorkouts[workoutKey][scoreName];
             scores[scoreName + "Length"]++;
-
-            totalCompleteData++;
           }
         });
       }
     }
 
     let energyScore = (energyScoresLength > 0) ? Math.round(((energyScores / energyScoresLength / 10) + Number.EPSILON) * 100) / 100 : null;
-    let rpeScore = (rpeScoresLength > 0) ? Math.round(((rpeScores / rpeScoresLength) + Number.EPSILON) * 100) / 100 : null;
-    let zoneScore = (energyScore !== null && rpeScore !== null) ? energyScore - rpeScore : null;
 
     let zoneName = '';
     let zoneColor = '';
 
-    if (zoneScore > 1.33) {
-      zoneName = this.doorgetsTranslateService.instant('#Recovery');
-      zoneColor = 'yellow';
-      totalCompleteData += 2;
-    } else if (zoneScore < -1.33) {
-      zoneName = this.doorgetsTranslateService.instant('#Overreaching');
-      zoneColor = 'red';
-      totalCompleteData += 1;
-    } else if (zoneScore !== null) {
-      zoneName = this.doorgetsTranslateService.instant('#Optimal');
-      zoneColor = 'green';
-      totalCompleteData += 3;
+    if (energyScore > 8) {
+      zoneName = this.doorgetsTranslateService.instant('#Very good');
+      zoneColor = 'high';
+      totalCompleteData = 3;
+    } else if (energyScore < 5) {
+      zoneName = this.doorgetsTranslateService.instant('#Very low');
+      zoneColor = 'low';
+      totalCompleteData = 1;
+    } else if (energyScore !== null) {
+      zoneName = this.doorgetsTranslateService.instant('#Good1');
+      zoneColor = 'medium';
+      totalCompleteData = 2;
     }
 
     this.dataWellnessSorting['client-id-' + clientId] = totalCompleteData;
@@ -176,6 +165,7 @@ export class CoachDashboardWellnessComponent implements OnInit {
       'mood': CoachDashboardWellnessComponent._computeSingleEnergyScore(scores.mood, scores.moodLength),
       'energy': CoachDashboardWellnessComponent._computeSingleEnergyScore(scores.energy, scores.energyLength),
       'stress': CoachDashboardWellnessComponent._computeSingleEnergyScore(scores.stress, scores.stressLength),
+      'energyScore': energyScore * 10
     };
   }
 
@@ -190,12 +180,12 @@ export class CoachDashboardWellnessComponent implements OnInit {
       result = score / scoreLength / 5 * 10;
       result = Math.round((result + Number.EPSILON) * 10) / 10;
 
-      color = 'yellow';
+      color = 'medium';
 
       if (result <= 5) {
-        color = 'red';
+        color = 'low';
       } else if (result >= 8) {
-        color = 'green';
+        color = 'high';
       }
     }
 

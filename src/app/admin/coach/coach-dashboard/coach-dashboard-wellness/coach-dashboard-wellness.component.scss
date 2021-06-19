@@ -1,6 +1,6 @@
-$primary-color-green: #00d49d;
-$primary-color-yellow: #cfe223;
-$primary-color-red: #ff0502;
+$primary-color-low: #e6e2ff;
+$primary-color-medium: #a495f9;
+$primary-color-high: #1000ff;
 
 .show-mobile {
   display: none;
@@ -16,10 +16,15 @@ $primary-color-red: #ff0502;
   padding-left: 120px;
 }
 
+.lead-body {
+  margin: 0;
+  padding: 0;
+}
+
 table {
   border-collapse: separate;
   border-spacing: 0 20px;
-  padding-bottom: 50px;
+  margin-bottom: 0;
 
   thead {
     tr {
@@ -39,16 +44,16 @@ table {
         vertical-align: middle;
         border: none;
 
-        .color-red {
-          color: $primary-color-red;
+        .color-low {
+          color: $primary-color-low;
         }
 
-        .color-green {
-          color: $primary-color-green;
+        .color-high {
+          color: $primary-color-high;
         }
 
-        .color-yellow {
-          color: $primary-color-yellow;
+        .color-medium {
+          color: $primary-color-medium;
         }
 
         .score {
@@ -80,7 +85,7 @@ table {
         text-transform: uppercase;
         position:relative;
         z-index: 1;
-        font-size: 20px;
+        font-size: 18px;
         color: #fff;
       }
     }
@@ -97,19 +102,19 @@ table {
   padding: 13px 18px;
   border-radius: 30px;
 
-  &.red {
-    background: $primary-color-red;
+  &.low {
+    background: $primary-color-low;
+    color: #000;
+  }
+
+  &.medium {
+    background: $primary-color-medium;
+    color: #000;
+  }
+
+  &.high {
+    background: $primary-color-high;
     color: #fff;
-  }
-
-  &.yellow {
-    background: $primary-color-yellow;
-    color: #000;
-  }
-
-  &.green {
-    background: $primary-color-green;
-    color: #000;
   }
 }
 
@@ -122,6 +127,7 @@ table {
     thead {
       tr {
         th {
+          border-bottom: none;
           font-size: 11px;
           padding: 5px;
 
@@ -155,6 +161,8 @@ table {
 
   .tpc-circle {
     width: auto;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
   .username, .score {

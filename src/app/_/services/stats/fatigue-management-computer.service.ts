@@ -17,7 +17,7 @@ export class FatigueManagementComputerService {
     if (energyScore <= 0) {
       return {
         status: 'todo',
-        color: 'red'
+        color: 'low'
       };
     }
 
@@ -28,13 +28,13 @@ export class FatigueManagementComputerService {
 
       if (energyScore > 80) {
         subtitle = this.doorgetsTranslateService.instant('#It seems like you are in a good shape, you can push yourself to a hard session.');
-        color = 'green';
+        color = 'high';
       } else if (energyScore < 60) {
         subtitle = this.doorgetsTranslateService.instant('#It seems like you rather tired. Do a light session to recover or rest.');
-        color = 'red';
+        color = 'low';
       } else {
         subtitle = this.doorgetsTranslateService.instant('#It seems like you are a bit tired. Adjust your session according to how you feel.');
-        color = 'yellow';
+        color = 'medium';
       }
 
       return {
@@ -73,11 +73,11 @@ export class FatigueManagementComputerService {
     }
 
     if (energyScore > 80) {
-      colorEnergy = 'green';
+      colorEnergy = 'high';
     } else if (energyScore < 60) {
-      colorEnergy = 'red';
+      colorEnergy = 'low';
     } else {
-      colorEnergy = 'yellow';
+      colorEnergy = 'medium';
     }
 
     return {

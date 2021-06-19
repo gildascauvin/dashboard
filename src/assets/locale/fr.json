@@ -343,7 +343,6 @@
   "#Undertraining": "Sous-entraînement",
   "#Overtraining": "Sur-entraînement",
   "#Constraint": "Contrainte",
-  "#Workload zone": "Charge aiguë:chronique",
   "#Load is under control. You can continue to overload": "La charge est sous contrôle. Vous pouvez continuer à surcharger",
   "#Load starts to be too high. Reduce load to avoid overfatigue": "La charge commence à être trop élevée. Réduisez la charge pour éviter la fatigue excessive",
   "#Load is dangerously high. High risk of injury due to overfatigue": "La charge est dangereusement élevée. Risque élevé de blessure dû à une surfatigue.",
@@ -381,7 +380,9 @@
   "#Bad": "Mauvais",
   "#Average": "Moyen",
   "#Good": "Bon",
+  "#Good1": "Bien",
   "#Very good": "Très bien",
+  "#Very low": "Très faible",
   "#Edit a metric": "Modifier un métrique",
   "#Resistance": "Resistance",
   "#Endurance" : "Endurance",
@@ -397,5 +398,7 @@
   "#Vous pensez que c'est une erreur ? Vous avez une question ou besoin de plus de temps ?": "Vous pensez que c'est une erreur ? Vous avez une question ou besoin de plus de temps ?",
   "#et nous déverouillerons votre compte.": "et nous déverouillerons votre compte.",
   "#Youtube / image URL": "Youtube / image URL",
-  "#Update Session": "Modifier la séance"
+  "#Update Session": "Modifier la séance",
+  "#Overload": "Surcharge",
+  "#Lifestyle": "Lifestyle"
 }

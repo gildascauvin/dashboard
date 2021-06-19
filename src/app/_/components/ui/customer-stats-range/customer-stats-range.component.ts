@@ -324,6 +324,9 @@ export class CustomerStatsRangeComponent implements OnInit {
       }
     }
 
+    this.startDay.setHours(0,0,0);
+    this.endDay.setHours(23,59,59);
+
     this.fromDate.year = parseInt("" + format(this.startDay, "yyyy"));
     this.fromDate.month = parseInt("" + format(this.startDay, "MM"));
     this.fromDate.day = parseInt("" + format(this.startDay, "dd"));
@@ -338,8 +341,8 @@ export class CustomerStatsRangeComponent implements OnInit {
 
     this.sub.onGetAllWorkout && this.sub.onGetAllWorkout.unsubscribe();
 
-    let toDate = this._computeDateFromDatePicker(this.toDate, true);
-    let fromDate = this._computeDateFromDatePicker(this.fromDate, true);
+    let toDate = this._computeDateFromDatePicker(this.toDate) + ' 23:59:59';
+    let fromDate = this._computeDateFromDatePicker(this.fromDate) + ' 00:00:00';
 
     this._clean();
 
@@ -450,16 +453,10 @@ export class CustomerStatsRangeComponent implements OnInit {
     };
   }
 
-  private _computeDateFromDatePicker(date, withtime?) {
+  private _computeDateFromDatePicker(date) {
     let day = (date.day < 10) ? "0" + date.day : date.day;
     let month = (date.month < 10) ? "0" + date.month : date.month;
 
-    let dateFormatted = date.year + "-" + month + "-" + day;
-
-    if (withtime === true) {
-      dateFormatted += " 00:00:00";
-    }
-
-    return dateFormatted;
+    return date.year + "-" + month + "-" + day;
   }
 }
