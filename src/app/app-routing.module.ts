@@ -65,6 +65,12 @@ import {AthletePerformanceComponent} from "./admin/athlete/athlete-performance/a
 import {AthleteWellnessComponent} from "./admin/athlete/athlete-wellness/athlete-wellness.component";
 import {CoachSettingsLanguageComponent} from "./admin/coach/coach-settings/coach-settings-language/coach-settings-language.component";
 import {AthleteSettingsLanguageComponent} from "./admin/athlete/athlete-settings/athlete-settings-language/athlete-settings-language.component";
+import {CoachAthleteDashboardTrainingComponent} from "./admin/coach/coach-athlete/coach-athlete-dashboard/coach-athlete-dashboard-training/coach-athlete-dashboard-training.component";
+import {CoachAthleteDashboardFatigueComponent} from "./admin/coach/coach-athlete/coach-athlete-dashboard/coach-athlete-dashboard-fatigue/coach-athlete-dashboard-fatigue.component";
+import {CoachAthleteDashboardWellnessComponent} from "./admin/coach/coach-athlete/coach-athlete-dashboard/coach-athlete-dashboard-wellness/coach-athlete-dashboard-wellness.component";
+import { AthleteDashboardTrainingComponent } from './admin/athlete/athlete-dashboard/athlete-dashboard-training/athlete-dashboard-training.component';
+import {AthleteDashboardFatigueComponent} from "./admin/athlete/athlete-dashboard/athlete-dashboard-fatigue/athlete-dashboard-fatigue.component";
+import { AthleteDashboardWellnessComponent } from './admin/athlete/athlete-dashboard/athlete-dashboard-wellness/athlete-dashboard-wellness.component';
 
 const routes: Routes = [{
     path: '',
@@ -118,8 +124,16 @@ const routes: Routes = [{
             component: CoachAthleteComponent,
             children: [
                 {
-                    path: 'dashboard',
-                    component: CoachAthleteLeadboardComponent
+                  path: 'dashboard',
+                  component: CoachAthleteDashboardTrainingComponent
+                },
+                {
+                  path: 'fatigue',
+                  component: CoachAthleteDashboardFatigueComponent
+                },
+                {
+                  path: 'wellness',
+                  component: CoachAthleteDashboardWellnessComponent
                 }, {
                     path: 'profile',
                     component: CoachAthleteProfileComponent,
@@ -139,38 +153,6 @@ const routes: Routes = [{
                                 isAthlet: false,
                             }
                         }
-                    ]
-                },{
-                    path: 'calendar',
-                    component: CoachAthleteCalendarComponent
-                },{
-                    path: 'stats',
-                    component: CoachAthleteStatsComponent,
-                    children: [
-                      {
-                        path: '',
-                        component: AthleteStatsFatigueManagementComponent,
-                        data: {
-                          isCoach: true,
-                          isAthlet: false,
-                        }
-                      },
-                      {
-                        path: 'overload',
-                        component: AthleteStatsTrainingOverloadComponent,
-                        data: {
-                          isCoach: true,
-                          isAthlet: false,
-                        }
-                      },
-                      {
-                        path: 'energy',
-                        component: AthleteStatsEnergySystemsComponent,
-                        data: {
-                          isCoach: true,
-                          isAthlet: false,
-                        }
-                      }
                     ]
                 }
             ],
@@ -209,16 +191,25 @@ const routes: Routes = [{
     canActivate: [AuthGuard],
     children: [{
         path: 'dashboard',
-        component: AthleteDashboardComponent
+        component: AthleteDashboardTrainingComponent
       }, {
-        path: 'team',
-        component: AthleteTeamComponent
+        path: 'fatigue',
+        component: AthleteDashboardFatigueComponent
       }, {
-        path: 'performance',
-        component: AthletePerformanceComponent
-      },{
         path: 'wellness',
-        component: AthleteWellnessComponent
+        component: AthleteDashboardWellnessComponent
+      },{
+        path: 'team',
+        component: AthleteTeamComponent,
+        children: [
+          {
+            path: 'performance',
+            component: AthletePerformanceComponent
+          },{
+            path: 'wellness',
+            component: AthleteWellnessComponent
+          }
+        ]
       },{
         path: 'profile',
         component: AthleteProfileComponent,
@@ -239,9 +230,6 @@ const routes: Routes = [{
                 }
             }
         ]
-      },{
-        path: 'calendar',
-        component: AthleteCalendarComponent
       },{
         path: 'programs',
         component: AthleteProgramsComponent
@@ -267,33 +255,7 @@ const routes: Routes = [{
             path: 'plan',
             component: AthleteSettingsPlanComponent
         }]
-      },{
-        path: 'stats',
-        component: AthleteStatsComponent,
-        children: [{
-            path: '',
-            component: AthleteStatsFatigueManagementComponent,
-            data: {
-              isCoach: false,
-              isAthlet: true,
-            }
-          },{
-            path: 'overload',
-            component: AthleteStatsTrainingOverloadComponent,
-            data: {
-              isCoach: false,
-              isAthlet: true,
-            }
-          },
-          {
-            path: 'energy',
-            component: AthleteStatsEnergySystemsComponent,
-            data: {
-              isCoach: false,
-              isAthlet: true,
-            }
-          }]
-    }]
+      }]
 }];
 
 @NgModule({

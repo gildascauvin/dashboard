@@ -54,6 +54,8 @@
                   </div>
               </div>
             </div>
+
+          <!--
             <div class="nav-bottom-header">
               <div class="content-header">
                 <button class="btn btn-primary float-right mr-4" (click)="openExerciceManagerModal()"><i class="fa fa-plus"></i> {{ '#Create a workout' | dgTranslate }}</button>
@@ -85,6 +87,8 @@
                 </ul>
               </div>
             </div>
+          -->
+
         </div>
     </div>
 </nav>
@@ -117,58 +121,36 @@
 >
   <ul class="nav nav-tabs nav-pills nav-fill">
     <li *ngIf="user.coachs && user.coachs.length > 0" class="nav-item">
-      <a
-        #team="routerLinkActive"
-        class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
-        routerLinkActive="active"
-        [routerLink]="['team']"
-      >
+      <a #team="routerLinkActive" class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" routerLinkActive="active" [routerLink]="['team']">
         <img class="icon" src="{{team.isActive ? 'assets/img/team_active.svg' : 'assets/img/team_inactive.svg'}}"/>
         <span [ngClass]="{ 'isActive': team.isActive }">{{ "#Team" | dgTranslate }}</span>
       </a>
     </li>
     <li class="nav-item">
-      <a
-        #dashboard="routerLinkActive"
-        class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
-        routerLinkActive="active"
-        [routerLink]="['dashboard']"
-      >
-          <img class="icon" src="{{dashboard.isActive ? 'assets/img/dashboard_active.svg' : 'assets/img/dashboard_inactive.svg'}}"/>
-          <span [ngClass]="{ 'isActive': dashboard.isActive }">{{ "#Overview" | dgTranslate }}</span>
+      <a #planning="routerLinkActive" class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" routerLinkActive="active" [routerLink]="['dashboard']">
+        <img class="icon" src="{{planning.isActive ? 'assets/img/planning_active.svg' : 'assets/img/planning_inactive.svg'}}"/>
+        <span [ngClass]="{ 'isActive': planning.isActive }"> {{ "#Training" | dgTranslate }}</span>
       </a>
     </li>
+
     <li class="nav-item">
-      <a
-        #profile="routerLinkActive"
-        class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
-        routerLinkActive="active"
-        [routerLink]="['profile']"
-      >
+      <a #fatigue="routerLinkActive" class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" routerLinkActive="active" [routerLink]="['fatigue']">
+        <img class="icon" src="{{fatigue.isActive ? 'assets/img/fatigue_active.svg' : 'assets/img/fatigue_inactive.svg'}}"/>
+        <span [ngClass]="{ 'isActive': fatigue.isActive }">{{ "#Fatigue" | dgTranslate }}</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a #wellness="routerLinkActive" class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" routerLinkActive="active" [routerLink]="['wellness']">
+        <img class="icon" src="{{wellness.isActive ? 'assets/img/wellness_active.svg' : 'assets/img/wellness_inactive.svg'}}"/>
+        <span [ngClass]="{ 'isActive': wellness.isActive }"> {{ "#Wellness" | dgTranslate }}</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a #profile="routerLinkActive" class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" routerLinkActive="active" [routerLink]="['profile']">
         <img class="icon" src="{{profile.isActive ? 'assets/img/profile_active.svg' : 'assets/img/profile_inactive.svg'}}"/>
         <span [ngClass]="{ 'isActive': profile.isActive }"> {{ "#Profile" | dgTranslate }}</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a
-       #planning="routerLinkActive"
-        class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
-        routerLinkActive="active"
-        [routerLink]="['calendar']"
-      >
-      <img class="icon" src="{{planning.isActive ? 'assets/img/planning_active.svg' : 'assets/img/planning_inactive.svg'}}"/>
-      <span [ngClass]="{ 'isActive': planning.isActive }"> {{ "#Planning" | dgTranslate }}</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a
-        #stats="routerLinkActive"
-        class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0"
-        routerLinkActive="active"
-        [routerLink]="['stats']"
-      >
-      <img class="icon" src="{{stats.isActive ? 'assets/img/stats_active.svg' : 'assets/img/stats_inactive.svg'}}"/>
-      <span [ngClass]="{ 'isActive': stats.isActive }"> {{ "#Statistics" | dgTranslate }}</span>
       </a>
     </li>
   </ul>

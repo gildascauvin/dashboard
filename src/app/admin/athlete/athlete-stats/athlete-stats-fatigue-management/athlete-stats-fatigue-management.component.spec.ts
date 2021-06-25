@@ -1,8 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {AthleteStatsFatigueManagementComponent} from "./athlete-stats-fatigue-management.component";
 
-import { AthleteStatsFatigueManagementComponent } from './athlete-profile-performance.component';
-
-describe('AthleteProfilePerformanceComponent', () => {
+describe('AthleteStatsFatiguePerformanceComponent', () => {
   let component: AthleteStatsFatigueManagementComponent;
   let fixture: ComponentFixture<AthleteStatsFatigueManagementComponent>;
 

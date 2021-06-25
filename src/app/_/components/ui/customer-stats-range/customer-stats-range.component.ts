@@ -219,6 +219,10 @@ export class CustomerStatsRangeComponent implements OnInit {
       }
     );
 
+    this.sub.onRefreshStats = this.customerStatsService.onRefreshStats.subscribe(() => {
+      this._syncWorkouts(true);
+    });
+
     this._init();
 
     this._syncWorkouts();
@@ -226,6 +230,7 @@ export class CustomerStatsRangeComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.sub.onTabChanged && this.sub.onTabChanged.unsubscribe();
+    this.sub.onRefreshStats && this.sub.onRefreshStats.unsubscribe();
   }
 
   onDateSelection(date: NgbDate, datepicker) {

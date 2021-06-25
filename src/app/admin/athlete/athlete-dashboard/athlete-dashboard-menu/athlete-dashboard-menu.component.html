@@ -1,0 +1,170 @@
+<ng-container *ngIf="fatigueManagementData">
+  <div class="fatigue-management-banner {{ fatigueManagementData.color }}-zone">
+    <div class="rectangle rectangle--{{ fatigueManagementData.status }}">
+
+      <ng-container *ngIf="!fatigueManagementData.status">
+        <div *ngIf="size > responsiveSize || (size <= responsiveSize && activeTab == 'training')" class="tpc-circle tpc-circle--energy">
+          <div class="c100 p0 red">
+            <div class="circle-content">
+              <img src="assets/img/logo/logo-power.png" srcset="assets/img/logo/logo-power@2x.png 2x,assets/img/logo/logo-power@3x.png 3x" class="logo">
+              <span class="percentage">-</span>
+              <div class="text-white sessions">{{ "#Energy" | dgTranslate }}</div>
+            </div>
+            <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="fatigueManagementData.status == 'todo' && user.data">
+        <div *ngIf="size > responsiveSize || (size <= responsiveSize && activeTab == 'training')" class="tpc-circle tpc-circle--energy">
+          <div class="c100 p100 red bg-transparent">
+            <div class="circle-content">
+              <img src="assets/img/logo/logo-power.png" srcset="assets/img/logo/logo-power@2x.png 2x,assets/img/logo/logo-power@3x.png 3x" class="logo">
+              <span class="percentage">-</span>
+              <div class="text-white sessions">{{ "#Energy" | dgTranslate }}</div>
+            </div>
+            <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="fatigueManagementData.status == 'in-progress'">
+        <div *ngIf="size > responsiveSize || (size <= responsiveSize && activeTab == 'training')" class="tpc-circle tpc-circle--energy">
+          <div class="c100 p{{ fatigueManagementData.energy }} {{ fatigueManagementData.color }}">
+            <div class="circle-content">
+              <img src="assets/img/logo/logo-power.png" srcset="assets/img/logo/logo-power@2x.png 2x,assets/img/logo/logo-power@3x.png 3x" class="logo">
+              <span class="percentage">{{ fatigueManagementData.energy }}%</span>
+              <div class="text-white sessions">{{ "#Energy" | dgTranslate }}</div>
+            </div>
+            <div class="slice">
+              <div class="bar"></div>
+              <div class="fill"></div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="fatigueManagementData.status == 'done'">
+        <div *ngIf="size > responsiveSize || (size <= responsiveSize && activeTab == 'training')" class="tpc-optimal-zone clearfix">
+          <div class="optimal-zone--left {{ fatigueManagementData.colorEnergy }}"></div>
+          <div class="optimal-zone">
+            <div class="title">{{ fatigueManagementData.zoneName }}</div>
+            <div class="subtitle">{{ "#Zone" | dgTranslate }}</div>
+          </div>
+          <div class="optimal-zone--right {{ fatigueManagementData.colorRPE }}"></div>
+          <div class="score energy-score {{ fatigueManagementData.colorEnergy }}">
+            <div class="value">{{ fatigueManagementData.energyScore }}/10</div>
+          </div>
+          <div class="score rpe-score {{ fatigueManagementData.colorRPE }}">
+            <div class="value">{{ fatigueManagementData.rpeScore }}/10</div>
+          </div>
+        </div>
+      </ng-container>
+
+      <div *ngIf="user.data && (size > responsiveSize || (size <= responsiveSize && activeTab == 'fatigue'))" class="tpc-circle tpc-circle--load">
+        <div class="c100 p{{ fatigueManagement.colors.load.percent }} {{ fatigueManagement.colors.load.colorCircle }}">
+          <div class="circle-content">
+            <img src="assets/img/logo/logo-rpe.png" class="logo logo-rpe">
+            <span class="title">{{ fatigueManagement.colors.load.textCircle }}</span>
+          </div>
+          <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+        </div>
+      </div>
+
+      <div *ngIf="user.data && (size > responsiveSize || (size <= responsiveSize && activeTab == 'wellness'))" class="tpc-circle tpc-circle--fitness">
+        <div class="c100 p{{ fatigueManagement.colors.fitness.percent }} {{ fatigueManagement.colors.fitness.colorCircle }}">
+          <div class="circle-content">
+            <img src="assets/img/logo/logo-cardio.png" srcset="assets/img/logo/logo-cardio@2x.png 2x,assets/img/logo/logo-cardio@3x.png 3x" class="logo">
+            <span class="title">{{ fatigueManagement.colors.fitness.textCircle }}</span>
+          </div>
+          <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ng-container>
+
+<div *ngIf="size > responsiveSize" class="nav-bottom-header">
+  <div class="content-header">
+
+    <ul class="navbar-nav flex-row mb-md-1 mt-md-0 mb-3 mt-2 justify-content-center">
+      <li class="nav-item">
+        <a class="nav-link py-0 d-flex" (click)="setActiveTab('training')" [routerLink]="this.links.training" [ngClass]="{ 'active': activeTab == 'training' }">
+          <span>{{ "#Training" | dgTranslate }}</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link py-0 d-flex" (click)="setActiveTab('fatigue')" [routerLink]="this.links.fatigue" [ngClass]="{ 'active': activeTab == 'fatigue' }">
+          <span> {{ "#Fatigue" | dgTranslate }}</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link py-0 d-flex" (click)="setActiveTab('wellness')" [routerLink]="this.links.wellness" [ngClass]="{ 'active': activeTab == 'wellness' }">
+          <span> {{ "#Wellness" | dgTranslate }}</span>
+        </a>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<div class="nav-header-banner pb-4 pt-4">
+  <a class="btn btn-primary btn--profile float-left ml-4 hidden-mobile" [routerLink]="links.profile">
+    <i class="fa fa-chevron-right"></i>
+    {{ "#Profile" | dgTranslate }}
+  </a>
+
+  <ng-container *ngIf="activeTab == 'training' && fatigueManagementData">
+
+      <ng-container *ngIf="fatigueManagementData.status == 'todo' && user.data">
+        <div class="d-flex flex-row justify-content-center">
+
+          <div [ngClass]="[size <= responsiveSize ? 'banner-training d-flex flex-column justify-content-center' : 'banner-training d-flex']">
+            <button [ngClass]="[size <= responsiveSize ? 'btn-user-input text-white order-2' : 'btn-user-input text-white']"
+            (click)="openStartSessionModal(currentWorkout, currentWorkout.day, true)">{{ "#User input" | dgTranslate }}</button>
+            <label>
+              <ng-container *ngIf="user.plan_id != 6">{{ "#Hi" | dgTranslate }} {{ user.data.firstname }}</ng-container>
+              <ng-container *ngIf="user.plan_id == 6">{{ "#Hi" | dgTranslate }}</ng-container>
+              , {{ "#How do you feel today ?" | dgTranslate }}
+            </label>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="fatigueManagementData.status == 'in-progress' && user.data">
+        <div class="d-flex flex-row justify-content-center">
+          <div>
+            <div>{{ fatigueManagementData.subtitle }}</div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="fatigueManagementData.status == 'done'">
+        <div class="d-flex flex-row justify-content-center">
+          <div>
+            <div>{{ fatigueManagementData.subtitle }}</div>
+          </div>
+        </div>
+      </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="activeTab == 'fatigue' && fatigueManagement">
+    <div class="d-flex flex-row justify-content-center">
+      <div>
+        <div *ngIf="activeSubTab == 'constraint'">{{ fatigueManagement.colors.load.descriptionConstraint }}.</div>
+        <div *ngIf="activeSubTab == 'workloadZone'">{{ fatigueManagement.colors.load.descriptionRCAC }}.</div>
+        <div *ngIf="activeSubTab == 'monotony'">{{ fatigueManagement.colors.variation.description }}.</div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="activeTab == 'wellness' && fatigueManagement">
+    <div class="d-flex flex-row justify-content-center">
+      <div>
+        <div *ngIf="activeSubTab == 'fitness'">{{ fatigueManagement.colors.fitness.descriptionFitness }}.</div>
+        <div *ngIf="activeSubTab == 'energyScore'">{{ fatigueManagement.colors.fitness.descriptionEnergyScore }}.</div>
+      </div>
+    </div>
+  </ng-container>
+</div>

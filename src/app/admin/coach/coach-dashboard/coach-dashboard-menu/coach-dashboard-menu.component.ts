@@ -32,8 +32,8 @@ export class CoachDashboardMenuComponent implements OnInit {
     if (this.isFromUrl === false) {
       this.links = {
         planning: ['/athlete', 'team'],
-        performance: ['/athlete', 'performance'],
-        wellness: ['/athlete', 'wellness']
+        performance: ['/athlete', 'team', 'performance'],
+        wellness: ['/athlete', 'team', 'wellness']
       };
     }
   }

@@ -1,22 +1,7 @@
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-} from "@angular/cdk/drag-drop";
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 import { DOCUMENT } from "@angular/common";
-import {
-  Component,
-  HostListener,
-  Inject,
-  Input,
-  OnInit,
-  SimpleChanges,
-} from "@angular/core";
-import {
-  NgbCalendar,
-  NgbDate,
-  NgbDateParserFormatter,
-} from "@ng-bootstrap/ng-bootstrap";
+import {Component, HostListener, Inject, Input, OnInit, SimpleChanges} from "@angular/core";
+import {NgbCalendar, NgbDate, NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import { addHours, endOfWeek, format, startOfWeek } from "date-fns";
 import { DoorgetsTranslateService } from "doorgets-ng-translate";
@@ -38,6 +23,7 @@ import {PlanningModalCreateComponent} from "../../../_/templates/planning/planni
 import {AthleteCalendarService} from "./athlete-calendar.service";
 import {PlanningModalDeleteComponent} from "../../../_/templates/planning/planning-modal-delete/planning-modal-delete.component";
 import {PlanningModalEditComponent} from "../../../_/templates/planning/planning-modal-edit/planning-modal-edit.component";
+import {ResizeService} from "../../../_/services/ui/resize-service.service";
 
 @Component({
   selector: "app-athlete-calendar",
@@ -110,6 +96,9 @@ export class AthleteCalendarComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  size: number = 1;
+  responsiveSize: number = 768;
+
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private toastrService: ToastrService,
@@ -123,15 +112,16 @@ export class AthleteCalendarComponent implements OnInit {
     private calendar: NgbCalendar,
     private athleteCalendarService: AthleteCalendarService,
     public formatter: NgbDateParserFormatter,
+    private resizeSvc: ResizeService,
   ) {}
 
-  @HostListener("document:keydown.escape", ["$event"]) onKeydownHandler(
-    event: KeyboardEvent
-  ) {
+  @HostListener("document:keydown.escape", ["$event"]) onKeydownHandler(event: KeyboardEvent) {
     this.closeAllBoxes();
   }
 
   ngOnInit(): void {
+
+    this.detectScreenSize();
 
     let todayCalendar = new Date();
 
@@ -139,36 +129,27 @@ export class AthleteCalendarComponent implements OnInit {
     this.startedAtModel.month = todayCalendar.getMonth() + 1;
     this.startedAtModel.day = todayCalendar.getDate();
 
-    this.user = this.isFromUrl
-      ? this.authService.getUserData()
-      : this.authService.getUserClientData();
+    this.user = this.isFromUrl ? this.authService.getUserData() : this.authService.getUserClientData();
 
     this._syncWorkouts();
 
-    this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe(
-      (o) => {
-        console.log(o);
+    this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe((o) => {
         this._syncWorkouts(null, true);
       }
     );
 
-    this.sub.workoutsGroupReset = this.templatesService.onWorkoutsGroupReset.subscribe(
-      () => {
+    this.sub.workoutsGroupReset = this.templatesService.onWorkoutsGroupReset.subscribe(() => {
         this.closeFooterActions();
       }
     );
 
     this.sub.onUpdate = this.userService.onUpdate.subscribe((user) => {
-      this.user = this.isFromUrl
-        ? this.authService.getUserData()
-        : this.authService.getUserClientData();
+      this.user = this.isFromUrl ? this.authService.getUserData() : this.authService.getUserClientData();
       this._syncWorkouts(null, true);
     });
 
     this._init();
     this._initDate();
-
-
 
     let bodyScroll = this.document.getElementById("fixed-calendar-planning");
 
@@ -176,19 +157,11 @@ export class AthleteCalendarComponent implements OnInit {
       let weeksScroll = this.document.querySelectorAll(".week-scroll");
 
       weeksScroll.forEach((weekNode: any) => {
-        // let weekNodeEl = this.document.querySelector(weekNode);
         let nWeek = weekNode.getBoundingClientRect();
-        // console.log(nWeek.top, nWeek, bodyTop, nWeek.top - bodyTop);
         if (nWeek.top < 100) {
           this.currentMonth = weekNode.attributes["data-date"].textContent;
         }
       });
-
-      // if (window.pageYOffset > sticky) {
-      //   navbar.classList.add("sticky")
-      // } else {
-      //   navbar.classList.remove("sticky");
-      // }
 
       if (
         bodyScroll.scrollTop > (bodyScroll.scrollHeight - bodyScroll.clientHeight - 100) &&
@@ -343,11 +316,14 @@ export class AthleteCalendarComponent implements OnInit {
   private _init(reset?) {
     if (reset) {
       let today = startOfWeek(new Date(), { weekStartsOn: 1 });
-      this.currentMonth =
-        this._getMonthName(format(today, "MM")) + " " + format(today, "yyyy");
-
+      this.currentMonth = this._getMonthName(format(today, "MM")) + " " + format(today, "yyyy");
       this.endDay = endOfWeek(new Date(), { weekStartsOn: 1 });
-      this.startDay = startOfWeek(new Date(), { weekStartsOn: 1 });
+
+      if (this.size <= this.responsiveSize) {
+        this.startDay = new Date();
+      } else {
+        this.startDay = startOfWeek(new Date(), { weekStartsOn: 1 });
+      }
 
       this.weeks = [];
     }
@@ -391,10 +367,7 @@ export class AthleteCalendarComponent implements OnInit {
 
         days.push(currentDay);
 
-        let nbHours =
-          formatedDate === "2020-10-25" || formatedDate === "2021-10-30"
-            ? 25
-            : 24;
+        let nbHours = formatedDate === "2020-10-25" || formatedDate === "2021-10-30" ? 25 : 24;
         date = addHours(date, nbHours);
         this.startDay = date;
       }
@@ -410,33 +383,27 @@ export class AthleteCalendarComponent implements OnInit {
   private _initDate(startedAtModel?) {
     this.startedAtModel = startedAtModel ? startedAtModel : this.startedAtModel;
     let today = startOfWeek(
-      new Date(
-        this.startedAtModel.year,
-        this.startedAtModel.month - 1,
-        this.startedAtModel.day
-      ),
+      new Date(this.startedAtModel.year, this.startedAtModel.month - 1, this.startedAtModel.day),
       { weekStartsOn: 1 }
     );
 
-    this.currentMonth =
-      this._getMonthName(format(today, "MM")) + " " + format(today, "yyyy");
+    this.currentMonth = this._getMonthName(format(today, "MM")) + " " + format(today, "yyyy");
 
     this.endDay = endOfWeek(
-      new Date(
-        this.startedAtModel.year,
-        this.startedAtModel.month - 1,
-        this.startedAtModel.day
-      ),
+      new Date(this.startedAtModel.year, this.startedAtModel.month - 1, this.startedAtModel.day),
       { weekStartsOn: 1 }
     );
-    this.startDay = startOfWeek(
-      new Date(
-        this.startedAtModel.year,
-        this.startedAtModel.month - 1,
-        this.startedAtModel.day
-      ),
-      { weekStartsOn: 1 }
-    );
+
+    if (this.size <= this.responsiveSize) {
+      this.startDay = new Date(this.startedAtModel.year, this.startedAtModel.month - 1, this.startedAtModel.day);
+    } else {
+      this.startDay = startOfWeek(
+        new Date(this.startedAtModel.year, this.startedAtModel.month - 1, this.startedAtModel.day),
+        { weekStartsOn: 1 }
+      );
+    }
+
+    console.log(this.startDay);
 
     this.weeks = [];
   }
@@ -563,6 +530,8 @@ export class AthleteCalendarComponent implements OnInit {
 
   onDateSelected($event) {
     this._initDate($event);
+    let date = new Date(this.startedAtModel.year, this.startedAtModel.month - 1, this.startedAtModel.day);
+    this.athleteCalendarService.onDateSelected.emit(date);
     this._syncWorkouts($event, true);
     this._initPlannings();
   }
@@ -624,6 +593,7 @@ export class AthleteCalendarComponent implements OnInit {
 
     console.log("onDragStart");
   }
+
   onDragEnd(test){
     console.log(test);
   }
@@ -933,12 +903,7 @@ export class AthleteCalendarComponent implements OnInit {
 
     this.sub.onGetAllWorkout && this.sub.onGetAllWorkout.unsubscribe();
 
-    let date =
-      this.startedAtModel.year +
-      "-" +
-      this.startedAtModel.month +
-      "-" +
-      this.startedAtModel.day;
+    let date = this.startedAtModel.year + "-" + this.startedAtModel.month + "-" + this.startedAtModel.day;
 
     if (this.isFromUrl) {
       this.sub.onGetAllWorkout = this.usersService
@@ -966,20 +931,12 @@ export class AthleteCalendarComponent implements OnInit {
     }
     console.log("this.workouts", this.workouts)
   }
+
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
     }
     this.autoSave();
   }
@@ -1006,7 +963,8 @@ export class AthleteCalendarComponent implements OnInit {
       }
     );
   }
-    validateInput(currentValue: NgbDateStruct | null, input: string): NgbDateStruct | null {
+
+  validateInput(currentValue: NgbDateStruct | null, input: string): NgbDateStruct | null {
     const parsed = this.formatter.parse(input);
     return parsed && this.calendar.isValid(NgbDate.from(parsed))
       ? NgbDate.from(parsed)
@@ -1016,5 +974,11 @@ export class AthleteCalendarComponent implements OnInit {
   getCardioUnitLabel(key) {
     const labelObj = this.configExercices.unit.find(obj => obj.id == key);
     return labelObj.name;
+  }
+
+  private detectScreenSize() {
+    const currentSize = this.document.body.clientWidth;
+    this.size = currentSize;
+    this.resizeSvc.onResize(currentSize);
   }
 }

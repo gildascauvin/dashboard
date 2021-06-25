@@ -42,7 +42,6 @@ export class CustomerIntensityComponent implements OnInit {
         let totalMovements = 0;
 
         for (let mvtId in this.movements) {
-          console.log(this.movements[mvtId]);
           if (this.movements[mvtId].intensite > 0) {
             totalMovements += this.movements[mvtId].intensiteSize;
           }

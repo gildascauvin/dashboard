@@ -11,8 +11,7 @@ export class FatigueManagementComputerService {
   compute(workout) {
 
     let energyScore = this.computeEnergyScore(workout);
-
-    let rate = parseInt(workout.rate);
+    let rate =(workout.rate) ? parseInt(workout.rate) : 0;
 
     if (energyScore <= 0) {
       return {
@@ -20,6 +19,8 @@ export class FatigueManagementComputerService {
         color: 'low'
       };
     }
+
+    console.log(rate);
 
     if (rate <= 0) {
       let title = this.doorgetsTranslateService.instant('#Autoregulation tips');

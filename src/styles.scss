@@ -549,10 +549,10 @@ body {
   position: relative;
   margin: auto;
   height: 46vh;
-  width: 52vw;
+  max-width: 52vw;
   @media (max-width: 720px) {
     height: 40vh;
-    width: 86vw;
+    max-width: 86vw;
   }
 }
 .chart-size {
@@ -1310,4 +1310,8 @@ $primary-color-high: #1000ff;
       width: 350px !important;
     }
   }
+}
+
+.background-gray {
+  background: $secondary-color;
 }
