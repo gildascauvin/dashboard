@@ -1,0 +1,54 @@
+<app-athlete-dashboard-menu [activeTab]="activeTab" [activeSubTab]="activeSubTab" [isFromUrl]="isFromUrl"></app-athlete-dashboard-menu>
+
+<div class="container-fluid background-gray">
+
+  <div class="row">
+    <div class="col-md-2 row--tabs">
+
+      <div class="tabs">
+        <div (click)="setActiveSubTab('constraint')" [ngClass]="[activeSubTab == 'constraint' ? 'tab active' : 'tab']">
+          <div class="value {{ fatigueManagement.colors.load.color1 }}">{{ fatigueManagement.load.constraint }}</div><div class="title">{{"#Constraint" | dgTranslate }}</div>
+        </div>
+        <div (click)="setActiveSubTab('workloadZone')" [ngClass]="[activeSubTab == 'workloadZone' ? 'tab active' : 'tab']">
+          <div class="value {{ fatigueManagement.colors.load.color2 }}">{{ fatigueManagement.load.rcac }}</div>
+          <div *ngIf="size <= responsiveSize" class="title">{{"#RCAC" | dgTranslate }}</div>
+          <div *ngIf="size > responsiveSize" class="title">{{"#Overload" | dgTranslate }}</div>
+        </div>
+        <div (click)="setActiveSubTab('monotony')" [ngClass]="[activeSubTab == 'monotony' ? 'tab active' : 'tab']">
+          <div class="value {{ fatigueManagement.colors.variation.colorCircle }}">{{ fatigueManagement.variation.monotony }}</div><div class="title">{{"#Monotony" | dgTranslate }}</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-md-10">
+      <div [ngClass]="[size <= responsiveSize ? 'row' : 'row pt-4 ml-2']">
+        <div class="col-md-12 calendar-top">
+
+          <div class="float-left">
+            <app-customer-stats-range [isFromUrl]="isFromUrl" [keepDates]="keepDates"></app-customer-stats-range>
+          </div>
+
+          <div [ngClass]="[size <= responsiveSize ? 'text-center' : 'float-right mr-4']">
+            <div class="switch-load-system">
+              <div class="custom-control custom-switch">
+                <label class="switch-load-system--label" for="custom-switch-load-system">{{"#Load" | dgTranslate }}</label>
+                <input type="checkbox" class="custom-control-input" id="custom-switch-load-system" (change)="onChangeSwitchLoadSystem()" [(ngModel)]="switchLoadSystem">
+                <label class="custom-control-label custom-control-label--red" for="custom-switch-load-system"></label>
+                <label class="switch-load-system--label-right" for="custom-switch-load-system">{{"#Systems" | dgTranslate }}</label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <ng-container *ngIf="!switchLoadSystem">
+        <app-athlete-stats-training-overload [isFromUrl]="isFromUrl" [keepDates]="keepDates"></app-athlete-stats-training-overload>
+      </ng-container>
+      <ng-container *ngIf="switchLoadSystem">
+        <app-athlete-energy-systems [isFromUrl]="isFromUrl" [keepDates]="keepDates"></app-athlete-energy-systems>
+      </ng-container>
+    </div>
+  </div>
+</div>

@@ -331,8 +331,8 @@
   "#It seems like you rather tired. Do a light session to recover or rest.": "Il semble que vous soyez plutôt fatigué. Faites une séance légère pour récupérer ou reposez-vous.",
   "#It seems like you are in a good shape, you can push yourself to a hard session.": "Il semble que vous soyez en bonne forme, vous pouvez aller chercher une séance difficile.",
   "#How did your session feel?": "Comment s'est passé votre séance ?",
-  "#Overreaching": "Surmenage",
-  "#OVERREACHING": "Surmenage",
+  "#Overreaching": "surmené",
+  "#OVERREACHING": "surmené",
   "#Optimal": "Optimale",
   "#Wellness": "Bien-être",
   "#Zone": "Zone",
@@ -340,8 +340,8 @@
   "#It seems like you had an easy session. While it is good for recovering or peaking, it is not optimal for improving.": "Il semble que vous avez fait une séance facile. Bien que ce soit bon pour récupérer ou atteindre un pic de forme, ce n'est pas optimal pour progresser.",
   "#It seems like you did an optimal session. Take a well deserved rest and you will be ready to train again!": "Il semble que vous avez fait une séance optimale. Prenez un repos bien mérité et vous serez prêt à vous entraîner à nouveau!",
   "#It seems like you did a very trying session. You might consider doing a recovery session or having a rest day.": "Il semble que vous avez fait une séance très éprouvante. Envisagez de faire une séance de récupération ou reposez-vous.",
-  "#Undertraining": "Sous-entraînement",
-  "#Overtraining": "Sur-entraînement",
+  "#Undertraining": "Sous entrainé",
+  "#Overtraining": "surentraîné",
   "#Constraint": "Contrainte",
   "#Load is under control. You can continue to overload": "La charge est sous contrôle. Vous pouvez continuer à surcharger",
   "#Load starts to be too high. Reduce load to avoid overfatigue": "La charge commence à être trop élevée. Réduisez la charge pour éviter la fatigue excessive",
@@ -400,5 +400,7 @@
   "#Youtube / image URL": "Youtube / image URL",
   "#Update Session": "Modifier la séance",
   "#Overload": "Surcharge",
-  "#Lifestyle": "Lifestyle"
+  "#Lifestyle": "Lifestyle",
+  "#Training": "Entraînement",
+  "#RCAC": "RCAC"
 }

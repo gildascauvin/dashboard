@@ -65,10 +65,12 @@ export class TemplatesModalStartSessionComponent implements OnInit {
       { name: this.doorgetsTranslateService.instant("#Extremely hard"), value: 10 },
     ];
 
-    this.options = Array.from(
-      { length: this.workout.program.exercices.length + 2 },
-      (_, i) => i + 1
-    );
+    if (this.workout.program.exercices) {
+      this.options = Array.from(
+        { length: this.workout.program.exercices.length + 2 },
+        (_, i) => i + 1
+      );
+    }
   }
 
   cancel() {

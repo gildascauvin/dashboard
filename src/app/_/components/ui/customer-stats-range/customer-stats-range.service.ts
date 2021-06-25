@@ -6,4 +6,5 @@ import { Injectable, EventEmitter } from '@angular/core';
 export class CustomerStatsService {
 	onStatsUpdated: any = new EventEmitter();
 	onStatsUpdatedStart: any = new EventEmitter();
+	onRefreshStats: any = new EventEmitter();
 }

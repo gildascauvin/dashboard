@@ -134,6 +134,13 @@ import {PlanningModalEditComponent} from "./_/templates/planning/planning-modal-
 import {PlanningModalCreateComponent} from "./_/templates/planning/planning-modal-create/planning-modal-create.component";
 import {PlanningModalDeleteComponent} from "./_/templates/planning/planning-modal-delete/planning-modal-delete.component";
 import {MaximumAerobicSpeedPipe} from "./_/pipes/maximum-aerobic-speed.pipe";
+import {AthleteDashboardMenuComponent} from "./admin/athlete/athlete-dashboard/athlete-dashboard-menu/athlete-dashboard-menu.component";
+import {AthleteDashboardTrainingComponent} from "./admin/athlete/athlete-dashboard/athlete-dashboard-training/athlete-dashboard-training.component";
+import {AthleteDashboardWellnessComponent} from "./admin/athlete/athlete-dashboard/athlete-dashboard-wellness/athlete-dashboard-wellness.component";
+import {AthleteDashboardFatigueComponent} from "./admin/athlete/athlete-dashboard/athlete-dashboard-fatigue/athlete-dashboard-fatigue.component";
+import {CoachAthleteDashboardTrainingComponent} from "./admin/coach/coach-athlete/coach-athlete-dashboard/coach-athlete-dashboard-training/coach-athlete-dashboard-training.component";
+import {CoachAthleteDashboardFatigueComponent} from "./admin/coach/coach-athlete/coach-athlete-dashboard/coach-athlete-dashboard-fatigue/coach-athlete-dashboard-fatigue.component";
+import {CoachAthleteDashboardWellnessComponent} from "./admin/coach/coach-athlete/coach-athlete-dashboard/coach-athlete-dashboard-wellness/coach-athlete-dashboard-wellness.component";
 
 export function newNgTranslate(http: HttpClient) {
   return new NgTranslate(http, "../../assets/locale");
@@ -150,6 +157,10 @@ export function newNgTranslate(http: HttpClient) {
     CoachComponent,
     AthleteComponent,
     AthleteDashboardComponent,
+    AthleteDashboardMenuComponent,
+    AthleteDashboardTrainingComponent,
+    AthleteDashboardWellnessComponent,
+    AthleteDashboardFatigueComponent,
     AthleteOnboardingComponent,
     AthleteProfileComponent,
     AthleteTeamComponent,
@@ -171,6 +182,9 @@ export function newNgTranslate(http: HttpClient) {
     CoachAthleteProfileComponent,
     CoachAthleteStatsComponent,
     CoachAthleteCalendarComponent,
+    CoachAthleteDashboardTrainingComponent,
+    CoachAthleteDashboardFatigueComponent,
+    CoachAthleteDashboardWellnessComponent,
     ConfirmAccountComponent,
     AccountNotConfirmedComponent,
     AutoConnectComponent,

@@ -1,15 +1,10 @@
-import { Component, OnInit, Inject, Input, SimpleChanges, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, Inject, Input, HostListener, ElementRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { DOCUMENT } from '@angular/common';
-
-import {format, addHours, startOfISOWeek, startOfWeek, endOfWeek, addMonths} from 'date-fns';
-import { ToastrService } from 'ngx-toastr';
+import {format, addMonths} from 'date-fns';
 import * as _ from 'lodash';
 import { DoorgetsTranslateService } from 'doorgets-ng-translate';
-import { delay } from 'rxjs/operators';
-
 import { webConfig } from '../../../web-config';
-
 import { AuthService } from '../../../_/services/http/auth.service';
 import { UserService } from '../../../_/services/model/user.service';
 import { UsersService } from '../../../_/templates/users.service';
@@ -29,6 +24,8 @@ import {AthleteDashboardService} from "./athlete-dashboard.service";
 export class AthleteDashboardComponent implements OnInit {
   @Input() isFromUrl = true;
   @Input() hideCalendar = false;
+
+  activeTab : any = 'training';
 
   bsModalRef: BsModalRef;
 
@@ -347,10 +344,6 @@ export class AthleteDashboardComponent implements OnInit {
     return date.getDate() == today.getDate() &&
       date.getMonth() == today.getMonth() &&
       date.getFullYear() == today.getFullYear()
-  }
-
-  computeFatigueManagementData(workout) {
-    return this.fatigueManagementComputer.compute(workout);
   }
 
   getWokout(day?) {

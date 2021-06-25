@@ -1,0 +1,51 @@
+.tabs {
+  margin-top: 20px;
+
+  .tab {
+    padding: 20px;
+    text-align: center;
+    margin: 0 auto 30px;
+    cursor: pointer;
+    border-radius: 10px;
+
+    &:hover, &.active {
+      background: #fff;
+    }
+
+    .value {
+      font-weight: 500;
+      font-size: 22px;
+
+      &.green {color: #00d49d;}
+      &.yellow {color: #cfe223;}
+      &.red {color: #ff0502;}
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .row--tabs {
+    background: #000;
+  }
+
+  .tabs {
+    margin-top: 0;
+
+    .tab {
+      float: left;
+      width: 50%;
+
+      &:hover, &.active {
+        background: #333;
+      }
+
+      .value {
+        color: #999;
+      }
+
+      .title {
+        color: #999;
+      }
+    }
+  }
+}

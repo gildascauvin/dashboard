@@ -11,8 +11,7 @@ export class FatigueManagementComputerService {
   compute(workout) {
 
     let energyScore = this.computeEnergyScore(workout);
-
-    let rate = parseInt(workout.rate);
+    let rate =(workout.rate) ? parseInt(workout.rate) : 0;
 
     if (energyScore <= 0) {
       return {
