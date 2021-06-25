@@ -20,8 +20,6 @@ export class FatigueManagementComputerService {
       };
     }
 
-    console.log(rate);
-
     if (rate <= 0) {
       let title = this.doorgetsTranslateService.instant('#Autoregulation tips');
       let subtitle = '';
