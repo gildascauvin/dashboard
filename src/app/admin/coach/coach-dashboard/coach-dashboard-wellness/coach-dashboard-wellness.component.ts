@@ -4,10 +4,11 @@ import {AuthService} from "../../../../_/services/http/auth.service";
 import {UserService} from "../../../../_/services/model/user.service";
 import {UsersService} from "../../../../_/templates/users.service";
 import {CoachDashboardMenuService} from "../coach-dashboard-menu/coach-dashboard-menu.service";
-import {endOfWeek} from "date-fns";
+import {endOfWeek, startOfWeek} from "date-fns";
 import * as _ from "lodash";
 import {UsersModalInvitationDeleteComponent} from "../../coach-clients/coach-clients-modal/users-modal-invitation-delete/users-modal-invitation-delete.component";
 import {DoorgetsTranslateService} from "doorgets-ng-translate";
+import {CustomerStatsSummaryService} from "../../../../_/components/ui/customer-stats-summary/customer-stats-summary.service";
 
 @Component({
   selector: "app-coach-dashboard-wellness",
@@ -39,6 +40,7 @@ export class CoachDashboardWellnessComponent implements OnInit {
     private userService: UserService,
     private usersService: UsersService,
     private modalService: BsModalService,
+    private customerStatsSummaryService: CustomerStatsSummaryService,
     private coachDashboardMenuService: CoachDashboardMenuService,
     private doorgetsTranslateService: DoorgetsTranslateService
   ) {}
@@ -50,7 +52,7 @@ export class CoachDashboardWellnessComponent implements OnInit {
     if (this.isFromUrl) {
       this.clients = this.user.clients;
 
-      this.computeAllWellnesses();
+      this._computeAllWellnesses();
 
     } else {
       for (let i in this.user.coachs) {
@@ -58,7 +60,7 @@ export class CoachDashboardWellnessComponent implements OnInit {
 
         this.usersService.getOne(coachId).subscribe((user: any) => {
           this.clients = user.clients;
-          this.computeAllWellnesses();
+          this._computeAllWellnesses();
         });
       }
     }
@@ -77,143 +79,6 @@ export class CoachDashboardWellnessComponent implements OnInit {
   ngOnDestroy(): void {
     this.sub.subjectUpdateUsers && this.sub.subjectUpdateUsers.unsubscribe();
     this.sub.onTabChanged && this.sub.onTabChanged.unsubscribe();
-  }
-
-  computeAllWellnesses() {
-
-    let to = endOfWeek(new Date(), {weekStartsOn: 1});
-    let from = _.clone(to);
-    from.setDate(from.getDate() - 7);
-    let fromDate = this.formatDate(from) + ' 00:00:00';
-    let toDate = this.formatDate(to) + ' 00:00:00';
-
-    this.clients.forEach((client, key) => {
-      let clientId = client.client_id;
-
-      this.sub.onGetAllWorkout = this.usersService
-        .getAllClientWorkouts(clientId, fromDate, toDate, 1)
-        .subscribe((workouts: any) => {
-          this.dataWellnessClients[clientId] = this._computeWellness(clientId, workouts);
-
-          if (Object.is(this.clients.length - 1, key)) {
-            this.clients.sort((a,b) => this.dataWellnessSorting['client-id-' + b.client_id] - this.dataWellnessSorting['client-id-' + a.client_id]);
-            this.dataWellnessIsLoading = true;
-          }
-        });
-    });
-  }
-
-  _computeWellness(clientId, workouts) {
-
-    let energyScores = 0;
-    let energyScoresLength = 0;
-    let totalCompleteData = 0;
-
-    let listScores = ['diet', 'sleep', 'mood', 'energy', 'stress'];
-
-    let scores = {
-      diet: 0, sleep: 0, mood: 0, energy: 0, stress: 0,
-      dietLength: 0, sleepLength: 0, moodLength: 0, energyLength: 0, stressLength: 0
-    };
-
-    for (let dayWorkout in workouts) {
-      let dayWorkouts = workouts[dayWorkout];
-
-      for (let workoutKey in dayWorkouts) {
-        let workoutEnergyScore = this._computeEnergyScore(dayWorkouts[workoutKey]);
-
-        if (workoutEnergyScore > 0) {
-          energyScores += workoutEnergyScore;
-          energyScoresLength++;
-        }
-
-        listScores.forEach(function(scoreName) {
-          if (dayWorkouts[workoutKey][scoreName] > 0) {
-            scores[scoreName] += dayWorkouts[workoutKey][scoreName];
-            scores[scoreName + "Length"]++;
-          }
-        });
-      }
-    }
-
-    let energyScore = (energyScoresLength > 0) ? Math.round(((energyScores / energyScoresLength / 10) + Number.EPSILON) * 100) / 100 : null;
-
-    let zoneName = '';
-    let zoneColor = '';
-
-    if (energyScore > 8) {
-      zoneName = this.doorgetsTranslateService.instant('#Very good');
-      zoneColor = 'high';
-      totalCompleteData = 3;
-    } else if (energyScore < 5) {
-      zoneName = this.doorgetsTranslateService.instant('#Very low');
-      zoneColor = 'low';
-      totalCompleteData = 1;
-    } else if (energyScore !== null) {
-      zoneName = this.doorgetsTranslateService.instant('#Good1');
-      zoneColor = 'medium';
-      totalCompleteData = 2;
-    }
-
-    this.dataWellnessSorting['client-id-' + clientId] = totalCompleteData;
-
-    return {
-      'zoneColor': zoneColor,
-      'zoneName': zoneName,
-      'diet': CoachDashboardWellnessComponent._computeSingleEnergyScore(scores.diet, scores.dietLength),
-      'sleep': CoachDashboardWellnessComponent._computeSingleEnergyScore(scores.sleep, scores.sleepLength),
-      'mood': CoachDashboardWellnessComponent._computeSingleEnergyScore(scores.mood, scores.moodLength),
-      'energy': CoachDashboardWellnessComponent._computeSingleEnergyScore(scores.energy, scores.energyLength),
-      'stress': CoachDashboardWellnessComponent._computeSingleEnergyScore(scores.stress, scores.stressLength),
-      'energyScore': energyScore * 10
-    };
-  }
-
-  private static _computeSingleEnergyScore(score, scoreLength) {
-
-    let result = 0;
-    let color = '';
-
-    if (scoreLength == 0 || score == 0) {
-      result = 0;
-    } else {
-      result = score / scoreLength / 5 * 10;
-      result = Math.round((result + Number.EPSILON) * 10) / 10;
-
-      color = 'medium';
-
-      if (result <= 5) {
-        color = 'low';
-      } else if (result >= 8) {
-        color = 'high';
-      }
-    }
-
-    return {
-      value: result,
-      color: color
-    };
-  }
-
-  private _computeEnergyScore(workout) {
-    let diet = parseInt(workout.diet);
-    let sleep = parseInt(workout.sleep);
-    let mood = parseInt(workout.mood);
-    let energy = parseInt(workout.energy);
-    let stress = parseInt(workout.stress);
-
-    let energyDatas = [diet, sleep, mood, energy, stress];
-
-    let totalEnergy = 0;
-    let totalDataConfirmed = 0;
-    energyDatas.forEach(function (data) {
-      if (data > 0) {
-        totalDataConfirmed++
-        totalEnergy += data;
-      }
-    });
-
-    return (totalDataConfirmed > 0) ? totalEnergy / (5 * totalDataConfirmed) * 100 : 0;
   }
 
   setCurrentAthletId(clientId) {
@@ -237,6 +102,77 @@ export class CoachDashboardWellnessComponent implements OnInit {
     this.activeTab = tab;
   }
 
+  private _computeAllWellnesses() {
+    let from = startOfWeek(new Date(), {weekStartsOn: 1});
+    let to = endOfWeek(new Date(), {weekStartsOn: 1});
+
+    let fromDate = CoachDashboardWellnessComponent.formatDate(from) + ' 00:00:00';
+    let toDate = CoachDashboardWellnessComponent.formatDate(to) + ' 00:00:00';
+
+    if (this.isFromUrl) {
+      this.sub.onGetAllWorkout = this.usersService.getAllTeamWorkouts(fromDate, toDate, 1).subscribe((workouts) => {
+        this._computeAllWellnessForAllClients(workouts);
+      });
+    } else {
+      this.sub.onGetAllWorkout = this.usersService.getAllClientTeamWorkouts(this.user.id, fromDate, toDate, 1).subscribe((workouts) => {
+        this._computeAllWellnessForAllClients(workouts);
+      });
+    }
+  }
+
+  private _computeAllWellnessForAllClients(workouts) {
+    this.clients.forEach((client, key) => {
+      let clientId = client.client_id;
+      let clientWorkouts = CoachDashboardWellnessComponent._getWorkoutsForOneClient(clientId, workouts);
+
+      this.dataWellnessClients[clientId] = this._computeWellnessForOneClient(clientId, clientWorkouts);
+
+      if (Object.is(this.clients.length - 1, key)) {
+        this.clients.sort((a, b) => this.dataWellnessSorting['client-id-' + b.client_id] - this.dataWellnessSorting['client-id-' + a.client_id]);
+        this.dataWellnessIsLoading = true;
+      }
+    });
+  }
+
+  private _computeWellnessForOneClient(clientId, workouts) {
+
+    let energyScoresData = this.customerStatsSummaryService.computeEnergyScoresForWorkouts(workouts);
+
+    let diet = energyScoresData.diet;
+    let sleep = energyScoresData.sleep;
+    let mood = energyScoresData.mood;
+    let energy = energyScoresData.energy;
+    let stress = energyScoresData.stress;
+    let energyScore = energyScoresData.energyScore;
+
+    let zoneName = '';
+    let zoneColor = '';
+
+    if (energyScore > 8) {
+      zoneName = this.doorgetsTranslateService.instant('#Very good');
+      zoneColor = 'high';
+    } else if (energyScore < 5) {
+      zoneName = this.doorgetsTranslateService.instant('#Very low');
+      zoneColor = 'low';
+    } else if (energyScore !== null) {
+      zoneName = this.doorgetsTranslateService.instant('#Good1');
+      zoneColor = 'medium';
+    }
+
+    this.dataWellnessSorting['client-id-' + clientId] = energyScore !== null ? energyScore : 0;
+
+    return {
+      'zoneColor': zoneColor,
+      'zoneName': zoneName,
+      'diet': diet,
+      'sleep': sleep,
+      'mood': mood,
+      'energy': energy,
+      'stress': stress,
+      'energyScore': energyScore > 0 ? Math.round((energyScore * 10 + Number.EPSILON) * 10) / 10 : 0
+    };
+  }
+
   private _initUser() {
     this.isLoading = true;
     this.sub.userInfo && this.sub.userInfo.unsubscribe();
@@ -255,7 +191,7 @@ export class CoachDashboardWellnessComponent implements OnInit {
     }
   }
 
-  formatDate(d) {
+  private static formatDate(d) {
     var month = '' + (d.getMonth() + 1),
       day = '' + d.getDate(),
       year = d.getFullYear();
@@ -266,5 +202,27 @@ export class CoachDashboardWellnessComponent implements OnInit {
       day = '0' + day;
 
     return [year, month, day].join('-');
+  }
+
+  private static _getWorkoutsForOneClient(clientId, workouts) {
+    let clientWorkouts = {};
+
+    for (let dayWorkout in workouts) {
+      let dayWorkouts = workouts[dayWorkout];
+
+      for (let workoutKey in dayWorkouts) {
+        let workout = dayWorkouts[workoutKey];
+
+        if (workout.user_id == clientId) {
+          if (!clientWorkouts[dayWorkout]) {
+            clientWorkouts[dayWorkout] = [];
+          }
+
+          clientWorkouts[dayWorkout].push(workout);
+        }
+      }
+    }
+
+    return clientWorkouts;
   }
 }

@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {DoorgetsTranslateService} from "doorgets-ng-translate";
+import * as _ from "lodash";
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +9,39 @@ export class FatigueManagementComputerService {
 
   constructor(private doorgetsTranslateService: DoorgetsTranslateService) { }
 
-  compute(workout) {
+  computeWithWorkouts(workouts) {
 
+    let totalEnergyScore = 0;
+    let totalRate = 0;
+    let sumEnergyScore = 0;
+    let sumRate = 0;
+
+    _.forEach(workouts, (workout) => {
+      let energyScore = this.computeEnergyScore(workout);
+      let rate =(workout.rate) ? parseInt(workout.rate) : 0;
+
+      if (energyScore > 0) {
+        totalEnergyScore++;
+        sumEnergyScore += energyScore;
+      }
+
+      if (rate > 0) {
+        totalRate++;
+        sumRate += rate;
+      }
+    });
+
+    return this.computeWithEnergyScoreAndRate((sumEnergyScore / totalEnergyScore), (sumRate / totalRate));
+  }
+
+  compute(workout) {
     let energyScore = this.computeEnergyScore(workout);
     let rate =(workout.rate) ? parseInt(workout.rate) : 0;
 
+    return this.computeWithEnergyScoreAndRate(energyScore, rate);
+  }
+
+  private computeWithEnergyScoreAndRate(energyScore, rate) {
     if (energyScore <= 0) {
       return {
         status: 'todo',
@@ -88,7 +117,6 @@ export class FatigueManagementComputerService {
       zoneName: zoneName,
       subtitle: subtitle
     };
-
   }
 
   computeEnergyScore(workout)

@@ -31,6 +31,50 @@ export class CustomerStatsSummaryService {
     private doorgetsTranslateService: DoorgetsTranslateService,
   ) {}
 
+  computeEnergyScoresForWorkouts(workouts) {
+    let listScores = ['diet', 'sleep', 'mood', 'energy', 'stress'];
+    let scores = {
+      diet: 0, sleep: 0, mood: 0, energy: 0, stress: 0,
+      dietLength: 0, sleepLength: 0, moodLength: 0, energyLength: 0, stressLength: 0
+    };
+
+    for (let dayWorkout in workouts) {
+      let dayWorkouts = workouts[dayWorkout];
+
+      for (let workoutKey in dayWorkouts) {
+        listScores.forEach(function(scoreName) {
+          if (dayWorkouts[workoutKey][scoreName] > 0) {
+            scores[scoreName] += dayWorkouts[workoutKey][scoreName];
+            scores[scoreName + "Length"]++;
+          }
+        });
+      }
+    }
+
+    let diet = CustomerStatsSummaryService._computeSingleEnergyScore(scores.diet, scores.dietLength);
+    let sleep = CustomerStatsSummaryService._computeSingleEnergyScore(scores.sleep, scores.sleepLength);
+    let mood = CustomerStatsSummaryService._computeSingleEnergyScore(scores.mood, scores.moodLength);
+    let energy = CustomerStatsSummaryService._computeSingleEnergyScore(scores.energy, scores.energyLength);
+    let stress = CustomerStatsSummaryService._computeSingleEnergyScore(scores.stress, scores.stressLength);
+
+    let energyScoresLength = 0;
+    if (diet.value > 0) energyScoresLength++;
+    if (sleep.value > 0) energyScoresLength++;
+    if (mood.value > 0) energyScoresLength++;
+    if (energy.value > 0) energyScoresLength++;
+    if (stress.value > 0) energyScoresLength++;
+
+    let energyScore = energyScoresLength > 0 ? (diet.value + sleep.value + mood.value + energy.value + stress.value) / energyScoresLength : 0;
+
+    return {
+      diet: diet,
+      sleep: sleep,
+      mood: mood,
+      energy: energy,
+      stress: stress,
+      energyScore: energyScore
+    };
+  }
 
   computeStatFatigueManagement(globalWorkouts, workouts, globalCustomerStats, customerStats, startDay, endDay) {
     let dataWeeklyLoad = CustomerStatsSummaryService._compute_weeklyLoad(globalCustomerStats.weekly);
@@ -50,18 +94,20 @@ export class CustomerStatsSummaryService {
     let monotony = (averageLoad > 0) ? averageLoad / standardDeviation : 0;
     let constraint = (weeklyLoad > 0) ? weeklyLoad * monotony : 0;
 
+    let energyScoresData = this.computeEnergyScoresForWorkouts(globalWorkouts);
+
     this.data.standardDeviation = standardDeviation;
     this.data.monotony = monotony;
     this.data.constraint = constraint;
     this.data.fitness = weeklyLoad - constraint;
-    this.data.energyScore = this._computeEnergyScoreForWorkouts(workouts);
+    this.data.energyScore = energyScoresData.energyScore;
 
     this.data.fitness = Math.round((this.data.fitness + Number.EPSILON) * 100) / 100;
     this.data.fitnessRounded = Math.round(this.data.fitness);
     this.data.constraint = Math.round((this.data.constraint + Number.EPSILON) * 100) / 100;
     this.data.constraintRounded = Math.round(this.data.constraint);
     this.data.monotony = Math.round((this.data.monotony + Number.EPSILON) * 100) / 100;
-    this.data.energyScore = Math.round(this.data.energyScore);
+    this.data.energyScore = this.data.energyScore > 0 ? Math.round((this.data.energyScore * 10 + Number.EPSILON) * 10) / 10 : 0;
 
     let customerDataWeeklyLoad = CustomerStatsSummaryService._compute_weeklyLoad(customerStats.stats.weekly);
 
@@ -342,27 +388,27 @@ export class CustomerStatsSummaryService {
     if (color1 == 'green' && color2 == 'green') {
       colorCircle = 'green';
       percent = 95;
-      textCircle = 'Very good';
+      textCircle = this.doorgetsTranslateService.instant('#Very good1');
     } else if (color1 == 'green' && color2 == 'yellow') {
       colorCircle = 'yellow';
       percent = 80;
-      textCircle = 'Good';
+      textCircle = this.doorgetsTranslateService.instant('#Good1');
     } else if (color1 == 'red' && color2 == 'green') {
       colorCircle = 'yellow';
       percent = 65;
-      textCircle = 'Quite good';
+      textCircle = this.doorgetsTranslateService.instant('#Quite good');
     } else if (color1 == 'red' && color2 == 'yellow') {
       colorCircle = 'red';
       percent = 50;
-      textCircle = 'Rather low';
+      textCircle = this.doorgetsTranslateService.instant('#Rather low');
     } else if (color1 == 'green' && color2 == 'red') {
       colorCircle = 'yellow';
       percent = 35;
-      textCircle = 'Low';
+      textCircle = this.doorgetsTranslateService.instant('#Low');
     } else if (color1 == 'red' && color2 == 'red') {
       colorCircle = 'red';
       percent = 20;
-      textCircle = 'Very low';
+      textCircle = this.doorgetsTranslateService.instant('#Very low');
     }
 
     return {
@@ -488,5 +534,31 @@ export class CustomerStatsSummaryService {
     }
 
     return 0;
+  }
+
+  private static _computeSingleEnergyScore(score, scoreLength) {
+
+    let result = 0;
+    let color = '';
+
+    if (scoreLength == 0 || score == 0) {
+      result = 0;
+    } else {
+      result = score / scoreLength / 5 * 10;
+      result = Math.round((result + Number.EPSILON) * 100) / 100;
+
+      color = 'medium';
+
+      if (result <= 5) {
+        color = 'low';
+      } else if (result >= 8) {
+        color = 'high';
+      }
+    }
+
+    return {
+      value: result,
+      color: color
+    };
   }
 }

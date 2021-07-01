@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList, Inject} from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import {NgbDateStruct, NgbAccordion} from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -10,6 +10,8 @@ import * as _ from 'lodash';
 import {MetricsModalCreateComponent} from "../../../_/templates/metrics/metrics-modal-create/metrics-modal-create.component";
 import {AthleteProfileService} from "./athlete-profile.service";
 import {MetricsModalEditComponent} from "../../../_/templates/metrics/metrics-modal-edit/metrics-modal-edit.component";
+import {ResizeService} from "../../../_/services/ui/resize-service.service";
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'app-athlete-profile',
@@ -21,6 +23,9 @@ export class AthleteProfileComponent implements OnInit {
   @ViewChildren('acc') accordions: QueryList<NgbAccordion>;
 
   @Input() isFromUrl = true;
+
+  activeTab : any = 'profile';
+  activeSubTab: any = '';
 
   newResult: any = {};
   newResultDate: any;
@@ -48,16 +53,23 @@ export class AthleteProfileComponent implements OnInit {
     year: 2002
   };
 
+  size: number = 1;
+  responsiveSize: number = 768;
+
   constructor(
     private authService: AuthService,
     private modalService: BsModalService,
     private userService: UserService,
     private usersService: UsersService,
     private toastrService: ToastrService,
-    private athleteProfileService: AthleteProfileService
+    private athleteProfileService: AthleteProfileService,
+    private resizeSvc: ResizeService,
+    @Inject(DOCUMENT) private _document
   	) { }
 
   ngOnInit(): void {
+    this.detectScreenSize();
+
   	this.user = this.isFromUrl
       ? this.authService.getUserData()
       : this.authService.getUserClientData();
@@ -194,5 +206,11 @@ export class AthleteProfileComponent implements OnInit {
         this.toastrService.error(data.message || 'An error has occurred');
       }
     }, (e) => this.toastrService.error('An error has occurred'));
+  }
+
+  private detectScreenSize() {
+    const currentSize = this._document.body.clientWidth;
+    this.size = currentSize;
+    this.resizeSvc.onResize(currentSize);
   }
 }

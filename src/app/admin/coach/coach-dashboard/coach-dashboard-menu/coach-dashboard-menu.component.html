@@ -1,37 +1,166 @@
-<div class="nav-bottom-header">
-  <div class="content-header">
-    <button class="hidden-mobile btn btn-primary float-right mr-4" (click)="openInvitationCreateModal()">
-      <i class="fa fa-plus"></i> {{ "#Add an athlet" | dgTranslate }}
-    </button>
+<ng-container *ngIf="fatigueManagementData">
 
+  <div class="d-flex flex-row justify-content-center align-items-end bg-light-black athlete-menu-items">
+
+    <div class="d-flex flex-column align-items-center athlete-menu-item">
+      <div class="fatigue-management-banner">
+        <ng-container *ngIf="!fatigueManagementData.status">
+          <div *ngIf="size > responsiveSize || (size <= responsiveSize && activeTab == 'training')" class="tpc-circle tpc-circle--energy">
+            <div class="c100 p0 red">
+              <div class="circle-content">
+                <img src="assets/img/logo/logo-power.png" srcset="assets/img/logo/logo-power@2x.png 2x,assets/img/logo/logo-power@3x.png 3x" class="logo">
+                <span class="percentage">-</span>
+                <div class="text-white sessions">{{ "#Energy" | dgTranslate }}</div>
+              </div>
+              <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="fatigueManagementData.status == 'todo'">
+          <div *ngIf="size > responsiveSize || (size <= responsiveSize && activeTab == 'training')" class="tpc-circle tpc-circle--energy">
+            <div class="c100 p100 red bg-transparent">
+              <div class="circle-content">
+                <img src="assets/img/logo/logo-power.png" srcset="assets/img/logo/logo-power@2x.png 2x,assets/img/logo/logo-power@3x.png 3x" class="logo">
+                <span class="percentage">-</span>
+                <div class="text-white sessions">{{ "#Energy" | dgTranslate }}</div>
+              </div>
+              <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="fatigueManagementData.status == 'in-progress'">
+          <div *ngIf="size > responsiveSize || (size <= responsiveSize && activeTab == 'training')" class="tpc-circle tpc-circle--energy">
+            <div class="c100 p{{ fatigueManagementData.energy }} {{ fatigueManagementData.color }}">
+              <div class="circle-content">
+                <img src="assets/img/logo/logo-power.png" srcset="assets/img/logo/logo-power@2x.png 2x,assets/img/logo/logo-power@3x.png 3x" class="logo">
+                <span class="percentage">{{ fatigueManagementData.energy }}%</span>
+                <div class="text-white sessions">{{ "#Energy" | dgTranslate }}</div>
+              </div>
+              <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="fatigueManagementData.status == 'done'">
+          <div *ngIf="size > responsiveSize || (size <= responsiveSize && activeTab == 'training')" class="tpc-optimal-zone clearfix">
+            <div class="optimal-zone--left {{ fatigueManagementData.colorEnergy }}"></div>
+            <div class="optimal-zone">
+              <div class="title">{{ fatigueManagementData.zoneName }}</div>
+              <div class="subtitle">{{ "#Zone" | dgTranslate }}</div>
+            </div>
+            <div class="optimal-zone--right {{ fatigueManagementData.colorRPE }}"></div>
+            <div class="score energy-score {{ fatigueManagementData.colorEnergy }}">
+              <div class="value">{{ fatigueManagementData.energyScore }}/10</div>
+            </div>
+            <div class="score rpe-score {{ fatigueManagementData.colorRPE }}">
+              <div class="value">{{ fatigueManagementData.rpeScore }}/10</div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div *ngIf="size > responsiveSize" class="nav-elem">
+        <a class="nav-link py-0 d-flex" (click)="setActiveTab('training')" [routerLink]="this.links.training" [ngClass]="{ 'active': activeTab == 'training' }">
+          <span>{{ "#Training" | dgTranslate }}</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-center athlete-menu-item">
+      <div *ngIf="size > responsiveSize || (size <= responsiveSize && activeTab == 'fatigue')" class="fatigue-management-banner">
+        <div class="tpc-circle tpc-circle--load">
+          <div class="c100 p{{ fatigueManagement.colors.load.percent }} {{ fatigueManagement.colors.load.colorCircle }}">
+            <div class="circle-content">
+              <img src="assets/img/logo/logo-rpe.png" class="logo logo-rpe">
+              <span class="title">{{ fatigueManagement.colors.load.textCircle }}</span>
+            </div>
+            <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="size > responsiveSize" class="nav-elem">
+        <a class="nav-link py-0 d-flex" (click)="setActiveTab('fatigue')" [routerLink]="this.links.fatigue" [ngClass]="{ 'active': activeTab == 'fatigue' }">
+          <span> {{ "#Fatigue" | dgTranslate }}</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-center athlete-menu-item">
+      <div *ngIf="size > responsiveSize || (size <= responsiveSize && activeTab == 'wellness')" class="fatigue-management-banner">
+        <div class="tpc-circle tpc-circle--fitness">
+          <div class="c100 p{{ fatigueManagement.colors.fitness.percent }} {{ fatigueManagement.colors.fitness.colorCircle }}">
+            <div class="circle-content">
+              <img src="assets/img/logo/logo-cardio.png" srcset="assets/img/logo/logo-cardio@2x.png 2x,assets/img/logo/logo-cardio@3x.png 3x" class="logo">
+              <span class="title">{{ fatigueManagement.colors.fitness.textCircle }}</span>
+            </div>
+            <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="size > responsiveSize" class="nav-elem">
+        <a class="nav-link py-0 d-flex" (click)="setActiveTab('wellness')" [routerLink]="this.links.wellness" [ngClass]="{ 'active': activeTab == 'wellness' }">
+          <span> {{ "#Wellness" | dgTranslate }}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</ng-container>
+
+<div class="nav-header-banner pb-4 pt-4">
+
+  <ng-container *ngIf="activeTab == 'training' && fatigueManagement">
+    <div class="d-flex flex-row justify-content-center description">
+      <div>
+        <div>{{ fatigueManagementData.subtitle }}</div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="activeTab == 'fatigue' && fatigueManagement">
+    <div class="d-flex flex-row justify-content-center description">
+      <div>
+        <div>{{ fatigueManagement.colors.load.descriptionConstraint }}.</div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="activeTab == 'wellness' && fatigueManagement">
+    <div class="d-flex flex-row justify-content-center description">
+      <div>
+        <div>{{ fatigueManagement.colors.fitness.descriptionFitness }}.</div>
+      </div>
+    </div>
+  </ng-container>
+
+  <button *ngIf="isFromUrl" class="hidden-mobile btn--profile btn btn-primary float-right mr-4" (click)="openInvitationCreateModal()">
+    <i class="fa fa-plus"></i> {{ "#Add an athlet" | dgTranslate }}
+  </button>
+</div>
+
+
+<div *ngIf="size <= responsiveSize" class="nav-bottom-header">
+  <div class="content-header">
     <ul class="navbar-nav flex-row mb-md-1 mt-md-0 mb-3 mt-2 justify-content-center">
       <li class="nav-item">
-        <a
-          class="nav-link py-0 d-flex"
-          (click)="setActiveTab('planning')"
-          [routerLink]="this.links.planning"
-          [ngClass]="{ 'active': activeTab == 'planning' }"
-        >
-          <span>{{ "#Planning" | dgTranslate }}</span>
+        <a class="nav-link py-0 d-flex" (click)="setActiveTab('training')" [routerLink]="this.links.training" [ngClass]="{ 'active': activeTab == 'training' }">
+          <span>{{ "#Training" | dgTranslate }}</span>
         </a>
       </li>
       <li class="nav-item">
-        <a
-          class="nav-link py-0 d-flex"
-          (click)="setActiveTab('performance')"
-          [routerLink]="this.links.performance"
-          [ngClass]="{ 'active': activeTab == 'performance' }"
-        >
+        <a class="nav-link py-0 d-flex" (click)="setActiveTab('fatigue')" [routerLink]="this.links.fatigue" [ngClass]="{ 'active': activeTab == 'fatigue' }">
           <span> {{ "#Fatigue" | dgTranslate }}</span>
         </a>
       </li>
       <li class="nav-item">
-        <a
-          class="nav-link py-0 d-flex"
-          (click)="setActiveTab('wellness')"
-          [routerLink]="this.links.wellness"
-          [ngClass]="{ 'active': activeTab == 'wellness' }"
-        >
+        <a class="nav-link py-0 d-flex" (click)="setActiveTab('wellness')" [routerLink]="this.links.wellness" [ngClass]="{ 'active': activeTab == 'wellness' }">
           <span> {{ "#Wellness" | dgTranslate }}</span>
         </a>
       </li>

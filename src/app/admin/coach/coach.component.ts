@@ -245,7 +245,6 @@ export class CoachComponent implements OnInit {
   }
 
   setActiveTab(tab) {
-    console.log('emit from team menu nav');
     this.coachDashboardMenuService.onTabChanged.emit(tab);
   }
 
