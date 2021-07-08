@@ -6,7 +6,7 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {UsersService} from "../../../../_/templates/users.service";
 import {UserService} from "../../../../_/services/model/user.service";
 import {CoachDashboardMenuService} from "../coach-dashboard-menu/coach-dashboard-menu.service";
-import {endOfWeek, startOfWeek} from "date-fns";
+import {addHours, differenceInDays, endOfWeek, format, startOfWeek} from "date-fns";
 import {DoorgetsTranslateService} from "doorgets-ng-translate";
 import {CustomerStatsComputerService} from "../../../../_/services/stats/customer-stats-computer.service";
 import {CustomerStatsSummaryService} from "../../../../_/components/ui/customer-stats-summary/customer-stats-summary.service";
@@ -19,9 +19,9 @@ import {CustomerStatsSummaryService} from "../../../../_/components/ui/customer-
 export class CoachDashboardPerformanceComponent implements OnInit {
   @Input() isFromUrl = true;
 
-  activeTab : any = 'performance';
+  activeTab: any = 'fatigue';
 
-  isLoading: boolean  = false;
+  isLoading: boolean = false;
   bsModalRef: BsModalRef;
   sub: any = {};
 
@@ -45,7 +45,8 @@ export class CoachDashboardPerformanceComponent implements OnInit {
     private doorgetsTranslateService: DoorgetsTranslateService,
     public customerStatsComputerService: CustomerStatsComputerService,
     private customerStatsSummaryService: CustomerStatsSummaryService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.user = this.authService.getUserData();
@@ -85,63 +86,109 @@ export class CoachDashboardPerformanceComponent implements OnInit {
 
   computeAllPerformances(clients) {
 
-    let globalFrom = startOfWeek(new Date(), { weekStartsOn: 1 });
-    let from = _.clone(globalFrom);
+    let dateFrom = startOfWeek(new Date(), {weekStartsOn: 1});
+    let dateTo = endOfWeek(new Date(), {weekStartsOn: 1});
+
+    let from = _.clone(dateFrom);
+    let to = _.clone(dateTo);
+
+    let weeksFrom = _.clone(from);
     from.setDate(from.getDate() - 21);
+    let weeksTo = _.clone(to);
 
-    let to = endOfWeek(new Date(), { weekStartsOn: 1 });
-    let globalTo = _.clone(to);
-
-    let globalFromDate = this.formatDate(globalFrom) + ' 00:00:00';
-    let globalToDate = this.formatDate(globalTo) + ' 00:00:00';
     let fromDate = this.formatDate(from) + ' 00:00:00';
     let toDate = this.formatDate(to) + ' 00:00:00';
 
+    if (this.isFromUrl) {
+      this.sub.onGetAllWorkout = this.usersService.getAllTeamWorkouts(fromDate, toDate, 1).subscribe((workouts) => {
+        this._computeAllPerformanceForAllClients(workouts, weeksFrom, weeksTo, from, to);
+      });
+    } else {
+      this.sub.onGetAllWorkout = this.usersService.getAllClientTeamWorkouts(this.user.id, fromDate, toDate, 1).subscribe((workouts) => {
+        this._computeAllPerformanceForAllClients(workouts, weeksFrom, weeksTo, from, to);
+      });
+    }
+  }
 
-    clients.forEach((client, key) => {
+  private _computeAllPerformanceForAllClients(allWorkouts, weeksFrom, weeksTo, from, to) {
+    this.clients.forEach((client, key) => {
       let clientId = client.client_id;
+      let workouts = CoachDashboardPerformanceComponent._getWorkoutsForOneClient(clientId, allWorkouts);
 
-      this.sub.onGetAllWorkout = this.usersService
-        .getAllClientWorkouts(clientId, globalFromDate, globalToDate, 1)
-        .subscribe((globalWorkouts: any) => {
+      if (workouts) {
+        let weeksWorkouts = CoachDashboardPerformanceComponent.getWorkoutsFromTo(workouts, weeksFrom, 7);
 
-          let globalCustomerStats = this.customerStatsComputerService.computeStatsForAllClientWorkouts(globalWorkouts, true);
-          globalCustomerStats = _.cloneDeep(globalCustomerStats);
+        if (Object.keys(weeksWorkouts).length > 0) {
+          let weeksCustomerStats = this.customerStatsComputerService.computeStatsForAllClientWorkouts(weeksWorkouts, true);
+          weeksCustomerStats = _.cloneDeep(weeksCustomerStats);
+          let customerStats = this.customerStatsComputerService.computeStatsForAllClientWorkouts(workouts, true, from, to);
 
-            this.usersService
-            .getAllClientWorkouts(clientId, fromDate, toDate, 1)
-            .subscribe((workouts: any) => {
-            if (workouts) {
-              let customerStats = this.customerStatsComputerService.computeStatsForAllClientWorkouts(workouts, true, from, to);
+          this.dataPerformanceClients[clientId] = this.customerStatsSummaryService.computeStatFatigueManagement(
+            weeksWorkouts,
+            workouts,
+            weeksCustomerStats.stats,
+            customerStats,
+            weeksFrom,
+            weeksTo
+          );
 
-              this.dataPerformanceClients[clientId] = this.customerStatsSummaryService.computeStatFatigueManagement(
-                globalWorkouts,
-                workouts,
-                globalCustomerStats.stats,
-                customerStats,
-                globalFrom,
-                globalTo
-              );
+          if (this.dataPerformanceClients[clientId].colors.zone.color == "red") {
+            this.dataPerformanceSorting['client-id-' + clientId] = 4;
+          } else if (this.dataPerformanceClients[clientId].colors.zone.color == "green") {
+            this.dataPerformanceSorting['client-id-' + clientId] = 3;
+          } else if (this.dataPerformanceClients[clientId].colors.zone.color == "yellow") {
+            this.dataPerformanceSorting['client-id-' + clientId] = 2;
+          } else {
+            this.dataPerformanceSorting['client-id-' + clientId] = 1;
+          }
+        }
+      }
 
-              if (this.dataPerformanceClients[clientId].colors.zone.color == "red") {
-                this.dataPerformanceSorting['client-id-' + clientId] = 4;
-              } else if (this.dataPerformanceClients[clientId].colors.zone.color == "green") {
-                this.dataPerformanceSorting['client-id-' + clientId] = 3;
-              } else if (this.dataPerformanceClients[clientId].colors.zone.color == "yellow") {
-                this.dataPerformanceSorting['client-id-' + clientId] = 2;
-              } else {
-                this.dataPerformanceSorting['client-id-' + clientId] = 1;
-              }
+      if (Object.is(this.clients.length - 1, key)) {
+        this.clients.sort((a, b) => this.dataPerformanceSorting['client-id-' + b.client_id] - this.dataPerformanceSorting['client-id-' + a.client_id]);
+        this.dataPerformanceIsLoading = true;
+      }
 
-              if (Object.is(this.clients.length - 1, key)) {
-                this.clients.sort((a, b) => this.dataPerformanceSorting['client-id-' + b.client_id] - this.dataPerformanceSorting['client-id-' + a.client_id]);
-                this.dataPerformanceIsLoading = true;
-              }
-
-            }
-          });
-        });
     });
+  }
+
+  private static _getWorkoutsForOneClient(clientId, workouts) {
+    let clientWorkouts = {};
+
+    for (let dayWorkout in workouts) {
+      let dayWorkouts = workouts[dayWorkout];
+
+      for (let workoutKey in dayWorkouts) {
+        let workout = dayWorkouts[workoutKey];
+
+        if (workout.user_id == clientId) {
+          if (!clientWorkouts[dayWorkout]) {
+            clientWorkouts[dayWorkout] = [];
+          }
+
+          clientWorkouts[dayWorkout].push(workout);
+        }
+      }
+    }
+
+    return clientWorkouts;
+  }
+
+  private static getWorkoutsFromTo(workouts, from, totalDays) {
+    let data = {};
+    let currentDate = _.clone(from);
+
+    for (let i = 0; i < totalDays; i++) {
+      let property = format(currentDate, "yyyy-MM-dd");
+
+      if (workouts[property]) {
+        data[property] = workouts[property];
+      }
+
+      currentDate = addHours(currentDate, 24);
+    }
+
+    return _.cloneDeep(data);
   }
 
   setCurrentAthletId(clientId) {

@@ -3,7 +3,7 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {AthleteDashboardMenuService} from "./athlete-dashboard-menu.service";
 import {FatigueManagementComputerService} from "../../../../_/services/stats/fatigue-management-computer.service";
 import {TemplatesModalStartSessionComponent} from "../../../../_/templates/templates-modal/templates-modal-start-session/templates-modal-start-session.component";
-import {endOfWeek, format, startOfWeek} from "date-fns";
+import {addHours, endOfWeek, format, startOfWeek} from "date-fns";
 import {UsersService} from "../../../../_/templates/users.service";
 import {AuthService} from "../../../../_/services/http/auth.service";
 import {UserService} from "../../../../_/services/model/user.service";
@@ -80,7 +80,7 @@ export class AthleteDashboardMenuComponent implements OnInit {
         training: ['/coach', 'athlet', 'dashboard'],
         fatigue: ['/coach', 'athlet', 'fatigue'],
         wellness: ['/coach', 'athlet', 'wellness'],
-        profile: ['/coach', 'athlete', 'profile']
+        profile: ['/coach', 'athlet', 'profile']
       };
     }
 
@@ -90,33 +90,16 @@ export class AthleteDashboardMenuComponent implements OnInit {
     );
 
     this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe((workout) => {
-        if (workout !== true) {
-          this.currentWorkout = workout;
-
-          console.log(this.currentWorkout);
-          console.log(format(this.currentDate, 'yyyy-MM-dd00:00:00'));
-          if (this.currentWorkout.started_at == format(this.currentDate, 'yyyy-MM-dd') + '00:00:00') {
-            this.fatigueManagementData = this.fatigueManagementComputer.compute(this.currentWorkout);
-          }
-
-          this.computeFatigueManagement(this.currentFrom, this.currentTo);
-        }
+        this.refreshData();
+        this.initWorkouts(this.currentDate);
+        this.computeFatigueManagement(this.currentFrom, this.currentTo);
       }
     );
 
     this.sub.onStatsUpdated = this.customerStatsService.onStatsUpdated.subscribe((component) => {
         this.refreshData();
-
-        console.log(this.currentFrom);
-        console.log(this.currentTo);
-
+        this.initWorkouts(this.currentDate);
         this.computeFatigueManagement(this.currentFrom, this.currentTo);
-        let now = format(this.currentDate, 'yyyy-MM-dd');
-
-        if (component.workouts[now] && component.workouts[now][0]) {
-          this.currentWorkout = component.workouts[now][0];
-          this.fatigueManagementData = this.fatigueManagementComputer.compute(this.currentWorkout);
-        }
       }
     );
 
@@ -125,7 +108,6 @@ export class AthleteDashboardMenuComponent implements OnInit {
         this.initWorkouts(date);
 
         this.currentDate = date;
-
         this.currentFrom = startOfWeek(date, { weekStartsOn: 1 });
         this.currentTo = endOfWeek(date, { weekStartsOn: 1 });
         this.computeFatigueManagement(this.currentFrom, this.currentTo);
@@ -135,12 +117,13 @@ export class AthleteDashboardMenuComponent implements OnInit {
     this.user = this.isFromUrl ? this.authService.getUserData() : this.authService.getUserClientData();
 
     this._initUser();
-    this.initWorkouts(new Date());
-
     this.currentFrom = startOfWeek(new Date(), { weekStartsOn: 1 });
     this.currentTo = endOfWeek(new Date(), { weekStartsOn: 1 });
-    this.computeFatigueManagement(this.currentFrom, this.currentTo);
-    console.log('3 / init FatigueManagement');
+
+    if (this.activeTab !== 'fatigue' && this.activeTab !== 'wellness') {
+        this.initWorkouts(new Date());
+        this.computeFatigueManagement(this.currentFrom, this.currentTo);
+    }
   }
 
   refreshData() {
@@ -263,67 +246,60 @@ export class AthleteDashboardMenuComponent implements OnInit {
     let from = _.clone(dateFrom);
     let to = _.clone(dateTo);
 
-    let globalFrom = _.clone(from);
+    let weeksFrom = _.clone(from);
     from.setDate(from.getDate() - 21);
-    let globalTo = _.clone(to);
+    let weeksTo = _.clone(to);
 
-    let globalFromDate = AthleteDashboardMenuComponent.formatDate(globalFrom) + ' 00:00:00';
-    let globalToDate = AthleteDashboardMenuComponent.formatDate(globalTo) + ' 00:00:00';
     let fromDate = AthleteDashboardMenuComponent.formatDate(from) + ' 00:00:00';
     let toDate = AthleteDashboardMenuComponent.formatDate(to) + ' 00:00:00';
 
-    console.log(globalFromDate);
-    console.log(globalToDate);
-    console.log(fromDate);
-    console.log(toDate);
-
     if (this.isFromUrl) {
 
-      this.sub.onGetAllWorkout = this.usersService.getAllWorkouts(globalFromDate, globalToDate, 1).subscribe((globalWorkouts: any) => {
-        let globalCustomerStats = this.customerStatsComputerService.computeStatsForAllClientWorkouts(globalWorkouts, true);
-        globalCustomerStats = _.cloneDeep(globalCustomerStats);
+      this.sub.onGetAllWorkout = this.usersService.getAllWorkouts(fromDate, toDate, 1).subscribe((workouts: any) => {
 
-        this.usersService.getAllWorkouts(fromDate, toDate, 1).subscribe((workouts: any) => {
-          if (workouts) {
+        if (workouts) {
+          let weeksWorkouts = AthleteDashboardMenuComponent.getWorkoutsFromTo(workouts, weeksFrom, 7);
+
+          if (Object.keys(weeksWorkouts).length > 0) {
+            let weeksCustomerStats = this.customerStatsComputerService.computeStatsForAllWorkouts(weeksWorkouts, true);
+            weeksCustomerStats = _.cloneDeep(weeksCustomerStats);
             let customerStats = this.customerStatsComputerService.computeStatsForAllWorkouts(workouts, true, from, to);
-            this.fatigueManagement = this.customerStatsSummaryService.computeStatFatigueManagement(
-              globalWorkouts,
-              workouts,
-              globalCustomerStats.stats,
-              customerStats,
-              globalFrom,
-              globalTo
-            );
 
-            console.log(this.fatigueManagement);
+            this.fatigueManagement = this.customerStatsSummaryService.computeStatFatigueManagement(
+              weeksWorkouts,
+              workouts,
+              weeksCustomerStats.stats,
+              customerStats,
+              weeksFrom,
+              weeksTo
+            );
           }
-        });
+        }
       });
 
     } else {
       let clientId = this.authService.getCurrentAthletId();
 
-      this.sub.onGetAllWorkout = this.usersService.getAllClientWorkouts(clientId, globalFromDate, globalToDate, 1).subscribe((globalWorkouts: any) => {
+      this.sub.onGetAllWorkout = this.usersService.getAllClientWorkouts(clientId, fromDate, toDate, 1).subscribe((workouts: any) => {
 
-        let globalCustomerStats = this.customerStatsComputerService.computeStatsForAllClientWorkouts(globalWorkouts, true);
-        globalCustomerStats = _.cloneDeep(globalCustomerStats);
+        if (workouts) {
+          let weeksWorkouts = AthleteDashboardMenuComponent.getWorkoutsFromTo(workouts, weeksFrom, 7);
 
-        this.sub.onGetAllWorkoutBis = this.usersService.getAllClientWorkouts(clientId, fromDate, toDate, 1).subscribe((workouts: any) => {
-            if (workouts) {
-              let customerStats = this.customerStatsComputerService.computeStatsForAllClientWorkouts(workouts, true, from, to);
+          if (Object.keys(weeksWorkouts).length > 0) {
+            let weeksCustomerStats = this.customerStatsComputerService.computeStatsForAllClientWorkouts(weeksWorkouts, true);
+            weeksCustomerStats = _.cloneDeep(weeksCustomerStats);
+            let customerStats = this.customerStatsComputerService.computeStatsForAllClientWorkouts(workouts, true, from, to);
 
-              this.fatigueManagement = this.customerStatsSummaryService.computeStatFatigueManagement(
-                globalWorkouts,
-                workouts,
-                globalCustomerStats.stats,
-                customerStats,
-                globalFrom,
-                globalTo
-              );
-
-              console.log(this.fatigueManagement);
-            }
-          });
+            this.fatigueManagement = this.customerStatsSummaryService.computeStatFatigueManagement(
+              weeksWorkouts,
+              workouts,
+              weeksCustomerStats.stats,
+              customerStats,
+              weeksFrom,
+              weeksTo
+            );
+          }
+        }
       });
     }
   }
@@ -348,5 +324,22 @@ export class AthleteDashboardMenuComponent implements OnInit {
       day = '0' + day;
 
     return [year, month, day].join('-');
+  }
+
+  private static getWorkoutsFromTo(workouts, from, totalDays) {
+    let data = {};
+    let currentDate = _.clone(from);
+
+    for (let i = 0; i < totalDays; i++) {
+      let property = format(currentDate, "yyyy-MM-dd");
+
+      if (workouts[property]) {
+        data[property] = workouts[property];
+      }
+
+      currentDate = addHours(currentDate, 24);
+    }
+
+    return _.cloneDeep(data);
   }
 }

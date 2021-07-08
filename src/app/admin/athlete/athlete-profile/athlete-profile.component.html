@@ -1,3 +1,7 @@
+<ng-container *ngIf="size > responsiveSize">
+  <app-athlete-dashboard-menu [activeTab]="activeTab" [activeSubTab]="activeSubTab" [isFromUrl]="isFromUrl"></app-athlete-dashboard-menu>
+</ng-container>
+
 <div class="container-fluid">
   <div class="container-scroll">
 

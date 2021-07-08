@@ -130,6 +130,20 @@ export class UsersService {
     return this.httpService.get(query);
   }
 
+  getAllTeamWorkouts(fromDate, toDate, strictDate?) {
+    let page: any = {
+      totalElements: 0,
+      pageNumber: 0,
+      size: 500,
+    };
+
+    let query = `workout/team?page=${page.pageNumber}&size=${page.size}&date=${fromDate}&date_end=${toDate}`;
+    query += strictDate
+      ? '&strict_date=1'
+      : '';
+    return this.httpService.get(query);
+  }
+
   getAllClientWorkouts(clientId, fromDate, toDate, strictDate?) {
     let page: any = {
       totalElements: 0,
@@ -138,6 +152,20 @@ export class UsersService {
     };
 
     let query = `workout/client/${clientId}?page=${page.pageNumber}&size=${page.size}&date=${fromDate}&date_end=${toDate}`;
+    query += strictDate
+      ? '&strict_date=1'
+      : '';
+    return this.httpService.get(query);
+  }
+
+  getAllClientTeamWorkouts(clientId, fromDate, toDate, strictDate?) {
+    let page: any = {
+      totalElements: 0,
+      pageNumber: 0,
+      size: 500,
+    };
+
+    let query = `workout/client/team/${clientId}?page=${page.pageNumber}&size=${page.size}&date=${fromDate}&date_end=${toDate}`;
     query += strictDate
       ? '&strict_date=1'
       : '';

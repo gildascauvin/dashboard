@@ -403,8 +403,6 @@ export class AthleteCalendarComponent implements OnInit {
       );
     }
 
-    console.log(this.startDay);
-
     this.weeks = [];
   }
 
@@ -929,7 +927,6 @@ export class AthleteCalendarComponent implements OnInit {
           this._refreshWeeksWithWorkouts();
         });
     }
-    console.log("this.workouts", this.workouts)
   }
 
   drop(event: CdkDragDrop<string[]>) {

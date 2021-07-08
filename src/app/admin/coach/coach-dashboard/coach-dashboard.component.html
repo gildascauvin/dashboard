@@ -1,10 +1,10 @@
 <app-coach-dashboard-menu [activeTab]="activeTab" [isFromUrl]="isFromUrl"></app-coach-dashboard-menu>
 
-  <ng-container *ngIf="activeTab == 'planning'">
+  <ng-container *ngIf="activeTab == 'training'">
     <app-coach-dashboard-planning [isFromUrl]="isFromUrl"></app-coach-dashboard-planning>
   </ng-container>
 
-  <ng-container *ngIf="activeTab == 'performance'">
+  <ng-container *ngIf="activeTab == 'fatigue'">
     <app-coach-dashboard-performance [isFromUrl]="isFromUrl"></app-coach-dashboard-performance>
   </ng-container>
 

@@ -1,7 +1,7 @@
 <nav *ngIf="size > responsiveSize" class="navbar navbar-expand-md navbar-dark bg-dark">
   <div class="container">
     <h1 class="pb-2 ml-md-0 ml-sm-3 ml-0 mr-3 pt-2">
-      <a [routerLink]="['/coach', 'dashboard']" (click)="setActiveTab('planning')" class="img-logo-brand">
+      <a [routerLink]="['/coach', 'dashboard']" (click)="setActiveTab('training')" class="img-logo-brand">
         <img src="/assets/img/logo-final.png" width="82" height="82" alt=""/>
       </a>
     </h1>
@@ -27,7 +27,7 @@
                     {{currentUserId}} -->
             </span>
             <div class="btn-group float-right">
-              <a class="links-menu mr-4" [routerLink]="['/coach', 'dashboard']" (click)="setActiveTab('planning')">
+              <a class="links-menu mr-4" [routerLink]="['/coach', 'dashboard']" (click)="setActiveTab('training')">
                 <i class="fa fa-user"></i> {{ "#Team" | dgTranslate }}
               </a>
               <a class="links-menu mr-2" routerLinkActive="active" [routerLink]="['/coach', 'programs']">

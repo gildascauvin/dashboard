@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
 })
 export class CoachDashboardComponent implements OnInit {
   @Input() isFromUrl = true;
-  activeTab : any = 'planning';
+  activeTab : any = 'training';
   sub: any = {};
 
   constructor(
@@ -22,11 +22,11 @@ export class CoachDashboardComponent implements OnInit {
   ngOnInit(): void {
     let paths = this.router.url.split('/');
 
-    if (paths.length >= 3 && ((paths[1] === 'coach' && paths[3] === 'performance') || ((paths[1] === 'athlete' && paths[2] === 'performance')))) {
-        this.setActiveTab('performance');
+    if (paths.length >= 3 && ((paths[1] === 'coach' && paths[3] === 'performance') || ((paths[1] === 'athlete' && paths[3] === 'performance')))) {
+        this.setActiveTab('fatigue');
     }
 
-    if (paths.length >= 3 && ((paths[1] === 'coach' && paths[3] === 'wellness') || ((paths[1] === 'athlete' && paths[2] === 'wellness')))) {
+    if (paths.length >= 3 && ((paths[1] === 'coach' && paths[3] === 'wellness') || ((paths[1] === 'athlete' && paths[3] === 'wellness')))) {
       this.setActiveTab('wellness');
     }
 

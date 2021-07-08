@@ -233,6 +233,8 @@ export class TemplatesModalExerciceManagerComponent extends FormModalCore implem
         this.usersService[
           this.isFromUrl ? "createWorkout" : "createClientWorkout"
         ](body).subscribe((response: any) => {
+          console.log('manager subscribe 1');
+
           if (response.errors) {
             this.toastrService.error(response.message);
           } else {
@@ -251,6 +253,7 @@ export class TemplatesModalExerciceManagerComponent extends FormModalCore implem
         this.usersService[
           this.isFromUrl ? "updateWorkout" : "updateClientWorkout"
         ](body).subscribe((response: any) => {
+          console.log('manager subscribe 2');
           if (response.errors) {
             this.toastrService.error(response.message);
           } else {
