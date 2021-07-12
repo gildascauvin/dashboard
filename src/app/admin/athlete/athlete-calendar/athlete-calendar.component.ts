@@ -151,7 +151,7 @@ export class AthleteCalendarComponent implements OnInit {
     this.user = this.isFromUrl ? this.authService.getUserData() : this.authService.getUserClientData();
 
     this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe((o) => {
-        this._syncWorkouts(true);
+        this._syncWorkouts(false);
       }
     );
 
@@ -175,11 +175,7 @@ export class AthleteCalendarComponent implements OnInit {
         }
       });
 
-      if (
-        bodyScroll.scrollTop > (bodyScroll.scrollHeight - bodyScroll.clientHeight - 100) &&
-        !this.isLoadingScroll &&
-        this.weeks.length < 30
-      ) {
+      if (bodyScroll.scrollTop > (bodyScroll.scrollHeight - bodyScroll.clientHeight - 100) && !this.isLoadingScroll && this.weeks.length < 30) {
         this.isLoadingScroll = true;
         this._init();
       }
@@ -908,13 +904,9 @@ export class AthleteCalendarComponent implements OnInit {
     let dayStartOn = this.startDay.getDate();
     let startOn = this.startDay.getFullYear() + "-" + ((monthStartOn < 10) ? '0':'') + monthStartOn + "-" + ((dayStartOn < 10) ? '0':'') + dayStartOn;
 
-    let monthEndOn = this.endDay.getMonth() + 1;
-    let dayEndOn = this.endDay.getDate();
-    let endOn = this.endDay.getFullYear() + "-" + ((monthEndOn < 10) ? '0':'') + monthEndOn + "-" + ((dayEndOn < 10) ? '0':'') + dayEndOn;
-
     if (this.isFromUrl) {
       this.sub.onGetAllWorkout = this.usersService
-        .getAllWorkouts(startOn, endOn, 1)
+        .getAllWorkout(startOn)
         .subscribe((workouts: any) => {
           if (workouts) {
             this.workouts = _.cloneDeep(workouts);
@@ -926,7 +918,7 @@ export class AthleteCalendarComponent implements OnInit {
     } else {
       let clientId = this.authService.getCurrentAthletId();
       this.sub.onGetAllWorkout = this.usersService
-        .getAllClientWorkouts(clientId, startOn, endOn, 1)
+        .getAllClientWorkout(clientId, startOn)
         .subscribe((workouts: any) => {
           if (workouts) {
             this.workouts = _.cloneDeep(workouts);
