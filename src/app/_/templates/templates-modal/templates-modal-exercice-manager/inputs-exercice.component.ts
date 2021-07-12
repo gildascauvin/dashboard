@@ -112,7 +112,6 @@ export class InputsExerciceComponent implements OnInit {
 
   protected _initMax() {
     _.forEach(this.model.movements, (mvt) => {
-      console.log("mvt", mvt);
       let profil = _.find(this.profil, {
         movement_id: mvt.movement_id,
       });
@@ -126,7 +125,6 @@ export class InputsExerciceComponent implements OnInit {
 
   protected _initMAS() {
     _.forEach(this.model.movements, (mvt) => {
-      console.log("mvt", mvt);
       let profil = _.find(this.profil, {
         movement_id: mvt.movement_id,
       });

@@ -1,16 +1,17 @@
-import { Component, Input, OnInit } from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 import {NgbCalendar, NgbDate, NgbDateParserFormatter} from "@ng-bootstrap/ng-bootstrap";
-import { ChartDataSets, ChartOptions, ChartType } from "chart.js";
+import {ChartDataSets, ChartOptions, ChartType} from "chart.js";
 import * as pluginDataLabels from "chartjs-plugin-datalabels";
 import {endOfWeek, format, startOfWeek,} from "date-fns";
-import { Label } from "ng2-charts";
-import { webConfig } from "../../../../web-config";
-import { AuthService } from "../../../../_/services/http/auth.service";
-import { UsersService } from "../../../../_/templates/users.service";
-import { CustomerStatsService } from "./customer-stats-range.service";
+import {Label} from "ng2-charts";
+import {webConfig} from "../../../../web-config";
+import {AuthService} from "../../../../_/services/http/auth.service";
+import {UsersService} from "../../../../_/templates/users.service";
+import {CustomerStatsService} from "./customer-stats-range.service";
 import {CustomerStatsComputerService} from "../../../services/stats/customer-stats-computer.service";
 import * as _ from "lodash";
 import {CustomerStatsSummaryService} from "../customer-stats-summary/customer-stats-summary.service";
+import {AthleteDashboardMenuService} from "../../../../admin/athlete/athlete-dashboard/athlete-dashboard-menu/athlete-dashboard-menu.service";
 
 @Component({
   selector: "app-customer-stats-range",
@@ -22,6 +23,7 @@ export class CustomerStatsRangeComponent implements OnInit {
   @Input() isFromUrl = true;
   @Input() isOneDay = false;
   @Input() keepDates = false;
+  @Input() classCss: any;
 
   isLoading: boolean = false;
 
@@ -73,8 +75,8 @@ export class CustomerStatsRangeComponent implements OnInit {
   movements: any = [];
   categoriesData: any = [];
 
-  endDay: any = endOfWeek(new Date(), { weekStartsOn: 1 });
-  startDay: any = startOfWeek(new Date(), { weekStartsOn: 1 });
+  endDay: any = endOfWeek(new Date(), {weekStartsOn: 1});
+  startDay: any = startOfWeek(new Date(), {weekStartsOn: 1});
 
   public barChartOptions: ChartOptions = {
     responsive: true,
@@ -204,7 +206,8 @@ export class CustomerStatsRangeComponent implements OnInit {
     public formatter: NgbDateParserFormatter,
     public customerStatsService: CustomerStatsService,
     public customerStatsComputerService: CustomerStatsComputerService,
-    public customerStatsSummaryService: CustomerStatsSummaryService
+    public customerStatsSummaryService: CustomerStatsSummaryService,
+    public athleteDashboardMenuService: AthleteDashboardMenuService
   ) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), "d", 7);
@@ -219,18 +222,23 @@ export class CustomerStatsRangeComponent implements OnInit {
       }
     );
 
+    this.sub.athleteDashboardOnTabChanged = this.athleteDashboardMenuService.onTabChanged.subscribe(
+      (tab) => {
+        this._syncWorkouts();
+      });
+
     this.sub.onRefreshStats = this.customerStatsService.onRefreshStats.subscribe(() => {
-      this._syncWorkouts(true);
+      this._syncWorkouts();
     });
 
     this._init();
-
     this._syncWorkouts();
   }
 
   ngOnDestroy(): void {
     this.sub.onTabChanged && this.sub.onTabChanged.unsubscribe();
     this.sub.onRefreshStats && this.sub.onRefreshStats.unsubscribe();
+    this.sub.athleteDashboardOnTabChanged && this.sub.athleteDashboardOnTabChanged.unsubscribe();
   }
 
   onDateSelection(date: NgbDate, datepicker) {
@@ -252,8 +260,7 @@ export class CustomerStatsRangeComponent implements OnInit {
 
     if (this.toDate && this.fromDate) {
       datepicker.toggle();
-
-      this._syncWorkouts(true);
+      this._syncWorkouts();
     }
   }
 
@@ -289,9 +296,9 @@ export class CustomerStatsRangeComponent implements OnInit {
 
   // events
   public chartClicked({
-    event,
-    active,
-  }: {
+                        event,
+                        active,
+                      }: {
     event: MouseEvent;
     active: {}[];
   }): void {
@@ -299,9 +306,9 @@ export class CustomerStatsRangeComponent implements OnInit {
   }
 
   public chartHovered({
-    event,
-    active,
-  }: {
+                        event,
+                        active,
+                      }: {
     event: MouseEvent;
     active: {}[];
   }): void {
@@ -314,23 +321,23 @@ export class CustomerStatsRangeComponent implements OnInit {
 
     if (this.keepDates == false) {
       if (!this.isOneDay) {
-        this.endDay = endOfWeek(toDate, { weekStartsOn: 1 });
-        this.startDay = startOfWeek(fromDate, { weekStartsOn: 1 });
+        this.endDay = endOfWeek(toDate, {weekStartsOn: 1});
+        this.startDay = startOfWeek(fromDate, {weekStartsOn: 1});
       } else {
         this.endDay = this.startDay = toDate;
       }
     } else {
       if (format(toDate, 'yyyyMMdd') == format(fromDate, 'yyyyMMdd')) {
-        this.endDay = endOfWeek(toDate, { weekStartsOn: 1 });
-        this.startDay = startOfWeek(fromDate, { weekStartsOn: 1 });
+        this.endDay = endOfWeek(toDate, {weekStartsOn: 1});
+        this.startDay = startOfWeek(fromDate, {weekStartsOn: 1});
       } else {
         this.endDay = toDate;
         this.startDay = fromDate;
       }
     }
 
-    this.startDay.setHours(0,0,0);
-    this.endDay.setHours(23,59,59);
+    this.startDay.setHours(0, 0, 0);
+    this.endDay.setHours(23, 59, 59);
 
     this.fromDate.year = parseInt("" + format(this.startDay, "yyyy"));
     this.fromDate.month = parseInt("" + format(this.startDay, "MM"));
@@ -341,7 +348,7 @@ export class CustomerStatsRangeComponent implements OnInit {
     this.toDate.day = parseInt("" + format(this.endDay, "dd"));
   }
 
-  private _syncWorkouts(strict?) {
+  private _syncWorkouts() {
     this.isLoading = true;
 
     this.sub.onGetAllWorkout && this.sub.onGetAllWorkout.unsubscribe();
@@ -379,14 +386,12 @@ export class CustomerStatsRangeComponent implements OnInit {
     }
   }
 
-  private _setCustomerStats(customerStats)
-  {
+  private _setCustomerStats(customerStats) {
     this.barChartData = customerStats.barChartData;
     this.barChartLabels = customerStats.barChartLabels;
     this.categories = customerStats.categories;
     this.categoriesData = customerStats.categoriesData;
     this.isLoading = customerStats.isLoading;
-    this.isOneDay = customerStats.isOneDay;
     this.liveStats = customerStats.liveStats;
     this.movements = customerStats.movements;
     this.stats = customerStats.stats;

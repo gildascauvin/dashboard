@@ -171,13 +171,13 @@ const routes: Routes = [{
             children: [{
                 path: 'profile',
                 component: CoachSettingsProfileComponent
-              },{
+              }, {
                 path: 'password',
                 component: CoachSettingsPasswordComponent
-              },{
+              }, {
                 path: 'language',
                 component: CoachSettingsLanguageComponent
-              },{
+              }, {
                 path: 'plan',
                 component: CoachSettingsPlanComponent
             }]
@@ -198,7 +198,7 @@ const routes: Routes = [{
       }, {
         path: 'wellness',
         component: AthleteDashboardWellnessComponent
-      },{
+      }, {
         path: 'team',
         component: AthleteTeamComponent,
         children: [
@@ -210,7 +210,7 @@ const routes: Routes = [{
             component: AthleteWellnessComponent
           }
         ]
-      },{
+      }, {
         path: 'profile',
         component: AthleteProfileComponent,
         children: [

@@ -221,7 +221,6 @@ export class AthleteStatsFatigueManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.detectScreenSize();
 
     this.isCoach = this.authService.isCoach();

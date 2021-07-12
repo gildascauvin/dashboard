@@ -33,3 +33,69 @@
     flex-flow: row;
   }
 }
+
+.form-group {
+  &.hidden {
+    .input-group {
+      input {
+        background: transparent !important;
+        border:none;
+      }
+    }
+  }
+}
+
+.calendar--desktop {
+  position: absolute;
+  margin-left: 10px;
+  top: calc(50% - 19px);
+
+  .input-group {
+    .calendar {
+      width: 120px;
+    }
+  }
+}
+
+.calendar--dark {
+  .input-group-prepend {
+    button {
+      background: #222 !important;
+      border-color: #333 !important;
+      color: #ccc !important;
+      border-bottom-left-radius: 30px;
+      border-top-left-radius: 30px;
+      border-right: none;
+    }
+  }
+
+  .calendar {
+    background: #222 !important;
+    border-color: #333 !important;
+    color: #ccc !important;
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+    border-left: none;
+    text-align: center;
+    padding-left: 0 !important;
+
+    &:focus {
+      box-shadow: none !important;
+    }
+  }
+
+  &.calendar--middle {
+    .calendar {
+      border-radius: 0 !important;
+      border-right: 0 !important;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar--dark {
+    .calendar {
+      width: 100px;
+    }
+  }
+}

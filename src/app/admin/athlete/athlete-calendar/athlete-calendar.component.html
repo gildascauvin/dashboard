@@ -2,21 +2,7 @@
   <div class="row">
     <div class="col-md-12 pt-4">
       <div id="navbar-planning">
-        <div class="input-group calendar-top float-left mr-2">
-          <input class="form-control calendar" name="dp" (ngModelChange)="onDateSelected($event)" (click)="d.toggle()"
-            [ngModel]="startedAtModel" ngbDatepicker #d="ngbDatepicker" />
-            <div class="input-group-append">
-              <button
-                class="btn btn-outline-secondary"
-                (click)="d.toggle()"
-                type="button"
-              >
-                <i class="fa fa-calendar"></i>
-              </button>
-            </div>
-          </div>
         <div class="date-title">{{ currentMonth | uppercase }}</div>
-
         <div class="switch-planning">
           <div class="custom-control custom-switch">
             <label class="switch-planning--label" for="custom-switch-planning">Planification</label>
@@ -122,7 +108,7 @@
                         ngbTooltip="{{ '#Duplicate' | dgTranslate }}" #t="ngbTooltip"
                         (click)="duplicateWorkout(workout); t.close()"></i>
                     </div>
-                    <button *ngIf="day.day == startedAtModel.day && day.month == startedAtModel.month"
+                    <button *ngIf="day.day == startDay.getDate() && day.month == (startDay.getMonth() + 1)"
                             [ngClass]="workout.is_session_started ? 'btn-secondary' : 'btn-primary'"
                             class="btn start-session"
                             (click)="openStartSessionModal(workout, day)">

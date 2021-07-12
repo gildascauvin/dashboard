@@ -138,7 +138,7 @@ export class CustomerStatsSummaryService {
     let fitnessColors = this._computeFitnessColors(data);
     let lifeStyleColor = CustomerStatsSummaryService._computeLifeStyleColors(data);
 
-    return {
+    let result = {
       has_stats: hasStat,
       load: {
         constraint: data.constraint,
@@ -177,6 +177,8 @@ export class CustomerStatsSummaryService {
         }
       }
     };
+
+    return result;
   }
 
   private _computeEnergyScoreForWorkouts(workouts) {

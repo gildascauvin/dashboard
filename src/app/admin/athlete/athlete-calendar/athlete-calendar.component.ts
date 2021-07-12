@@ -24,6 +24,7 @@ import {AthleteCalendarService} from "./athlete-calendar.service";
 import {PlanningModalDeleteComponent} from "../../../_/templates/planning/planning-modal-delete/planning-modal-delete.component";
 import {PlanningModalEditComponent} from "../../../_/templates/planning/planning-modal-edit/planning-modal-edit.component";
 import {ResizeService} from "../../../_/services/ui/resize-service.service";
+import {CustomerStatsService} from "../../../_/components/ui/customer-stats-range/customer-stats-range.service";
 
 @Component({
   selector: "app-athlete-calendar",
@@ -113,6 +114,7 @@ export class AthleteCalendarComponent implements OnInit {
     private athleteCalendarService: AthleteCalendarService,
     public formatter: NgbDateParserFormatter,
     private resizeSvc: ResizeService,
+    private customerStatsService: CustomerStatsService
   ) {}
 
   @HostListener("document:keydown.escape", ["$event"]) onKeydownHandler(event: KeyboardEvent) {
@@ -123,15 +125,28 @@ export class AthleteCalendarComponent implements OnInit {
 
     this.detectScreenSize();
 
+    this.customerStatsService.onRefreshStats.emit();
+
     let todayCalendar = new Date();
 
     this.startedAtModel.year = todayCalendar.getFullYear();
     this.startedAtModel.month = todayCalendar.getMonth() + 1;
     this.startedAtModel.day = todayCalendar.getDate();
 
-    this.user = this.isFromUrl ? this.authService.getUserData() : this.authService.getUserClientData();
+    this.sub.onStatsUpdated = this.customerStatsService.onStatsUpdated.subscribe(
+      (component) => {
 
-    this._syncWorkouts();
+        if (!component.isOneDay) {
+          let startDay = _.clone(component.startDay);
+          let endDay = _.clone(component.endDay);
+          this.startDay = startDay;
+          this.endDay = endDay;
+          this._syncWorkouts();
+        }
+    });
+
+
+    this.user = this.isFromUrl ? this.authService.getUserData() : this.authService.getUserClientData();
 
     this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe((o) => {
         this._syncWorkouts(null, true);
@@ -142,11 +157,6 @@ export class AthleteCalendarComponent implements OnInit {
         this.closeFooterActions();
       }
     );
-
-    this.sub.onUpdate = this.userService.onUpdate.subscribe((user) => {
-      this.user = this.isFromUrl ? this.authService.getUserData() : this.authService.getUserClientData();
-      this._syncWorkouts(null, true);
-    });
 
     this._init();
     this._initDate();
@@ -255,23 +265,6 @@ export class AthleteCalendarComponent implements OnInit {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    for (const propName in changes) {
-      if (changes.hasOwnProperty(propName)) {
-        switch (propName) {
-          case "workouts": {
-            // this._init();
-          }
-
-          case "weeks": {
-            // console.log('weeks');
-            // this._init();
-          }
-        }
-      }
-    }
-  }
-
   ngOnDestroy() {
     this.sub.templates && this.sub.templates.unsubscribe();
     this.sub.onWorkoutSaved && this.sub.onWorkoutSaved.unsubscribe();
@@ -282,6 +275,7 @@ export class AthleteCalendarComponent implements OnInit {
     this.sub.onPlanningUpdated && this.sub.onPlanningUpdated.unsubscribe();
     this.sub.onPlanningRemoved && this.sub.onPlanningRemoved.unsubscribe();
     this.sub.onPlanningsUpdated && this.sub.onPlanningsUpdated.unsubscribe();
+    this.sub.onStatsUpdated && this.sub.onStatsUpdated.unsubscribe();
   }
 
   getConnectedExercicesList() {
@@ -314,7 +308,9 @@ export class AthleteCalendarComponent implements OnInit {
   }
 
   private _init(reset?) {
+
     if (reset) {
+      /*
       let today = startOfWeek(new Date(), { weekStartsOn: 1 });
       this.currentMonth = this._getMonthName(format(today, "MM")) + " " + format(today, "yyyy");
       this.endDay = endOfWeek(new Date(), { weekStartsOn: 1 });
@@ -324,9 +320,10 @@ export class AthleteCalendarComponent implements OnInit {
       } else {
         this.startDay = startOfWeek(new Date(), { weekStartsOn: 1 });
       }
-
+      */
       this.weeks = [];
     }
+
 
     this._addWeeks();
   }
@@ -369,7 +366,7 @@ export class AthleteCalendarComponent implements OnInit {
 
         let nbHours = formatedDate === "2020-10-25" || formatedDate === "2021-10-30" ? 25 : 24;
         date = addHours(date, nbHours);
-        this.startDay = date;
+        //this.startDay = date;
       }
 
       this.weeks.push(days);
@@ -394,6 +391,7 @@ export class AthleteCalendarComponent implements OnInit {
       { weekStartsOn: 1 }
     );
 
+    /*
     if (this.size <= this.responsiveSize) {
       this.startDay = new Date(this.startedAtModel.year, this.startedAtModel.month - 1, this.startedAtModel.day);
     } else {
@@ -402,6 +400,7 @@ export class AthleteCalendarComponent implements OnInit {
         { weekStartsOn: 1 }
       );
     }
+     */
 
     this.weeks = [];
   }
@@ -487,9 +486,6 @@ export class AthleteCalendarComponent implements OnInit {
             const workoutFromCLone = dayWorkout.workouts[indexWorkout];
             if (workoutFromCLone) {
               workoutFromCLone.started_at = dayWorkout.date + '00:00:00';
-
-              console.log(workoutFromCLone);
-              console.log(diff);
               workoutToSave.push(workoutFromCLone);
             }
           });
@@ -526,13 +522,16 @@ export class AthleteCalendarComponent implements OnInit {
     });
   }
 
+  /*
   onDateSelected($event) {
     this._initDate($event);
     let date = new Date(this.startedAtModel.year, this.startedAtModel.month - 1, this.startedAtModel.day);
     this.athleteCalendarService.onDateSelected.emit(date);
+    console.log('OnDateSelected');
     this._syncWorkouts($event, true);
     this._initPlannings();
   }
+   */
 
   duplicateWorkout(workout) {
     this.copyWorkouts = [];
@@ -897,15 +896,19 @@ export class AthleteCalendarComponent implements OnInit {
 
   private _syncWorkouts(startedAtModel?, reset?) {
     this.isLoading = true;
-    this.startedAtModel = startedAtModel ? startedAtModel : this.startedAtModel;
-
     this.sub.onGetAllWorkout && this.sub.onGetAllWorkout.unsubscribe();
 
-    let date = this.startedAtModel.year + "-" + this.startedAtModel.month + "-" + this.startedAtModel.day;
+    let monthStartOn = this.startDay.getMonth() + 1;
+    let dayStartOn = this.startDay.getDate();
+    let startOn = this.startDay.getFullYear() + "-" + ((monthStartOn < 10) ? '0':'') + monthStartOn + "-" + ((dayStartOn < 10) ? '0':'') + dayStartOn;
+
+    let monthEndOn = this.endDay.getMonth() + 1;
+    let dayEndOn = this.endDay.getDate();
+    let endOn = this.endDay.getFullYear() + "-" + ((monthEndOn < 10) ? '0':'') + monthEndOn + "-" + ((dayEndOn < 10) ? '0':'') + dayEndOn;
 
     if (this.isFromUrl) {
       this.sub.onGetAllWorkout = this.usersService
-        .getAllWorkout(date)
+        .getAllWorkouts(startOn, endOn, 1)
         .subscribe((workouts: any) => {
           if (workouts) {
             this.workouts = _.cloneDeep(workouts);
@@ -917,7 +920,7 @@ export class AthleteCalendarComponent implements OnInit {
     } else {
       let clientId = this.authService.getCurrentAthletId();
       this.sub.onGetAllWorkout = this.usersService
-        .getAllClientWorkout(clientId, date)
+        .getAllClientWorkouts(clientId, startOn, endOn, 1)
         .subscribe((workouts: any) => {
           if (workouts) {
             this.workouts = _.cloneDeep(workouts);

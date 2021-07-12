@@ -116,6 +116,8 @@
 
 <div class="nav-header-banner pb-4 pt-4">
 
+  <app-customer-stats-range *ngIf="size > responsiveSize" [classCss]="'calendar--desktop'" [isFromUrl]="isFromUrl" [keepDates]="keepDates"></app-customer-stats-range>
+
   <ng-container *ngIf="activeTab == 'training' && fatigueManagement">
     <div class="d-flex flex-row justify-content-center description">
       <div>
@@ -148,19 +150,19 @@
 
 <div *ngIf="size <= responsiveSize" class="nav-bottom-header">
   <div class="content-header">
-    <ul class="navbar-nav flex-row mb-md-1 mt-md-0 mb-3 mt-2 justify-content-center">
-      <li class="nav-item">
-        <a class="nav-link py-0 d-flex" (click)="setActiveTab('training')" [routerLink]="this.links.training" [ngClass]="{ 'active': activeTab == 'training' }">
+    <ul class="navbar-nav flex-row mb-md-1 mt-md-0 mb-3 mt-2 justify-content-center row">
+      <li class="nav-item col-4">
+        <a class="nav-link py-0" (click)="setActiveTab('training')" [routerLink]="this.links.training" [ngClass]="{ 'active': activeTab == 'training' }">
           <span>{{ "#Training" | dgTranslate }}</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link py-0 d-flex" (click)="setActiveTab('fatigue')" [routerLink]="this.links.fatigue" [ngClass]="{ 'active': activeTab == 'fatigue' }">
+      <li class="nav-item col-4">
+        <a class="nav-link py-0" (click)="setActiveTab('fatigue')" [routerLink]="this.links.fatigue" [ngClass]="{ 'active': activeTab == 'fatigue' }">
           <span> {{ "#Fatigue" | dgTranslate }}</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link py-0 d-flex" (click)="setActiveTab('wellness')" [routerLink]="this.links.wellness" [ngClass]="{ 'active': activeTab == 'wellness' }">
+      <li class="nav-item col-4">
+        <a class="nav-link py-0" (click)="setActiveTab('wellness')" [routerLink]="this.links.wellness" [ngClass]="{ 'active': activeTab == 'wellness' }">
           <span> {{ "#Wellness" | dgTranslate }}</span>
         </a>
       </li>

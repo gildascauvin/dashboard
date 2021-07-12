@@ -31,7 +31,9 @@ export class FatigueManagementComputerService {
       }
     });
 
-    return this.computeWithEnergyScoreAndRate((sumEnergyScore / totalEnergyScore), (sumRate / totalRate));
+    let finalRate = totalRate > 0 ? (sumRate / totalRate) : 0;
+
+    return this.computeWithEnergyScoreAndRate((sumEnergyScore / totalEnergyScore), finalRate);
   }
 
   compute(workout) {
@@ -113,7 +115,7 @@ export class FatigueManagementComputerService {
       colorRPE: colorRPE,
       colorEnergy: colorEnergy,
       energyScore: Math.round(energyScore / 10),
-      rpeScore: rate,
+      rpeScore: Math.round(rate),
       zoneName: zoneName,
       subtitle: subtitle
     };

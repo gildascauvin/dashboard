@@ -21,6 +21,7 @@ import {UserService} from "../../../../_/services/model/user.service";
 export class CoachDashboardMenuComponent implements OnInit {
   @Input() isFromUrl = true;
   @Input() activeTab = 'training';
+  @Input() keepDates = true;
 
   bsModalRef: BsModalRef;
   user: any = {};

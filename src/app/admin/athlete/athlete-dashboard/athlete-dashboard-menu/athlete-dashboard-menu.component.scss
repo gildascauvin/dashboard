@@ -41,7 +41,7 @@
   min-height: 70px;
 
   .description {
-    max-width: 800px;
+    max-width: 470px;
     margin: 0 auto;
     text-align: center;
   }
@@ -49,6 +49,7 @@
   .btn--profile {
     position: absolute;
     top: calc(50% - 18px);
+    right: 0;
   }
 }
 
@@ -56,18 +57,33 @@
   .nav-bottom-header {
     padding: 0;
     top: 58px;
-    height: 50px;
 
     .content-header {
 
       .navbar-nav {
-        margin-top: 15px !important;
+        margin: 0 !important;
+        background: #000;
+        padding: 15px 0;
+
+        .nav-item {
+          text-align: center;
+
+          &:last-child {
+            a {
+              margin-right: 0 !important;
+            }
+          }
+        }
       }
 
       .nav-link {
         font-size: 12px;
         padding-bottom: 5px !important;
-        margin-right: 30px;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: #e1e1e1;
+        display: inline-block;
+        text-align: center;
 
         &.active {
           border-bottom: 2px solid #d44000;
@@ -384,7 +400,8 @@
   .nav-header-banner {
 
     .justify-content-center {
-      font-size: 13px;
+      font-size: 16px;
+      line-height: 21px;
       margin: 0 15px;
       text-align: center;
     }
@@ -407,6 +424,89 @@
   .athlete-menu-items {
     .athlete-menu-item {
       padding: 0;
+    }
+  }
+}
+
+.tabs {
+  margin-top: 20px;
+  padding: 0 10px;
+
+  .tab {
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 10px;
+
+    &:hover, &.active {
+      background: #fff;
+    }
+
+    .value {
+      font-weight: 500;
+      font-size: 22px;
+
+      &.green {color: #00d49d;}
+      &.yellow {color: #cfe223;}
+      &.red {color: #ff0502;}
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .row--tabs {
+    background: #000;
+    padding-bottom: 30px;
+  }
+
+  .tabs {
+    margin-top: 0;
+
+    .tab {
+
+      &:hover, &.active {
+        background: #333;
+      }
+
+      .value {
+        color: #999;
+      }
+
+      .title {
+        color: #999;
+      }
+    }
+  }
+
+  .tpc-circle {
+    .c100 {
+      font-size: 200px;
+    }
+
+    .circle-content {
+      width: 160px;
+      height: 160px;
+
+      .percentage {
+        margin-top: 50px;
+      }
+
+      .logo {
+        top: 10px;
+        left: calc(50% - 25px);
+        width: 50px;
+        height: 50px;
+
+        &.logo-rpe {
+          left: calc(50% - 18px);
+        }
+      }
+    }
+
+    .title {
+      top: 70px;
+      font-size: 27px;
+      line-height: 30px;
     }
   }
 }

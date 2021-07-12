@@ -26,7 +26,6 @@ export class AthleteStatsComponent implements OnInit {
 
     this.sub.onTabChanged = this.customerStatsSummaryService.onTabChanged.subscribe(
       (tab) => {
-        console.log(tab);
         this.setActiveTab(tab);
       }
     );

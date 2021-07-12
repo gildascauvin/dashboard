@@ -1,4 +1,4 @@
-<form class="form-inline container-form" *ngIf="showRange">
+<form class="form-inline container-form {{ classCss }}" *ngIf="showRange">
   <div class="form-group hidden">
     <div class="input-group">
       <input
@@ -27,8 +27,13 @@
       </ng-template>
     </div>
   </div>
-  <div class="form-group ml0 mt-3 mt-md-0">
+  <div class="form-group mt-0 mb-0 calendar--dark calendar--middle">
     <div class="input-group">
+      <div class="input-group-prepend">
+        <button class="btn btn-outline-secondary" (click)="datepicker.toggle()" type="button">
+          <i class="fa fa-calendar"></i>
+        </button>
+      </div>
       <input
         #dpFromDate
         class="form-control calendar"
@@ -37,18 +42,9 @@
         [value]="formatter.format(fromDate)"
         (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
       />
-      <div class="input-group-append">
-        <button
-          class="btn btn-outline-secondary"
-          (click)="datepicker.toggle()"
-          type="button"
-        >
-          <i class="fa fa-calendar"></i>
-        </button>
-      </div>
     </div>
   </div>
-  <div class="form-group ml-3 ml-md-2 mt-3 mt-md-0">
+  <div class="form-group mb-0 calendar--dark">
     <div class="input-group">
       <input
         #dpToDate
@@ -58,15 +54,13 @@
         [value]="formatter.format(toDate)"
         (input)="toDate = validateInput(toDate, dpToDate.value)"
       />
+      <!--
       <div class="input-group-append">
-        <button
-          class="btn btn-outline-secondary"
-          (click)="datepicker.toggle()"
-          type="button"
-        >
+        <button class="btn btn-outline-secondary" (click)="datepicker.toggle()" type="button">
           <i class="fa fa-calendar"></i>
         </button>
       </div>
+      -->
     </div>
   </div>
 </form>

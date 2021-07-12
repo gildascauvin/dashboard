@@ -46,7 +46,6 @@ export class AthleteDashboardFatigueComponent implements OnInit {
   ngOnInit(): void {
 
     this.detectScreenSize();
-
     this.sub.onStatsUpdated = this.customerStatsService.onStatsUpdated.subscribe(
       (component) => {
         this.fatigueManagement = {
