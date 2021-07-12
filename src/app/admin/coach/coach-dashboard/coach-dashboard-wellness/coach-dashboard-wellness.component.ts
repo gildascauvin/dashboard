@@ -9,6 +9,7 @@ import * as _ from "lodash";
 import {UsersModalInvitationDeleteComponent} from "../../coach-clients/coach-clients-modal/users-modal-invitation-delete/users-modal-invitation-delete.component";
 import {DoorgetsTranslateService} from "doorgets-ng-translate";
 import {CustomerStatsSummaryService} from "../../../../_/components/ui/customer-stats-summary/customer-stats-summary.service";
+import {CustomerStatsService} from "../../../../_/components/ui/customer-stats-range/customer-stats-range.service";
 
 @Component({
   selector: "app-coach-dashboard-wellness",
@@ -30,6 +31,9 @@ export class CoachDashboardWellnessComponent implements OnInit {
 
   clients: any;
 
+  dateStartOn: any;
+  dateEndOn: any;
+
   user: any = {
     data: {},
     profil: []
@@ -42,28 +46,24 @@ export class CoachDashboardWellnessComponent implements OnInit {
     private modalService: BsModalService,
     private customerStatsSummaryService: CustomerStatsSummaryService,
     private coachDashboardMenuService: CoachDashboardMenuService,
-    private doorgetsTranslateService: DoorgetsTranslateService
+    private doorgetsTranslateService: DoorgetsTranslateService,
+    private customerStatsService: CustomerStatsService,
   ) {}
 
   ngOnInit(): void {
     this.user = this.authService.getUserData();
     this._initUser();
 
-    if (this.isFromUrl) {
-      this.clients = this.user.clients;
+    this.customerStatsService.onRefreshStats.emit();
 
-      this._computeAllWellnesses();
+    this.sub.onStatsUpdated = this.customerStatsService.onStatsUpdated.subscribe(
+      (component) => {
+        this.dateStartOn = component.startDay;
+        this.dateEndOn = component.endDay;
 
-    } else {
-      for (let i in this.user.coachs) {
-        let coachId = this.user.coachs[i].user_id;
-
-        this.usersService.getOne(coachId).subscribe((user: any) => {
-          this.clients = user.clients;
-          this._computeAllWellnesses();
-        });
+        this._initWellness();
       }
-    }
+    );
 
     this.sub.subjectUpdateUsers = this.usersService.onUserUpdated.subscribe(() => {
       this._initUser();
@@ -76,9 +76,28 @@ export class CoachDashboardWellnessComponent implements OnInit {
     );
   }
 
+  _initWellness() {
+    if (this.isFromUrl) {
+      this.clients = this.user.clients;
+
+      this._computeAllWellnesses(this.dateStartOn, this.dateEndOn);
+
+    } else {
+      for (let i in this.user.coachs) {
+        let coachId = this.user.coachs[i].user_id;
+
+        this.usersService.getOne(coachId).subscribe((user: any) => {
+          this.clients = user.clients;
+          this._computeAllWellnesses(this.dateStartOn, this.dateEndOn);
+        });
+      }
+    }
+  }
+
   ngOnDestroy(): void {
     this.sub.subjectUpdateUsers && this.sub.subjectUpdateUsers.unsubscribe();
     this.sub.onTabChanged && this.sub.onTabChanged.unsubscribe();
+    this.sub.onStatsUpdated && this.sub.onStatsUpdated.unsubscribe();
   }
 
   setCurrentAthletId(clientId) {
@@ -102,9 +121,7 @@ export class CoachDashboardWellnessComponent implements OnInit {
     this.activeTab = tab;
   }
 
-  private _computeAllWellnesses() {
-    let from = startOfWeek(new Date(), {weekStartsOn: 1});
-    let to = endOfWeek(new Date(), {weekStartsOn: 1});
+  private _computeAllWellnesses(from, to) {
 
     let fromDate = CoachDashboardWellnessComponent.formatDate(from) + ' 00:00:00';
     let toDate = CoachDashboardWellnessComponent.formatDate(to) + ' 00:00:00';

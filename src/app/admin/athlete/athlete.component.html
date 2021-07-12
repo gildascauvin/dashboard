@@ -5,6 +5,7 @@
   </div>
 </ng-container>
 
+<!-- Menu TOP Desktop -->
  <nav *ngIf="size > responsiveSize" class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container">
         <h1 class="pb-2 ml-md-0 ml-sm-3 ml-0 mr-3 pt-2">
@@ -93,21 +94,22 @@
     </div>
 </nav>
 
+<!-- Menu TOP Mobile -->
 <nav *ngIf="size <= responsiveSize">
   <div class="container-fluid top-custom-nav">
     <div class="row align-items-center">
-      <div class="col-9 text-sm-right text-md-left">
-        <a href="#" class="left-menu-title" [routerLink]="['dashboard']"><img src="/assets/img/logo-final.png" width="30" height="30" alt="">
-        <span class="ml-2">ThePerfClub</span>
-        </a>
+      <div class="col-2">
+        <a href="#" [routerLink]="['dashboard']"><img src="/assets/img/logo-final.png" width="38" height="38" alt=""></a>
       </div>
-      <div class="col-2 text-sm-left text-md-right">
-        <button class="btn" (click)="toogleRightMenu()">
-          <img src="assets/img/hamburger.svg"/>
-          <ng-container *ngIf="user.invitations != undefined">
-            <span class="icon-invitation"></span>
-          </ng-container>
-        </button>
+      <div class="col-10 pl-0">
+
+        <div *ngIf="showFormTwoDate" [ngClass]="[size <= responsiveSize ? 'row' : 'row pt-4 ml-2']">
+          <div class="col-md-12 calendar-top">
+            <div class="float-left">
+              <app-customer-stats-range [isFromUrl]="isFromUrl" [keepDates]="keepDates"></app-customer-stats-range>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -115,10 +117,8 @@
 
 <div [class.cover-menu]="showLeftMenu || showRightMenu"></div>
 
-<div
-  *ngIf="size <= responsiveSize"
-  class="responsive-left-menu fixed-bottom text-white"
->
+<!-- Menu MOBILE BOTTOM -->
+<div *ngIf="size <= responsiveSize" class="responsive-left-menu fixed-bottom text-white">
   <ul class="nav nav-tabs nav-pills nav-fill">
     <li *ngIf="user.coachs && user.coachs.length > 0" class="nav-item">
       <a #team="routerLinkActive" class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" routerLinkActive="active" [routerLink]="['team']">
@@ -133,17 +133,9 @@
       </a>
     </li>
 
-    <li class="nav-item">
-      <a #fatigue="routerLinkActive" class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" routerLinkActive="active" [routerLink]="['fatigue']">
-        <img class="icon" src="{{fatigue.isActive ? 'assets/img/fatigue_active.svg' : 'assets/img/fatigue_inactive.svg'}}"/>
-        <span [ngClass]="{ 'isActive': fatigue.isActive }">{{ "#Fatigue" | dgTranslate }}</span>
-      </a>
-    </li>
-
-    <li class="nav-item">
-      <a #wellness="routerLinkActive" class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" routerLinkActive="active" [routerLink]="['wellness']">
-        <img class="icon" src="{{wellness.isActive ? 'assets/img/wellness_active.svg' : 'assets/img/wellness_inactive.svg'}}"/>
-        <span [ngClass]="{ 'isActive': wellness.isActive }"> {{ "#Wellness" | dgTranslate }}</span>
+    <li class="nav-item nav-item--main">
+      <a class="nav-link" (click)="openStartSessionModal()">
+        <img class="icon" src="assets/img/start-session.svg"/>
       </a>
     </li>
 
@@ -153,10 +145,19 @@
         <span [ngClass]="{ 'isActive': profile.isActive }"> {{ "#Profile" | dgTranslate }}</span>
       </a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link nav-link--menu list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" (click)="toogleRightMenu()">
+        <img class="icon" src="assets/img/hamburger.svg"/>
+        <span> {{ "#Menu" | dgTranslate }}</span>
+        <ng-container *ngIf="user.invitations != undefined">
+          <span class="icon-invitation"></span>
+        </ng-container>
+      </a>
+    </li>
   </ul>
 </div>
 
-
+<!-- Menu Hamburger -->
 <div class="responsive-right-menu" [class.responsive-right-menu-toogled]="!showRightMenu">
   <div class="text-left pb-2" (click)="showRightMenu=false"><i class="fa fa-close"></i></div>
    <div>

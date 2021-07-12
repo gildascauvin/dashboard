@@ -1,3 +1,4 @@
+<!-- Menu TOP Desktop -->
 <nav *ngIf="size > responsiveSize" class="navbar navbar-expand-md navbar-dark bg-dark">
   <div class="container">
     <h1 class="pb-2 ml-md-0 ml-sm-3 ml-0 mr-3 pt-2">
@@ -8,7 +9,6 @@
     <div class="collapse navbar-collapse ml-lg-2 ml-0" id="navbarCollapse">
       <div class="nav-top-header">
         <div class="content-header">
-          <!-- <div class="row"> -->
           <div class="col-md-12">
             <span>
               <button *ngIf="currentUser.data" class="btn btn-dark rounded-pill" (click)="openClientManagerModal()">
@@ -20,11 +20,6 @@
                 <i class="fa fa-plus"></i>
                 {{ "#Choose an athlet" | dgTranslate }}
               </button>
-              <!-- <select class="select-menu-athlet" [(ngModel)]="currentUser.id" (ngModelChange)="onChangeUser($event)" >
-                      <option [value]="0">{{ '#Choose an athlet' | dgTranslate }}</option>
-                      <option *ngFor="let client of user.clients" [value]="client.client_id" >{{ client.profile?.firstname }} {{ client.profile?.lastname }}</option>
-                    </select>
-                    {{currentUserId}} -->
             </span>
             <div class="btn-group float-right">
               <a class="links-menu mr-4" [routerLink]="['/coach', 'dashboard']" (click)="setActiveTab('training')">
@@ -49,12 +44,11 @@
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" target="_blank" href="http://www.theperfclub.com/ressources">{{ '#Documentation' | dgTranslate }}</a>
                   <div class="dropdown-divider"></div>
-                  <button class="dropdown-item" (click)="logout()" href="#">{{ "#Logout" | dgTranslate }}</button>
+                  <button class="dropdown-item" (click)="logout()">{{ "#Logout" | dgTranslate }}</button>
                 </div>
               </div>
             </div>
           </div>
-          <!-- </div> -->
         </div>
       </div>
 
@@ -98,30 +92,21 @@
   </div>
 </nav>
 
+<!-- Menu TOP Mobile -->
 <nav *ngIf="size <= responsiveSize">
   <div class="container-fluid top-custom-nav">
     <div class="row align-items-center">
-      <div class="col-9 text-left">
-        <span class="left-menu-title">
-          <a [routerLink]="['/coach', 'dashboard']" (click)="setActiveTab('planning')">
-          <img src="/assets/img/logo-final.png" width="30" height="30" alt=""/>
-          </a>
-        </span>
-        <button *ngIf="currentUser.data" class="btn btn-dark rounded-pill ml-2 font-user" (click)="openClientManagerModal()">
-          <i class="fa fa-user-circle"></i> {{ currentUser.data?.firstname }}
-          {{ currentUser.data?.lastname }}
-          <i class="fa fa-lg fa-angle-down pl-1" aria-hidden="true"></i>
-        </button>
-        <button *ngIf="!currentUser.data" class="btn btn-dark rounded-pill ml-2" (click)="openClientManagerModal()">
-          <i class="fa fa-plus"></i> {{ "#Choose an athlet" | dgTranslate }}
-        </button>
-
-        <!-- <button class="btn" (click)="toogleLeftMenu()"><i class="fa fa-bars"></i></button> -->
+      <div class="col-2">
+          <a [routerLink]="['/coach', 'dashboard']" (click)="setActiveTab('planning')"><img src="/assets/img/logo-final.png" width="38" height="38" alt=""/></a>
       </div>
-      <div class="col-3 text-right">
-        <button class="btn" (click)="toogleRightMenu()">
-          <img src="assets/img/hamburger.svg"/>
-        </button>
+      <div class="col-10 pl-0">
+        <div *ngIf="showFormTwoDate" [ngClass]="[size <= responsiveSize ? 'row' : 'row pt-4 ml-2']">
+          <div class="col-md-12 calendar-top">
+            <div class="float-left">
+              <app-customer-stats-range [isFromUrl]="isFromUrl" [keepDates]="keepDates"></app-customer-stats-range>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -129,6 +114,8 @@
 
 <div [class.cover-menu]="showLeftMenu || showRightMenu"></div>
 
+
+<!-- Menu MOBILE coach with selected Athlete BOTTOM -->
 <div *ngIf="currentUser.data && size <= responsiveSize" class="responsive-left-menu fixed-bottom text-white">
   <ul class="nav nav-tabs nav-pills nav-fill">
     <li class="nav-item">
@@ -138,34 +125,77 @@
       </a>
     </li>
     <li class="nav-item">
-      <a #training="routerLinkActive" class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" routerLinkActive="active" [routerLink]="['/coach', 'athlet', 'dashboard']">
-        <img class="icon" src="{{training.isActive ? 'assets/img/planning_active.svg' : 'assets/img/planning_inactive.svg'}}"/>
-        <span [ngClass]="{ 'isActive': training.isActive }"> {{ "#Training" | dgTranslate }}</span>
+      <a #programs="routerLinkActive" class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" routerLinkActive="active" [routerLink]="['/coach', 'programs']">
+        <img class="icon" src="{{programs.isActive ? 'assets/img/planning_active.svg' : 'assets/img/planning_inactive.svg'}}"/>
+        <span [ngClass]="{ 'isActive': programs.isActive }"> {{ "#Programs" | dgTranslate }}</span>
+      </a>
+    </li>
+
+    <li class="nav-item nav-item--main">
+      <a class="nav-link" (click)="openClientManagerModal()">
+        <span>{{ currentUser.data?.firstname }} {{ currentUser.data?.lastname }}</span>
+        <img class="icon-bottom-right" src="assets/img/change-athlete.svg">
       </a>
     </li>
 
     <li class="nav-item">
-      <a #fatigue="routerLinkActive" class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" routerLinkActive="active" [routerLink]="['/coach', 'athlet', 'fatigue']">
-        <img class="icon" src="{{fatigue.isActive ? 'assets/img/fatigue_active.svg' : 'assets/img/fatigue_inactive.svg'}}"/>
-        <span [ngClass]="{ 'isActive': fatigue.isActive }">{{ "#Fatigue" | dgTranslate }}</span>
+      <a #client="routerLinkActive" class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" routerLinkActive="active" [routerLink]="['/coach', 'clients']">
+        <img class="icon" src="{{client.isActive ? 'assets/img/profile_active.svg' : 'assets/img/profile_inactive.svg'}}"/>
+        <span [ngClass]="{ 'isActive': client.isActive }"> {{ "#Athlets" | dgTranslate }}</span>
       </a>
     </li>
 
     <li class="nav-item">
-      <a #wellness="routerLinkActive" class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" routerLinkActive="active" [routerLink]="['/coach', 'athlet', 'wellness']">
-        <img class="icon" src="{{wellness.isActive ? 'assets/img/wellness_active.svg' : 'assets/img/wellness_inactive.svg'}}"/>
-        <span [ngClass]="{ 'isActive': wellness.isActive }"> {{ "#Wellness" | dgTranslate }}</span>
-      </a>
-    </li>
-
-    <li class="nav-item">
-      <a #profile="routerLinkActive" class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" routerLinkActive="active" [routerLink]="['/coach', 'athlet', 'profile']">
-        <img class="icon" src="{{profile.isActive ? 'assets/img/profile_active.svg' : 'assets/img/profile_inactive.svg'}}"/>
-        <span [ngClass]="{ 'isActive': profile.isActive }"> {{ "#Profile" | dgTranslate }}</span>
+      <a class="nav-link nav-link--menu list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" (click)="toogleRightMenu()">
+        <img class="icon" src="assets/img/hamburger.svg"/>
+        <span> {{ "#Menu" | dgTranslate }}</span>
       </a>
     </li>
   </ul>
 </div>
+
+<!-- Menu MOBILE Coach BOTTOM -->
+<div *ngIf="!currentUser.data && size <= responsiveSize" class="responsive-left-menu fixed-bottom text-white">
+  <ul class="nav nav-tabs nav-pills nav-fill">
+
+    <li class="nav-item">
+      <a #team="routerLinkActive" class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" routerLinkActive="active" [routerLink]="['/coach', 'dashboard']" (click)="setActiveTab('planning')">
+        <img class="icon" src="{{team.isActive ? 'assets/img/team_active.svg' : 'assets/img/team_inactive.svg'}}"/>
+        <span [ngClass]="{ 'isActive': team.isActive }">{{ "#Team" | dgTranslate }}</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a #programs="routerLinkActive" class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" routerLinkActive="active" [routerLink]="['/coach', 'programs']">
+        <img class="icon" src="{{programs.isActive ? 'assets/img/planning_active.svg' : 'assets/img/planning_inactive.svg'}}"/>
+        <span [ngClass]="{ 'isActive': programs.isActive }"> {{ "#Programs" | dgTranslate }}</span>
+      </a>
+    </li>
+
+    <li class="nav-item nav-item--main">
+      <a class="nav-link" (click)="openClientManagerModal()">
+        <span>{{ "#Choose an athlet" | dgTranslate }}</span>
+        <img class="icon-bottom-right" src="assets/img/change-athlete.svg">
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a #client="routerLinkActive" class="nav-link list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" routerLinkActive="active" [routerLink]="['/coach', 'clients']">
+        <img class="icon" src="{{client.isActive ? 'assets/img/profile_active.svg' : 'assets/img/profile_inactive.svg'}}"/>
+        <span [ngClass]="{ 'isActive': client.isActive }"> {{ "#Athlets" | dgTranslate }}</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link nav-link--menu list-group-item list-group-item-action list-group-item-dark rounded-0 pl-0 pr-0" (click)="toogleRightMenu()">
+        <img class="icon" src="assets/img/hamburger.svg"/>
+        <span> {{ "#Menu" | dgTranslate }}</span>
+      </a>
+    </li>
+
+  </ul>
+</div>
+
+<!-- Menu Hamburger -->
 <div class="responsive-right-menu" [class.responsive-right-menu-toogled]="!showRightMenu">
   <div class="text-left pb-2" (click)="showRightMenu = false">
     <i class="fa fa-close"></i>

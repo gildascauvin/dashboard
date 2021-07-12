@@ -3,7 +3,7 @@
 <div class="container-fluid background-gray">
 
   <div class="row">
-    <div class="col-md-2 row--tabs">
+    <div *ngIf="size > responsiveSize" class="col-md-2 row--tabs">
 
       <div class="tabs">
         <div (click)="setActiveSubTab('constraint')" [ngClass]="[activeSubTab == 'constraint' ? 'tab active' : 'tab']">
@@ -23,11 +23,7 @@
 
     <div class="col-md-10">
       <div [ngClass]="[size <= responsiveSize ? 'row' : 'row pt-4 ml-2']">
-        <div class="col-md-12 calendar-top">
-
-          <div class="float-left">
-            <app-customer-stats-range [isFromUrl]="isFromUrl" [keepDates]="keepDates"></app-customer-stats-range>
-          </div>
+        <div class="col-md-12 calendar-top pt-4">
 
           <div [ngClass]="[size <= responsiveSize ? 'text-center' : 'float-right mr-4']">
             <div class="switch-load-system">

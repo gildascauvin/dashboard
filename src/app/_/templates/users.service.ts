@@ -98,8 +98,8 @@ export class UsersService {
     return this.httpService.get(`planning/client/${clientId}?page=${page.pageNumber}&size=${page.size}&fromDate=${fromDate}`);
   }
 
-  getAllUserWorkouts(userId) {
-    return this.httpService.get(`workout/client/user/${userId}`);
+  getAllUserWorkouts(userId, fromDate, toDate) {
+    return this.httpService.get(`workout/client/user/${userId}?date=${fromDate}&date_end=${toDate}`);
   }
 
   getAllClientWorkout(clientId, date?) {

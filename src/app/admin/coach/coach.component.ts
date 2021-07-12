@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ElementRef, HostListener, ChangeDetectorRef } from '@angular/core';
+import {Component, OnInit, Inject, ElementRef, HostListener, ChangeDetectorRef, Input} from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
@@ -24,6 +24,10 @@ import {DoorgetsTranslateService} from "doorgets-ng-translate";
   styleUrls: ['./coach.component.scss']
 })
 export class CoachComponent implements OnInit {
+  @Input() isFromUrl = true;
+  keepDates = true;
+  showFormTwoDate: boolean = false;
+
   bsModalRef: BsModalRef;
 
   user: any = {
@@ -59,9 +63,19 @@ export class CoachComponent implements OnInit {
     private elementRef: ElementRef,
     private coachDashboardMenuService: CoachDashboardMenuService,
     private doorgetsTranslateService: DoorgetsTranslateService,
-    @Inject(DOCUMENT) private _document) { }
+    @Inject(DOCUMENT) private _document) {
+  }
 
   ngOnInit(): void {
+    this.isFromUrl = !this.authService.isCoach();
+    this.displayDateForms();
+
+    this.router.events.subscribe((val) => {
+      if (val instanceof NavigationEnd) {
+        this.displayDateForms();
+      }
+    });
+
     this._document.body.style.background = '#FFF';
 
     this.user = this.authService.getUserData();
@@ -122,6 +136,23 @@ export class CoachComponent implements OnInit {
       $("#sidebar-wrapper").toggleClass("toggled");
     });
   }
+
+  displayDateForms() {
+    this.showFormTwoDate = false;
+
+    let paths = this.router.url.split('/');
+    if (paths.length >= 3 && paths[1] === 'coach') {
+
+      if (paths[2] === 'dashboard' || paths[2] === 'wellness' || paths[2] === 'fatigue') {
+        this.showFormTwoDate = true;
+      }
+
+      if (paths[3] === 'dashboard' || paths[3] === 'wellness' || paths[3] === 'fatigue') {
+        this.showFormTwoDate = true;
+      }
+    }
+  }
+
 
   _verifyUserPlan() {
     this.usersService.getOne(this.user.id).subscribe((user: any) => {

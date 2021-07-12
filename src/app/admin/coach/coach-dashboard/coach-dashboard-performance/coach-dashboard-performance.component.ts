@@ -10,6 +10,7 @@ import {addHours, differenceInDays, endOfWeek, format, startOfWeek} from "date-f
 import {DoorgetsTranslateService} from "doorgets-ng-translate";
 import {CustomerStatsComputerService} from "../../../../_/services/stats/customer-stats-computer.service";
 import {CustomerStatsSummaryService} from "../../../../_/components/ui/customer-stats-summary/customer-stats-summary.service";
+import {CustomerStatsService} from "../../../../_/components/ui/customer-stats-range/customer-stats-range.service";
 
 @Component({
   selector: "app-coach-dashboard-performance",
@@ -31,6 +32,9 @@ export class CoachDashboardPerformanceComponent implements OnInit {
 
   clients: any;
 
+  dateStartOn: any;
+  dateEndOn: any;
+
   user: any = {
     data: {},
     profil: []
@@ -45,6 +49,7 @@ export class CoachDashboardPerformanceComponent implements OnInit {
     private doorgetsTranslateService: DoorgetsTranslateService,
     public customerStatsComputerService: CustomerStatsComputerService,
     private customerStatsSummaryService: CustomerStatsSummaryService,
+    private customerStatsService: CustomerStatsService,
   ) {
   }
 
@@ -52,21 +57,30 @@ export class CoachDashboardPerformanceComponent implements OnInit {
     this.user = this.authService.getUserData();
     this._initUser();
 
-    if (this.isFromUrl) {
-      this.clients = this.user.clients;
+    this.customerStatsService.onRefreshStats.emit();
 
-      this.computeAllPerformances(this.clients);
+    this.sub.onStatsUpdated = this.customerStatsService.onStatsUpdated.subscribe(
+      (component) => {
+        this.dateStartOn = component.startDay;
+        this.dateEndOn = component.endDay;
 
-    } else {
-      for (let i in this.user.coachs) {
-        let coachId = this.user.coachs[i].user_id;
+        if (this.isFromUrl) {
+          this.clients = this.user.clients;
 
-        this.usersService.getOne(coachId).subscribe((user: any) => {
-          this.clients = user.clients;
-          this.computeAllPerformances(user.clients);
-        });
+          this.computeAllPerformances(this.clients, this.dateStartOn, this.dateEndOn);
+
+        } else {
+          for (let i in this.user.coachs) {
+            let coachId = this.user.coachs[i].user_id;
+
+            this.usersService.getOne(coachId).subscribe((user: any) => {
+              this.clients = user.clients;
+              this.computeAllPerformances(user.clients, this.dateStartOn, this.dateEndOn);
+            });
+          }
+        }
       }
-    }
+    );
 
     this.sub.subjectUpdateUsers = this.usersService.onUserUpdated.subscribe(() => {
       this._initUser();
@@ -82,12 +96,10 @@ export class CoachDashboardPerformanceComponent implements OnInit {
   ngOnDestroy(): void {
     this.sub.subjectUpdateUsers && this.sub.subjectUpdateUsers.unsubscribe();
     this.sub.onTabChanged && this.sub.onTabChanged.unsubscribe();
+    this.sub.onStatsUpdated && this.sub.onStatsUpdated.unsubscribe();
   }
 
-  computeAllPerformances(clients) {
-
-    let dateFrom = startOfWeek(new Date(), {weekStartsOn: 1});
-    let dateTo = endOfWeek(new Date(), {weekStartsOn: 1});
+  computeAllPerformances(clients, dateFrom, dateTo) {
 
     let from = _.clone(dateFrom);
     let to = _.clone(dateTo);
@@ -111,9 +123,14 @@ export class CoachDashboardPerformanceComponent implements OnInit {
   }
 
   private _computeAllPerformanceForAllClients(allWorkouts, weeksFrom, weeksTo, from, to) {
+    this.dataPerformanceClients = [];
+    this.dataPerformanceSorting = [];
+
     this.clients.forEach((client, key) => {
       let clientId = client.client_id;
       let workouts = CoachDashboardPerformanceComponent._getWorkoutsForOneClient(clientId, allWorkouts);
+
+      this.dataPerformanceSorting['client-id-' + clientId] = 1;
 
       if (workouts) {
         let weeksWorkouts = CoachDashboardPerformanceComponent.getWorkoutsFromTo(workouts, weeksFrom, 7);
@@ -148,7 +165,6 @@ export class CoachDashboardPerformanceComponent implements OnInit {
         this.clients.sort((a, b) => this.dataPerformanceSorting['client-id-' + b.client_id] - this.dataPerformanceSorting['client-id-' + a.client_id]);
         this.dataPerformanceIsLoading = true;
       }
-
     });
   }
 

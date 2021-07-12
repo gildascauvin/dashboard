@@ -12,6 +12,8 @@ import { UsersService } from "../../../../_/templates/users.service";
 import { UsersModalInvitationCreateComponent } from "../../coach-clients/coach-clients-modal/users-modal-invitation-create/users-modal-invitation-create.component";
 import {FatigueManagementComputerService} from "../../../../_/services/stats/fatigue-management-computer.service";
 import * as _ from "lodash";
+import {CustomerStatsService} from "../../../../_/components/ui/customer-stats-range/customer-stats-range.service";
+import {endOfWeek, startOfWeek} from "date-fns";
 
 @Component({
   selector: "app-coach-dashboard-planning",
@@ -39,7 +41,10 @@ export class CoachDashboardPlanningComponent implements OnInit {
   responsiveSize: number = 768;
 
   totalColumn: number = 3;
-  rowNumbers : number[];
+  rowNumbers: number[];
+
+  dateStartOn: any;
+  dateEndOn: any;
 
   constructor(
     private authService: AuthService,
@@ -50,6 +55,7 @@ export class CoachDashboardPlanningComponent implements OnInit {
     private doorgetsTranslateService: DoorgetsTranslateService,
     private elementRef: ElementRef,
     private fatigueManagementComputer: FatigueManagementComputerService,
+    private customerStatsService: CustomerStatsService,
     @Inject(DOCUMENT) private _document
   ) {}
 
@@ -57,11 +63,11 @@ export class CoachDashboardPlanningComponent implements OnInit {
     this.detectScreenSize();
     this._computeResponsiveGrid();
 
+    this.customerStatsService.onRefreshStats.emit();
+
     if (this.isFromUrl) {
       this.authService.setCurrentAthletId(0);
       this.authService.setCurrentAthlet({});
-
-      this._initUser();
 
       this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe(
         (o) => {
@@ -79,9 +85,16 @@ export class CoachDashboardPlanningComponent implements OnInit {
         this._checkEmpty();
       });
 
-    } else {
-      this._initUser();
     }
+
+    this.sub.onStatsUpdated = this.customerStatsService.onStatsUpdated.subscribe(
+      (component) => {
+        this.dateStartOn = component.startDay;
+        this.dateEndOn = component.endDay;
+
+        this._initUser();
+      }
+    );
   }
 
   ngOnDestroy(): void {
@@ -90,6 +103,7 @@ export class CoachDashboardPlanningComponent implements OnInit {
     this.sub.resizeSvc && this.sub.resizeSvc.unsubscribe();
     this.sub.onUserUpdated && this.sub.onUserUpdated.unsubscribe();
     this.sub.onWorkoutSaved && this.sub.onWorkoutSaved.unsubscribe();
+    this.sub.onStatsUpdated && this.sub.onStatsUpdated.unsubscribe();
   }
 
   setCurrentAthletId(clientId) {
@@ -117,9 +131,17 @@ export class CoachDashboardPlanningComponent implements OnInit {
 
   private _initWorkouts() {
 
+    let monthStartOn = this.dateStartOn.getMonth() + 1;
+    let dayStartOn = this.dateStartOn.getDate();
+    let startOn = this.dateStartOn.getFullYear() + "-" + ((monthStartOn < 10) ? '0':'') + monthStartOn + "-" + ((dayStartOn < 10) ? '0':'') + dayStartOn;
+
+    let monthEndOn = this.dateEndOn.getMonth() + 1;
+    let dayEndOn = this.dateEndOn.getDate();
+    let endOn = this.dateEndOn.getFullYear() + "-" + ((monthEndOn < 10) ? '0':'') + monthEndOn + "-" + ((dayEndOn < 10) ? '0':'') + dayEndOn;
+
     if (this.isFromUrl) {
       this.usersService
-        .getAllUserWorkouts(this.user.id)
+        .getAllUserWorkouts(this.user.id, startOn, endOn)
         .subscribe((userWorkouts) => {
           this.workouts = (userWorkouts && Object.keys(userWorkouts)) || [];
           this.userWorkouts = userWorkouts;
@@ -147,7 +169,7 @@ export class CoachDashboardPlanningComponent implements OnInit {
         let coachId = this.user.coachs[i].user_id;
 
         this.usersService
-          .getAllUserWorkouts(coachId)
+          .getAllUserWorkouts(coachId, startOn, endOn)
           .subscribe((userWorkouts) => {
             let userWorkoutsKeys = (userWorkouts && Object.keys(userWorkouts)) || [];
 

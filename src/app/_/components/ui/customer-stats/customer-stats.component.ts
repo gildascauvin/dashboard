@@ -202,6 +202,7 @@ export class CustomerStatsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.sub.onStatsUpdated = this.customerStatsService.onStatsUpdated.subscribe(
       (component) => {
 

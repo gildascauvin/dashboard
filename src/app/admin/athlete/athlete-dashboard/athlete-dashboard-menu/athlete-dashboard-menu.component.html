@@ -1,3 +1,25 @@
+<div *ngIf="size <= responsiveSize" class="nav-bottom-header">
+  <div class="content-header">
+    <ul class="navbar-nav flex-row mb-md-1 mt-md-0 mb-3 mt-2 justify-content-center row">
+      <li class="nav-item col-4">
+        <a class="nav-link py-0" (click)="setActiveTab('training')" [routerLink]="this.links.training" [ngClass]="{ 'active': activeTab == 'training' }">
+          <span>{{ "#Training" | dgTranslate }}</span>
+        </a>
+      </li>
+      <li class="nav-item col-4">
+        <a class="nav-link py-0" (click)="setActiveTab('fatigue')" [routerLink]="this.links.fatigue" [ngClass]="{ 'active': activeTab == 'fatigue' }">
+          <span> {{ "#Fatigue" | dgTranslate }}</span>
+        </a>
+      </li>
+      <li class="nav-item col-4">
+        <a class="nav-link py-0" (click)="setActiveTab('wellness')" [routerLink]="this.links.wellness" [ngClass]="{ 'active': activeTab == 'wellness' }">
+          <span> {{ "#Wellness" | dgTranslate }}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
 <ng-container *ngIf="fatigueManagementData">
 
   <div class="d-flex flex-row justify-content-center align-items-end bg-light-black athlete-menu-items">
@@ -115,10 +137,8 @@
 </ng-container>
 
 <div class="nav-header-banner pb-4 pt-4">
-  <a class="btn btn-primary btn--profile float-left ml-4 hidden-mobile" [routerLink]="links.profile">
-    <i class="fa fa-chevron-right"></i>
-    {{ "#Profile" | dgTranslate }}
-  </a>
+
+  <app-customer-stats-range *ngIf="size > responsiveSize" [classCss]="'calendar--desktop'" [isFromUrl]="isFromUrl" [keepDates]="keepDates"></app-customer-stats-range>
 
   <ng-container *ngIf="activeTab == 'training' && fatigueManagementData">
 
@@ -172,4 +192,46 @@
       </div>
     </div>
   </ng-container>
+
+  <a class="btn btn-primary btn--profile float-right mr-4 hidden-mobile" [routerLink]="links.profile">
+    <i class="fa fa-chevron-right"></i>
+    {{ "#Profile" | dgTranslate }}
+  </a>
+</div>
+
+<div *ngIf="activeTab == 'fatigue' && size <= responsiveSize" class="container-fluid">
+  <div class="row">
+    <div class="col-12 row--tabs">
+
+      <div class="tabs row">
+        <div (click)="setActiveSubTab('constraint')" [ngClass]="[activeSubTab == 'constraint' ? 'tab active col-4' : 'tab col-4']">
+          <div class="value {{ fatigueManagement.colors.load.color1 }}">{{ fatigueManagement.load.constraint }}</div><div class="title">{{"#Constraint" | dgTranslate }}</div>
+        </div>
+        <div (click)="setActiveSubTab('workloadZone')" [ngClass]="[activeSubTab == 'workloadZone' ? 'tab active col-4' : 'tab col-4']">
+          <div class="value {{ fatigueManagement.colors.load.color2 }}">{{ fatigueManagement.load.rcac }}</div>
+          <div *ngIf="size <= responsiveSize" class="title">{{"#RCAC" | dgTranslate }}</div>
+          <div *ngIf="size > responsiveSize" class="title">{{"#Overload" | dgTranslate }}</div>
+        </div>
+        <div (click)="setActiveSubTab('monotony')" [ngClass]="[activeSubTab == 'monotony' ? 'tab active col-4' : 'tab col-4']">
+          <div class="value {{ fatigueManagement.colors.variation.colorCircle }}">{{ fatigueManagement.variation.monotony }}</div><div class="title">{{"#Monotony" | dgTranslate }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="activeTab == 'wellness' && size <= responsiveSize" class="container-fluid">
+  <div class="row">
+    <div class="col-12 row--tabs">
+
+      <div class="tabs row">
+        <div (click)="setActiveSubTab('fitness')" [ngClass]="[activeSubTab == 'fitness' ? 'tab active col-6' : 'tab col-6']">
+          <div class="value {{ fatigueManagement.colors.fitness.color1 }}">{{ fatigueManagement.fitness.fitness }}</div><div class="title">{{"#Fitness" | dgTranslate }}</div>
+        </div>
+        <div (click)="setActiveSubTab('energyScore')" [ngClass]="[activeSubTab == 'energyScore' ? 'tab active col-6' : 'tab col-6']">
+          <div class="value {{ fatigueManagement.colors.fitness.color2 }}">{{ fatigueManagement.fitness.energyScore }}%</div><div class="title">{{"#Energy score" | dgTranslate }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 3</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Bottom-Navigation-2-Copy-6" transform="translate(-204.000000, -36.000000)">
+            <g id="Group-3" transform="translate(205.000000, 37.000000)">
+                <circle id="Oval" stroke="#FFFFFF" stroke-width="0.65" fill="#D44000" cx="10.725" cy="10.725" r="10.725"></circle>
+                <polygon id="Rectangle" fill="#FFFFFF" points="4.9 5.22297002 8.9 9.12297002 3.9 10.09797"></polygon>
+                <path d="M6.4,7.66047002 C7.97990111,6.17392966 9.47990111,5.36142966 10.9,5.22297002 C12.3200989,5.08451038 14.1534322,5.57201038 16.4,6.68547002" id="Line" stroke="#FFFFFF" stroke-width="1.43" stroke-linecap="round" stroke-linejoin="round"></path>
+                <polygon id="Rectangle" fill="#FFFFFF" transform="translate(14.396362, 14.063159) rotate(178.000000) translate(-14.396362, -14.063159) " points="12.9296954 11.7460291 16.8408065 15.4534365 11.9519176 16.3802884"></polygon>
+                <path d="M4.66237682,16.5720314 C6.20716902,15.1589005 7.67383568,14.3865239 9.06237682,14.2549018 C10.450918,14.1232797 12.2435106,14.5867056 14.4401546,15.6451796" id="Line" stroke="#FFFFFF" stroke-width="1.43" stroke-linecap="round" stroke-linejoin="round" transform="translate(9.551266, 15.402549) rotate(178.000000) translate(-9.551266, -15.402549) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

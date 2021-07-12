@@ -25,6 +25,7 @@ export class AthleteDashboardMenuComponent implements OnInit {
   @Input() activeTab = 'training';
   @Input() activeSubTab = '';
 
+  keepDates = true;
   bsModalRef: BsModalRef;
   user: any = {};
   workouts: any = {};
@@ -53,8 +54,8 @@ export class AthleteDashboardMenuComponent implements OnInit {
   responsiveSize: number = 768;
 
   currentDate: any = new Date();
-  currentFrom: any = new Date();
-  currentTo: any = new Date();
+  currentFrom: any = startOfWeek(new Date(), { weekStartsOn: 1 });
+  currentTo: any = endOfWeek(new Date(), { weekStartsOn: 1 });
 
   constructor(
     private modalService: BsModalService,
@@ -91,14 +92,20 @@ export class AthleteDashboardMenuComponent implements OnInit {
 
     this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe((workout) => {
         this.refreshData();
-        this.initWorkouts(this.currentDate);
+        this.initWorkouts(this.currentFrom);
         this.computeFatigueManagement(this.currentFrom, this.currentTo);
       }
     );
 
     this.sub.onStatsUpdated = this.customerStatsService.onStatsUpdated.subscribe((component) => {
+
+        if (component.isOneDay === false) {
+          this.currentFrom = _.clone(component.startDay);
+          this.currentTo = _.clone(component.endDay);
+        }
+
         this.refreshData();
-        this.initWorkouts(this.currentDate);
+        this.initWorkouts(this.currentFrom);
         this.computeFatigueManagement(this.currentFrom, this.currentTo);
       }
     );
@@ -120,10 +127,13 @@ export class AthleteDashboardMenuComponent implements OnInit {
     this.currentFrom = startOfWeek(new Date(), { weekStartsOn: 1 });
     this.currentTo = endOfWeek(new Date(), { weekStartsOn: 1 });
 
+    /*
+    console.log(this.currentFrom, this.currentTo);
     if (this.activeTab !== 'fatigue' && this.activeTab !== 'wellness') {
         this.initWorkouts(new Date());
         this.computeFatigueManagement(this.currentFrom, this.currentTo);
     }
+     */
   }
 
   refreshData() {
@@ -174,6 +184,10 @@ export class AthleteDashboardMenuComponent implements OnInit {
     );
   }
 
+  setActiveSubTab(tab) {
+    this.activeSubTab = tab;
+  }
+
   initWorkouts(fromDate) {
     let now = format(fromDate, 'yyyy-MM-dd');
 
@@ -188,6 +202,7 @@ export class AthleteDashboardMenuComponent implements OnInit {
           if (workouts[now] && workouts[now][0]) {
             this.currentWorkout = workouts[now][0];
             this.fatigueManagementData = this.fatigueManagementComputer.compute(this.currentWorkout);
+            console.log(this.fatigueManagementData);
           }
         }
       });
@@ -204,6 +219,7 @@ export class AthleteDashboardMenuComponent implements OnInit {
           if (workouts[now] && workouts[now][0]) {
             this.currentWorkout = workouts[now][0];
             this.fatigueManagementData = this.fatigueManagementComputer.compute(this.currentWorkout);
+            console.log(this.fatigueManagementData);
           }
         }
       });
@@ -254,7 +270,6 @@ export class AthleteDashboardMenuComponent implements OnInit {
     let toDate = AthleteDashboardMenuComponent.formatDate(to) + ' 00:00:00';
 
     if (this.isFromUrl) {
-
       this.sub.onGetAllWorkout = this.usersService.getAllWorkouts(fromDate, toDate, 1).subscribe((workouts: any) => {
 
         if (workouts) {
@@ -273,6 +288,8 @@ export class AthleteDashboardMenuComponent implements OnInit {
               weeksFrom,
               weeksTo
             );
+
+            console.log(this.fatigueManagement);
           }
         }
       });
@@ -298,6 +315,8 @@ export class AthleteDashboardMenuComponent implements OnInit {
               weeksFrom,
               weeksTo
             );
+
+            console.log(this.fatigueManagement);
           }
         }
       });

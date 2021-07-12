@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {BsModalService, BsModalRef} from 'ngx-bootstrap/modal';
+import {ToastrService} from 'ngx-toastr';
+import {Router} from '@angular/router';
 
-import { UsersService } from '../../../../../_/templates/users.service';
-import { AuthService } from '../../../../../_/services/http/auth.service';
-import { UserService } from '../../../../../_/services/model/user.service';
+import {UsersService} from '../../../../../_/templates/users.service';
+import {AuthService} from '../../../../../_/services/http/auth.service';
+import {UserService} from '../../../../../_/services/model/user.service';
 
 @Component({
   selector: 'app-users-modal-choose-athlet',
@@ -13,34 +13,29 @@ import { UserService } from '../../../../../_/services/model/user.service';
   styleUrls: ['./users-modal-choose-athlet.component.scss']
 })
 export class UsersModalChooseAthletComponent implements OnInit {
-	isLoading: boolean = false;
+  isLoading: boolean = false;
 
-	currentUser: any = {
-	}
+  currentUser: any = {};
 
-	user: any = {
-		clients: []
-	}
+  user: any = {
+    clients: []
+  };
 
   constructor(
-  	public bsModalRef: BsModalRef,
-  	private router: Router,
-  	private userService: UserService,
-  	private usersService: UsersService,
-  	private authService: AuthService,
-  	private toastrService: ToastrService,) {
+    public bsModalRef: BsModalRef,
+    private router: Router,
+    private userService: UserService,
+    private usersService: UsersService,
+    private authService: AuthService) {
   }
 
   ngOnInit() {
-  	this.router.routeReuseStrategy.shouldReuseRoute = function(){
-      return false;
-    }
   }
 
   cancel() {
-  	this.user = {
-			clients: []
-		};
+    this.user = {
+      clients: []
+    };
 
     this.bsModalRef.hide();
   }
@@ -48,9 +43,10 @@ export class UsersModalChooseAthletComponent implements OnInit {
   setCurrentAthletId(clientId) {
     this.authService.setCurrentAthletId(clientId);
 
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
       this.router.navigate(['/coach/athlet/dashboard'])
     );
+
     this.userService.getUserInfos(true);
     this.cancel();
   }

@@ -15,6 +15,7 @@ import {DOCUMENT} from "@angular/common";
 })
 export class AthleteDashboardWellnessComponent implements OnInit {
   @Input() isFromUrl = true;
+  @Input() showFormTwoDate = true;
   keepDates = true;
   activeTab : any = 'wellness';
   activeSubTab: any = 'fitness';
