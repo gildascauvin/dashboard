@@ -12,6 +12,7 @@ import * as _ from "lodash";
 import {CustomerStatsComputerService} from "../../../../_/services/stats/customer-stats-computer.service";
 import {CustomerStatsSummaryService} from "../../../../_/components/ui/customer-stats-summary/customer-stats-summary.service";
 import {UserService} from "../../../../_/services/model/user.service";
+import {CustomerStatsService} from "../../../../_/components/ui/customer-stats-range/customer-stats-range.service";
 
 @Component({
   selector: "app-coach-dashboard-menu",
@@ -62,6 +63,7 @@ export class CoachDashboardMenuComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private fatigueManagementComputer: FatigueManagementComputerService,
+    private customerStatsService: CustomerStatsService,
     private resizeSvc: ResizeService,
     @Inject(DOCUMENT) private _document
   ) {
@@ -80,14 +82,20 @@ export class CoachDashboardMenuComponent implements OnInit {
       };
     }
 
-
-    this.currentFrom = startOfWeek(new Date(), { weekStartsOn: 1 });
-    this.currentTo = endOfWeek(new Date(), { weekStartsOn: 1 });
-
     this.user = this.isFromUrl ? this.authService.getUserData() : this.authService.getUserClientData();
 
-    this.initWorkouts();
-    this.computeFatigueManagement(this.currentFrom, this.currentTo);
+    this.sub.onStatsUpdated = this.customerStatsService.onStatsUpdated.subscribe((component) => {
+
+        if (component.isOneDay === false) {
+          this.currentFrom = _.clone(component.startDay);
+          this.currentTo = _.clone(component.endDay);
+
+          this.refreshData();
+          this.initWorkouts();
+          this.computeFatigueManagement(this.currentFrom, this.currentTo);
+        }
+      }
+    );
   }
 
   ngOnDestroy(): void {}
@@ -95,6 +103,16 @@ export class CoachDashboardMenuComponent implements OnInit {
   setActiveTab(tab) {
     this.activeTab = tab;
     this.coachDashboardMenuService.onTabChanged.emit(tab);
+  }
+
+  refreshData() {
+    this.fatigueManagement = {
+      load: {constraint: 0, rcac: 0}, variation: {monotony: 0}, fitness: {fitness: 0, energyScore: 0},
+      colors: {load: {color1: '', color2: ''}, variation: {percent: 0}, fitness: {color1: ''}}
+    };
+
+    this.fatigueManagementData = [];
+    this.currentWorkout = {};
   }
 
   openInvitationCreateModal() {
