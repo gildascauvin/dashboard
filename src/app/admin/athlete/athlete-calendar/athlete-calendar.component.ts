@@ -56,6 +56,8 @@ export class AthleteCalendarComponent implements OnInit {
   showNowPosition: boolean = true;
   widthMonth: number = 180;
 
+  currentWeeksStartDay: any = null;
+
   hover: any = {};
   timer: any = {};
 
@@ -141,7 +143,7 @@ export class AthleteCalendarComponent implements OnInit {
           let endDay = _.clone(component.endDay);
           this.startDay = startDay;
           this.endDay = endDay;
-          this._syncWorkouts();
+          this._syncWorkouts(false);
         }
     });
 
@@ -149,7 +151,7 @@ export class AthleteCalendarComponent implements OnInit {
     this.user = this.isFromUrl ? this.authService.getUserData() : this.authService.getUserClientData();
 
     this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe((o) => {
-        this._syncWorkouts(null, true);
+        this._syncWorkouts(true);
       }
     );
 
@@ -245,7 +247,7 @@ export class AthleteCalendarComponent implements OnInit {
       };
     });
 
-    this.plannings = plannings;;
+    this.plannings = plannings;
   }
 
   private _setPlanningMonthes(startMonth, totalMonth) {
@@ -321,9 +323,9 @@ export class AthleteCalendarComponent implements OnInit {
         this.startDay = startOfWeek(new Date(), { weekStartsOn: 1 });
       }
       */
+      this.currentWeeksStartDay = null;
       this.weeks = [];
     }
-
 
     this._addWeeks();
   }
@@ -340,9 +342,13 @@ export class AthleteCalendarComponent implements OnInit {
   }
 
   private _addWeeks() {
+    if (this.currentWeeksStartDay === null) {
+      this.currentWeeksStartDay = _.clone(this.startDay);
+    }
+
     for (let y = 0; y < 5; ++y) {
       let days = [];
-      let date = new Date(this.startDay);
+      let date = new Date(this.currentWeeksStartDay);
       for (let i = 0; i < this.ngOfWeeks; ++i) {
         let formatedDate = format(date, "yyyy-MM-dd");
         let formatedDay = format(date, "dd");
@@ -366,7 +372,7 @@ export class AthleteCalendarComponent implements OnInit {
 
         let nbHours = formatedDate === "2020-10-25" || formatedDate === "2021-10-30" ? 25 : 24;
         date = addHours(date, nbHours);
-        //this.startDay = date;
+        this.currentWeeksStartDay = date;
       }
 
       this.weeks.push(days);
@@ -894,7 +900,7 @@ export class AthleteCalendarComponent implements OnInit {
     };
   }
 
-  private _syncWorkouts(startedAtModel?, reset?) {
+  private _syncWorkouts(reset?) {
     this.isLoading = true;
     this.sub.onGetAllWorkout && this.sub.onGetAllWorkout.unsubscribe();
 
