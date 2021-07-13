@@ -70,6 +70,7 @@ export class AthleteOnboardingComponent implements OnInit {
           this._initData(user);
           this._checkOnboardingStatus();
           this._setDefaultLocale();
+          this.skip();
         });
       } else {
 
@@ -81,6 +82,7 @@ export class AthleteOnboardingComponent implements OnInit {
             this._initData(user);
             this._checkOnboardingStatus();
             this._setDefaultLocale();
+            this.skip();
           });
         });
       }
@@ -196,6 +198,7 @@ export class AthleteOnboardingComponent implements OnInit {
           this.loginService.setUserId(data.user_id);
           this.isFromUrl = this.signupService.isAthlet();
           this._initUser();
+          this.skip();
         }
       }
     });
