@@ -92,7 +92,7 @@ export class AthleteDashboardMenuComponent implements OnInit {
 
     this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe((workout) => {
         this.refreshData();
-        this.initWorkouts(this.currentFrom);
+        this.initWorkouts();
         this.computeFatigueManagement(this.currentFrom, this.currentTo);
       }
     );
@@ -105,14 +105,14 @@ export class AthleteDashboardMenuComponent implements OnInit {
         }
 
         this.refreshData();
-        this.initWorkouts(this.currentFrom);
+        this.initWorkouts();
         this.computeFatigueManagement(this.currentFrom, this.currentTo);
       }
     );
 
     this.sub.onDateCalendarSelected = this.athleteCalendarService.onDateSelected.subscribe((date) => {
         this.refreshData();
-        this.initWorkouts(date);
+        this.initWorkouts();
 
         this.currentDate = date;
         this.currentFrom = startOfWeek(date, { weekStartsOn: 1 });
@@ -188,7 +188,8 @@ export class AthleteDashboardMenuComponent implements OnInit {
     this.activeSubTab = tab;
   }
 
-  initWorkouts(fromDate) {
+  initWorkouts() {
+    let fromDate = new Date();
     let now = format(fromDate, 'yyyy-MM-dd');
 
     if (this.isFromUrl) {

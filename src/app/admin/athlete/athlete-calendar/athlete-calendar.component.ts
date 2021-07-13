@@ -56,6 +56,8 @@ export class AthleteCalendarComponent implements OnInit {
   showNowPosition: boolean = true;
   widthMonth: number = 180;
 
+  currentDate: any;
+
   currentWeeksStartDay: any = null;
 
   hover: any = {};
@@ -117,7 +119,9 @@ export class AthleteCalendarComponent implements OnInit {
     public formatter: NgbDateParserFormatter,
     private resizeSvc: ResizeService,
     private customerStatsService: CustomerStatsService
-  ) {}
+  ) {
+    this.currentDate = new Date();
+  }
 
   @HostListener("document:keydown.escape", ["$event"]) onKeydownHandler(event: KeyboardEvent) {
     this.closeAllBoxes();
