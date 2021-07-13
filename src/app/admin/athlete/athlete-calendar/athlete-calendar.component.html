@@ -108,7 +108,7 @@
                         ngbTooltip="{{ '#Duplicate' | dgTranslate }}" #t="ngbTooltip"
                         (click)="duplicateWorkout(workout); t.close()"></i>
                     </div>
-                    <button *ngIf="day.day == startDay.getDate() && day.month == (startDay.getMonth() + 1)"
+                    <button *ngIf="day.day == currentDate.getDate() && day.month == (currentDate.getMonth() + 1)"
                             [ngClass]="workout.is_session_started ? 'btn-secondary' : 'btn-primary'"
                             class="btn start-session"
                             (click)="openStartSessionModal(workout, day)">

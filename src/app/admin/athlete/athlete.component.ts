@@ -177,31 +177,18 @@ export class AthleteComponent implements OnInit {
   }
 
   openStartSessionModal() {
+    let now = new Date();
+    let month = now.getMonth() + 1;
+    let day = now.getDate();
 
-    let date = null;
+    let date = now.getFullYear() + "-" + ((month < 10) ? '0':'') + month + "-" + ((day < 10) ? '0':'') + day;
 
-    if (this.showFormTwoDate) {
+    this.sub.onGetAllWorkout = this.usersService.getAllWorkouts(date, date, true).subscribe((workouts: any) => {
+      if (workouts && workouts[date] && workouts[date][0]) {
+        this.confirmOpenStartSessionModal(workouts[date][0]);
+      }
+    });
 
-      let month = this.twoDateStartOn.getMonth() + 1;
-      let day = this.twoDateStartOn.getDate();
-      date = this.twoDateStartOn.getFullYear() + "-" + ((month < 10) ? '0':'') + month + "-" + ((day < 10) ? '0':'') + day;
-
-    } else if (this.showFormTwoDate === false) {
-
-      let todayCalendar = new Date();
-      let month = todayCalendar.getMonth() + 1;
-      let day = todayCalendar.getDate();
-
-      date = todayCalendar.getFullYear() + "-" + ((month < 10) ? '0':'') + month + "-" + ((day < 10) ? '0':'') + day;
-    }
-
-    if (date !== null) {
-      this.sub.onGetAllWorkout = this.usersService.getAllWorkouts(date, date, true).subscribe((workouts: any) => {
-        if (workouts && workouts[date] && workouts[date][0]) {
-          this.confirmOpenStartSessionModal(workouts[date][0]);
-        }
-      });
-    }
   }
 
   confirmOpenStartSessionModal(workout) {
