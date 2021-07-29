@@ -155,6 +155,7 @@ export class AthleteCalendarComponent implements OnInit {
     });
 
     this.user = this.isFromUrl ? this.authService.getUserData() : this.authService.getUserClientData();
+    this._initUser();
 
     this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe((o) => {
         this._syncWorkouts(false);
@@ -1018,5 +1019,36 @@ export class AthleteCalendarComponent implements OnInit {
     const currentSize = this.document.body.clientWidth;
     this.size = currentSize;
     this.resizeSvc.onResize(currentSize);
+  }
+
+   private _initUser() {
+    this.isLoading = true;
+    this.sub.userInfo && this.sub.userInfo.unsubscribe();
+
+    if (this.isFromUrl) {
+      this.sub.userInfo = this.usersService.getUser().subscribe((user: any) => {
+        if (user) {
+          this.user = user;
+
+          this.userService.initUserInfos(user);
+          this.isLoading = false;
+        }
+      });
+    } else {
+      let userClientId = this.authService.getCurrentAthletId();
+
+      this.sub.userInfo = this.usersService.getUserClient(userClientId).subscribe((user: any) => {
+        if (user) {
+          this.user = user;
+
+          if (this.isFromUrl) {
+            this.userService.initUserInfos(user);
+          } else {
+            this.userService.initUserClientInfos(user);
+          }
+          this.isLoading = false;
+        }
+      });
+    }
   }
 }

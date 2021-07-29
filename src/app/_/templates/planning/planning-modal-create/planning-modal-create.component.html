@@ -56,7 +56,7 @@
       <div class="form-group">
         <label>{{ '#Volume' | dgTranslate }}</label>
         <select [(ngModel)]="modelPlanning.volume_id" class="form-control">
-          <option *ngFor="let volume of configPlanning.volumes" [value]="volume.id">{{ volume.name }}</option>
+          <option *ngFor="let volume of configPlanning.volumes" [value]="volume.id">{{ '#' + volume.name | dgTranslate }}</option>
         </select>
       </div>
     </div>
@@ -65,7 +65,7 @@
       <div class="form-group">
         <label>{{ '#Intensity' | dgTranslate }}</label>
         <select [(ngModel)]="modelPlanning.intensity_id" class="form-control">
-          <option *ngFor="let volume of configPlanning.volumes" [value]="volume.id">{{ volume.name }}</option>
+          <option *ngFor="let volume of configPlanning.volumes" [value]="volume.id">{{ '#' + volume.name | dgTranslate }}</option>
         </select>
       </div>
     </div>
@@ -74,7 +74,7 @@
       <div class="form-group">
         <label>{{ '#Frequency' | dgTranslate }}</label>
         <select [(ngModel)]="modelPlanning.frequency_id" class="form-control">
-          <option *ngFor="let volume of configPlanning.volumes" [value]="volume.id">{{ volume.name }}</option>
+          <option *ngFor="let volume of configPlanning.volumes" [value]="volume.id">{{ '#' + volume.name | dgTranslate }}</option>
         </select>
       </div>
     </div>
