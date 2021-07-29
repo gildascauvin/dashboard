@@ -47,17 +47,10 @@ export class UsersModalChooseAthletComponent implements OnInit {
   setCurrentAthletId(clientId) {
     this.authService.setCurrentAthletId(clientId);
 
-    this.sub.userInfo = this.usersService.getUserClient(clientId).subscribe((user: any) => {
-      if (user) {
-        this.user = user;
-        this.userService.initUserClientInfos(user);
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+      this.router.navigate(['/coach/athlet/dashboard'])
+    );
 
-        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-          this.router.navigate(['/coach/athlet/dashboard'])
-        );
-
-        this.cancel();
-      }
-    });
+    this.cancel();
   }
 }
