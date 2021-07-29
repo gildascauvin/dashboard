@@ -6,6 +6,7 @@ import {FormModalCore} from '../../../core/form-modal.core';
 import * as _ from 'lodash';
 import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 import {AthleteCalendarService} from 'src/app/admin/athlete/athlete-calendar/athlete-calendar.service';
+import {webConfig} from "../../../../web-config";
 
 @Component({
   selector: 'tpc-planning-modal-edit',
@@ -18,8 +19,7 @@ export class PlanningModalEditComponent extends FormModalCore implements OnInit 
   modelPlanning: any = {};
   templates: any [] = [];
   selectedTemplate: any = {};
-  errors: any = {}
-  sub: any;
+  errors: any = {};
   userId: number = 0;
 
   startDate: NgbDateStruct = {
@@ -33,6 +33,8 @@ export class PlanningModalEditComponent extends FormModalCore implements OnInit 
     month: 1,
     year: 2002,
   };
+
+  configPlanning: any = webConfig.planning;
 
   constructor(
     public bsModalRef: BsModalRef,
@@ -56,9 +58,7 @@ export class PlanningModalEditComponent extends FormModalCore implements OnInit 
     this.endDate = {day: parseInt(endDateSplit[0]), month: parseInt(endDateSplit[1]), year: parseInt(endDateSplit[2])};
   }
 
-  ngOnDestroy(): void {
-    this.sub && this.sub.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   cancel() {
     this.model = {};
@@ -88,5 +88,18 @@ export class PlanningModalEditComponent extends FormModalCore implements OnInit 
       }
     }, (e) => this.toastrService.error('An error has occurred'));
 
+  }
+
+  delete() {
+    this.usersService.removePlanning(this.userId, this.modelPlanning.planning_id).subscribe((data: any) => {
+      if (!data.errors) {
+        this.cancel();
+        this.athleteCalendarService.onRemovedPlanning.emit(true);
+        this.toastrService.success('Planning removed!');
+      } else {
+        this.errors = data.errors;
+        this.toastrService.error(data.message || 'An error has occurred');
+      }
+    }, (e) => this.toastrService.error('An error has occurred'));
   }
 }

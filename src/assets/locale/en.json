@@ -391,6 +391,9 @@
   "#Very bad": "Very bad",
   "#Bad": "Bad",
   "#Average": "Average",
+  "#Medium": "Medium",
+  "#High": "High",
+  "#Very high": "Very high",
   "#Good": "Good",
   "#Good1": "Good",
   "#Very good": "Very good",
@@ -407,5 +410,12 @@
   "#Lifestyle": "Lifestyle",
   "#Training": "Training",
   "#RCAC": "RCAC",
-  "#Menu": "Menu"
+  "#Menu": "Menu",
+  "#Intensity": "Intensity",
+  "#Frequency": "Frequency",
+  "#Name of the block": "Name of the block",
+  "#Edit a training block": "Edit a training block",
+  "#Start date": "Start date",
+  "#End date": "End date",
+  "#Create a training block": "Create a training block"
 }

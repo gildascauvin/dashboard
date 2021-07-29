@@ -4,6 +4,7 @@ import { UsersService } from '../../users.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormModalCore } from '../../../core/form-modal.core';
 import {AthleteCalendarService} from "../../../../admin/athlete/athlete-calendar/athlete-calendar.service";
+import {webConfig} from "../../../../web-config";
 
 @Component({
   selector: 'tpc-planning-modal-create',
@@ -24,6 +25,8 @@ export class PlanningModalCreateComponent extends FormModalCore implements OnIni
   errors: any = {}
 
   sub: any;
+
+  configPlanning: any = webConfig.planning;
 
 	constructor(
   	public bsModalRef: BsModalRef,
