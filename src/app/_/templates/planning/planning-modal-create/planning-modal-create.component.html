@@ -54,7 +54,34 @@
 
     <div class="col-md-12">
       <div class="form-group">
-        <label>{{ '#Description' | dgTranslate }} <small>({{ '#Optional' | dgTranslate }})</small></label>
+        <label>{{ '#Volume' | dgTranslate }}</label>
+        <select [(ngModel)]="modelPlanning.volume_id" class="form-control">
+          <option *ngFor="let volume of configPlanning.volumes" [value]="volume.id">{{ volume.name }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>{{ '#Intensity' | dgTranslate }}</label>
+        <select [(ngModel)]="modelPlanning.intensity_id" class="form-control">
+          <option *ngFor="let volume of configPlanning.volumes" [value]="volume.id">{{ volume.name }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>{{ '#Frequency' | dgTranslate }}</label>
+        <select [(ngModel)]="modelPlanning.frequency_id" class="form-control">
+          <option *ngFor="let volume of configPlanning.volumes" [value]="volume.id">{{ volume.name }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>{{ '#Description' | dgTranslate }} <small>({{ '#optional' | dgTranslate }})</small></label>
         <textarea placeholder="" [class.is-invalid]="errors.description" (input)="errors.description=false"  [(ngModel)]="modelPlanning.description" class="form-control"></textarea>
       </div>
     </div>

@@ -54,19 +54,54 @@
 
     <div class="col-md-12">
       <div class="form-group">
-        <label>{{ '#Description' | dgTranslate }} <small>({{ '#Optional' | dgTranslate }})</small></label>
+        <label>{{ '#Volume' | dgTranslate }}</label>
+        <select [(ngModel)]="modelPlanning.volume_id" class="form-control">
+          <option *ngFor="let volume of configPlanning.volumes" [value]="volume.id">{{ '#' + volume.name | dgTranslate }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>{{ '#Intensity' | dgTranslate }}</label>
+        <select [(ngModel)]="modelPlanning.intensity_id" class="form-control">
+          <option *ngFor="let volume of configPlanning.volumes" [value]="volume.id">{{ '#' + volume.name | dgTranslate }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>{{ '#Frequency' | dgTranslate }}</label>
+        <select [(ngModel)]="modelPlanning.frequency_id" class="form-control">
+          <option *ngFor="let volume of configPlanning.volumes" [value]="volume.id">{{ '#' + volume.name | dgTranslate }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group">
+        <label>{{ '#Description' | dgTranslate }} <small>({{ '#optional' | dgTranslate }})</small></label>
         <textarea placeholder="" [class.is-invalid]="errors.description" (input)="errors.description=false"  [(ngModel)]="modelPlanning.description" class="form-control"></textarea>
       </div>
     </div>
 
   </div>
 </div>
-<div class="modal-footer">
-  <button class="btn btn-light mr-4" [disabled]="isLoading" (click)="cancel()">
-    <i class="fa fa-close"></i> {{ '#Cancel' | dgTranslate }}
-  </button>
-  <button class="btn btn-primary" [disabled]="isLoading" (click)="save()">
-    <i class="fa fa-save"></i>
-    {{ '#Save' | dgTranslate }}
-  </button>
+<div class="modal-footer justify-content-between">
+  <div>
+    <button class="btn btn-danger mr-4" [disabled]="isLoading" (click)="delete()">
+      <i class="fa fa-trash"></i> {{ '#Delete' | dgTranslate }}
+    </button>
+  </div>
+
+  <div>
+    <button class="btn btn-light mr-4" [disabled]="isLoading" (click)="cancel()">
+      <i class="fa fa-close"></i> {{ '#Cancel' | dgTranslate }}
+    </button>
+    <button class="btn btn-primary" [disabled]="isLoading" (click)="save()">
+      <i class="fa fa-save"></i>
+      {{ '#Save' | dgTranslate }}
+    </button>
+  </div>
 </div>

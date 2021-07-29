@@ -158,6 +158,7 @@ export const webConfig = {
 	 		{ id: 2, name: 'Comp'},
 	 		{ id: 3, name: 'Test'},
 	 		{ id: 4, name: 'Injury'},
+      { id: 5, name: 'Rest'},
 	 	],
 	 	flatCustom: {
  		  0: 'none',
@@ -165,6 +166,7 @@ export const webConfig = {
 	 		2: 'Comp',
 	 		3: 'Test',
 	 		4: 'Injury',
+      5: 'Rest',
 		 },
 		 unit: [
 			{ id: 6, name: 'Reps'},
@@ -247,5 +249,21 @@ export const webConfig = {
  	  3: 'Free trial',
     4: 'Paywall',
     5: 'Premium'
+  },
+  planning : {
+ 	  volumes: [
+      { id: 1, name: 'Very low'},
+      { id: 2, name: 'Low'},
+      { id: 3, name: 'Medium'},
+      { id: 4, name: 'High'},
+      { id: 5, name: 'Very high'}
+    ],
+    flatVolumes: {
+      1: 'Very low',
+      2: 'Low',
+      3: 'Medium',
+      4: 'High',
+      5: 'Very high',
+    }
   }
 };

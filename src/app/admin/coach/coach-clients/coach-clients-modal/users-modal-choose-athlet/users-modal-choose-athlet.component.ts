@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BsModalService, BsModalRef} from 'ngx-bootstrap/modal';
-import {ToastrService} from 'ngx-toastr';
+import {BsModalRef} from 'ngx-bootstrap/modal';
 import {Router} from '@angular/router';
 
 import {UsersService} from '../../../../../_/templates/users.service';
@@ -16,6 +15,7 @@ export class UsersModalChooseAthletComponent implements OnInit {
   isLoading: boolean = false;
 
   currentUser: any = {};
+  sub: any = {};
 
   user: any = {
     clients: []
@@ -32,6 +32,10 @@ export class UsersModalChooseAthletComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    this.sub.userInfo && this.sub.userInfo.unsubscribe();
+  }
+
   cancel() {
     this.user = {
       clients: []
@@ -43,11 +47,17 @@ export class UsersModalChooseAthletComponent implements OnInit {
   setCurrentAthletId(clientId) {
     this.authService.setCurrentAthletId(clientId);
 
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-      this.router.navigate(['/coach/athlet/dashboard'])
-    );
+    this.sub.userInfo = this.usersService.getUserClient(clientId).subscribe((user: any) => {
+      if (user) {
+        this.user = user;
+        this.userService.initUserClientInfos(user);
 
-    this.userService.getUserInfos(true);
-    this.cancel();
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+          this.router.navigate(['/coach/athlet/dashboard'])
+        );
+
+        this.cancel();
+      }
+    });
   }
 }

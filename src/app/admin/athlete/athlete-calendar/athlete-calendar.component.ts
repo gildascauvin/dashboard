@@ -84,6 +84,7 @@ export class AthleteCalendarComponent implements OnInit {
 
   workouts: any = {};
   plannings: any = [];
+  events: any = [];
 
   endDay: any = endOfWeek(new Date(), { weekStartsOn: 1 });
   startDay: any = startOfWeek(new Date(), { weekStartsOn: 1 });
@@ -91,6 +92,7 @@ export class AthleteCalendarComponent implements OnInit {
   weeks: any[] = [];
 
   configExercices: any = webConfig.exercices;
+  configPlanning: any = webConfig.planning;
 
   ngOfWeeks: number = 7;
 
@@ -131,6 +133,7 @@ export class AthleteCalendarComponent implements OnInit {
 
     this.detectScreenSize();
 
+
     this.customerStatsService.onRefreshStats.emit();
 
     let todayCalendar = new Date();
@@ -151,11 +154,11 @@ export class AthleteCalendarComponent implements OnInit {
         }
     });
 
-
     this.user = this.isFromUrl ? this.authService.getUserData() : this.authService.getUserClientData();
 
     this.sub.onWorkoutSaved = this.usersService.onWorkoutSaved.subscribe((o) => {
         this._syncWorkouts(false);
+        this._initPlannings();
       }
     );
 
@@ -215,30 +218,80 @@ export class AthleteCalendarComponent implements OnInit {
         this.showNowPosition = false;
       }
 
+      let totalRows = 0;
+
+      if (data.events && data.events.length > 0) {
+        this._computeEvents(data.events, data.plannings.length);
+        totalRows += data.events.length;
+      } else {
+        this.events = [];
+      }
 
       if (data.plannings && data.plannings.length > 0) {
         this._setPlanningMonthes(data.gantt.start_planning_month, data.gantt.total_monthes);
         this._computePlannings(data.plannings);
-        this.totalPlanningHeight = data.plannings.length * 50 + 40;
+        totalRows += data.plannings.length;
+
+      } else {
+        this.plannings = [];
+        this._setPlanningMonthes(this.startedAtModel.month, 12);
+
+      }
+
+      if (totalRows > 0) {
+        this.totalPlanningHeight = totalRows * 65 + 60;
         if (this.totalPlanningHeight < 250) {
           this.totalPlanningHeight = 250;
         }
       } else {
-        this.plannings = [];
-        this._setPlanningMonthes(this.startedAtModel.month, 12);
         this.totalPlanningHeight = 250;
       }
+
     });
+  }
+
+  private _computeEvents(events, planningLength) {
+
+    let heightPlanning = 60;
+    let minLeft = 20;
+
+    let position = 1 + planningLength;
+
+    _.forEach(events, (event, idEvent) => {
+
+      let date = Date.parse(event.date);
+      event.formattedDate = format(date, "d") + ' ' + this._getMonthName(format(date, "MM"));
+
+      event.style = {
+        top: position * heightPlanning,
+        left: event.diff_from_start > 0 ? event.diff_from_start * this.widthMonth : minLeft
+      };
+
+      position++;
+    });
+
+    this.events = events;
   }
 
   private _computePlannings(plannings) {
 
-
-    let heightPlanning = 45;
+    let heightPlanning = 60;
     let minLeft = 20;
     let minWidth = 10;
 
     _.forEach(plannings, (planning, idPlanning) => {
+
+      if (this.configPlanning.flatVolumes[planning.volume_id]) {
+        planning.volume = this.doorgetsTranslateService.instant("#" + this.configPlanning.flatVolumes[planning.volume_id]);
+      }
+
+      if (this.configPlanning.flatVolumes[planning.intensity_id]) {
+        planning.intensity = this.doorgetsTranslateService.instant("#" + this.configPlanning.flatVolumes[planning.intensity_id]);
+      }
+
+      if (this.configPlanning.flatVolumes[planning.frequency_id]) {
+        planning.frequency = this.doorgetsTranslateService.instant("#" + this.configPlanning.flatVolumes[planning.frequency_id]);
+      }
 
       planning.style = {
         top: planning.position * heightPlanning,
@@ -706,8 +759,6 @@ export class AthleteCalendarComponent implements OnInit {
 
   openPlanningAddModal() {
 
-    console.log('open planning add modal');
-
     const initialState = {
       userId: this.user.id,
     };
@@ -723,6 +774,7 @@ export class AthleteCalendarComponent implements OnInit {
   }
 
   openPlanningEditModal(planningId) {
+
     let selectedPlanning = null;
     for(let planning in this.plannings) {
       if (this.plannings[planning].planning_id == planningId) {
@@ -742,22 +794,6 @@ export class AthleteCalendarComponent implements OnInit {
         keyboard: false,
         initialState: initialState,
         class: "modal-lg",
-      }
-    );
-  }
-
-  openPlanningDeleteModal(planningId) {
-    const initialState = {
-      userId: this.user.id,
-      planningId: planningId
-    };
-
-    this.bsModalRef = this.modalService.show(
-      PlanningModalDeleteComponent,
-      {
-        keyboard: false,
-        initialState: initialState,
-        class: "modal-xs",
       }
     );
   }
